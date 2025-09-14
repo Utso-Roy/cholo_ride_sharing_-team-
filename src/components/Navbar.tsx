@@ -12,18 +12,18 @@ const Navbar = () => {
           <HiChevronDown className="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" />
         </a>
         {/* Submenu */}
-        <ul className="absolute left-0 top-full mt-2 hidden w-40 rounded-md bg-base-100 p-2 shadow-md group-hover:block z-20">
+        <ul className="absolute left-0 top-full mt-2 hidden w-40 rounded-md bg-base-100 text-[#27445D] p-2 shadow-md group-hover:block z-20">
           <li><a>Submenu 1</a></li>
           <li><a>Submenu 2</a></li>
         </ul>
       </li>
 
-      <li><a>Contactfirebase.config.js</a></li>
+      <li><a>Contact</a></li>
     </>
   );
 
   return (
-    <div className="navbar bg-base-100 shadow-sm">
+    <div className="navbar bg-[#27445D] sticky top-0 text-white shadow-sm">
       {/* Navbar Start */}
       <div className="navbar-start">
         {/* Mobile Dropdown */}
@@ -50,12 +50,12 @@ const Navbar = () => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-10 mt-3 w-52 p-2 shadow"
+            className="menu menu-sm dropdown-content bg-base-100 text-[#27445D] rounded-box z-10 mt-3 w-52 p-2 shadow"
           >
             {links}
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl">daisyUI</a>
+        <a className="cursor-pointer text-xl">daisyUI</a>
       </div>
 
       {/* Navbar Center */}
