@@ -1,4 +1,3 @@
-// Utils/ServiceItems/serviceItems.ts
 import { FaMotorcycle, FaCar, FaBus, FaShippingFast, FaAmbulance, FaSuitcaseRolling, FaSchool } from 'react-icons/fa';
 import { GiAutoRepair } from 'react-icons/gi';
 import { IconType } from 'react-icons';
