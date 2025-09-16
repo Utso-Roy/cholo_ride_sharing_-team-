@@ -15,6 +15,7 @@ const Navbar = () => {
     <>
       <li className="hover:text-[#71BBB2] transition-colors duration-300">
         <a href="#">হোম</a>
+        
       </li>
 
       {/* সার্ভিসসমূহ */}
