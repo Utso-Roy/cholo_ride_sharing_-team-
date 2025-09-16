@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import { HiChevronDown } from "react-icons/hi";
+import { FaMotorcycle, FaCarSide } from "react-icons/fa";
+import { MdOutlineElectricRickshaw } from "react-icons/md";
+
 import serviceItems from "../Utils/ServiceItems/serviceItems";
 
 const Navbar = () => {
   const [openServices, setOpenServices] = useState(false);
   const [openHelp, setOpenHelp] = useState(false);
-  const [openCompany, setOpenCompany] = useState(false); 
+  const [openCompany, setOpenCompany] = useState(false);
+  const [openEarn, setOpenEarn] = useState(false);
 
   const links = (
     <>
@@ -38,6 +42,7 @@ const Navbar = () => {
                     href="#"
                     className="flex flex-col items-center justify-center p-2 rounded-md hover:bg-gray-100 transition-colors duration-200"
                     style={{ color: item.color }}
+                    onClick={() => setOpenServices(false)}
                   >
                     <Icon className="text-2xl" />
                     <div className="text-sm mt-1 text-center">{item.label}</div>
@@ -52,6 +57,55 @@ const Navbar = () => {
       {/* ব্লগ */}
       <li className="hover:text-[#71BBB2] transition-colors duration-300">
         <a href="#">ব্লগ</a>
+      </li>
+
+      {/* আয় করুন */}
+      <li className="relative">
+        <button
+          onClick={() => setOpenEarn(!openEarn)}
+          className="flex items-center gap-1 cursor-pointer hover:text-[#71BBB2] transition-colors duration-300"
+        >
+          আয় করুন
+          <HiChevronDown
+            className={`w-4 h-4 transition-transform duration-300 ${
+              openEarn ? "rotate-180" : ""
+            }`}
+          />
+        </button>
+
+        {openEarn && (
+          <div className="absolute left-0 top-full mt-2 w-60 rounded-md bg-white text-[#27445D] p-4 shadow-lg z-50">
+            <ul className="flex flex-col gap-2">
+              <li>
+                <a
+                  href="#"
+                  className="flex items-center gap-2 hover:text-[#71BBB2] transition-colors"
+                  onClick={() => setOpenEarn(false)}
+                >
+                  <FaMotorcycle className="text-lg" /> বাইক রাইড দিয়ে আয়
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="flex items-center gap-2 hover:text-[#71BBB2] transition-colors"
+                  onClick={() => setOpenEarn(false)}
+                >
+                  <FaCarSide className="text-lg" /> কার রাইড দিয়ে আয়
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="flex items-center gap-2 hover:text-[#71BBB2] transition-colors"
+                  onClick={() => setOpenEarn(false)}
+                >
+                  <MdOutlineElectricRickshaw  className="text-lg" /> সিএনজি রাইড দিয়ে আয়
+                </a>
+              </li>
+            </ul>
+          </div>
+        )}
       </li>
 
       {/* অনন্যা Dropdown */}
@@ -138,7 +192,9 @@ const Navbar = () => {
     <div className="navbar bg-[#27445D] sticky top-0 text-white shadow-md z-50">
       {/* Navbar Start */}
       <div className="navbar-start">
-        <a className="cursor-pointer text-xl font-bold text-white">যাত্রী</a>
+        <a className="cursor-pointer text-xl font-bold text-white" href="#">
+          যাত্রী
+        </a>
       </div>
 
       {/* Navbar Center */}
@@ -148,7 +204,10 @@ const Navbar = () => {
 
       {/* Navbar End */}
       <div className="navbar-end">
-        <a className="btn bg-[#71BBB2] hover:bg-[#5AA29F] text-white border-none">
+        <a
+          href="#"
+          className="btn bg-[#71BBB2] hover:bg-[#5AA29F] text-white border-none"
+        >
           Booking
         </a>
       </div>
