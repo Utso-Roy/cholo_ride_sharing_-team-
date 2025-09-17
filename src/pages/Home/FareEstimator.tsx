@@ -108,7 +108,7 @@ const FareEstimator: React.FC = () => {
               <p className="text-gray-600 mb-1">
                 রেট প্রতি কিমি: {service.ratePerKm} টাকা
               </p>
-              <p className="text-lg font-bold">
+              <p className="text-lg font-semibold">
                 আনুমানিক ভাড়া: {distance ? distance * service.ratePerKm : 0}{" "}
                 টাকা
               </p>

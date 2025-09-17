@@ -4,46 +4,46 @@ import { FaMapMarkerAlt } from "react-icons/fa";
 interface Destination {
   id: number;
   name: string;
-  distance: string; // Approx distance
+  distance: string; 
   image: string;
 }
 
 const destinations: Destination[] = [
   {
     id: 1,
-    name: "Dhaka → Chittagong",
+    name: "ঢাকা → চট্টগ্রাম",
     distance: "250 km",
     image: "https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?auto=format&fit=crop&w=800&q=60",
   },
   {
     id: 2,
-    name: "Dhaka → Sylhet",
+    name: "ঢাকা→ সিলেট",
     distance: "240 km",
     image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=60",
   },
   {
     id: 3,
-    name: "Dhaka → Khulna",
+    name: "ঢাকা → খুলনা",
     distance: "210 km",
     image: "https://images.unsplash.com/photo-1520342868574-5fa3804e551c?auto=format&fit=crop&w=800&q=60",
   },
   {
     id: 4,
-    name: "Dhaka → Rajshahi",
+    name: "ঢাকা → রাজশাহী",
     distance: "220 km",
     image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=800&q=60",
   },
   {
     id: 5,
-    name: "Dhaka → Barishal",
+    name: "ঢাকা → বরিশাল",
     distance: "200 km",
-    image: "https://images.unsplash.com/photo-1581090700227-4c4f50b40c16?auto=format&fit=crop&w=800&q=60",
+    image: "https://images.unsplash.com/photo-1520342868574-5fa3804e551c?auto=format&fit=crop&w=800&q=60",
   },
   {
     id: 6,
-    name: "Dhaka → Rangpur",
+    name: "ঢাকা → রংপুর",
     distance: "300 km",
-    image: "https://images.unsplash.com/photo-1556742400-b5e3b3c39d94?auto=format&fit=crop&w=800&q=60",
+    image: "https://images.unsplash.com/photo-1520342868574-5fa3804e551c?auto=format&fit=crop&w=800&q=60",
   },
 ];
 
