@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router";
+import Hello from "../../assets/Welcome Animation.json";
 
 type Blog = {
     id: number;
@@ -58,14 +59,16 @@ export const BlogListPage: React.FC = () => {
     return (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
             {/* Heading */}
-            <motion.h1
+            <motion.div
                 initial={{ opacity: 0, y: -40 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
-                className="text-3xl sm:text-4xl font-extrabold mb-6 text-[#274450] text-center"
+                className="flex justify-between"
             >
-                স্বাগতম আমাদের ব্লগ পেইজে 🚖
-            </motion.h1>
+                <h1 className="text-2xl sm:text-4xl font-extrabold mb-6 text-[#274450] text-center">স্বাগতম আমাদের ব্লগ পেইজে 🚖</h1>
+                <Lottie></Lottie>
+
+            </motion.div>
 
             {/* Search & Filter */}
             <div className="flex flex-col sm:flex-row gap-3 mb-8">
