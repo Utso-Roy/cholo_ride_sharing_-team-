@@ -3,6 +3,7 @@ import SwiperPage from './SwiperPage';
 import OurServices from './OurServices';
 import PopularDestinations from './PopularDestinations';
 import FeaturedDrivers from './FeaturedDrivers';
+import FareEstimator from './FareEstimator';
 
 const Home = () => {
   return (
@@ -22,10 +23,10 @@ const Home = () => {
 
         <FeaturedDrivers></FeaturedDrivers>
       </section>
-
+<FareEstimator></FareEstimator>
       <section>
         
-        
+
 </section>
     </div>
   );
