@@ -26,9 +26,8 @@ const Navbar = () => {
         >
           সার্ভিসসমূহ
           <HiChevronDown
-            className={`w-4 h-4 transition-transform duration-300 ${
-              openServices ? "rotate-180" : ""
-            }`}
+            className={`w-4 h-4 transition-transform duration-300 ${openServices ? "rotate-180" : ""
+              }`}
           />
         </button>
 
@@ -57,14 +56,13 @@ const Navbar = () => {
 
       {/* ব্লগ */}
       {/* <li className="hover:text-[#71BBB2] transition-colors duration-300">
-        <NavLink path:"/blog">ব্লগ</NavLink>
          <a href="#">ব্লগ</a> 
       </li> */}
+
       {/* ব্লগ */}
-<li className="hover:text-[#71BBB2] transition-colors duration-300">
-  <NavLink to="/blog">ব্লগ</NavLink>
-  {/* <a href="#">ব্লগ</a> */}
-</li>
+      <li className="hover:text-[#71BBB2] transition-colors duration-300">
+        <NavLink to="/blogs">ব্লগ</NavLink>
+      </li>
 
 
       {/* আয় করুন */}
@@ -75,9 +73,8 @@ const Navbar = () => {
         >
           আয় করুন
           <HiChevronDown
-            className={`w-4 h-4 transition-transform duration-300 ${
-              openEarn ? "rotate-180" : ""
-            }`}
+            className={`w-4 h-4 transition-transform duration-300 ${openEarn ? "rotate-180" : ""
+              }`}
           />
         </button>
 
@@ -108,7 +105,7 @@ const Navbar = () => {
                   className="flex items-center gap-2 hover:text-[#71BBB2] transition-colors"
                   onClick={() => setOpenEarn(false)}
                 >
-                  <MdOutlineElectricRickshaw  className="text-lg" /> সিএনজি রাইড দিয়ে আয়
+                  <MdOutlineElectricRickshaw className="text-lg" /> সিএনজি রাইড দিয়ে আয়
                 </a>
               </li>
             </ul>
@@ -124,9 +121,8 @@ const Navbar = () => {
         >
           অনন্যা
           <HiChevronDown
-            className={`w-4 h-4 transition-transform duration-300 ${
-              openCompany ? "rotate-180" : ""
-            }`}
+            className={`w-4 h-4 transition-transform duration-300 ${openCompany ? "rotate-180" : ""
+              }`}
           />
         </button>
 
@@ -161,9 +157,8 @@ const Navbar = () => {
         >
           হেল্প
           <HiChevronDown
-            className={`w-4 h-4 transition-transform duration-300 ${
-              openHelp ? "rotate-180" : ""
-            }`}
+            className={`w-4 h-4 transition-transform duration-300 ${openHelp ? "rotate-180" : ""
+              }`}
           />
         </button>
 
@@ -186,7 +181,7 @@ const Navbar = () => {
                 সেফটি ও প্রাইভেসি নীতিমালা
               </li>
               <li className=" hover:text-[#71BBB2] cursor-pointer">
-                 অভিযোগ/প্রস্তাব দিন
+                অভিযোগ/প্রস্তাব দিন
               </li>
               <li className="text-sm mt-2">হেল্পলাইন : +০৩৮২৫৮৯৫৭৮৪</li>
             </ul>
