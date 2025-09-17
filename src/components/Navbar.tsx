@@ -4,6 +4,7 @@ import { FaMotorcycle, FaCarSide } from "react-icons/fa";
 import { MdOutlineElectricRickshaw } from "react-icons/md";
 
 import serviceItems from "../Utils/ServiceItems/serviceItems";
+import { NavLink } from "react-router";
 
 const Navbar = () => {
   const [openServices, setOpenServices] = useState(false);
@@ -55,9 +56,16 @@ const Navbar = () => {
       </li>
 
       {/* ব্লগ */}
-      <li className="hover:text-[#71BBB2] transition-colors duration-300">
-        <a href="#">ব্লগ</a>
-      </li>
+      {/* <li className="hover:text-[#71BBB2] transition-colors duration-300">
+        <NavLink path:"/blog">ব্লগ</NavLink>
+         <a href="#">ব্লগ</a> 
+      </li> */}
+      {/* ব্লগ */}
+<li className="hover:text-[#71BBB2] transition-colors duration-300">
+  <NavLink to="/blog">ব্লগ</NavLink>
+  {/* <a href="#">ব্লগ</a> */}
+</li>
+
 
       {/* আয় করুন */}
       <li className="relative">
