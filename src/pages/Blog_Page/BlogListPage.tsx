@@ -2,7 +2,8 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router";
-import Hello from "../../assets/Welcome Animation.json";
+import Hello from "../../assets/WelcomeAnimation.json";
+import Lottie from "lottie-react";
 
 type Blog = {
     id: number;
@@ -58,36 +59,44 @@ export const BlogListPage: React.FC = () => {
 
     return (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-            {/* Heading */}
-            <motion.div
-                initial={{ opacity: 0, y: -40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                className="flex justify-between"
-            >
-                <h1 className="text-2xl sm:text-4xl font-extrabold mb-6 text-[#274450] text-center">স্বাগতম আমাদের ব্লগ পেইজে 🚖</h1>
-                <Lottie></Lottie>
-
-            </motion.div>
-
-            {/* Search & Filter */}
-            <div className="flex flex-col sm:flex-row gap-3 mb-8">
-                <input
-                    placeholder="ব্লগ সার্চ করুন..."
-                    value={query}
-                    onChange={e => setQuery(e.target.value)}
-                    className="flex-1 px-4 py-2 rounded-lg border border-[#497D74] focus:outline-none focus:ring-2 focus:ring-[#71BBB2]"
-                />
-                <select
-                    value={category}
-                    onChange={e => setCategory(e.target.value)}
-                    className="px-4 py-2 rounded-lg border border-[#497D74] bg-white focus:outline-none focus:ring-2 focus:ring-[#71BBB2]"
+            <div className="bg-gradient-to-r from-[#274450] to-[#71BBB2] rounded-2xl">
+                {/* Heading */}
+                <motion.div
+                    initial={{ opacity: 0, y: -40 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6 }}
+                    className="flex  justify-between items-center gap-4 px-4 sm:px-8"
                 >
-                    {categories.map(c => (
-                        <option key={c} value={c}>{c}</option>
-                    ))}
-                </select>
+                    <h1 className="text-xl lg:text-4xl font-extrabold text-white drop-shadow">
+                        স্বাগতম চলো ব্লগ পেইজে 🚖
+                    </h1>
+                    <Lottie
+                        animationData={Hello}
+                        loop={true}
+                        style={{ width: 200, height: 200 }}
+                    />
+                </motion.div>
+
+                {/* Search & Filter */}
+                <div className="flex flex-col sm:flex-row gap-3 mb-8 px-4 sm:px-8 pb-6">
+                    <input
+                        placeholder="ব্লগ সার্চ করুন..."
+                        value={query}
+                        onChange={e => setQuery(e.target.value)}
+                        className="flex-1 px-4 py-2 rounded-lg border border-[#EFE9D5] focus:outline-none focus:ring-2 focus:ring-[#EFE9D5]"
+                    />
+                    <select
+                        value={category}
+                        onChange={e => setCategory(e.target.value)}
+                        className="px-4 py-2 rounded-lg border border-[#497D74] bg-white focus:outline-none focus:ring-2 focus:ring-[#EFE9D5]"
+                    >
+                        {categories.map(c => (
+                            <option key={c} value={c}>{c}</option>
+                        ))}
+                    </select>
+                </div>
             </div>
+
 
             {/* Blog Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
