@@ -31,7 +31,7 @@ const services = [
   },
   {
     icon: <FaMapMarkedAlt className="text-4xl text-[#71BBB2]" />,
-    title: "জার্নি প্যাকেজ সিস্টেম",
+    title: "ভ্রমণ প্যাকেজ সিস্টেম",
     desc: "দিন/ঘণ্টা ভিত্তিক প্যাকেজ রাইড সুবিধা।"
   },
   {
@@ -50,8 +50,8 @@ const OurServices = () => {
   return (
     <section className="py-16 bg-[#e6fcf9]">
       <div className="max-w-7xl mx-auto px-6 text-center">
-        <h2 className="text-4xl font-bold mb-10">
-          Our <span className="text-[#71BBB2]">Services</span>
+        <h2 className="text-4xl font-bold text-[#27445D] mb-10">
+          আমাদের সার্ভিসসমূহ
         </h2>
 
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
