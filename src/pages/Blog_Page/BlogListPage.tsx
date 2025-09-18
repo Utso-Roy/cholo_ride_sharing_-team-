@@ -113,7 +113,7 @@ export const BlogListPage: React.FC = () => {
                         <img
                             src={blog.thumbnail}
                             alt={blog.title}
-                            className="w-full h-48 object-cover"
+                            className="w-full h-52 object-cover"
                         />
                         <div className="p-5">
                             <h3 className="font-bold text-lg mb-2 text-[#274450]">{blog.title}</h3>
