@@ -6,6 +6,7 @@ import { Dropdown } from "primereact/dropdown";
 import { Button } from "primereact/button";
 import { Toast } from "primereact/toast";
 import { classNames } from "primereact/utils";
+import BikeEarnArticle from "../components/BikeEarnArticle";
 
 
 const CITY_OPTIONS = [
@@ -103,17 +104,7 @@ export default function BikeStepOne() {
         </div>
 
         {/* RIGHT: আর্টিকেল/বর্ণনা */}
-        <article className="bg-[#27445D] rounded-lg shadow p-5 md:p-6 text-white">
-          <h2 className="text-xl font-bold mb-3">কিভাবে বাইক রাইড দিয়ে আয় করবেন</h2>
-          <ol className="list-decimal ml-5 space-y-2">
-            <li>অ্যাপে ড্রাইভার হিসেবে সাইন আপ করুন।</li>
-            <li>প্রয়োজনীয় ডকুমেন্ট (NID, লাইসেন্স, রেজিস্ট্রেশন) যাচাই করুন।</li>
-            <li>পছন্দের সময় অনুযায়ী অনলাইনে এসে রাইড নিন।</li>
-            <li>সেফটি গাইডলাইন ফলো করুন এবং ৫-স্টার সার্ভিস দিন।</li>
-            <li>সাপ্তাহিক পেআউটে আয় গ্রহণ করুন।</li>
-          </ol>
-          <p className="mt-4 text-sm">নোট: যথাযথ কাগজপত্র না থাকলে অ্যাকাউন্ট ভেরিফাই নাও হতে পারে।</p>
-        </article>
+        <BikeEarnArticle/>
       </section>
     </main>
   );
