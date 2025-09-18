@@ -65,7 +65,7 @@ const BikeEarnArticle = () => {
   ];
 
   return (
-    <article className="bg-[#27445D] rounded-lg shadow p-5 md:p-6 text-white">
+    <article className="bg-[#e6fcf9] rounded-lg shadow p-5 md:p-6 text-[#27445D]">
       {/* Header */}
       <header className="text-center mb-6">
         <h2 className="text-2xl font-bold">কিভাবে বাইক রাইড দিয়ে আয় করবেন</h2>
@@ -79,14 +79,14 @@ const BikeEarnArticle = () => {
         {steps.map((s, i) => (
           <div
             key={i}
-            className="flex items-start gap-3 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition"
+            className="flex items-start gap-3 p-3 rounded-lg bg-[#27445D]/6 hover:bg-[#27445D]/10 transition"
           >
             <div className="shrink-0 mt-0.5">{s.icon}</div>
             <div>
               <h3 className="font-semibold">{s.title}</h3>
               <p className="text-sm opacity-90">{s.desc}</p>
             </div>
-            <span className="ml-auto rounded-full bg-white/10 px-2 py-0.5 text-xs">
+            <span className="ml-auto rounded-full bg-[#27445D]/10 px-2 py-0.5 text-xs">
               ধাপ {i + 1}
             </span>
           </div>
@@ -100,7 +100,7 @@ const BikeEarnArticle = () => {
           {benefits.map((b, i) => (
             <div
               key={i}
-              className="flex items-start gap-3 p-3 rounded-lg border border-white/10"
+              className="flex items-start gap-3 p-3 rounded-lg border border-[#27445D]"
             >
               <div className="shrink-0 mt-0.5">{b.icon}</div>
               <div>
