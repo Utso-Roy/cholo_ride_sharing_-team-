@@ -1,10 +1,11 @@
-// About.tsx
 import { Card } from "primereact/card";
 import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import aboutBanner from "../../assets/banner/aboutBanner1.jpg";
 import aboutBanner2 from '../../assets/banner/aboutBanner2.jpg';
+import { FaArrowRight } from "react-icons/fa";
+import { Link } from "react-router";
 
 export default function About() {
   useEffect(() => {
@@ -16,7 +17,7 @@ export default function About() {
   }, []);
 
   return (
-    <div className="w-full overflow-hidden ">
+    <div className="w-full overflow-hidden bg-white">
       {/* Hero Section */}
       <section className="w-full h-[60vh] md:h-[70vh]">
         <Card
@@ -45,12 +46,12 @@ export default function About() {
           </div>
         </Card>
       </section>
-     {/* Mission & Vision Section */}
+      {/* Mission & Vision Section */}
       <section className=" py-16 px-4 md:px-12 bg-white">
-          <h2 className="text-3xl md:text-5xl lg:text-5xl font-bold mb-12 text-[#27445D]  text-center">
-              আমাদের লক্ষ্য ও ভিশন
-            </h2>
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-around gap-14 bg-white  overflow-hidden rounded-lg">
+        <h2 className="text-3xl md:text-5xl lg:text-5xl font-bold mb-12 text-[#27445D]  text-center">
+          আমাদের লক্ষ্য ও উদ্দেশ্য
+        </h2>
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-around gap-14 bg-white  overflow-hidden rounded-lg">
 
           {/* Left Image */}
           <div className="md:w-1/2 w-full h-64 md:h-[550px] lg:h-[550px]  flex-shrink-0">
@@ -64,8 +65,8 @@ export default function About() {
 
           {/* Right Text */}
           <div className="md:w-1/2 w-full  p-6 md:p-10 flex flex-col justify-center" data-aos="fade-left">
-          
-            <ol type="i" className="list-disc  text-xl space-y-8 text-black leading-relaxed ">
+
+            <ol type="i" className="list-disc  text-xl space-y-10 text-black leading-relaxed ">
               <li>
                 প্রতিটি নাগরিককে <span className="font-semibold text-[#27445D]">নিরাপদ ও নির্ভরযোগ্য</span> যাতায়াত সেবা প্রদান করা।
               </li>
@@ -87,7 +88,39 @@ export default function About() {
         </div>
       </section>
 
-      
+      {/* Our Story */}
+      <section className="max-w-7xl mx-auto bg-black rounded-2xl py-16 px-4 md:px-12 text-center">
+        <h2
+          className="text-3xl font-bold mb-6"
+          data-aos="fade-up"
+        >
+          আমাদের গল্প
+        </h2>
+        <p
+          className="max-w-3xl mx-auto text-gray-600"
+          data-aos="fade-up"
+          data-aos-delay="200"
+        >
+          চলো যাত্রা শুরু করেছিল এক সাধারণ ধারণা থেকে – কিভাবে মানুষকে দ্রুত, নিরাপদ
+          এবং সাশ্রয়ীভাবে গন্তব্যে পৌঁছে দেওয়া যায়। আজ আমরা হাজারো যাত্রী এবং
+          পার্টনারদের নিয়ে এগিয়ে যাচ্ছি আরও স্মার্ট বাংলাদেশের দিকে।
+        </p>
+
+        <div className="flex justify-center">
+          <Link to="/our-story">
+            <button
+              className="btn bg-[#71BBB2] hover:bg-[#5AA29F] text-white border-none mt-4 flex items-center gap-2"
+              data-aos="fade-up"
+              data-aos-delay="200"
+            >
+              আরো জানুন <FaArrowRight />
+            </button>
+          </Link>
+        </div>
+      </section>
+    
+
+
     </div>
   );
 }

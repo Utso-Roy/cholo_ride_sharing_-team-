@@ -3,6 +3,7 @@ import Error from "../Error/Error";
 import Home from "../pages/Home";
 import RootLayout from "../Layout/RootLayout";
 import AboutUs from "../pages/OthersPage/AboutUs";
+import OurStory from "../pages/OthersPage/OurStory";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
       {
         path:"/aboutUs",
         element:<AboutUs/>
+      },
+      {
+        path:"/our-story",
+        element:<OurStory/>
       }
     ],
   },
