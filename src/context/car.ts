@@ -17,5 +17,5 @@ const carVehicleInit: CarVehicle = {
   brand: null, model: null, regNo: "", year: "", fitnessNo: "",
 };
 
-export const { Provider: BikeApplyProvider, useApply: useBikeApply } =
+export const { Provider: CarApplyProvider, useApply: useBikeApply } =
   makeApplyContext<CarDriver, CarVehicle>(carDriverInit, carVehicleInit);
