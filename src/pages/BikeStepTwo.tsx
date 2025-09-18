@@ -12,6 +12,9 @@ import { Gender, useBikeApply } from "../context/bike";
 
 import { FaUserCheck, FaMotorcycle, FaClipboardCheck } from "react-icons/fa";
 
+// 🔧 ফিচার ফ্ল্যাগ (পরে true করে দিলেই Toast অন)
+const ENABLE_TOAST = false;
+
 const CITY_OPTIONS = [
   { label: "ঢাকা", value: "Dhaka" },
   { label: "চট্টগ্রাম", value: "Chattogram" },
@@ -37,6 +40,8 @@ const BikeStepTwo = () => {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   // রোবাস্ট রিসেটের জন্য (ফলব্যাক): FileUpload রিমাউন্ট করাতে key ব্যবহার
   const [fileKey, setFileKey] = useState(0);
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const modelOptions = useMemo(() => {
     if (!vehicle.brand) return [];
@@ -71,7 +76,7 @@ const BikeStepTwo = () => {
     // ইনপুট ক্লিয়ার
     fileRef.current?.clear?.();
 
-    // ফলব্যাক: কিছু সেটাপে clear() যথেষ্ট না হলে রিমাউন্ট 
+    // ফলব্যাক: কিছু সেটাপে clear() যথেষ্ট না হলে রিমাউন্ট
     setFileKey((k) => k + 1);
   };
 
@@ -82,7 +87,23 @@ const BikeStepTwo = () => {
     };
   }, [previewUrl]);
 
-  const submitAll = () => {
+  // নোটিফায়ার হেল্পার
+  const notify = (type: "success" | "warn" | "error", detail: string) => {
+    if (ENABLE_TOAST) {
+      toast.current?.show({
+        severity: type,
+        summary:
+          type === "success" ? "সফল" : type === "warn" ? "সতর্কতা" : "ত্রুটি",
+        detail,
+        life: 2400,
+      });
+    } else {
+      // আপাতত কনসোলে দেখাই; UI তে কোনো টস্ট নেই
+      console.info(`[${type.toUpperCase()}] ${detail}`);
+    }
+  };
+
+  const submitAll = async () => {
     // ধাপ–২ ভ্যালিডেশন (ড্রাইভার + ভেহিকল)
     const invalid =
       !driver.firstName?.trim() ||
@@ -98,33 +119,33 @@ const BikeStepTwo = () => {
       !vehicle.model ||
       !vehicle.regNo?.trim() ||
       !vehicle.year?.trim() ||
-      !vehicle.fitnessNo?.trim();
+      !vehicle.fitnessNo?.trim() ||
       !vehicle.taxTokenNo?.trim();
 
     if (invalid) {
-      toast.current?.show({
-        severity: "warn",
-        summary: "ফর্ম অসম্পূর্ণ",
-        detail: "সবগুলো প্রয়োজনীয় ঘর পূরণ করুন।",
-      });
+      notify("warn", "সবগুলো প্রয়োজনীয় ঘর পূরণ করুন।");
       return;
     }
 
-    const payload = { driver, vehicle };
-    console.log("SUBMIT_PAYLOAD", payload);
+    setIsSubmitting(true);
 
-    toast.current?.show({
-      severity: "success",
-      summary: "সফল",
-      detail: "আবেদন জমা হয়েছে!",
-    });
+    try {
+      // এখানে এখন শুধু ডেমো—সার্ভার নেই, তাই সরাসরি সফল ধরা হল
+      // পরে সার্ভার হলে এখানে fetch(...) বসাবে
+      notify("success", "আবেদন জমা হয়েছে (ডেমো)!");
+      // reset(); navigate("/"); ইত্যাদি যা আছে চালিয়ে দাও
+    } catch (err: any) {
+      notify("error", err?.message || "সাবমিট ব্যর্থ হয়েছে।");
+    } finally {
+      setIsSubmitting(false);
+    }
     reset();
     navigate("/");
   };
 
   return (
     <main className="px-4 md:px-10 py-10 bg-white">
-      <Toast ref={toast} />
+      {ENABLE_TOAST && <Toast ref={toast} position="top-center" />}
 
       {/* টপে Steps (ভিজুয়াল)
       <div className="bg-white rounded-lg shadow p-4 mb-6">
@@ -267,7 +288,7 @@ const BikeStepTwo = () => {
 
             <div className="flex flex-col gap-2 md:col-span-2">
               <label>ছবি আপলোড করুন (jpg/png)*</label>
-              
+
               <FileUpload
                 key={fileKey}
                 ref={fileRef}
@@ -428,10 +449,11 @@ const BikeStepTwo = () => {
               onClick={() => navigate(-1)}
             />
             <Button
-              label="সাবমিট"
-              icon="pi pi-check"
+              label={isSubmitting ? "সাবমিট হচ্ছে..." : "সাবমিট"}
+              icon={isSubmitting ? "pi pi-spin pi-spinner" : "pi pi-check"}
               className="!bg-[#71BBB2] !border-none hover:!bg-[#5AA29F]"
               onClick={submitAll}
+              disabled={isSubmitting}
             />
           </div>
         </section>
