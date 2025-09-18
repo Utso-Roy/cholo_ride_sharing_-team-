@@ -4,6 +4,7 @@ import { FaMotorcycle, FaCarSide } from "react-icons/fa";
 import { MdOutlineElectricRickshaw } from "react-icons/md";
 
 import serviceItems from "../Utils/ServiceItems/serviceItems";
+import { NavLink } from "react-router";
 
 const Navbar = () => {
   const [openServices, setOpenServices] = useState(false);
@@ -14,7 +15,7 @@ const Navbar = () => {
   const links = (
     <>
       <li className="hover:text-[#71BBB2] transition-colors duration-300">
-        <a href="#">হোম</a>
+        <NavLink to="/">হোম</NavLink>
       </li>
 
       {/* সার্ভিসসমূহ */}
@@ -77,31 +78,31 @@ const Navbar = () => {
           <div className="absolute left-0 top-full mt-2 w-60 rounded-md bg-white text-[#27445D] p-4 shadow-lg z-50">
             <ul className="flex flex-col gap-2">
               <li>
-                <a
-                  href="#"
+                <NavLink
+                  to="/earn/bike"
                   className="flex items-center gap-2 hover:text-[#71BBB2] transition-colors"
                   onClick={() => setOpenEarn(false)}
                 >
                   <FaMotorcycle className="text-lg" /> বাইক রাইড দিয়ে আয়
-                </a>
+                </NavLink>
               </li>
               <li>
-                <a
-                  href="#"
+                <NavLink
+                  to="/earn/car"
                   className="flex items-center gap-2 hover:text-[#71BBB2] transition-colors"
                   onClick={() => setOpenEarn(false)}
                 >
                   <FaCarSide className="text-lg" /> কার রাইড দিয়ে আয়
-                </a>
+                </NavLink>
               </li>
               <li>
-                <a
-                  href="#"
+                <NavLink
+                  to="/earn/cng"
                   className="flex items-center gap-2 hover:text-[#71BBB2] transition-colors"
                   onClick={() => setOpenEarn(false)}
                 >
                   <MdOutlineElectricRickshaw  className="text-lg" /> সিএনজি রাইড দিয়ে আয়
-                </a>
+                </NavLink>
               </li>
             </ul>
           </div>
