@@ -122,7 +122,7 @@ export const BlogListPage: React.FC = () => {
                                 <span>{blog.author} • {blog.date}</span>
                                 <Link
                                     to={`/blogs/${blog.id}`}
-                                    className="bg-[#497D74] hover:bg-[#71BBB2] text-white px-3 py-1 rounded-lg text-sm transition-colors"
+                                    className="bg-[#497D74] font-extrabold hover:bg-[#71BBB2] text-white px-3 py-1 rounded-lg text-sm transition-colors"
                                 >
                                     বিস্তারিত
                                 </Link>
