@@ -1,12 +1,11 @@
 import React from "react";
 import { useRef, useMemo, useEffect, useState } from "react";
+import { FileUpload, FileUploadSelectEvent } from "primereact/fileupload";
 import { useNavigate } from "react-router";
-import { Steps } from "primereact/steps";
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
 import { Button } from "primereact/button";
 import { Calendar } from "primereact/calendar";
-import { FileUpload, FileUploadSelectEvent } from "primereact/fileupload";
 import { Toast } from "primereact/toast";
 import { classNames } from "primereact/utils";
 import { Gender, useBikeApply } from "../context/bike";
@@ -34,7 +33,10 @@ const BikeStepTwo = () => {
   const { driver, setDriver, vehicle, setVehicle, reset } = useBikeApply();
   const toast = useRef<Toast>(null);
   const navigate = useNavigate();
+  const fileRef = useRef<FileUpload | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  // রোবাস্ট রিসেটের জন্য (ফলব্যাক): FileUpload রিমাউন্ট করাতে key ব্যবহার
+  const [fileKey, setFileKey] = useState(0);
 
   const modelOptions = useMemo(() => {
     if (!vehicle.brand) return [];
@@ -57,12 +59,20 @@ const BikeStepTwo = () => {
       if (prev) URL.revokeObjectURL(prev); // আগের URL ক্লিনআপ
       return nextUrl;
     });
+    // clear the state after remove preview
+    fileRef.current?.clear?.();
   };
 
   const removePhoto = () => {
     if (previewUrl) URL.revokeObjectURL(previewUrl);
     setPreviewUrl(null);
     setDriver({ ...driver, photo: null });
+
+    // ইনপুট ক্লিয়ার
+    fileRef.current?.clear?.();
+
+    // ফলব্যাক: কিছু সেটাপে clear() যথেষ্ট না হলে রিমাউন্ট 
+    setFileKey((k) => k + 1);
   };
 
   // আনমাউন্ট হলে/URL বদলালে প্রিভিউ URL ক্লিনআপ
@@ -89,6 +99,7 @@ const BikeStepTwo = () => {
       !vehicle.regNo?.trim() ||
       !vehicle.year?.trim() ||
       !vehicle.fitnessNo?.trim();
+      !vehicle.taxTokenNo?.trim();
 
     if (invalid) {
       toast.current?.show({
@@ -256,7 +267,10 @@ const BikeStepTwo = () => {
 
             <div className="flex flex-col gap-2 md:col-span-2">
               <label>ছবি আপলোড করুন (jpg/png)*</label>
+              
               <FileUpload
+                key={fileKey}
+                ref={fileRef}
                 mode="basic"
                 name="photo"
                 chooseLabel="ছবি নির্বাচন"
@@ -384,6 +398,7 @@ const BikeStepTwo = () => {
                 onChange={(e) =>
                   setVehicle({ ...vehicle, fitnessNo: e.target.value })
                 }
+                placeholder="যেমন: FT-458921"
                 className={classNames({
                   "p-invalid": !vehicle.fitnessNo?.trim(),
                 })}
@@ -393,12 +408,13 @@ const BikeStepTwo = () => {
             <div className="flex flex-col gap-2 md:col-span-2">
               <label>ট্যাক্স টোকেন নাম্বার*</label>
               <InputText
-                value={vehicle.fitnessNo}
+                value={vehicle.taxTokenNo}
                 onChange={(e) =>
-                  setVehicle({ ...vehicle, fitnessNo: e.target.value })
+                  setVehicle({ ...vehicle, taxTokenNo: e.target.value })
                 }
+                placeholder="যেমন: TT-2025-XXXX"
                 className={classNames({
-                  "p-invalid": !vehicle.fitnessNo?.trim(),
+                  "p-invalid": !vehicle.taxTokenNo?.trim(),
                 })}
               />
             </div>

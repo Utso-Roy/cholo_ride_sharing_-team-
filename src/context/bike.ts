@@ -7,7 +7,7 @@ export type BikeDriver = {
   gender?: Gender; dob?: Date | null; nid?: string; license?: string; photo?: File | null;
 };
 export type BikeVehicle = {
-  brand: string | null; model: string | null; regNo: string; year: string; fitnessNo: string;
+  brand: string | null; model: string | null; regNo: string; year: string; fitnessNo: string; taxTokenNo: string;
 };
 
 const bikeDriverInit: BikeDriver = {
@@ -15,7 +15,7 @@ const bikeDriverInit: BikeDriver = {
   gender: undefined, dob: null, nid: "", license: "", photo: null,
 };
 const bikeVehicleInit: BikeVehicle = {
-  brand: null, model: null, regNo: "", year: "", fitnessNo: "",
+  brand: null, model: null, regNo: "", year: "", fitnessNo: "", taxTokenNo: "",
 };
 
 export const { Provider: BikeApplyProvider, useApply: useBikeApply } =
