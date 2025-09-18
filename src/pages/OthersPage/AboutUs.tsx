@@ -6,6 +6,7 @@ import aboutBanner from "../../assets/banner/aboutBanner1.jpg";
 import aboutBanner2 from '../../assets/banner/aboutBanner2.jpg';
 import { FaArrowRight } from "react-icons/fa";
 import { Link } from "react-router";
+import CountUp from "react-countup";
 
 export default function About() {
   useEffect(() => {
@@ -118,6 +119,36 @@ export default function About() {
           </Link>
         </div>
       </section>
+        {/* Stats Section */}
+       <section className="max-w-7xl mx-auto py-16 my-16 rounded-2xl bg-[#71BBB2]   text-white text-center">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-8 ">
+        <div>
+          <h3 className="text-4xl font-bold">
+            <CountUp end={1000000} suffix="+" duration={10} />
+          </h3>
+          <p>রাইড সম্পন্ন</p>
+        </div>
+        <div>
+          <h3 className="text-4xl font-bold">
+            <CountUp end={500000} suffix="+" duration={10} />
+          </h3>
+          <p>ইউজার</p>
+        </div>
+        <div>
+          <h3 className="text-4xl font-bold">
+            <CountUp end={50000} suffix="+" duration={10} />
+          </h3>
+          <p>পার্টনার</p>
+        </div>
+        <div>
+          <h3 className="text-4xl font-bold">
+            <CountUp end={64} duration={10} />
+          </h3>
+          <p>জেলায় সেবা</p>
+        </div>
+      </div>
+    </section>
+
     
 
 
