@@ -83,7 +83,7 @@ export const BlogListPage: React.FC = () => {
                         placeholder="ব্লগ সার্চ করুন..."
                         value={query}
                         onChange={e => setQuery(e.target.value)}
-                        className="flex-1 px-4 py-2 rounded-lg border border-[#EFE9D5] focus:outline-none focus:ring-2 focus:ring-[#EFE9D5]"
+                        className="flex-1 px-4 py-2 rounded-lg text-white border border-[#EFE9D5] focus:outline-none focus:ring-2 focus:ring-[#EFE9D5]"
                     />
                     <select
                         value={category}
@@ -108,7 +108,7 @@ export const BlogListPage: React.FC = () => {
                         transition={{ duration: 0.6, delay: idx * 0.1 }}
                         whileHover={{ scale: 1.10 }}
                         whileTap={{ scale: 0.97 }}
-                        className="bg-white border rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow"
+                        className="bg-white border-2 border-[#EFE9D5]  rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow"
                     >
                         <img
                             src={blog.thumbnail}
