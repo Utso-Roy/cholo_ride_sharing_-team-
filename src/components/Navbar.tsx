@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { HiChevronDown } from "react-icons/hi";
 import { FaMotorcycle, FaCarSide,  } from "react-icons/fa";
 import { MdOutlineElectricRickshaw } from "react-icons/md";
-
 import serviceItems from "../Utils/ServiceItems/serviceItems";
+import { NavLink } from "react-router";
 
 const Navbar = () => {
   const [openServices, setOpenServices] = useState(false);
@@ -14,7 +14,7 @@ const Navbar = () => {
   const links = (
     <>
       <li className="hover:text-[#71BBB2] transition-colors duration-300">
-        <a href="#">হোম</a>
+        <a href="/">হোম</a>
       </li>
 
       {/* সার্ভিসসমূহ */}
@@ -204,12 +204,12 @@ const Navbar = () => {
 
       {/* Navbar End */}
       <div className="navbar-end">
-        <a
-          href="#"
+        <NavLink
+          to="/signup"
           className="btn bg-[#71BBB2] hover:bg-[#5AA29F] text-white border-none"
         >
-          Booking
-        </a>
+          নিবন্ধন করুন
+        </NavLink>
       </div>
     </div>
   );
