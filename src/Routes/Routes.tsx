@@ -22,19 +22,24 @@ const router = createBrowserRouter([
         path: "/",
       },
       {
-         path: "/blogs",
+        path: "/blogs",
         element: <BlogListPage></BlogListPage>,
 
       },
       {
-        path:"/blogs/:id",
-        element: <BlogDetailsPage></BlogDetailsPage>
-        path:"/aboutUs",
-        element:<AboutUs/>
+        path: "/blogs/:id",
+        element: <BlogDetailsPage></BlogDetailsPage>,
       },
       {
-        path:"/our-story",
-        element:<OurStory/>
+        path: "/aboutUs",
+        element: <AboutUs />,
+      },
+      {
+        path: "/our-story",
+        element: <OurStory />,
+      }
+      ,
+      {
         path: "/earn/bike",
         Component: BikeEarnings
       },

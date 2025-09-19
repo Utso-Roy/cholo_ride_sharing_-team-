@@ -17,7 +17,7 @@ const Navbar = () => {
     <>
       <li className="hover:text-[#71BBB2] transition-colors duration-300">
         <a href="#">হোম</a>
-        
+
       </li>
 
       {/* সার্ভিসসমূহ */}
@@ -55,11 +55,6 @@ const Navbar = () => {
           </div>
         )}
       </li>
-
-      {/* ব্লগ */}
-      {/* <li className="hover:text-[#71BBB2] transition-colors duration-300">
-         <a href="#">ব্লগ</a> 
-      </li> */}
 
       {/* ব্লগ */}
       <li className="hover:text-[#71BBB2] transition-colors duration-300">
@@ -128,60 +123,29 @@ const Navbar = () => {
           />
         </button>
 
+        {/* Dropdown Menu */}
         {openCompany && (
-          <div className="absolute left-0 top-full mt-2 w-72 rounded-md bg-white text-[#27445D] p-4 shadow-lg z-50">
-            <ul className="flex flex-col gap-2">
-              <li className="hover:text-[#71BBB2] cursor-pointer">
-                ℹ️ আমাদের সম্পর্কে
-              </li>
-              <li className="hover:text-[#71BBB2] cursor-pointer">
-                👨‍💻 ক্যারিয়ার
-              </li>
-              <li className="hover:text-[#71BBB2] cursor-pointer">
-                📜 শর্তাবলী ও প্রাইভেসি পলিসি
-              </li>
-              <li className="hover:text-[#71BBB2] cursor-pointer">
-                🤝 পার্টনারশিপ
-              </li>
-              <li className="hover:text-[#71BBB2] cursor-pointer">
-                🌍 সামাজিক কার্যক্রম
-      {/* অন্যান্য */}
-          <li className="relative">
-      
-      <button
-        onClick={() => setOpenCompany(!openCompany)}
-        className="flex items-center gap-1 cursor-pointer hover:text-[#71BBB2] transition-colors duration-300"
-      >
-        অনন্যা
-        <HiChevronDown
-          className={`w-4 h-4 transition-transform duration-300 ${
-            openCompany ? "rotate-180" : ""
-          }`}
-        />
-      </button>
+          <ul className="absolute left-0 top-full mt-2 w-72 rounded-md bg-white text-[#27445D] p-4 shadow-lg z-50 flex flex-col gap-2">
+            {othersItems.map((item, index) => {
+              const Icon = item.icon;
+              return (
+                <li key={index} className="rounded-md">
+                  <NavLink
+                    to={item.path}
+                    className="flex items-center gap-2 hover:text-[#71BBB2] cursor-pointer p-2 transition-colors duration-200"
+                  >
+                    <span style={{ color: item.color }}>
+                      <Icon size={18} />
+                    </span>
+                    {item.label}
+                  </NavLink>
+                </li>
+              );
+            })}
+          </ul>
+        )}
+      </li>
 
-      {/* Dropdown Menu */}
-      {openCompany && (
-        <ul className="absolute left-0 top-full mt-2 w-72 rounded-md bg-white text-[#27445D] p-4 shadow-lg z-50 flex flex-col gap-2">
-          {othersItems.map((item, index) => {
-            const Icon = item.icon;
-            return (
-              <li key={index} className="rounded-md">
-                <NavLink
-                  to={item.path}
-                  className="flex items-center gap-2 hover:text-[#71BBB2] cursor-pointer p-2 transition-colors duration-200"
-                >
-                  <span style={{ color: item.color }}>
-                    <Icon size={18} />
-                  </span>
-                  {item.label}
-                </NavLink>
-              </li>
-            );
-          })}
-        </ul>
-      )}
-    </li>
 
       {/* হেল্প Dropdown */}
       <li className="relative">
