@@ -9,6 +9,7 @@ const Home = () => {
           <a href="#home" className="hover:text-[#71BBB2]">হোম</a>
           <a href="#services" className="hover:text-[#71BBB2]">সার্ভিসসমূহ</a>
           <a href="#contact" className="hover:text-[#71BBB2]">যোগাযোগ</a>
+          <a href="">bijoy</a>
         </nav>
       </header>
 
