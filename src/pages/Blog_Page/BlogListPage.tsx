@@ -1,4 +1,4 @@
-/// src/pages/Blog_Page/BlogListPage.tsx
+// src/pages/Blog_Page/BlogListPage.tsx
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router";
