@@ -29,14 +29,10 @@ const Home = () => {
       </section>
 
       <section>
-
         <CallToAction></CallToAction>
       </section>
 
-      <section>
-
-        
-      </section>
+      <section></section>
     </div>
   );
 };
