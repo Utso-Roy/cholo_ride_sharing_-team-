@@ -5,6 +5,7 @@ import { MdOutlineElectricRickshaw } from "react-icons/md";
 
 import serviceItems from "../Utils/ServiceItems/serviceItems";
 import { NavLink } from "react-router";
+
 import othersItems from "../Utils/ServiceItems/othersItems";
 
 const Navbar = () => {
@@ -188,7 +189,7 @@ const Navbar = () => {
           onClick={() => setOpenHelp(!openHelp)}
           className="flex items-center gap-1 cursor-pointer hover:text-[#71BBB2] transition-colors duration-300"
         >
-          হেল্প
+          হেল্প 
           <HiChevronDown
             className={`w-4 h-4 transition-transform duration-300 ${openHelp ? "rotate-180" : ""
               }`}
@@ -197,6 +198,60 @@ const Navbar = () => {
 
         {openHelp && (
           <div className="absolute left-0 top-full mt-2 w-64 rounded-md bg-white text-[#27445D] p-4 shadow-lg z-50">
+  <ul className="flex flex-col gap-2">
+    <li>
+      <NavLink
+        to="/faq"
+        className="hover:text-[#71BBB2] cursor-pointer block"
+      >
+        সাধারণ জিজ্ঞাসা (FAQ)
+      </NavLink>
+    </li>
+    <li>
+      <NavLink
+        to="/customercare"
+        className="hover:text-[#71BBB2] cursor-pointer block"
+      >
+        কাস্টমার কেয়ার
+      </NavLink>
+    </li>
+    <li>
+      <NavLink
+        to="/userguide"
+        className="hover:text-[#71BBB2] cursor-pointer block"
+      >
+        ইউজার গাইড
+      </NavLink>
+    </li>
+    <li>
+      <NavLink
+        to="/driverguide"
+        className="hover:text-[#71BBB2] cursor-pointer block"
+      >
+        ড্রাইভার গাইড
+      </NavLink>
+    </li>
+    <li>
+      <NavLink
+        to="/safety-policy"
+        className="hover:text-[#71BBB2] cursor-pointer block"
+      >
+        সেফটি ও প্রাইভেসি নীতিমালা
+      </NavLink>
+    </li>
+    <li>
+      <NavLink
+        to="/complaints"
+        className="hover:text-[#71BBB2] cursor-pointer block"
+      >
+        অভিযোগ/প্রস্তাব দিন
+      </NavLink>
+    </li>
+    <li className="text-sm mt-2">হেল্পলাইন : +০৩৮২৫৮৯৫৭৮৪</li>
+  </ul>
+</div>
+
+
             <ul className="flex flex-col gap-2">
               <li className=" hover:text-[#71BBB2] cursor-pointer">
                 সাধারণ জিজ্ঞাসা (FAQ)

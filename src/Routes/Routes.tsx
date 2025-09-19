@@ -2,6 +2,11 @@ import { createBrowserRouter } from "react-router";
 import Error from "../Error/Error";
 import Home from "../pages/Home";
 import RootLayout from "../Layout/RootLayout";
+import FAQ from "../Utils/Help/FAQ/FAQ";
+import CustomerCare from "../Utils/Help/CustomerCare/CustomerCare";
+import UserGuide from "../Utils/Help/UserGuide/UserGuide";
+import DriverGuide from "../Utils/Help/DriverGuide/DriverGuide";
+
 import { BlogListPage } from "../pages/Blog_Page/BlogListPage";
 import { BlogDetailsPage } from "../pages/Blog_Page/BlogDetailsPage";
 import AboutUs from "../pages/OthersPage/AboutUs";
@@ -24,6 +29,23 @@ const router = createBrowserRouter([
         element: <Home></Home>,
         path: "/",
       },
+      {
+        path:'/faq',
+        Component:FAQ
+      },
+      {
+        path:'/customercare',
+        Component:CustomerCare
+      },
+      {
+        path:'/userguide',
+        Component:UserGuide
+      },
+      {
+        path:'/driverguide',
+        Component:DriverGuide
+      },
+
 
       // Bike Subtree
       {
