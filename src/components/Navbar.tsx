@@ -16,8 +16,7 @@ const Navbar = () => {
   const links = (
     <>
       <li className="hover:text-[#71BBB2] transition-colors duration-300">
-        <a href="#">হোম</a>
-        
+        <NavLink to="/">হোম</NavLink>
       </li>
 
       {/* সার্ভিসসমূহ */}
@@ -84,31 +83,31 @@ const Navbar = () => {
           <div className="absolute left-0 top-full mt-2 w-60 rounded-md bg-white text-[#27445D] p-4 shadow-lg z-50">
             <ul className="flex flex-col gap-2">
               <li>
-                <a
-                  href="#"
+                <NavLink
+                  to="/earn/bike"
                   className="flex items-center gap-2 hover:text-[#71BBB2] transition-colors"
                   onClick={() => setOpenEarn(false)}
                 >
                   <FaMotorcycle className="text-lg" /> বাইক রাইড দিয়ে আয়
-                </a>
+                </NavLink>
               </li>
               <li>
-                <a
-                  href="#"
+                <NavLink
+                  to="/earn/car"
                   className="flex items-center gap-2 hover:text-[#71BBB2] transition-colors"
                   onClick={() => setOpenEarn(false)}
                 >
                   <FaCarSide className="text-lg" /> কার রাইড দিয়ে আয়
-                </a>
+                </NavLink>
               </li>
               <li>
-                <a
-                  href="#"
+                <NavLink
+                  to="/earn/cng"
                   className="flex items-center gap-2 hover:text-[#71BBB2] transition-colors"
                   onClick={() => setOpenEarn(false)}
                 >
-                  <MdOutlineElectricRickshaw className="text-lg" /> সিএনজি রাইড দিয়ে আয়
-                </a>
+                  <MdOutlineElectricRickshaw  className="text-lg" /> সিএনজি রাইড দিয়ে আয়
+                </NavLink>
               </li>
             </ul>
           </div>
@@ -116,7 +115,7 @@ const Navbar = () => {
       </li>
 
       {/* অনন্যা Dropdown */}
-      <li className="relative">
+      {/* <li className="relative">
         <button
           onClick={() => setOpenCompany(!openCompany)}
           className="flex items-center gap-1 cursor-pointer hover:text-[#71BBB2] transition-colors duration-300"
@@ -126,9 +125,9 @@ const Navbar = () => {
             className={`w-4 h-4 transition-transform duration-300 ${openCompany ? "rotate-180" : ""
               }`}
           />
-        </button>
+        </button> */}
 
-        {openCompany && (
+        {/* {openCompany && (
           <div className="absolute left-0 top-full mt-2 w-72 rounded-md bg-white text-[#27445D] p-4 shadow-lg z-50">
             <ul className="flex flex-col gap-2">
               <li className="hover:text-[#71BBB2] cursor-pointer">
@@ -144,7 +143,7 @@ const Navbar = () => {
                 🤝 পার্টনারশিপ
               </li>
               <li className="hover:text-[#71BBB2] cursor-pointer">
-                🌍 সামাজিক কার্যক্রম
+                🌍 সামাজিক কার্যক্রম */}
       {/* অন্যান্য */}
           <li className="relative">
       

@@ -9,6 +9,9 @@ import OurStory from "../pages/OthersPage/OurStory";
 import BikeEarnings from "../pages/BikeEarnings";
 import CarEarnings from "../pages/CarEarnings";
 import CngEarnings from "../pages/CngEarnings";
+import BikeLayout from "../Layout/BikeLayout";
+import BikeStepOne from "../pages/BikeStepOne";
+import BikeStepTwo from "../pages/BikeStepTwo";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +24,8 @@ const router = createBrowserRouter([
         element: <Home></Home>,
         path: "/",
       },
+
+      // Bike Subtree
       {
          path: "/blogs",
         element: <BlogListPage></BlogListPage>,
@@ -29,14 +34,21 @@ const router = createBrowserRouter([
       {
         path:"/blogs/:id",
         element: <BlogDetailsPage></BlogDetailsPage>
-        path:"/aboutUs",
-        element:<AboutUs/>
       },
+      {path:"/aboutUs",
+        element:<AboutUs/>
+      },  
       {
         path:"/our-story",
         element:<OurStory/>
-        path: "/earn/bike",
-        Component: BikeEarnings
+      },
+      {  
+      path: "/earn/bike",
+        element: <BikeLayout/>,
+        children: [
+          {index: true, element: <BikeStepOne/>},
+          {path: "details", element: <BikeStepTwo/>}
+        ]
       },
       {
         path: "/earn/car",
