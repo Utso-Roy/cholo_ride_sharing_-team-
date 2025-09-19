@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
+import { Accordion, AccordionTab } from "primereact/accordion";
+import { FaQuestionCircle } from "react-icons/fa";
 
 const faqItems = [
   {
@@ -15,65 +17,55 @@ const faqItems = [
   },
   {
     question: "রাইড ক্যানসেল করলে কোনো চার্জ লাগবে কি?",
-    answer:"বুকিংয়ের ২ মিনিটের মধ্যে ক্যানসেল করলে কোনো চার্জ নেই। এর পরে ক্যানসেল করলে একটি ছোট চার্জ প্রযোজ্য হতে পারে।",
+    answer:
+      "বুকিংয়ের ২ মিনিটের মধ্যে ক্যানসেল করলে কোনো চার্জ নেই। এর পরে ক্যানসেল করলে একটি ছোট চার্জ প্রযোজ্য হতে পারে।",
   },
   {
     question: "আমি রাইডের সময় ও অবস্থান শেয়ার করতে পারি কি?",
-    answer:"হ্যাঁ, রাইড চলাকালীন আপনি আপনার লাইভ লোকেশন পরিবার বা বন্ধুদের সাথে শেয়ার করতে পারবেন।",
+    answer:
+      "হ্যাঁ, রাইড চলাকালীন আপনি আপনার লাইভ লোকেশন পরিবার বা বন্ধুদের সাথে শেয়ার করতে পারবেন।",
   },
   {
     question: "যদি চালক সময়মতো না আসে তাহলে কী করবো?",
-    answer:"চালক নির্ধারিত সময়ে না এলে আপনি বুকিং ক্যানসেল করে নতুন চালক নির্বাচন করতে পারবেন অথবা হেল্পলাইন-এ যোগাযোগ করতে পারেন।",
+    answer:
+      "চালক নির্ধারিত সময়ে না এলে আপনি বুকিং ক্যানসেল করে নতুন চালক নির্বাচন করতে পারবেন অথবা হেল্পলাইন-এ যোগাযোগ করতে পারেন।",
   },
   {
     question: "আমি কিভাবে অভিযোগ জানাবো?",
-    answer:"‘সাপোর্ট’ মেনুতে গিয়ে অভিযোগ/প্রস্তাব দিন অপশন থেকে অভিযোগ জানাতে পারবেন।",
+    answer:
+      "‘সাপোর্ট’ মেনুতে গিয়ে অভিযোগ/প্রস্তাব দিন অপশন থেকে অভিযোগ জানাতে পারবেন।",
   },
 ];
 
-const FAQ = () => {
-  const [openIndex, setOpenIndex] = useState(null);
-
-  const toggleFAQ = (index) => {
-    setOpenIndex(openIndex === index ? null : index);
-  };
-
+const FAQ: React.FC = () => {
   return (
-    <div className="bg-gradient-to-br from-[#E3FDFD] via-[#CBF1F5] to-[#A6E3E9] min-h-screen py-12 px-4">
-      <h2 className="text-4xl font-extrabold text-center text-[#27445D] mb-10 drop-shadow-md">
-        সাধারণ জিজ্ঞাসা (FAQ)
-      </h2>
+    <div className="bg-[#e6fcf9] min-h-screen py-12 px-4">
+      <div className="max-w-3xl mx-auto">
+        <h2 className="text-4xl font-extrabold text-center text-[#27445D] mb-10 drop-shadow-md">
+          সাধারণ জিজ্ঞাসা (FAQ)
+        </h2>
 
-      <div className="max-w-2xl mx-auto flex flex-col gap-5">
-        {faqItems.map((item, index) => (
-          <div
-            key={index}
-            className="backdrop-blur-md bg-white/80 border border-gray-200 shadow-lg rounded-2xl overflow-hidden"
-          >
-            <button
-              onClick={() => toggleFAQ(index)}
-              className="w-full flex justify-between items-center px-6 py-4 text-lg font-semibold text-[#27445D] hover:bg-[#71BBB2]/20 transition"
+        <Accordion multiple className="bg-white/80 backdrop-blur-md rounded-2xl shadow-lg border border-gray-200">
+          {faqItems.map((item, index) => (
+            <AccordionTab
+              key={index}
+              header={
+                <div className="flex items-center gap-3 text-[#27445D] font-semibold text-lg">
+                  <FaQuestionCircle className="text-[#71BBB2]" />
+                  {item.question}
+                </div>
+              }
+              headerClassName="hover:text-[#71BBB2] transition-colors"
+              contentClassName="text-[#27445D] text-base leading-relaxed px-4 py-3"
             >
-              {item.question}
-              <span
-                className={`transition-transform duration-300 ${
-                  openIndex === index ? "rotate-180" : ""
-                }`}
-              >
-                ▼
-              </span>
-            </button>
-            <div
-              className={`px-6 overflow-hidden transition-all duration-500 ease-in-out ${
-                openIndex === index ? "max-h-40 py-4" : "max-h-0"
-              }`}
-            >
-              <p className="text-[#27445D] text-base leading-relaxed">
-                {item.answer}
-              </p>
-            </div>
-          </div>
-        ))}
+              {item.answer}
+            </AccordionTab>
+          ))}
+        </Accordion>
+
+        <div className="mt-8 text-center text-gray-600 text-lg font-medium">
+          💡 মনে রাখবেন: সবসময় নিরাপদে এবং নিয়ম মেনে রাইড করুন।
+        </div>
       </div>
     </div>
   );

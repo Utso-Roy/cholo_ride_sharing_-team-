@@ -1,6 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
+import { Card } from "primereact/card";
+import { Button } from "primereact/button";
+import { Accordion, AccordionTab } from "primereact/accordion";
+import { FaPhoneAlt } from "react-icons/fa";
 
-const drivers = [
+interface Driver {
+  name: string;
+  vehicle: string;
+  rating: number;
+  phone: string;
+  experience: string;
+  image: string;
+}
+
+const drivers: Driver[] = [
   {
     name: "রাকিব হাসান",
     vehicle: "বাইক",
@@ -19,7 +32,7 @@ const drivers = [
   },
 ];
 
-const guidelines = [
+const guidelines: string[] = [
   "রাইড শুরু করার আগে গাড়ি/বাইক সবসময় চেক করুন।",
   "যাত্রীদের সাথে সদয় ও ভদ্র আচরণ করুন।",
   "সময়মতো পৌঁছানোর চেষ্টা করুন।",
@@ -27,13 +40,7 @@ const guidelines = [
   "যদি কোনো সমস্যা হয়, সরাসরি কাস্টমার কেয়ারকে জানান।",
 ];
 
-const DriverGuide = () => {
-  const [activeIndex, setActiveIndex] = useState(null);
-
-  const toggleIndex = (index) => {
-    setActiveIndex(activeIndex === index ? null : index);
-  };
-
+const DriverGuide: React.FC = () => {
   return (
     <div className="bg-gradient-to-br from-[#E3FDFD] via-[#CBF1F5] to-[#A6E3E9] min-h-screen py-12 px-6">
       <div className="max-w-5xl mx-auto">
@@ -42,16 +49,11 @@ const DriverGuide = () => {
         </h2>
 
         {/* Driver List */}
-        <div className="space-y-4 mb-12">
+        <Accordion multiple className="mb-12">
           {drivers.map((driver, index) => (
-            <div
+            <AccordionTab
               key={index}
-              className="bg-white/90 shadow-lg rounded-2xl border border-gray-200 overflow-hidden hover:shadow-2xl transition"
-            >
-              <button
-                onClick={() => toggleIndex(index)}
-                className="w-full flex items-center justify-between p-4 cursor-pointer focus:outline-none bg-gradient-to-r from-[#71BBB2] to-[#5AA29F] text-white font-semibold text-lg"
-              >
+              header={
                 <div className="flex items-center gap-4">
                   <img
                     src={driver.image}
@@ -59,28 +61,33 @@ const DriverGuide = () => {
                     className="w-14 h-14 rounded-full ring-2 ring-white shadow-md"
                   />
                   <div>
-                    <p>{driver.name}</p>
-                    <p className="text-sm">{driver.vehicle} • ⭐ {driver.rating}</p>
+                    <p className="font-semibold">{driver.name}</p>
+                    <p className="text-sm">
+                      {driver.vehicle} • ⭐ {driver.rating}
+                    </p>
                   </div>
                 </div>
-                <span className="text-2xl">{activeIndex === index ? "▲" : "▼"}</span>
-              </button>
-
-              {activeIndex === index && (
-                <div className="p-4 bg-gray-50 text-[#27445D] space-y-2">
-                  <p><strong>ফোন:</strong> {driver.phone}</p>
-                  <p><strong>অভিজ্ঞতা:</strong> {driver.experience}</p>
-                  <button className="mt-2 w-full bg-gradient-to-r from-[#71BBB2] to-[#5AA29F] hover:from-[#5AA29F] hover:to-[#71BBB2] text-white font-semibold py-2 rounded-lg transition">
-                    কল করুন
-                  </button>
-                </div>
-              )}
-            </div>
+              }
+            >
+              <Card className="bg-gray-50 text-[#27445D] p-4 shadow-md">
+                <p>
+                  <strong>ফোন:</strong> {driver.phone}
+                </p>
+                <p>
+                  <strong>অভিজ্ঞতা:</strong> {driver.experience}
+                </p>
+                <Button
+                  label="কল করুন"
+                  icon={<FaPhoneAlt />}
+                  className="mt-3 w-full bg-gradient-to-r from-[#71BBB2] to-[#5AA29F] hover:from-[#5AA29F] hover:to-[#71BBB2] text-white"
+                />
+              </Card>
+            </AccordionTab>
           ))}
-        </div>
+        </Accordion>
 
-        {/* Guidelines / Tips for Drivers */}
-        <div className="bg-white/90 shadow-lg rounded-2xl border border-gray-200 p-6">
+        {/* Guidelines */}
+        <Card className="bg-white/90 shadow-lg rounded-2xl border border-gray-200 p-6">
           <h3 className="text-2xl font-bold text-[#27445D] mb-4 text-center">
             ড্রাইভারদের জন্য নির্দেশিকা
           </h3>
@@ -91,7 +98,7 @@ const DriverGuide = () => {
               </li>
             ))}
           </ul>
-        </div>
+        </Card>
       </div>
     </div>
   );
