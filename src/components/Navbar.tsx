@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { HiChevronDown } from "react-icons/hi";
-import { FaMotorcycle, FaCarSide } from "react-icons/fa";
+import { FaMotorcycle, FaCarSide,  } from "react-icons/fa";
 import { MdOutlineElectricRickshaw } from "react-icons/md";
 
 import serviceItems from "../Utils/ServiceItems/serviceItems";
