@@ -6,6 +6,8 @@ import { MdOutlineElectricRickshaw } from "react-icons/md";
 import serviceItems from "../Utils/ServiceItems/serviceItems";
 import { NavLink } from "react-router";
 
+import othersItems from "../Utils/ServiceItems/othersItems";
+
 const Navbar = () => {
   const [openServices, setOpenServices] = useState(false);
   const [openHelp, setOpenHelp] = useState(false);
@@ -15,7 +17,7 @@ const Navbar = () => {
   const links = (
     <>
       <li className="hover:text-[#71BBB2] transition-colors duration-300">
-        <a href="#">হোম</a>
+        <NavLink to="/">হোম</NavLink>
       </li>
 
       {/* সার্ভিসসমূহ */}
@@ -26,9 +28,8 @@ const Navbar = () => {
         >
           সার্ভিসসমূহ
           <HiChevronDown
-            className={`w-4 h-4 transition-transform duration-300 ${
-              openServices ? "rotate-180" : ""
-            }`}
+            className={`w-4 h-4 transition-transform duration-300 ${openServices ? "rotate-180" : ""
+              }`}
           />
         </button>
 
@@ -56,9 +57,15 @@ const Navbar = () => {
       </li>
 
       {/* ব্লগ */}
+      {/* <li className="hover:text-[#71BBB2] transition-colors duration-300">
+         <a href="#">ব্লগ</a> 
+      </li> */}
+
+      {/* ব্লগ */}
       <li className="hover:text-[#71BBB2] transition-colors duration-300">
-        <a href="#">ব্লগ</a>
+        <NavLink to="/blogs">ব্লগ</NavLink>
       </li>
+
 
       {/* আয় করুন */}
       <li className="relative">
@@ -68,9 +75,8 @@ const Navbar = () => {
         >
           আয় করুন
           <HiChevronDown
-            className={`w-4 h-4 transition-transform duration-300 ${
-              openEarn ? "rotate-180" : ""
-            }`}
+            className={`w-4 h-4 transition-transform duration-300 ${openEarn ? "rotate-180" : ""
+              }`}
           />
         </button>
 
@@ -78,31 +84,31 @@ const Navbar = () => {
           <div className="absolute left-0 top-full mt-2 w-60 rounded-md bg-white text-[#27445D] p-4 shadow-lg z-50">
             <ul className="flex flex-col gap-2">
               <li>
-                <a
-                  href="#"
+                <NavLink
+                  to="/earn/bike"
                   className="flex items-center gap-2 hover:text-[#71BBB2] transition-colors"
                   onClick={() => setOpenEarn(false)}
                 >
                   <FaMotorcycle className="text-lg" /> বাইক রাইড দিয়ে আয়
-                </a>
+                </NavLink>
               </li>
               <li>
-                <a
-                  href="#"
+                <NavLink
+                  to="/earn/car"
                   className="flex items-center gap-2 hover:text-[#71BBB2] transition-colors"
                   onClick={() => setOpenEarn(false)}
                 >
                   <FaCarSide className="text-lg" /> কার রাইড দিয়ে আয়
-                </a>
+                </NavLink>
               </li>
               <li>
-                <a
-                  href="#"
+                <NavLink
+                  to="/earn/cng"
                   className="flex items-center gap-2 hover:text-[#71BBB2] transition-colors"
                   onClick={() => setOpenEarn(false)}
                 >
                   <MdOutlineElectricRickshaw  className="text-lg" /> সিএনজি রাইড দিয়ে আয়
-                </a>
+                </NavLink>
               </li>
             </ul>
           </div>
@@ -110,20 +116,19 @@ const Navbar = () => {
       </li>
 
       {/* অনন্যা Dropdown */}
-      <li className="relative">
+      {/* <li className="relative">
         <button
           onClick={() => setOpenCompany(!openCompany)}
           className="flex items-center gap-1 cursor-pointer hover:text-[#71BBB2] transition-colors duration-300"
         >
           অনন্যা
           <HiChevronDown
-            className={`w-4 h-4 transition-transform duration-300 ${
-              openCompany ? "rotate-180" : ""
-            }`}
+            className={`w-4 h-4 transition-transform duration-300 ${openCompany ? "rotate-180" : ""
+              }`}
           />
-        </button>
+        </button> */}
 
-        {openCompany && (
+        {/* {openCompany && (
           <div className="absolute left-0 top-full mt-2 w-72 rounded-md bg-white text-[#27445D] p-4 shadow-lg z-50">
             <ul className="flex flex-col gap-2">
               <li className="hover:text-[#71BBB2] cursor-pointer">
@@ -139,12 +144,44 @@ const Navbar = () => {
                 🤝 পার্টনারশিপ
               </li>
               <li className="hover:text-[#71BBB2] cursor-pointer">
-                🌍 সামাজিক কার্যক্রম
+                🌍 সামাজিক কার্যক্রম */}
+      {/* অন্যান্য */}
+          <li className="relative">
+      
+      <button
+        onClick={() => setOpenCompany(!openCompany)}
+        className="flex items-center gap-1 cursor-pointer hover:text-[#71BBB2] transition-colors duration-300"
+      >
+        অনন্যা
+        <HiChevronDown
+          className={`w-4 h-4 transition-transform duration-300 ${
+            openCompany ? "rotate-180" : ""
+          }`}
+        />
+      </button>
+
+      {/* Dropdown Menu */}
+      {openCompany && (
+        <ul className="absolute left-0 top-full mt-2 w-72 rounded-md bg-white text-[#27445D] p-4 shadow-lg z-50 flex flex-col gap-2">
+          {othersItems.map((item, index) => {
+            const Icon = item.icon;
+            return (
+              <li key={index} className="rounded-md">
+                <NavLink
+                  to={item.path}
+                  className="flex items-center gap-2 hover:text-[#71BBB2] cursor-pointer p-2 transition-colors duration-200"
+                >
+                  <span style={{ color: item.color }}>
+                    <Icon size={18} />
+                  </span>
+                  {item.label}
+                </NavLink>
               </li>
-            </ul>
-          </div>
-        )}
-      </li>
+            );
+          })}
+        </ul>
+      )}
+    </li>
 
       {/* হেল্প Dropdown */}
       <li className="relative">
@@ -154,9 +191,8 @@ const Navbar = () => {
         >
           হেল্প 
           <HiChevronDown
-            className={`w-4 h-4 transition-transform duration-300 ${
-              openHelp ? "rotate-180" : ""
-            }`}
+            className={`w-4 h-4 transition-transform duration-300 ${openHelp ? "rotate-180" : ""
+              }`}
           />
         </button>
 
@@ -215,6 +251,29 @@ const Navbar = () => {
   </ul>
 </div>
 
+
+            <ul className="flex flex-col gap-2">
+              <li className=" hover:text-[#71BBB2] cursor-pointer">
+                সাধারণ জিজ্ঞাসা (FAQ)
+              </li>
+              <li className=" hover:text-[#71BBB2] cursor-pointer">
+                কাস্টমার কেয়ার
+              </li>
+              <li className=" hover:text-[#71BBB2] cursor-pointer">
+                ইউজার গাইড
+              </li>
+              <li className=" hover:text-[#71BBB2] cursor-pointer">
+                ড্রাইভার গাইড
+              </li>
+              <li className=" hover:text-[#71BBB2] cursor-pointer">
+                সেফটি ও প্রাইভেসি নীতিমালা
+              </li>
+              <li className=" hover:text-[#71BBB2] cursor-pointer">
+                অভিযোগ/প্রস্তাব দিন
+              </li>
+              <li className="text-sm mt-2">হেল্পলাইন : +০৩৮২৫৮৯৫৭৮৪</li>
+            </ul>
+          </div>
         )}
       </li>
     </>
