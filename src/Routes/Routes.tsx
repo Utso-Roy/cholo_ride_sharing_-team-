@@ -1,7 +1,8 @@
 import { createBrowserRouter } from "react-router";
 import Error from "../Error/Error";
-import Home from "../pages/Home";
+import Home from "../pages/Home/Home";
 import RootLayout from "../Layout/RootLayout";
+<<<<<<< HEAD
 import FAQ from "../Utils/Help/FAQ/FAQ";
 import CustomerCare from "../Utils/Help/CustomerCare/CustomerCare";
 import UserGuide from "../Utils/Help/UserGuide/UserGuide";
@@ -17,6 +18,10 @@ import CngEarnings from "../pages/CngEarnings";
 import BikeLayout from "../Layout/BikeLayout";
 import BikeStepOne from "../pages/BikeStepOne";
 import BikeStepTwo from "../pages/BikeStepTwo";
+=======
+import SignUp from "../Access/SignUp";
+import Login from "../Access/Login";
+>>>>>>> main
 
 const router = createBrowserRouter([
   {
@@ -30,6 +35,7 @@ const router = createBrowserRouter([
         path: "/",
       },
       {
+<<<<<<< HEAD
         path:'/faq',
         Component:FAQ
       },
@@ -80,6 +86,15 @@ const router = createBrowserRouter([
         path: "/earn/cng",
         Component: CngEarnings
       }
+=======
+        element: <SignUp></SignUp>,
+        path: "/signup"
+      },
+      {
+        element: <Login></Login>,
+        path: "/login"
+      },
+>>>>>>> main
     ],
   },
 ]);
