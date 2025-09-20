@@ -2,14 +2,10 @@ import { createBrowserRouter } from "react-router";
 import Error from "../Error/Error";
 import Home from "../pages/Home";
 import RootLayout from "../Layout/RootLayout";
-<<<<<<< HEAD
 import AboutUs from "../pages/OthersPage/AboutUs";
 import OurStory from "../pages/OthersPage/OurStory";
-=======
-import BikeEarnings from "../pages/BikeEarnings";
-import CarEarnings from "../pages/CarEarnings";
-import CngEarnings from "../pages/CngEarnings";
->>>>>>> 8e9235484649dd4c88178bdaa36621a485a3965a
+import Career from "../pages/CareerPage/Career";
+
 
 const router = createBrowserRouter([
   {
@@ -29,17 +25,8 @@ const router = createBrowserRouter([
       {
         path:"/our-story",
         element:<OurStory/>
-        path: "/earn/bike",
-        Component: BikeEarnings
       },
-      {
-        path: "/earn/car",
-        Component: CarEarnings
-      },
-      {
-        path: "/earn/cng",
-        Component: CngEarnings
-      }
+
     ],
   },
 ]);
