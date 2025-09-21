@@ -1,7 +1,13 @@
 import { createBrowserRouter } from "react-router";
 import Error from "../Error/Error";
-import Home from "../pages/Home";
+import Home from "../pages/Home/Home";
 import RootLayout from "../Layout/RootLayout";
+<<<<<<< HEAD
+import FAQ from "../Utils/Help/FAQ/FAQ";
+import CustomerCare from "../Utils/Help/CustomerCare/CustomerCare";
+import UserGuide from "../Utils/Help/UserGuide/UserGuide";
+import DriverGuide from "../Utils/Help/DriverGuide/DriverGuide";
+
 import { BlogListPage } from "../pages/Blog_Page/BlogListPage";
 import { BlogDetailsPage } from "../pages/Blog_Page/BlogDetailsPage";
 import AboutUs from "../pages/OthersPage/AboutUs";
@@ -9,6 +15,13 @@ import OurStory from "../pages/OthersPage/OurStory";
 import BikeEarnings from "../pages/BikeEarnings";
 import CarEarnings from "../pages/CarEarnings";
 import CngEarnings from "../pages/CngEarnings";
+import BikeLayout from "../Layout/BikeLayout";
+import BikeStepOne from "../pages/BikeStepOne";
+import BikeStepTwo from "../pages/BikeStepTwo";
+=======
+import SignUp from "../Access/SignUp";
+import Login from "../Access/Login";
+>>>>>>> main
 
 const router = createBrowserRouter([
   {
@@ -22,15 +35,48 @@ const router = createBrowserRouter([
         path: "/",
       },
       {
+<<<<<<< HEAD
         path: "/blogs",
+=======
+<<<<<<< HEAD
+        path:'/faq',
+        Component:FAQ
+      },
+      {
+        path:'/customercare',
+        Component:CustomerCare
+      },
+      {
+        path:'/userguide',
+        Component:UserGuide
+      },
+      {
+        path:'/driverguide',
+        Component:DriverGuide
+      },
+
+
+      // Bike Subtree
+      {
+         path: "/blogs",
+>>>>>>> 7a2b7ca790dfe1559ee3ce4f6f35859e28d672c2
         element: <BlogListPage></BlogListPage>,
 
       },
       {
+<<<<<<< HEAD
         path: "/blogs/:id",
         element: <BlogDetailsPage></BlogDetailsPage>,
+=======
+        path:"/blogs/:id",
+        element: <BlogDetailsPage></BlogDetailsPage>
+>>>>>>> 7a2b7ca790dfe1559ee3ce4f6f35859e28d672c2
       },
+      {path:"/aboutUs",
+        element:<AboutUs/>
+      },  
       {
+<<<<<<< HEAD
         path: "/aboutUs",
         element: <AboutUs />,
       },
@@ -42,6 +88,18 @@ const router = createBrowserRouter([
       {
         path: "/earn/bike",
         Component: BikeEarnings
+=======
+        path:"/our-story",
+        element:<OurStory/>
+      },
+      {  
+      path: "/earn/bike",
+        element: <BikeLayout/>,
+        children: [
+          {index: true, element: <BikeStepOne/>},
+          {path: "details", element: <BikeStepTwo/>}
+        ]
+>>>>>>> 7a2b7ca790dfe1559ee3ce4f6f35859e28d672c2
       },
       {
         path: "/earn/car",
@@ -51,6 +109,15 @@ const router = createBrowserRouter([
         path: "/earn/cng",
         Component: CngEarnings
       }
+=======
+        element: <SignUp></SignUp>,
+        path: "/signup"
+      },
+      {
+        element: <Login></Login>,
+        path: "/login"
+      },
+>>>>>>> main
     ],
   },
 ]);
