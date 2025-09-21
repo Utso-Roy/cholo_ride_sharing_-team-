@@ -51,7 +51,7 @@ const Home = () => {
         <h3 className="text-3xl font-bold mb-4">আপডেটের জন্য সাবস্ক্রাইব করুন</h3>
         <p className="mb-6">আমাদের সর্বশেষ রাইডস এবং সার্ভিস সম্পর্কে আপডেট পান</p>
         <button className="bg-[#71BBB2] px-6 py-3 rounded-lg font-semibold hover:bg-[#5aa9a1] transition">
-          এখনই সাবস্ক্রাইব করুন
+          এখনই সাবস্ক্রাইব করুন 
         </button>
       </section>
     </div>
