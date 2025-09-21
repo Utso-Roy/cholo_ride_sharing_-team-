@@ -193,7 +193,7 @@ const Navbar = () => {
       {/* Navbar Start */}
       <div className="navbar-start">
         <a className="cursor-pointer text-xl font-bold text-white" href="#">
-          যাত্রী
+          চলো
         </a>
       </div>
 

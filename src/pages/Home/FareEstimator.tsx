@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { InputNumber } from "primereact/inputnumber";
-import { Button } from "primereact/button";
 import {
   FaMotorcycle,
   FaCar,
