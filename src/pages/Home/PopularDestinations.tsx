@@ -50,11 +50,14 @@ const destinations: Destination[] = [
 const PopularDestinations: React.FC = () => {
   return (
     <section className="py-16 bg-[#e6fcf9]">
-      <div className="max-w-7xl mx-auto px-6 text-center">
-        <h2 className="text-4xl text-[#27445D] font-bold mb-10">
+      <div className="w-full px-6 text-center">
+        <h2 className="text-4xl text-[#27445D] font-bold ">
          জনপ্রিয় 
  গন্তব্য
         </h2>
+<p className="text-base text-gray-600 max-w-2xl mx-auto mb-8">
+  আমাদের গ্রাহকদের জন্য সবচেয়ে জনপ্রিয় ও পছন্দের গন্তব্যগুলো এখানে তুলে ধরা হয়েছে।
+</p>
 
         <div className="grid gap-4 md:grid-cols-4">
           {destinations.map((dest) => (
