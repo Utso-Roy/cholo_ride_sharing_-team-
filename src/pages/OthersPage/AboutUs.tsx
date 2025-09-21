@@ -16,11 +16,21 @@ import CountUp from "react-countup";
 
 import aboutBanner from "../../assets/banner/aboutBanner1.jpg";
 import aboutBanner2 from "../../assets/banner/aboutBanner2.jpg";
+import { FaArrowRight, FaCarSide, FaHandshake, FaMapMarkerAlt, FaUsers } from "react-icons/fa";
+import { Link } from "react-router";
+import CountUp from "react-countup";
+
 
 export default function About(): JSX.Element {
   useEffect(() => {
     AOS.init({ duration: 800, offset: 100, once: true });
   }, []);
+  const stats = [
+    { icon: <FaCarSide size={40} color="#FF6B6B" />, value: 1000000, label: "রাইড সম্পন্ন" },
+    { icon: <FaUsers size={40} color="#4ECDC4" />, value: 500000, label: "ইউজার" },
+    { icon: <FaHandshake size={40} color="#FFD93D" />, value: 50000, label: "পার্টনার" },
+    { icon: <FaMapMarkerAlt size={40} color="#1A535C" />, value: 64, label: "জেলায় সেবা" },
+  ];
 
   return (
     <div className="w-full overflow-hidden bg-white">
@@ -62,6 +72,56 @@ export default function About(): JSX.Element {
       />
     </div>
 
+      {/* Our Story */}
+      <section
+        className="max-w-7xl mx-auto bg-[#71BBB2]  rounded-2xl py-16 px-4 md:px-12 text-center text-white mb-20"
+        data-aos="fade-up"
+        data-aos-delay={200}>
+        
+        <h2 className="text-3xl font-bold mb-6" data-aos="fade-up">
+          আমাদের গল্প
+        </h2>
+        <p
+          className="max-w-3xl mx-auto text-gray-300"
+          data-aos="fade-up"
+          data-aos-delay={200}
+        >
+          চলো যাত্রা শুরু করেছিল এক সাধারণ ধারণা থেকে – কিভাবে মানুষকে দ্রুত,
+          নিরাপদ এবং সাশ্রয়ীভাবে গন্তব্যে পৌঁছে দেওয়া যায়। আজ আমরা হাজারো যাত্রী
+          এবং পার্টনারদের নিয়ে এগিয়ে যাচ্ছি আরও স্মার্ট বাংলাদেশের দিকে।
+        </p>
+
+        <div className="flex justify-center">
+          <Link to="/our-story">
+            <button
+              className="btn bg-[#e6fcf9]  hover:bg-[#fbfefe] text-[#27445D]  border-none mt-4 flex items-center gap-2"
+              data-aos="fade-up"
+              data-aos-delay={200}
+            >
+              আরো জানুন <FaArrowRight />
+            </button>
+          </Link>
+        </div>
+      </section>
+
+      {/* Stats Section */}
+      <section className="max-w-7xl mx-auto py-16 mb-20">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          {stats.map((stat, index) => (
+            <Card
+              key={index}
+              className="flex flex-col items-center justify-center text-center p-6  hover:scale-105 transition-transform duration-300"
+              style={{ backgroundColor: "#e6fcf9", color: "#27445D" }}
+              data-aos="zoom-in"
+              data-aos-delay={index * 150} // staggered animation
+            >
+              <div className="flex items-center justify-center mb-4 w-full">
+                {stat.icon}
+              </div>
+              <h3 className="text-4xl font-bold">
+                <CountUp end={stat.value} duration={10} suffix={stat.value >= 100000 ? "+" : ""} />
+              </h3>
+              <p className="mt-2 text-lg font-medium">{stat.label}</p>
     {/* Right Cards */}
     <div className="flex-1 grid grid-cols-1 gap-6" data-aos="fade-left">
       {[
@@ -111,6 +171,19 @@ export default function About(): JSX.Element {
         <h2 className="text-3xl md:text-5xl font-bold mb-12 text-[#27445D] text-center" data-aos="fade-up">
           আমাদের মূল্যবোধ
         </h2>
+        <div className="grid md:grid-cols-3 gap-8">
+          <Card className="shadow-md " data-aos="flip-left">
+            <h3 className="text-xl text-[#27445D] font-semibold mb-2">নিরাপত্তা</h3>
+            <p>যাত্রী এবং চালকের নিরাপত্তা আমাদের প্রথম অগ্রাধিকার।</p>
+          </Card>
+          <Card className="shadow-md" data-aos="flip-left" data-aos-delay={200}>
+            <h3 className="text-xl font-semibold text-[#27445D] mb-2">বিশ্বাসযোগ্যতা</h3>
+            <p>সময়ে পৌঁছানো এবং মানসম্মত সেবা দেওয়ার অঙ্গীকার।</p>
+          </Card>
+          <Card className="shadow-md" data-aos="flip-left" data-aos-delay={400}>
+            <h3 className="text-xl font-semibold text-[#27445D] mb-2">টেকসই উন্নয়ন</h3>
+            <p>পরিবেশবান্ধব পরিবহন ব্যবস্থা গড়ে তোলা আমাদের লক্ষ্য।</p>
+          </Card>
         <div className="grid md:grid-cols-3 gap-5">
           {[
             {
