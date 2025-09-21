@@ -6,6 +6,7 @@ import FeaturedDrivers from "./FeaturedDrivers";
 import FareEstimator from "./FareEstimator";
 import Testimonials from "./Testimonials";
 import CallToAction from "./CallToAction";
+import Statistics from "./Statistics";
 
 const Home = () => {
   return (
@@ -32,6 +33,11 @@ const Home = () => {
         <CallToAction></CallToAction>
       </section>
 
+      <section>
+
+        <Statistics></Statistics>
+      </section>
+      
       <section></section>
     </div>
   );
