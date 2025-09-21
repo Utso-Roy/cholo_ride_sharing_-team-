@@ -2,6 +2,10 @@ import { createBrowserRouter } from "react-router";
 import Error from "../Error/Error";
 import Home from "../pages/Home/Home";
 import RootLayout from "../Layout/RootLayout";
+import AboutUs from "../pages/OthersPage/AboutUs";
+import OurStory from "../pages/OthersPage/OurStory";
+import Career from "../pages/CareerPage/Career";
+
 import FAQ from "../Utils/Help/FAQ/FAQ";
 import CustomerCare from "../Utils/Help/CustomerCare/CustomerCare";
 import UserGuide from "../Utils/Help/UserGuide/UserGuide";
@@ -40,6 +44,19 @@ const router = createBrowserRouter([
       { path: "/our-story", element: <OurStory /> },
 
       {
+        index: true,
+        element: <Home></Home>,
+        path: "/",
+      },
+      {
+        path:"/aboutUs",
+        element:<AboutUs/>
+      },
+      {
+        path:"/our-story",
+        element:<OurStory/>
+      },
+
         path: "/earn/bike",
         element: <BikeLayout />,
         children: [
