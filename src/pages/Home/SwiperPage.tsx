@@ -115,7 +115,7 @@ const SwiperPage: React.FC = () => {
         <Swiper
           onSwiper={setThumbsSwiper}
           loop={true}
-          spaceBetween={12}
+          spaceBetween={4}
           slidesPerView={4}
           freeMode={true}
           watchSlidesProgress={true}
@@ -130,7 +130,7 @@ const SwiperPage: React.FC = () => {
               <img
                 src={slide.image}
                 alt={slide.title}
-                className="w-full h-30 object-cover rounded-xl border-2 border-transparent group-hover:border-[#71BBB2] shadow-md"
+                className="w-[80%] h-30 object-cover rounded-xl border-2 border-transparent group-hover:border-[#71BBB2] shadow-md"
               />
             </SwiperSlide>
           ))}

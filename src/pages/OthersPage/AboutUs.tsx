@@ -48,7 +48,7 @@ export default function About(): JSX.Element {
 
       {/* Mission & Vision */}
     {/* Mission & Vision */}
-<section className="py-16 px-4 md:px-12 bg-white mb-20 max-w-7xl mx-auto">
+<section className="py-16 px-6 md:px-12 bg-white mb-20 w-full">
   <h2 className="text-3xl md:text-5xl font-bold mb-12 text-[#27445D] text-center">
     আমাদের লক্ষ্য ও উদ্দেশ্য
   </h2>
@@ -75,7 +75,7 @@ export default function About(): JSX.Element {
           key={idx}
           className="shadow-md flex items-start gap-4 p-5 hover:shadow-xl transition transform hover:-translate-y-1 min-h-[80px]"
         >
-          <div className="text-3xl flex-shrink-0 mt-1">{item.icon}</div>
+          <p className=" text-3xl mb-2 flex justify-center items-center">{item.icon}</p>
           <p className="text-[#27445D] text-lg">{item.text}</p>
         </Card>
       ))}
@@ -84,7 +84,7 @@ export default function About(): JSX.Element {
 </section>
 
       {/* Stats */}
-      <section className="max-w-7xl mx-auto py-16 rounded-2xl bg-[#e6fcf9] text-white text-center mb-20 px-4">
+      <section className="w-full py-16 rounded-2xl bg-[#e6fcf9] text-white text-center mb-20 px-4">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           {[
             { icon: <FaRoute />, count: 1000000, label: "রাইড সম্পন্ন" },
@@ -107,7 +107,7 @@ export default function About(): JSX.Element {
       </section>
 
       {/* Values */}
-      <section className="max-w-7xl mx-auto py-16 px-4 bg-[#e6fcf9] mb-20">
+      <section className="w-full py-16 px-4 bg-[#e6fcf9] mb-20">
         <h2 className="text-3xl md:text-5xl font-bold mb-12 text-[#27445D] text-center" data-aos="fade-up">
           আমাদের মূল্যবোধ
         </h2>
@@ -135,7 +135,7 @@ export default function About(): JSX.Element {
               data-aos="flip-left"
               data-aos-delay={idx * 200}
             >
-              {item.icon}
+              <p className="flex items-center justify-center">{item.icon}</p>
               <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
               <p>{item.desc}</p>
             </Card>

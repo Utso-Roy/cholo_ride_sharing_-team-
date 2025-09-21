@@ -9,7 +9,7 @@ import CallToAction from "./CallToAction";
 
 const Home = () => {
   return (
-    <div className="space-y-10">
+    <div className="space-y-5">
       <section>
         <SwiperPage></SwiperPage>
       </section>

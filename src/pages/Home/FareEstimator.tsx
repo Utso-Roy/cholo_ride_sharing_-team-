@@ -36,12 +36,12 @@ const services: ServiceFare[] = [
 const FareEstimator: React.FC = () => {
   const [distance, setDistance] = useState<number>(0);
 
-  const handleReset = () => setDistance(0); // Reset distance
+  const handleReset = () => setDistance(0); 
 
   return (
     <section className="py-16 bg-[#e6fcf9]">
-      <div className="max-w-7xl mx-auto px-6 text-center">
-        <h2 className="text-4xl text-[#27445D] font-bold mb-6">
+      <div className="w-full  px-6 text-center">
+        <h2 className="text-4xl text-[#27445D] font-bold ">
           ভাড়া পরিকল্পনা
         </h2>
         <p className="text-gray-600 mb-12 max-w-3xl mx-auto">
