@@ -1,6 +1,10 @@
 import { createBrowserRouter } from "react-router";
 import Error from "../Error/Error";
 import RootLayout from "../Layout/RootLayout";
+import AboutUs from "../pages/OthersPage/AboutUs";
+import OurStory from "../pages/OthersPage/OurStory";
+import Career from "../pages/CareerPage/Career";
+
 import Home from "../pages/Home/Home";
 
 // Others Pages
@@ -53,6 +57,19 @@ const router = createBrowserRouter([
 
       // Earnings / Nested Routes
       {
+        index: true,
+        element: <Home></Home>,
+        path: "/",
+      },
+      {
+        path:"/aboutUs",
+        element:<AboutUs/>
+      },
+      {
+        path:"/our-story",
+        element:<OurStory/>
+      },
+
         path: "/earn/bike",
         element: <BikeLayout />,
         children: [
