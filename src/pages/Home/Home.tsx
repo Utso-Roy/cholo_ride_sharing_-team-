@@ -10,7 +10,7 @@ import Statistics from "./Statistics";
 
 const Home = () => {
   return (
-    <div className="space-y-10">
+    <div className="space-y-5">
       <section>
         <SwiperPage></SwiperPage>
       </section>
@@ -30,7 +30,6 @@ const Home = () => {
       </section>
 
       <section>
-
         <CallToAction></CallToAction>
       </section>
 
@@ -39,6 +38,7 @@ const Home = () => {
         <Statistics></Statistics>
       </section>
       
+      <section></section>
     </div>
   );
 };
