@@ -1,13 +1,9 @@
 import { createBrowserRouter } from "react-router";
 import Error from "../Error/Error";
 import RootLayout from "../Layout/RootLayout";
-import AboutUs from "../pages/OthersPage/AboutUs";
-import OurStory from "../pages/OthersPage/OurStory";
-import Career from "../pages/CareerPage/Career";
 
+// Pages
 import Home from "../pages/Home/Home";
-
-// Others Pages
 import AboutUs from "../pages/OthersPage/AboutUs";
 import OurStory from "../pages/OthersPage/OurStory";
 
@@ -22,12 +18,11 @@ import { BlogListPage } from "../pages/Blog_Page/BlogListPage";
 import { BlogDetailsPage } from "../pages/Blog_Page/BlogDetailsPage";
 
 // Earnings Pages
-import BikeEarnings from "../pages/BikeEarnings";
-import CarEarnings from "../pages/CarEarnings";
-import CngEarnings from "../pages/CngEarnings";
 import BikeLayout from "../Layout/BikeLayout";
 import BikeStepOne from "../pages/BikeStepOne";
 import BikeStepTwo from "../pages/BikeStepTwo";
+import CarEarnings from "../pages/CarEarnings";
+import CngEarnings from "../pages/CngEarnings";
 
 // Auth
 import SignUp from "../Access/SignUp";
@@ -39,37 +34,25 @@ const router = createBrowserRouter([
     element: <RootLayout />,
     errorElement: <Error />,
     children: [
-      { index: true, element: <Home /> }, // default home page
+      // Home
+      { index: true, element: <Home /> },
 
-      // Help Pages
+      // Help
       { path: "/faq", element: <FAQ /> },
       { path: "/customercare", element: <CustomerCare /> },
       { path: "/userguide", element: <UserGuide /> },
       { path: "/driverguide", element: <DriverGuide /> },
 
-      // Blog Pages
+      // Blog
       { path: "/blogs", element: <BlogListPage /> },
       { path: "/blogs/:id", element: <BlogDetailsPage /> },
 
-      // Others Pages
+      // Others
       { path: "/aboutUs", element: <AboutUs /> },
       { path: "/our-story", element: <OurStory /> },
 
       // Earnings / Nested Routes
       {
-        index: true,
-        element: <Home></Home>,
-        path: "/",
-      },
-      {
-        path:"/aboutUs",
-        element:<AboutUs/>
-      },
-      {
-        path:"/our-story",
-        element:<OurStory/>
-      },
-
         path: "/earn/bike",
         element: <BikeLayout />,
         children: [
@@ -80,7 +63,7 @@ const router = createBrowserRouter([
       { path: "/earn/car", element: <CarEarnings /> },
       { path: "/earn/cng", element: <CngEarnings /> },
 
-      // Auth Pages
+      // Auth
       { path: "/signup", element: <SignUp /> },
       { path: "/login", element: <Login /> },
     ],
