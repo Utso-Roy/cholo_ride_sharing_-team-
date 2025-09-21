@@ -59,7 +59,7 @@ export default function About(): JSX.Element {
         <h2 className="text-3xl md:text-5xl lg:text-5xl font-bold mb-12 text-[#27445D] text-center">
           আমাদের লক্ষ্য ও উদ্দেশ্য
         </h2>
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-around gap-14 bg-white overflow-hidden rounded-lg">
+        <div className="w-full mx-auto flex flex-col md:flex-row justify-around gap-14 bg-white overflow-hidden rounded-lg">
           {/* Left Image */}
           <div className="md:w-1/2 w-full h-64 md:h-[550px] lg:h-[550px] flex-shrink-0">
             <img
