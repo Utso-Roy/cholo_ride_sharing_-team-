@@ -32,10 +32,10 @@ const stats: StatItem[] = [
 
 const Statistics: React.FC = () => {
   return (
-    <section className="py-20 bg-[#e6fcf9]">
+    <section className="py-20  bg-gradient-to-r from-[#e6fcf9] to-gray-50">
       <div className="max-w-7xl mx-auto px-6 text-center">
-        <h2 className="text-4xl font-bold mb-12 text-[#27445D]">
-          পরিসংখ্যান / ফান ফ্যাক্টস
+        <h2 className="text-4xl font-bold  text-[#27445D]">
+          পরিসংখ্যান 
         </h2>
         <p className="text-gray-600 mb-12 max-w-3xl mx-auto">
           আমাদের সেবার সাফল্য এবং গুরুত্বপূর্ণ তথ্য সমূহ।
