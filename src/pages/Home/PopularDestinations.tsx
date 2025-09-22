@@ -49,7 +49,7 @@ const destinations: Destination[] = [
 
 const PopularDestinations: React.FC = () => {
   return (
-    <section className="py-16 bg-[#e6fcf9]">
+    <section className="py-16 bg-gray-50">
       <div className="w-full px-6 text-center">
         <h2 className="text-4xl text-[#27445D] font-bold ">
          জনপ্রিয় 

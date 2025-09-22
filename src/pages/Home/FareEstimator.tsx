@@ -39,7 +39,7 @@ const FareEstimator: React.FC = () => {
   const handleReset = () => setDistance(0); 
 
   return (
-    <section className="py-16 bg-[#e6fcf9]">
+    <section className="py-16 bg-gray-50">
       <div className="w-full  px-6 text-center">
         <h2 className="text-4xl text-[#27445D] font-bold ">
           ভাড়া পরিকল্পনা
@@ -59,13 +59,13 @@ const FareEstimator: React.FC = () => {
             buttonLayout="horizontal"
             decrementButtonClassName="!bg-[#71BBB2] !text-white"
             incrementButtonClassName="!bg-[#71BBB2] !text-white"
-            inputClassName="border border-gray-300 rounded-lg px-4 py-2 w-48 focus:outline-none focus:ring-2 focus:ring-[#71BBB2]"
+            inputClassName="border !shadow-none border-gray-300 rounded-lg px-4 py-2 w-48 focus:outline-none focus:ring-2 focus:ring-[#71BBB2]"
           />
 
           {/* Reset Button */}
           <Button
             label="রিসেট"
-            className="!bg-red-400 !hover:bg-red-600 !border-none !shadow-none !text-white"
+            className="!bg-[#71BBB2] !hover:bg-red-600 !border-none !shadow-none !text-white"
             onClick={handleReset}
           />
         </div>
@@ -82,7 +82,7 @@ const FareEstimator: React.FC = () => {
                 <div className="text-5xl flex items-center justify-center text-[#71BBB2]">{service.icon}</div>
                 <h3 className="text-xl font-semibold mb-1">{service.name}</h3>
                 <p className="text-gray-600 mb-1">রেট প্রতি কিমি: {service.ratePerKm} টাকা</p>
-                <p className="text-lg font-bold text-[#27445D]">
+                <p className="text-md font-bold text-[#27445D]">
                   আনুমানিক ভাড়া: {fare.toLocaleString()} টাকা
                 </p>
               </Card>
