@@ -17,5 +17,5 @@ const cngVehicleInit: CNGVehicle = {
   brand: null, model: null, regNo: "", year: "", fitnessNo: "", taxTokenNo: "",
 };
 
-export const { Provider: CNGApplyProvider, useApply: useBikeApply } =
+export const { Provider: CNGApplyProvider, useApply: useCNGApply } =
   makeApplyContext<CNGDriver, CNGVehicle>(cngDriverInit, cngVehicleInit);
