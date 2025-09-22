@@ -27,6 +27,9 @@ import CngEarnings from "../pages/CngEarnings";
 // Auth
 import SignUp from "../Access/SignUp";
 import Login from "../Access/Login";
+import CarLayout from "../Layout/CarLayout";
+import CarStepOne from "../pages/CarStepOne";
+import CarStepTwo from "../pages/CarStepTwo";
 
 const router = createBrowserRouter([
   {
@@ -60,7 +63,12 @@ const router = createBrowserRouter([
           { path: "details", element: <BikeStepTwo /> },
         ],
       },
-      { path: "/earn/car", element: <CarEarnings /> },
+      { path: "/earn/car", element: <CarLayout />,
+        children: [
+          {index: true, element: <CarStepOne/>},
+          {path: "details", element: <CarStepTwo/>}
+        ],
+       },
       { path: "/earn/cng", element: <CngEarnings /> },
 
       // Auth
