@@ -299,18 +299,18 @@ const BikeStepTwo = () => {
                 maxFileSize={2 * 1024 * 1024}
                 customUpload
                 onSelect={onPhoto}
-                pt={{
-                  chooseButton: {
-                    className:
-                      "!bg-[#71BBB2] !border-none hover:!bg-[#5AA29F] " +
-                      "focus:!ring-2 focus:!ring-[#71BBB2]/40 !text-[#27445D] font-medium",
-                  },
-                }}
+                // pt={{
+                //   chooseButton: {
+                //     className:
+                //       "!bg-[#71BBB2] !border-none hover:!bg-[#5AA29F] " +
+                //       "focus:!ring-2 focus:!ring-[#71BBB2]/40 !text-[#27445D] font-medium",
+                //   },
+                // }}
                 /* 🔹 বিকল্প: কিছু ভার্সনে chooseOptions ও কাজ করে */
                 chooseOptions={{
                   label: "ছবি নির্বাচন",
                   className:
-                    "!bg-[#71BBB2] !border-none hover:!bg-[#5AA29F] " +
+                    "!bg-white border-none hover:!bg-[#27445D] hover:!text-white " +
                     "!text-[#27445D] font-medium",
                 }}
               />
