@@ -10,6 +10,8 @@ import Statistics from "./Statistics";
 import WhyChooseUs from "./WhyChooseUs";
 import LatestNews from "./LatestNews";
 import HowItWorks from "./HowItWorks";
+import Partners from "./Partners";
+import Newsletter from "./Newsletter";
 
 const Home = () => {
   return (
@@ -51,7 +53,15 @@ const Home = () => {
       
       <section>
         <HowItWorks></HowItWorks>
-     </section>
+      </section>
+      
+
+      <section>
+        <Partners></Partners>
+      </section>
+      <section>
+        <Newsletter></Newsletter>
+      </section>
     </div>
   );
 };
