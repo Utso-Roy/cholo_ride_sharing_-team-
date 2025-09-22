@@ -8,6 +8,8 @@ import Testimonials from "./Testimonials";
 import CallToAction from "./CallToAction";
 import Statistics from "./Statistics";
 import WhyChooseUs from "./WhyChooseUs";
+import LatestNews from "./LatestNews";
+import HowItWorks from "./HowItWorks";
 
 const Home = () => {
   return (
@@ -21,6 +23,10 @@ const Home = () => {
        <section>
 
         <WhyChooseUs></WhyChooseUs>
+      </section>
+
+      <section>
+        <LatestNews></LatestNews>
       </section>
       <section>
         <PopularDestinations></PopularDestinations>
@@ -43,7 +49,9 @@ const Home = () => {
         <Statistics></Statistics>
       </section>
       
-     
+      <section>
+        <HowItWorks></HowItWorks>
+     </section>
     </div>
   );
 };
