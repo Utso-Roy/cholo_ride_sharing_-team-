@@ -1,12 +1,12 @@
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router";
-import { useCNGApply } from "../../context/cng";
+import { useCNGApply } from "../context/cng";
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
 import { Button } from "primereact/button";
 import { Toast } from "primereact/toast";
 import { classNames } from "primereact/utils";
-import CngEarnArticle from "../../components/CngEarnArticle";
+import CngEarnArticle from "../components/CngEarnArticle";
 
 
 

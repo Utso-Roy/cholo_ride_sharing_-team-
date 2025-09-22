@@ -7,7 +7,7 @@ import { Button } from "primereact/button";
 import { Calendar } from "primereact/calendar";
 import { Toast } from "primereact/toast";
 import { classNames } from "primereact/utils";
-import { Gender, useCNGApply } from "../../context/cng";
+import { Gender, useCNGApply } from "../context/cng";
 
 import { FaUserCheck, FaShuttleVan, FaClipboardCheck } from "react-icons/fa";
 
