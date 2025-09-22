@@ -1,22 +1,30 @@
 import { createBrowserRouter } from "react-router";
 import Error from "../Error/Error";
-import Home from "../pages/Home/Home";
 import RootLayout from "../Layout/RootLayout";
+
+// Pages
+import Home from "../pages/Home/Home";
+import AboutUs from "../pages/OthersPage/AboutUs";
+import OurStory from "../pages/OthersPage/OurStory";
+
+// Help Pages
 import FAQ from "../Utils/Help/FAQ/FAQ";
 import CustomerCare from "../Utils/Help/CustomerCare/CustomerCare";
 import UserGuide from "../Utils/Help/UserGuide/UserGuide";
 import DriverGuide from "../Utils/Help/DriverGuide/DriverGuide";
 
+// Blog Pages
 import { BlogListPage } from "../pages/Blog_Page/BlogListPage";
 import { BlogDetailsPage } from "../pages/Blog_Page/BlogDetailsPage";
-import AboutUs from "../pages/OthersPage/AboutUs";
-import OurStory from "../pages/OthersPage/OurStory";
-import BikeEarnings from "../pages/BikeEarnings";
-import CarEarnings from "../pages/CarEarnings";
-import CngEarnings from "../pages/CngEarnings";
+
+// Earnings Pages
 import BikeLayout from "../Layout/BikeLayout";
 import BikeStepOne from "../pages/BikeStepOne";
 import BikeStepTwo from "../pages/BikeStepTwo";
+import CarEarnings from "../pages/CarEarnings";
+import CngEarnings from "../pages/CngEarnings";
+
+// Auth
 import SignUp from "../Access/SignUp";
 import Login from "../Access/Login";
 
@@ -26,19 +34,24 @@ const router = createBrowserRouter([
     element: <RootLayout />,
     errorElement: <Error />,
     children: [
+      // Home
       { index: true, element: <Home /> },
 
+      // Help
       { path: "/faq", element: <FAQ /> },
       { path: "/customercare", element: <CustomerCare /> },
       { path: "/userguide", element: <UserGuide /> },
       { path: "/driverguide", element: <DriverGuide /> },
 
+      // Blog
       { path: "/blogs", element: <BlogListPage /> },
       { path: "/blogs/:id", element: <BlogDetailsPage /> },
 
+      // Others
       { path: "/aboutUs", element: <AboutUs /> },
       { path: "/our-story", element: <OurStory /> },
 
+      // Earnings / Nested Routes
       {
         path: "/earn/bike",
         element: <BikeLayout />,
@@ -50,6 +63,7 @@ const router = createBrowserRouter([
       { path: "/earn/car", element: <CarEarnings /> },
       { path: "/earn/cng", element: <CngEarnings /> },
 
+      // Auth
       { path: "/signup", element: <SignUp /> },
       { path: "/login", element: <Login /> },
     ],
