@@ -233,7 +233,7 @@ const Navbar: React.FC = () => {
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink to="/complaints" className="hover:text-[#71BBB2] block">
+                    <NavLink to="/feedbackform" className="hover:text-[#71BBB2] block">
                       অভিযোগ/প্রস্তাব দিন
                     </NavLink>
                   </li>

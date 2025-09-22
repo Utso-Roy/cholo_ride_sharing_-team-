@@ -47,8 +47,6 @@ const DriverGuide: React.FC = () => {
         <h2 className="text-4xl font-extrabold text-center text-[#27445D] mb-12 drop-shadow-md">
           ড্রাইভার গাইড
         </h2>
-
-        {/* Driver List */}
         <Accordion multiple className="mb-12">
           {drivers.map((driver, index) => (
             <AccordionTab
@@ -85,8 +83,6 @@ const DriverGuide: React.FC = () => {
             </AccordionTab>
           ))}
         </Accordion>
-
-        {/* Guidelines */}
         <Card className="bg-white/90 shadow-lg rounded-2xl border border-gray-200 p-6">
           <h3 className="text-2xl font-bold text-[#27445D] mb-4 text-center">
             ড্রাইভারদের জন্য নির্দেশিকা

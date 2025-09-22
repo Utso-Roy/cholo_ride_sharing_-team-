@@ -28,6 +28,7 @@ import CngEarnings from "../pages/CngEarnings";
 import SignUp from "../Access/SignUp";
 import Login from "../Access/Login";
 import PrivacyPolicy from "../Utils/Help/PrivacyPolicy/PrivacyPolicy";
+import FeedbackForm from "../Utils/Help/FeedbackForm/FeedbackForm";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,7 @@ const router = createBrowserRouter([
       { path: "/userguide", element: <UserGuide /> },
       { path: "/driverguide", element: <DriverGuide /> },
       { path: "/privacypolicy", element: <PrivacyPolicy /> },
+      { path: "/feedbackform", element: <FeedbackForm /> },
 
       // Blog
       { path: "/blogs", element: <BlogListPage /> },

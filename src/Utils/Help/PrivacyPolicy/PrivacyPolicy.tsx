@@ -7,12 +7,9 @@ const PrivacyPolicy: React.FC = () => {
   return (
     <div className="bg-gradient-to-br from-[#E3FDFD] via-[#CBF1F5] to-[#A6E3E9] min-h-screen py-12 px-6">
       <div className="max-w-5xl mx-auto">
-        {/* Title */}
         <h2 className="text-4xl font-extrabold text-center text-[#27445D] mb-12 drop-shadow-md">
           সেফটি ও প্রাইভেসি নীতিমালা
         </h2>
-
-        {/* Cards Section */}
         <div className="grid md:grid-cols-2 gap-6 mb-12">
           <Card className="p-6 shadow-lg hover:shadow-2xl transition-transform transform hover:-translate-y-2">
             <div className="flex items-center gap-3 mb-3">
@@ -56,7 +53,6 @@ const PrivacyPolicy: React.FC = () => {
           </Card>
         </div>
 
-        {/* Accordion Section */}
         <Card className="p-6 shadow-lg border border-gray-200 bg-white/90">
           <h3 className="text-2xl font-bold text-center text-[#27445D] mb-6">
             বিস্তারিত নীতিমালা
