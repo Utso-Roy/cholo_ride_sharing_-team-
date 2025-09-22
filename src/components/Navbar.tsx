@@ -228,7 +228,7 @@ const Navbar: React.FC = () => {
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink to="/safety-policy" className="hover:text-[#71BBB2] block">
+                    <NavLink to="/privacypolicy" className="hover:text-[#71BBB2] block">
                       সেফটি ও প্রাইভেসি নীতিমালা
                     </NavLink>
                   </li>
