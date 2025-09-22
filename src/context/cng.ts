@@ -6,7 +6,7 @@ export type CNGDriver = {
   gender?: Gender; dob?: Date | null; nid?: string; license?: string; photo?: File | null;
 };
 export type CNGVehicle = {
-  brand: string | null; model: string | null; regNo: string; year: string; fitnessNo: string;
+  brand: string | null; model: string | null; regNo: string; year: string; fitnessNo: string; taxTokenNo: string;
 };
 
 const cngDriverInit: CNGDriver = {
@@ -14,7 +14,7 @@ const cngDriverInit: CNGDriver = {
   gender: undefined, dob: null, nid: "", license: "", photo: null,
 };
 const cngVehicleInit: CNGVehicle = {
-  brand: null, model: null, regNo: "", year: "", fitnessNo: "",
+  brand: null, model: null, regNo: "", year: "", fitnessNo: "", taxTokenNo: "",
 };
 
 export const { Provider: CNGApplyProvider, useApply: useBikeApply } =
