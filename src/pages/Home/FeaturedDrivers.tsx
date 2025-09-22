@@ -42,7 +42,7 @@ const featuredDrivers: Driver[] = [
 
 const FeaturedDrivers: React.FC = () => {
   return (
-    <section className="py-16 bg-[#e6fcf9]">
+    <section className="py-16  bg-gradient-to-r from-[#e6fcf9] to-gray-50">
       <div className="w-full px-6 text-center">
         <h2 className="text-4xl font-bold text-[#27445D]  flex items-center justify-center gap-3">
           শীর্ষ ড্রাইভার / রাইডার

@@ -7,6 +7,7 @@ import FareEstimator from "./FareEstimator";
 import Testimonials from "./Testimonials";
 import CallToAction from "./CallToAction";
 import Statistics from "./Statistics";
+import WhyChooseUs from "./WhyChooseUs";
 
 const Home = () => {
   return (
@@ -16,6 +17,10 @@ const Home = () => {
       </section>
       <section>
         <OurServices></OurServices>
+      </section>
+       <section>
+
+        <WhyChooseUs></WhyChooseUs>
       </section>
       <section>
         <PopularDestinations></PopularDestinations>
@@ -38,7 +43,7 @@ const Home = () => {
         <Statistics></Statistics>
       </section>
       
-      <section></section>
+     
     </div>
   );
 };

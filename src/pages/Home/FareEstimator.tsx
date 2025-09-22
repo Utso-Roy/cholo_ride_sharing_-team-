@@ -39,7 +39,7 @@ const FareEstimator: React.FC = () => {
   const handleReset = () => setDistance(0); 
 
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-16  bg-gradient-to-r from-[#e6fcf9] to-gray-50">
       <div className="w-full  px-6 text-center">
         <h2 className="text-4xl text-[#27445D] font-bold ">
           ভাড়া পরিকল্পনা
