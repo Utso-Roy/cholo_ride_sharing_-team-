@@ -97,7 +97,7 @@ const SwiperPage: React.FC = () => {
                   transition={{ duration: 0.7 }}
                   className="relative z-10 text-center px-6 md:px-20"
                 >
-                  <h2 className="text-4xl md:text-6xl font-extrabold mb-4 leading-snug drop-shadow-xl">
+                  <h2 className="text-4xl md:text-6xl font-extrabold  leading-snug drop-shadow-xl">
                     {slide.title}
                   </h2>
                   <p className="text-lg md:text-2xl font-light max-w-2xl mx-auto drop-shadow-md">

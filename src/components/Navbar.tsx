@@ -246,10 +246,10 @@ const Navbar: React.FC = () => {
       {/* Navbar End */}
      <div className="navbar-end">
   <NavLink to="/signup">
-    <Button
-      label="নিবন্ধন করুন"
- className="!bg-[#71BBB2] !text-white !border-none !px-4 !py-2 !rounded-md 
-             hover:!bg-white hover:!text-[#71BBB2] !text-md transition-colors duration-300"    />
+   <Button
+  label="নিবন্ধন করুন"
+  className="!bg-white !text-[#71BBB2] font-bold px-4 py-2 rounded-full shadow-lg hover:scale-105 transition-transform border-none"
+/>
   </NavLink>
 </div>
     </div>
