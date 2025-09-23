@@ -14,7 +14,7 @@ const ForgetPasswordwithEmail = () => {
                             <Lottie animationData={taxiLottie} loop={true} style={{ width: '100%', maxWidth: 180, height: 'auto' }} />
                         </div>
                         <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-3">পাসওয়ার্ড ভুলে গেছেন?</h2>
-                        <p className="text-white text-sm md:text-base lg:text-lg">ইমেইল অথবা নাম্বার দিয়ে পাসওয়ার্ড পুনরুদ্ধার করুন।</p>
+                        <p className="text-white text-sm md:text-base lg:text-lg">ই-মেইল অথবা নাম্বার দিয়ে পাসওয়ার্ড পুনরুদ্ধার করুন।</p>
                     </div>
                 </div>
             </div>
@@ -25,8 +25,8 @@ const ForgetPasswordwithEmail = () => {
                         <h2 className="text-2xl font-bold text-center mb-4 text-[#71BBB2]">পাসওয়ার্ড পুনরুদ্ধার করুন</h2>
                         <form className="space-y-4">
                             <div>
-                                <label className="label">ইমেইল</label>
-                                <input type="email" placeholder="ইমেইল দিন" className="input input-bordered w-full bg-white text-black placeholder-gray-500" />
+                                <label className="label">ই-মেইল</label>
+                                <input type="email" placeholder="ই-মেইল দিন" className="input input-bordered w-full bg-white text-black placeholder-gray-500" />
                             </div>
                             <button type="submit" className="btn bg-[#71BBB2] hover:bg-[#5AA29F] text-white border-none w-full">পাসওয়ার্ড রিসেট লিঙ্ক পাঠান</button>
                         </form>
