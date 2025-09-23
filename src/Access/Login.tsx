@@ -54,7 +54,7 @@ const Login = () => {
                             <Lottie animationData={taxiLottie} loop={true} style={{ width: '100%', maxWidth: 180, height: 'auto' }} />
                         </div>
                         <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-3">স্বাগতম!</h2>
-                        <p className="text-white text-sm md:text-base lg:text-lg">আপনার যাত্রা শুরু করুন সহজেই লগইন করে।</p>
+                        <p className="text-white text-sm md:text-base lg:text-lg">লগইন করে আপনার যাত্রা শুরু করুন সহজেই ।</p>
                     </div>
                 </div>
             </div>
