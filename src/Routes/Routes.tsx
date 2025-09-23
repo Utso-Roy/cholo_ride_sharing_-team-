@@ -8,6 +8,8 @@ import Home from "../pages/Home/Home";
 import AboutUs from "../pages/OthersPage/AboutUs";
 import OurStory from "../pages/OthersPage/OurStory";
 import Career from "../pages/OthersPage/Career";
+import Partnership from "../pages/OthersPage/PartherShip";
+import Privacy from "../pages/OthersPage/Privacy";
 
 // Help Pages
 import FAQ from "../Utils/Help/FAQ/FAQ";
@@ -29,7 +31,8 @@ import CngEarnings from "../pages/CngEarnings";
 // Auth
 import SignUp from "../Access/SignUp";
 import Login from "../Access/Login";
-import Privacy from "../pages/OthersPage/Privacy";
+
+
 
 
 
@@ -57,6 +60,7 @@ const router = createBrowserRouter([
       { path: "/our-story", element: <OurStory /> },
       { path: "/career", element: <Career/>},
       { path: "/policy", element: <Privacy/>},
+      { path: "/partnership", element: <Partnership/>},
 
       // Earnings / Nested Routes
       {
