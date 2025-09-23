@@ -138,13 +138,12 @@ const Login = () => {
                             </div>
                             {/* Forgot Password */}
                             <div className="text-right">
-                                <button
-                                    type="button"
+                                <Link
+                                    to="/forget-password-with-email"
                                     className="text-sm text-blue-500 hover:underline"
-                                    onClick={handleForgotPassword}
                                 >
                                     পাসওয়ার্ড ভুলে গেছেন?
-                                </button>
+                                </Link>
                             </div>
                             {/* Submit */}
                             <button type="submit" className="btn bg-[#71BBB2] hover:bg-[#5AA29F] text-white border-none w-full mt-2">

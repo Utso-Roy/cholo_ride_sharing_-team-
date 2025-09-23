@@ -4,6 +4,8 @@ import Home from "../pages/Home/Home";
 import RootLayout from "../Layout/RootLayout";
 import SignUp from "../Access/SignUp";
 import Login from "../Access/Login";
+import ForgetPasswordwithEmail from "../Access/ForgetPasswordwithEmail";
+import ForgetPasswordwithNumber from "../Access/ForgetPasswordwithNumber";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +25,14 @@ const router = createBrowserRouter([
       {
         element: <Login></Login>,
         path: "/login"
+      },
+      {
+        element: <ForgetPasswordwithEmail></ForgetPasswordwithEmail>,
+        path: "/forget-password-with-email"
+      },
+      {
+        element: <ForgetPasswordwithNumber></ForgetPasswordwithNumber>,
+        path: "/forget-password-with-number"
       },
     ],
   },
