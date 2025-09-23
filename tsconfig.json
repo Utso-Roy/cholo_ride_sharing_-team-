@@ -6,8 +6,9 @@
     "jsx": "react-jsx",
     "moduleResolution": "Node",
     "strict": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true
+  "esModuleInterop": true,
+  "forceConsistentCasingInFileNames": true,
+  "resolveJsonModule": true
   },
   "include": ["src"]
 }
