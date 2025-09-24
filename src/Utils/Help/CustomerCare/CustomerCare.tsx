@@ -18,8 +18,6 @@ const CustomerCare: React.FC = () => {
         <h2 className="text-4xl font-extrabold text-center text-[#27445D] mb-10 drop-shadow-md">
           কাস্টমার কেয়ার
         </h2>
-
-        {/* Info Cards */}
         <div className="grid md:grid-cols-3 gap-6">
           <Card className="text-center p-6 hover:shadow-2xl transition-transform transform hover:-translate-y-2">
             <div className="w-16 h-16 mx-auto rounded-full bg-gradient-to-r from-[#71BBB2] to-[#5AA29F] flex items-center justify-center text-white mb-4 shadow-md text-2xl">
@@ -48,8 +46,6 @@ const CustomerCare: React.FC = () => {
             <p className="text-sm text-gray-500">Head Office</p>
           </Card>
         </div>
-
-        {/* Contact Form */}
         <div className="mt-12 bg-white/90 shadow-lg rounded-2xl p-8 border border-gray-200">
           <h3 className="text-2xl font-bold text-[#27445D] mb-6 text-center">আমাদের সাথে যোগাযোগ করুন</h3>
           <form className="space-y-6" onSubmit={handleSubmit}>

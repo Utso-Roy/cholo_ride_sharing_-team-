@@ -222,6 +222,49 @@ const Navbar: React.FC = () => {
                 strokeWidth="2"
                 d="M4 6h16M4 12h8m-8 6h16"
               />
+
+            </button>
+            {openHelp && (
+              <div className="absolute left-0 top-full mt-2 w-64 rounded-md bg-white text-[#27445D] p-4 shadow-lg z-50">
+                <ul className="flex flex-col gap-2">
+                  <li>
+                    <NavLink to="/faq" className="hover:text-[#71BBB2] block">
+                      সাধারণ জিজ্ঞাসা (FAQ)
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/customercare" className="hover:text-[#71BBB2] block">
+                      কাস্টমার কেয়ার
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/userguide" className="hover:text-[#71BBB2] block">
+                      ইউজার গাইড
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/driverguide" className="hover:text-[#71BBB2] block">
+                      ড্রাইভার গাইড
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/privacypolicy" className="hover:text-[#71BBB2] block">
+                      সেফটি ও প্রাইভেসি নীতিমালা
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/feedbackform" className="hover:text-[#71BBB2] block">
+                      অভিযোগ/প্রস্তাব দিন
+                    </NavLink>
+                  </li>
+                  <li className="text-sm mt-2">হেল্পলাইন : +০৩৮২৫৮৯৫৭৮৪</li>
+                </ul>
+              </div>
+            )}
+          </li>
+        </ul>
+      </div>
+
             </svg>
           </div>
           <ul
@@ -230,7 +273,7 @@ const Navbar: React.FC = () => {
           >
             {links}
           </ul>
-        </div>
+        
 
         {/* Brand */}
         <NavLink to="/" className="btn btn-ghost text-xl text-white font-bold">
