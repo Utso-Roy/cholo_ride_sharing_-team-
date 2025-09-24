@@ -6,9 +6,15 @@
     "jsx": "react-jsx",
     "moduleResolution":"Bundler",
     "strict": true,
+
+  "esModuleInterop": true,
+  "forceConsistentCasingInFileNames": true,
+  "resolveJsonModule": true
+
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true
+
 
   },
   "include": ["src"]

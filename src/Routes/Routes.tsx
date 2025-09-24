@@ -31,11 +31,12 @@ import CngEarnings from "../pages/CngEarnings";
 // Auth
 import SignUp from "../Access/SignUp";
 import Login from "../Access/Login";
+import ForgetPasswordwithEmail from "../Access/ForgetPasswordwithEmail";
+import ForgetPasswordwithNumber from "../Access/ForgetPasswordwithNumber";
 import PrivacyPolicy from "../Utils/Help/PrivacyPolicy/PrivacyPolicy";
 import FeedbackForm from "../Utils/Help/FeedbackForm/FeedbackForm";
 import SocialActivitiesPage from "../pages/OthersPage/SocialActivitiesPage";
 import SocialActivitiesDetails from "../pages/OthersPage/SocialActivitiesDetails";
-
 
 const router = createBrowserRouter([
   {
@@ -75,6 +76,15 @@ const router = createBrowserRouter([
           { index: true, element: <BikeStepOne /> },
           { path: "details", element: <BikeStepTwo /> },
         ],
+      },
+
+      {
+        element: <ForgetPasswordwithEmail></ForgetPasswordwithEmail>,
+        path: "/forget-password-with-email"
+      },
+      {
+        element: <ForgetPasswordwithNumber></ForgetPasswordwithNumber>,
+        path: "/forget-password-with-number"
       },
       { path: "/earn/car", element: <CarEarnings /> },
       { path: "/earn/cng", element: <CngEarnings /> },
