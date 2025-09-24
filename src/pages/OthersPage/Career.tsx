@@ -6,7 +6,6 @@ import { FaLocationDot } from "react-icons/fa6";
 import { FiTrendingUp, FiCreditCard, FiHeart } from "react-icons/fi";
 
 
-// Job type interface
 interface Job {
     id: number;
     title: string;
@@ -17,7 +16,6 @@ interface Job {
     icon: ReactNode;
 }
 
-// Dummy Job Data (বাংলায়)
 const jobs: Job[] = [
     {
         id: 1,
@@ -85,7 +83,7 @@ const Career: FC = () => {
     );
 
     return (
-        <div>
+        <div >
             <section className="pb-5">
                 {/*  Hero Carousel Section */}
                 <Galleria
@@ -111,7 +109,7 @@ const Career: FC = () => {
                 >
                     কেন আমাদের সাথে কাজ করবেন?
                 </h2>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto text-center">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 px-6 text-center">
                     <Card title="ফ্লেক্সিবল কাজ" className="bg-white p-6 rounded-2xl  shadow hover:shadow-xl transition-transform hover:-translate-y-1">
                         <p className="text-gray-600 text-sm">পার্টটাইম বা ফুলটাইম – নিজের সুবিধামতো কাজ করার সুযোগ।</p>
                     </Card>
@@ -130,7 +128,7 @@ const Career: FC = () => {
                     বর্তমানে খালি পদ
                 </h2>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 px-6">
                     {jobs.map((job: Job) => (
                         <div
                             key={job.id}
@@ -157,7 +155,7 @@ const Career: FC = () => {
                                     <span className="text-sm text-gray-500">
                                         শেষ তারিখ: {job.deadline}
                                     </span>
-                                    <button className="mt-4 bg-[#71BBB2] text-white text-sm font-semibold px-6 py-2 rounded-full hover:bg-[#27445D] transition duration-300">
+                                    <button className="mt-4 bg-[#71BBB2] text-white text-sm  px-2 py-2 rounded-sm cursor-pointer hover:bg-[#27445D] transition duration-300">
                                         আবেদন করুন
                                     </button>
                                 </div>
@@ -173,7 +171,7 @@ const Career: FC = () => {
                     আমাদের সাথে কাজ করার সুবিধাসমূহ
                 </h2>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto text-center text-[#27445D]">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 px-6 text-center text-[#27445D]">
                     {/* Career Card */}
                     <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition">
                         <FiTrendingUp className="mx-auto mb-3 w-12 h-12 text-[#27445D]" />
