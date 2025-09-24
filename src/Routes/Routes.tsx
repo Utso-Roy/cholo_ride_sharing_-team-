@@ -31,6 +31,8 @@ import CngEarnings from "../pages/CngEarnings";
 // Auth
 import SignUp from "../Access/SignUp";
 import Login from "../Access/Login";
+import SocialActivitiesPage from "../pages/OthersPage/SocialActivitiesPage";
+import SocialActivitiesDetails from "../pages/OthersPage/SocialActivitiesDetails";
 
 
 
@@ -61,6 +63,8 @@ const router = createBrowserRouter([
       { path: "/career", element: <Career/>},
       { path: "/policy", element: <Privacy/>},
       { path: "/partnership", element: <Partnership/>},
+      { path: "/social", element: <SocialActivitiesPage/>},
+      { path: "/activities/:id", element: <SocialActivitiesDetails/>},
 
       // Earnings / Nested Routes
       {
