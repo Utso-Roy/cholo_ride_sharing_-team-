@@ -4,11 +4,18 @@
     "module": "ESNext",
     "lib": ["DOM", "ESNext"],
     "jsx": "react-jsx",
-    "moduleResolution": "Node",
+    "moduleResolution":"Bundler",
     "strict": true,
+
   "esModuleInterop": true,
   "forceConsistentCasingInFileNames": true,
   "resolveJsonModule": true
+
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true
+
+
   },
   "include": ["src"]
 }

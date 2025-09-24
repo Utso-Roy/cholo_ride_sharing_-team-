@@ -48,8 +48,8 @@ const services = [
 
 const OurServices = () => {
   return (
-    <section className="py-16 bg-[#e6fcf9]">
-      <div className="max-w-7xl mx-auto px-6 text-center">
+    <section className="py-16  bg-gradient-to-r from-[#e6fcf9] to-gray-50">
+      <div className=" px-6 text-center">
         <h2 className="text-4xl font-bold text-[#27445D] mb-10">
           আমাদের সার্ভিসসমূহ
         </h2>

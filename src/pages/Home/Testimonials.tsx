@@ -46,10 +46,10 @@ const testimonials: Testimonial[] = [
 
 const Testimonials: React.FC = () => {
   return (
-    <section className="py-16 bg-[#e6fcf9]">
-      <div className="max-w-7xl mx-auto px-6 text-center">
-        <h2 className="text-4xl font-bold text-[#27445D] mb-4">
-          ব্যবহারকারীদের <span className="text-[#71BBB2]">মতামত</span>
+    <section className="py-16  bg-gradient-to-r from-[#e6fcf9] to-gray-50">
+      <div className="w-full px-6 text-center">
+        <h2 className="text-4xl font-bold text-[#27445D] ">
+          ব্যবহারকারীদের মতামত
         </h2>
         <p className="text-gray-600 mb-12 max-w-3xl mx-auto">
           আমাদের সেবার উপর গ্রাহকদের বিশ্বাসযোগ্য মতামত।

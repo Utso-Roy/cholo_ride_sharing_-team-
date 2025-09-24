@@ -1,5 +1,5 @@
 import React from "react";
-import { FaStar, FaUserAlt } from "react-icons/fa";
+import { FaStar } from "react-icons/fa";
 
 interface Driver {
   id: number;
@@ -42,10 +42,9 @@ const featuredDrivers: Driver[] = [
 
 const FeaturedDrivers: React.FC = () => {
   return (
-    <section className="py-16 bg-[#e6fcf9]">
-      <div className="max-w-7xl mx-auto px-6 text-center">
-        <h2 className="text-4xl font-bold text-[#27445D] mb-10 flex items-center justify-center gap-3">
-          <FaUserAlt color="#27445D" />
+    <section className="py-16  bg-gradient-to-r from-[#e6fcf9] to-gray-50">
+      <div className="w-full px-6 text-center">
+        <h2 className="text-4xl font-bold text-[#27445D]  flex items-center justify-center gap-3">
           শীর্ষ ড্রাইভার / রাইডার
         </h2>
         <p className="text-gray-600 mb-12 max-w-3xl mx-auto">
