@@ -39,7 +39,7 @@ const faqItems = [
 
 const FAQ: React.FC = () => {
   return (
-    <div className="bg-[#e6fcf9] min-h-screen py-12 px-4">
+    <div className="bg-gradient-to-r from-[#e6fcf9] to-gray-50 min-h-screen py-12 px-4">
       <div className="max-w-3xl mx-auto">
         <h2 className="text-4xl font-extrabold text-center text-[#27445D] mb-10 drop-shadow-md">
           সাধারণ জিজ্ঞাসা (FAQ)
