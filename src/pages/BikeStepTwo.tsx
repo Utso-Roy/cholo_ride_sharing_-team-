@@ -12,8 +12,13 @@ import { Gender, useBikeApply } from "../context/bike";
 
 import { FaUserCheck, FaMotorcycle, FaClipboardCheck } from "react-icons/fa";
 
+import { useMutation } from "@tanstack/react-query";
+import { api } from "../lib/api";
+
 // 🔧 ফিচার ফ্ল্যাগ (পরে true করে দিলেই Toast অন)
-const ENABLE_TOAST = false;
+const ENABLE_TOAST = true;
+
+
 
 const CITY_OPTIONS = [
   { label: "ঢাকা", value: "Dhaka" },
@@ -103,6 +108,36 @@ const BikeStepTwo = () => {
     }
   };
 
+  const submitMutation = useMutation({
+  mutationFn: async ({ driver, vehicle }: any) => {
+    const fd = new FormData();
+    // --- driver fields ---
+    fd.append("firstName", driver.firstName);
+    fd.append("lastName", driver.lastName);
+    fd.append("phone", driver.phone);
+    fd.append("city", driver.city);
+    fd.append("gender", driver.gender);
+    // Calendar থেকে আপনি Date রাখছেন; সার্ভারে string (ISO) চাই
+    fd.append("dob", driver.dob?.toISOString?.() || driver.dob);
+    fd.append("nid", driver.nid);
+    fd.append("license", driver.license);
+    if (driver.photo) fd.append("photo", driver.photo, driver.photo.name);
+
+    // --- vehicle fields ---
+    fd.append("brand", vehicle.brand);
+    fd.append("model", vehicle.model);
+    fd.append("regNo", vehicle.regNo);
+    fd.append("year", vehicle.year);
+    fd.append("fitnessNo", vehicle.fitnessNo);
+    fd.append("taxTokenNo", vehicle.taxTokenNo);
+
+    const res = await api.post("/api/bike-applications", fd, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+    return res.data;
+  },
+});
+
   const submitAll = async () => {
     // ধাপ–২ ভ্যালিডেশন (ড্রাইভার + ভেহিকল)
     const invalid =
@@ -128,19 +163,23 @@ const BikeStepTwo = () => {
     }
 
     setIsSubmitting(true);
-
-    try {
-      // এখানে এখন শুধু ডেমো—সার্ভার নেই, তাই সরাসরি সফল ধরা হল
-      // পরে সার্ভার হলে এখানে fetch(...) বসাবে
-      notify("success", "আবেদন জমা হয়েছে (ডেমো)!");
-      // reset(); navigate("/"); ইত্যাদি যা আছে চালিয়ে দাও
-    } catch (err: any) {
-      notify("error", err?.message || "সাবমিট ব্যর্থ হয়েছে।");
-    } finally {
-      setIsSubmitting(false);
-    }
-    reset();
-    navigate("/");
+    submitMutation.mutate(
+      { driver, vehicle },
+      {
+        onSuccess: (data) => {
+          notify("success", "আবেদন জমা হয়েছে!");
+          // চাইলে data.id দেখাতে পারেন
+          reset();
+          navigate("/");
+        },
+        onError: (err: any) => {
+          const msg =
+            err?.response?.data?.error || err?.message || "সাবমিট ব্যর্থ হয়েছে";
+          notify("error", msg);
+        },
+        onSettled: () => setIsSubmitting(false),
+      }
+    );
   };
 
   return (
@@ -449,11 +488,11 @@ const BikeStepTwo = () => {
               onClick={() => navigate(-1)}
             />
             <Button
-              label={isSubmitting ? "সাবমিট হচ্ছে..." : "সাবমিট"}
-              icon={isSubmitting ? "pi pi-spin pi-spinner" : "pi pi-check"}
+              label={submitMutation.isPending ? "সাবমিট হচ্ছে..." : "সাবমিট"}
+              icon={submitMutation.isPending ? "pi pi-spin pi-spinner" : "pi pi-check"}
               className="!bg-[#71BBB2] !border-none hover:!bg-[#5AA29F]"
               onClick={submitAll}
-              disabled={isSubmitting}
+              disabled={submitMutation.isPending}
             />
           </div>
         </section>
