@@ -30,6 +30,8 @@ import Login from "../Access/Login";
 
 //Services Pages
 import CNGRidePage from "../pages/Services/CNGRidePage";
+import TrackRide from "../pages/Services/TrackRide";
+
 
 const router = createBrowserRouter([
   {
@@ -52,6 +54,7 @@ const router = createBrowserRouter([
 
       //Service page
       { path: "/cng", element: <CNGRidePage></CNGRidePage> },
+      { path: "/track", element: <TrackRide></TrackRide> },
 
       // Others
       { path: "/aboutUs", element: <AboutUs /> },
