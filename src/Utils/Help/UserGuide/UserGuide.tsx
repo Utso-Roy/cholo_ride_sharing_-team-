@@ -56,13 +56,11 @@ const guideSteps = [
 
 const UserGuide: React.FC = () => {
   return (
-    <div className="bg-gradient-to-br from-[#E3FDFD] via-[#CBF1F5] to-[#A6E3E9] min-h-screen py-12 px-4">
+    <div className="bg-gradient-to-r from-[#e6fcf9] to-gray-50 min-h-screen py-12 px-4">
       <div className="max-w-7xl mx-auto">
         <h2 className="text-4xl font-extrabold text-center text-[#27445D] mb-12 drop-shadow-md">
           ইউজার গাইড
         </h2>
-
-        {/* Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {guideSteps.map((step, index) => (
             <Card
@@ -79,8 +77,6 @@ const UserGuide: React.FC = () => {
             </Card>
           ))}
         </div>
-
-        {/* Footer Note */}
         <div className="mt-12 text-center text-gray-600 text-lg font-medium">
           💡 মনে রাখবেন: সবসময় নিরাপদে এবং নিয়ম মেনে রাইড করুন।
         </div>

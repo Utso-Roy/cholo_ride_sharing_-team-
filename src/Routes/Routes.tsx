@@ -4,8 +4,12 @@ import RootLayout from "../Layout/RootLayout";
 
 // Pages
 import Home from "../pages/Home/Home";
+// otherpage
 import AboutUs from "../pages/OthersPage/AboutUs";
 import OurStory from "../pages/OthersPage/OurStory";
+import Career from "../pages/OthersPage/Career";
+import Partnership from "../pages/OthersPage/PartherShip";
+import Privacy from "../pages/OthersPage/Privacy";
 
 // Help Pages
 import FAQ from "../Utils/Help/FAQ/FAQ";
@@ -29,8 +33,15 @@ import CNGLayout from "../Layout/CNGLayout";
 // Auth
 import SignUp from "../Access/SignUp";
 import Login from "../Access/Login";
+
 import CngStepOne from "../pages/CngStepOne";
 import CngStepTwo from "../pages/CngStepTwo";
+
+
+import PrivacyPolicy from "../Utils/Help/PrivacyPolicy/PrivacyPolicy";
+import FeedbackForm from "../Utils/Help/FeedbackForm/FeedbackForm";
+import SocialActivitiesPage from "../pages/OthersPage/SocialActivitiesPage";
+import SocialActivitiesDetails from "../pages/OthersPage/SocialActivitiesDetails";
 
 
 
@@ -48,6 +59,8 @@ const router = createBrowserRouter([
       { path: "/customercare", element: <CustomerCare /> },
       { path: "/userguide", element: <UserGuide /> },
       { path: "/driverguide", element: <DriverGuide /> },
+      { path: "/privacypolicy", element: <PrivacyPolicy /> },
+      { path: "/feedbackform", element: <FeedbackForm /> },
 
       // Blog
       { path: "/blogs", element: <BlogListPage /> },
@@ -56,6 +69,11 @@ const router = createBrowserRouter([
       // Others
       { path: "/aboutUs", element: <AboutUs /> },
       { path: "/our-story", element: <OurStory /> },
+      { path: "/career", element: <Career/>},
+      { path: "/policy", element: <Privacy/>},
+      { path: "/partnership", element: <Partnership/>},
+      { path: "/social", element: <SocialActivitiesPage/>},
+      { path: "/activities/:id", element: <SocialActivitiesDetails/>},
 
       // Earnings / Nested Routes
       {
