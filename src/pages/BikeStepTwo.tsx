@@ -18,8 +18,6 @@ import { api } from "../lib/api";
 // 🔧 ফিচার ফ্ল্যাগ (পরে true করে দিলেই Toast অন)
 const ENABLE_TOAST = true;
 
-
-
 const CITY_OPTIONS = [
   { label: "ঢাকা", value: "Dhaka" },
   { label: "চট্টগ্রাম", value: "Chattogram" },
@@ -69,8 +67,8 @@ const BikeStepTwo = () => {
       if (prev) URL.revokeObjectURL(prev); // আগের URL ক্লিনআপ
       return nextUrl;
     });
-    // clear the state after remove preview
-    fileRef.current?.clear?.();
+    // // clear the state after remove preview
+    // fileRef.current?.clear?.();
   };
 
   const removePhoto = () => {
@@ -109,34 +107,50 @@ const BikeStepTwo = () => {
   };
 
   const submitMutation = useMutation({
-  mutationFn: async ({ driver, vehicle }: any) => {
-    const fd = new FormData();
-    // --- driver fields ---
-    fd.append("firstName", driver.firstName);
-    fd.append("lastName", driver.lastName);
-    fd.append("phone", driver.phone);
-    fd.append("city", driver.city);
-    fd.append("gender", driver.gender);
-    // Calendar থেকে আপনি Date রাখছেন; সার্ভারে string (ISO) চাই
-    fd.append("dob", driver.dob?.toISOString?.() || driver.dob);
-    fd.append("nid", driver.nid);
-    fd.append("license", driver.license);
-    if (driver.photo) fd.append("photo", driver.photo, driver.photo.name);
+    mutationFn: async ({ driver, vehicle }: any) => {
+      const dobVal = Array.isArray(driver.dob) ? driver.dob[0] : driver.dob;
+      const dobStr =
+        dobVal instanceof Date ? dobVal.toISOString() : String(dobVal ?? "");
 
-    // --- vehicle fields ---
-    fd.append("brand", vehicle.brand);
-    fd.append("model", vehicle.model);
-    fd.append("regNo", vehicle.regNo);
-    fd.append("year", vehicle.year);
-    fd.append("fitnessNo", vehicle.fitnessNo);
-    fd.append("taxTokenNo", vehicle.taxTokenNo);
+      const fd = new FormData();
+      // --- driver fields ---
+      fd.set("firstName", driver.firstName);
+      fd.set("lastName", driver.lastName);
+      fd.set("phone", driver.phone);
+      fd.set("city", driver.city);
+      fd.set("gender", driver.gender);
 
-    const res = await api.post("/api/bike-applications", fd, {
-      headers: { "Content-Type": "multipart/form-data" },
-    });
-    return res.data;
-  },
-});
+      fd.set("nid", driver.nid);
+      fd.set("license", driver.license);
+      if (driver.photo) fd.set("photo", driver.photo, driver.photo.name);
+      fd.set("dob", dobStr);
+
+      // --- vehicle fields ---
+      fd.set("brand", vehicle.brand);
+      fd.set("model", vehicle.model);
+      fd.set("regNo", vehicle.regNo);
+      fd.set("year", vehicle.year);
+      fd.set("fitnessNo", vehicle.fitnessNo);
+      fd.set("taxTokenNo", vehicle.taxTokenNo);
+
+      console.groupCollapsed("FormData preview");
+      for (const [k, v] of fd.entries()) {
+        if (v instanceof File) {
+          console.log(k, { name: v.name, type: v.type, size: v.size });
+        } else {
+          console.log(k, v);
+        }
+      }
+      console.groupEnd();
+
+      if (!(driver.photo instanceof File)) {
+        console.warn("photo is NOT a File:", driver.photo);
+      }
+
+      const res = await api.post("/api/bike-applications", fd);
+      return res.data;
+    },
+  });
 
   const submitAll = async () => {
     // ধাপ–২ ভ্যালিডেশন (ড্রাইভার + ভেহিকল)
@@ -173,10 +187,45 @@ const BikeStepTwo = () => {
           navigate("/");
         },
         onError: (err: any) => {
-          const msg =
-            err?.response?.data?.error || err?.message || "সাবমিট ব্যর্থ হয়েছে";
-          notify("error", msg);
+          const data = err?.response?.data;
+          console.error("Submit error:", data);
+
+          // Zod field errors (object: { fieldName: string[] })
+          const fe = data?.details?.fieldErrors as
+            | Record<string, string[]>
+            | undefined;
+
+          // First error message (if any)
+          const firstField = fe && Object.keys(fe)[0];
+          const firstMsg = firstField && fe[firstField]?.[0];
+
+          // Optional: nice label mapping (API keys → Bangla labels)
+          const label: Record<string, string> = {
+            "driver.firstName": "নামের প্রথম অংশ",
+            "driver.lastName": "নামের শেষ অংশ",
+            "driver.phone": "মোবাইল নাম্বার",
+            "driver.city": "শহর",
+            "driver.gender": "লিঙ্গ",
+            "driver.dob": "জন্মতারিখ",
+            "driver.nid": "এনআইডি",
+            "driver.license": "ড্রাইভিং লাইসেন্স",
+            "vehicle.brand": "ব্র্যান্ড",
+            "vehicle.model": "মডেল",
+            "vehicle.regNo": "রেজিস্ট্রেশন নম্বর",
+            "vehicle.year": "সাল",
+            "vehicle.fitnessNo": "ফিটনেস নম্বর",
+            "vehicle.taxTokenNo": "ট্যাক্স টোকেন নম্বর",
+          };
+
+          const msg = data?.error || err?.message || "সাবমিট ব্যর্থ হয়েছে";
+
+          if (firstField && firstMsg) {
+            notify("error", `${label[firstField] || firstField}: ${firstMsg}`);
+          } else {
+            notify("error", msg);
+          }
         },
+
         onSettled: () => setIsSubmitting(false),
       }
     );
@@ -287,6 +336,7 @@ const BikeStepTwo = () => {
             <div className="flex flex-col gap-2">
               <label>জন্ম তারিখ*</label>
               <Calendar
+                selectionMode="single"
                 value={driver.dob ?? null}
                 onChange={(e) => setDriver({ ...driver, dob: e.value as Date })}
                 dateFormat="dd/mm/yy"
@@ -334,8 +384,8 @@ const BikeStepTwo = () => {
                 mode="basic"
                 name="photo"
                 chooseLabel="ছবি নির্বাচন"
-                accept="image/*"
-                maxFileSize={2 * 1024 * 1024}
+                accept="image/jpeg, image/png"
+                // maxFileSize={2 * 1024 * 1024}
                 customUpload
                 onSelect={onPhoto}
                 // pt={{
@@ -489,7 +539,11 @@ const BikeStepTwo = () => {
             />
             <Button
               label={submitMutation.isPending ? "সাবমিট হচ্ছে..." : "সাবমিট"}
-              icon={submitMutation.isPending ? "pi pi-spin pi-spinner" : "pi pi-check"}
+              icon={
+                submitMutation.isPending
+                  ? "pi pi-spin pi-spinner"
+                  : "pi pi-check"
+              }
               className="!bg-[#71BBB2] !border-none hover:!bg-[#5AA29F]"
               onClick={submitAll}
               disabled={submitMutation.isPending}
