@@ -198,6 +198,10 @@ const Navbar: React.FC = () => {
     <div className="navbar bg-[#27445D] sticky top-0 text-white shadow-md z-50">
       {/* Navbar Start */}
       <div className="navbar-start">
+
+        <NavLink to="/" className="cursor-pointer text-xl font-bold text-white">
+          চলো
+
         {/* Mobile dropdown */}
         <div className="dropdown">
           <button
@@ -230,6 +234,7 @@ const Navbar: React.FC = () => {
         {/* Brand */}
         <NavLink to="/" className="btn btn-ghost text-xl text-white font-bold">
           চলো
+
         </NavLink>
       </div>
 
