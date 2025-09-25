@@ -36,8 +36,7 @@ const Navbar: React.FC = () => {
   }, [location.pathname]);
 
   const getDropdownClass = (isOpen: boolean) =>
-    `flex items-center gap-1 cursor-pointer transition-colors duration-300 ${
-      isOpen ? "text-[#71BBB2]" : "text-white hover:text-[#71BBB2]"
+    `flex items-center gap-1 cursor-pointer transition-colors duration-300 ${isOpen ? "text-[#71BBB2]" : "text-white hover:text-[#71BBB2]"
     }`;
 
   const navLinkClass = ({ isActive }: { isActive: boolean }) =>
@@ -73,9 +72,8 @@ const Navbar: React.FC = () => {
             >
               সার্ভিসসমূহ
               <HiChevronDown
-                className={`w-4 h-4 transition-transform duration-300 ${
-                  openServices ? "rotate-180" : ""
-                }`}
+                className={`w-4 h-4 transition-transform duration-300 ${openServices ? "rotate-180" : ""
+                  }`}
               />
             </button>
             {openServices && (
@@ -116,9 +114,8 @@ const Navbar: React.FC = () => {
             >
               আয় করুন
               <HiChevronDown
-                className={`w-4 h-4 transition-transform duration-300 ${
-                  openEarn ? "rotate-180" : ""
-                }`}
+                className={`w-4 h-4 transition-transform duration-300 ${openEarn ? "rotate-180" : ""
+                  }`}
               />
             </button>
             {openEarn && (
@@ -164,9 +161,8 @@ const Navbar: React.FC = () => {
             >
               অনন্যা
               <HiChevronDown
-                className={`w-4 h-4 transition-transform duration-300 ${
-                  openCompany ? "rotate-180" : ""
-                }`}
+                className={`w-4 h-4 transition-transform duration-300 ${openCompany ? "rotate-180" : ""
+                  }`}
               />
             </button>
             {openCompany && (
@@ -199,9 +195,8 @@ const Navbar: React.FC = () => {
             >
               হেল্প
               <HiChevronDown
-                className={`w-4 h-4 transition-transform duration-300 ${
-                  openHelp ? "rotate-180" : ""
-                }`}
+                className={`w-4 h-4 transition-transform duration-300 ${openHelp ? "rotate-180" : ""
+                  }`}
               />
             </button>
             {openHelp && (
