@@ -28,6 +28,9 @@ import CngEarnings from "../pages/CngEarnings";
 import SignUp from "../Access/SignUp";
 import Login from "../Access/Login";
 
+//Services Pages
+import CNGRidePage from "../pages/Services/CNGRidePage";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -46,6 +49,9 @@ const router = createBrowserRouter([
       // Blog
       { path: "/blogs", element: <BlogListPage /> },
       { path: "/blogs/:id", element: <BlogDetailsPage /> },
+
+      //Service page
+      { path: "/cng", element: <CNGRidePage></CNGRidePage> },
 
       // Others
       { path: "/aboutUs", element: <AboutUs /> },
