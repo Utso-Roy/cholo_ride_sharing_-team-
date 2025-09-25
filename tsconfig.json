@@ -4,18 +4,12 @@
     "module": "ESNext",
     "lib": ["DOM", "ESNext"],
     "jsx": "react-jsx",
-    "moduleResolution":"Bundler",
+    "moduleResolution": "Bundler",
     "strict": true,
-
-  "esModuleInterop": true,
-  "forceConsistentCasingInFileNames": true,
-  "resolveJsonModule": true,
-
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true
-
-
+    "resolveJsonModule": true,
+    "types": ["vite/client"]
   },
   "include": ["src"]
 }

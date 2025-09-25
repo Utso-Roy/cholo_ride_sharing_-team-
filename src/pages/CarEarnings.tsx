@@ -1,9 +1,8 @@
 import React from 'react';
+import { Navigate } from 'react-router';
 
 const CarEarnings = () => {
-    return (
-        <div className="p-10">কার রাইড দিয়ে আয় — শীঘ্রই…</div>
-    );
+    return <Navigate to="/earn/car"/>;
 };
 
 export default CarEarnings;
