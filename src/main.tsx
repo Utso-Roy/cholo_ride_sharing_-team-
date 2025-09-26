@@ -9,7 +9,6 @@ import router from './Routes/Routes';
 
 
 // TanStack Query
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 // QueryClient 
 

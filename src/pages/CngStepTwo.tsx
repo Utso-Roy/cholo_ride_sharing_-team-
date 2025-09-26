@@ -117,7 +117,6 @@ const CngStepTwo = () => {
 
     setIsSubmitting(true);
     try {
-      // TODO: এখানে API কল যুক্ত করো (fetch/axios)
       notify("success", "আবেদন জমা হয়েছে (ডেমো)!");
     } catch (err: any) {
       notify("error", err?.message || "সাবমিট ব্যর্থ হয়েছে।");

@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { HiChevronDown } from "react-icons/hi";
-import { FaMotorcycle, FaCarSide, FaQuestionCircle, FaHeadset, FaBookOpen, FaUserTie, FaShieldAlt, FaRegCommentDots } from "react-icons/fa";
+import {
+  FaMotorcycle,
+  FaCarSide,
+  FaQuestionCircle,
+  FaHeadset,
+  FaBookOpen,
+  FaUserTie,
+  FaShieldAlt,
+  FaRegCommentDots,
+} from "react-icons/fa";
 import { MdOutlineElectricRickshaw } from "react-icons/md";
 import { NavLink, useLocation } from "react-router";
 import { Button } from "primereact/button";
@@ -24,6 +33,10 @@ interface OtherItem {
 
 const Navbar: React.FC = () => {
   const [openServices, setOpenServices] = useState(false);
+  const [openHelp, setOpenHelp] = useState(false);
+  const [openCompany, setOpenCompany] = useState(false);
+  const [openEarn, setOpenEarn] = useState(false);
+
   const location = useLocation();
 
   useEffect(() => {
@@ -34,112 +47,185 @@ const Navbar: React.FC = () => {
   }, [location.pathname]);
 
   const getDropdownClass = (isOpen: boolean) =>
-    `flex items-center gap-1 cursor-pointer transition-colors duration-300 ${isOpen ? "text-[#71BBB2]" : "text-white hover:text-[#71BBB2]"
+    `flex items-center gap-1 cursor-pointer transition-colors duration-300 ${
+      isOpen ? "text-[#71BBB2]" : "text-white hover:text-[#71BBB2]"
     }`;
-
-  useEffect(() => setOpenServices(false), [location.pathname]);
-
 
   const navLinkClass = ({ isActive }: { isActive: boolean }) =>
     isActive ? "text-[#71BBB2]" : "hover:text-[#71BBB2] transition-colors";
 
-  const links = (
-    <>
-      <li><NavLink to="/" className={navLinkClass}>হোম</NavLink></li>
-
-      {/* Services */}
-      <li className="relative">
-        <button onClick={() => setOpenServices(!openServices)} className="flex items-center gap-1">
-          সার্ভিসসমূহ <HiChevronDown className={`w-4 h-4 transition-transform ${openServices ? "rotate-180" : ""}`} />
-        </button>
-        {openServices && (
-          <div className="absolute left-0 top-full mt-2 w-96 rounded-md bg-white text-[#27445D] p-4 shadow-lg z-50">
-            <div className="grid grid-cols-3 gap-4">
-              {serviceItems.map((item: ServiceItem, idx: number) => {
-                const Icon = item.icon;
-                return (
-                  <a key={idx} href="#" className="flex flex-col items-center p-2 rounded-md hover:bg-gray-100" style={{ color: item.color }}>
-                    <Icon className="text-2xl" />
-                    <span className="text-sm mt-1 text-center">{item.label}</span>
-                  </a>
-                );
-              })}
-            </div>
-          </div>
-        )}
-      </li>
-
-      <li><NavLink to="/blogs" className={navLinkClass}>ব্লগ</NavLink></li>
-
-      {/* Earn */}
-      <li>
-        <details>
-          <summary>আয় করুন</summary>
-          <ul className="p-2 bg-white text-[#27445D]">
-            <li><NavLink to="/earn/bike"><FaMotorcycle /> বাইক</NavLink></li>
-            <li><NavLink to="/earn/car"><FaCarSide /> কার</NavLink></li>
-            <li><NavLink to="/earn/cng"><MdOutlineElectricRickshaw /> সিএনজি</NavLink></li>
-          </ul>
-        </details>
-      </li>
-
-      {/* Others */}
-      <li>
-        <details>
-          <summary>অনন্যা</summary>
-          <ul className="p-2 bg-white text-[#27445D] w-72">
-            {othersItems.map((item: OtherItem, idx: number) => {
-              const Icon = item.icon;
-              return (
-                <li key={idx}>
-                  <NavLink to={item.path} className="flex items-center gap-2 hover:text-[#71BBB2]">
-                    <Icon /> {item.label}
-                  </NavLink>
-                </li>
-              );
-            })}
-          </ul>
-        </details>
-      </li>
-
-      {/* Help */}
-      <li>
-        <details>
-          <summary>হেল্প</summary>
-          <ul className="p-2 bg-white text-[#27445D] w-72">
-            <li><NavLink to="/faq" className="flex items-center gap-2 hover:text-[#71BBB2]"><FaQuestionCircle /> FAQ</NavLink></li>
-            <li><NavLink to="/customercare" className="flex items-center gap-2 hover:text-[#71BBB2]"><FaHeadset /> কাস্টমার কেয়ার</NavLink></li>
-            <li><NavLink to="/userguide" className="flex items-center gap-2 hover:text-[#71BBB2]"><FaBookOpen /> ইউজার গাইড</NavLink></li>
-            <li><NavLink to="/driverguide" className="flex items-center gap-2 hover:text-[#71BBB2]"><FaUserTie /> ড্রাইভার গাইড</NavLink></li>
-            <li><NavLink to="/safety-policy" className="flex items-center gap-2 hover:text-[#71BBB2]"><FaShieldAlt /> সেফটি নীতিমালা</NavLink></li>
-            <li><NavLink to="/complaints" className="flex items-center gap-2 hover:text-[#71BBB2]"><FaRegCommentDots /> অভিযোগ দিন</NavLink></li>
-            <li className="text-sm mt-2">হেল্পলাইন: +০৩৮২৫৮৯৫৭৮৪</li>
-          </ul>
-        </details>
-      </li>
-    </>
-  );
-
   return (
     <div className="navbar bg-[#27445D] sticky top-0 text-white shadow-md z-50">
       <div className="navbar-start flex items-center gap-4">
-        <NavLink to="/" className="text-xl font-bold">চলো</NavLink>
+        <NavLink to="/" className="text-xl font-bold">
+          চলো
+        </NavLink>
 
         {/* Mobile dropdown */}
         <div className="dropdown lg:hidden">
           <button tabIndex={0} className="btn btn-ghost text-white">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 6h16M4 12h8m-8 6h16"
+              />
             </svg>
           </button>
-          <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-50 p-2 shadow bg-[#27445D] rounded-box w-60">
-            {links}
+          <ul
+            tabIndex={0}
+            className="menu menu-sm dropdown-content mt-3 z-50 p-2 shadow bg-[#27445D] rounded-box w-60"
+          >
+            {/* Mobile Links */}
+            <li>
+              <NavLink to="/" className={navLinkClass}>
+                হোম
+              </NavLink>
+            </li>
+
+            {/* সার্ভিসসমূহ */}
+            <li className="relative">
+              <button
+                onClick={() => setOpenServices(!openServices)}
+                className="flex items-center gap-1"
+              >
+                সার্ভিসসমূহ{" "}
+                <HiChevronDown
+                  className={`w-4 h-4 transition-transform ${
+                    openServices ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+              {openServices && (
+                <div className="absolute left-0 top-full mt-2 w-96 rounded-md bg-white text-[#27445D] p-4 shadow-lg z-50">
+                  <div className="grid grid-cols-3 gap-4">
+                    {serviceItems.map((item: ServiceItem, idx: number) => {
+                      const Icon = item.icon;
+                      return (
+                        <NavLink
+                          key={idx}
+                          to={item.path}
+                          className="flex flex-col items-center p-2 rounded-md hover:bg-gray-100"
+                          style={{ color: item.color }}
+                        >
+                          <Icon className="text-2xl" />
+                          <span className="text-sm mt-1 text-center">
+                            {item.label}
+                          </span>
+                        </NavLink>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+            </li>
+
+            <li>
+              <NavLink to="/blogs" className={navLinkClass}>
+                ব্লগ
+              </NavLink>
+            </li>
+
+            {/* Earn */}
+            <li>
+              <details>
+                <summary>আয় করুন</summary>
+                <ul className="p-2 bg-white text-[#27445D]">
+                  <li>
+                    <NavLink to="/earn/bike">
+                      <FaMotorcycle /> বাইক
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/earn/car">
+                      <FaCarSide /> কার
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/earn/cng">
+                      <MdOutlineElectricRickshaw /> সিএনজি
+                    </NavLink>
+                  </li>
+                </ul>
+              </details>
+            </li>
+
+            {/* Others */}
+            <li>
+              <details>
+                <summary>অনন্যা</summary>
+                <ul className="p-2 bg-white text-[#27445D] w-72">
+                  {othersItems.map((item: OtherItem, idx: number) => {
+                    const Icon = item.icon;
+                    return (
+                      <li key={idx}>
+                        <NavLink
+                          to={item.path}
+                          className="flex items-center gap-2 hover:text-[#71BBB2]"
+                        >
+                          <Icon /> {item.label}
+                        </NavLink>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </details>
+            </li>
+
+            {/* Help */}
+            <li>
+              <details>
+                <summary>হেল্প</summary>
+                <ul className="p-2 bg-white text-[#27445D] w-72">
+                  <li>
+                    <NavLink to="/faq">
+                      <FaQuestionCircle /> FAQ
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/customercare">
+                      <FaHeadset /> কাস্টমার কেয়ার
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/userguide">
+                      <FaBookOpen /> ইউজার গাইড
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/driverguide">
+                      <FaUserTie /> ড্রাইভার গাইড
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/safety-policy">
+                      <FaShieldAlt /> সেফটি নীতিমালা
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/complaints">
+                      <FaRegCommentDots /> অভিযোগ দিন
+                    </NavLink>
+                  </li>
+                  <li className="text-sm mt-2">
+                    হেল্পলাইন: +০৩৮২৫৮৯৫৭৮৪
+                  </li>
+                </ul>
+              </details>
+            </li>
           </ul>
         </div>
       </div>
 
+      {/* Desktop Menu */}
       <div className="navbar-center hidden lg:flex">
-
         <ul className="menu menu-horizontal px-1 gap-2">
           {/* হোম */}
           <li>
@@ -149,47 +235,6 @@ const Navbar: React.FC = () => {
           </li>
 
           {/* সার্ভিসসমূহ */}
-          {/* <li className="relative">
-            <button
-              onClick={() => setOpenServices(!openServices)}
-              className={getDropdownClass(openServices)}
-            >
-              সার্ভিসসমূহ
-              <HiChevronDown
-                className={`w-4 h-4 transition-transform duration-300 ${openServices ? "rotate-180" : ""
-                  }`}
-              />
-            </button>
-            {openServices && (
-              <div className="absolute left-0 top-full mt-2 w-96 rounded-md bg-white text-[#27445D] p-4 shadow-lg z-50">
-                <div className="grid grid-cols-3 gap-4">
-                  {serviceItems.map((item: ServiceItem, index: number) => {
-                    const Icon = item.icon;
-                    return (
-                      <NavLink className={navLinkClass}>
-
-                        <a
-                          key={index}
-                          href="#"
-                          className="flex flex-col items-center justify-center p-2 rounded-md hover:bg-gray-100 transition-colors duration-200"
-                          style={{ color: item.color }}
-                          onClick={() => setOpenServices(false)}
-                        >
-                          <Icon className="text-2xl" />
-                          <div className="text-sm mt-1 text-center">{item.label}</div>
-                        </a>
-
-                      </NavLink>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
-          </li> */}
-
-
-
-          {/* সার্ভিসসমূহ */}
           <li className="relative">
             <button
               onClick={() => setOpenServices(!openServices)}
@@ -197,8 +242,9 @@ const Navbar: React.FC = () => {
             >
               সার্ভিসসমূহ
               <HiChevronDown
-                className={`w-4 h-4 transition-transform duration-300 ${openServices ? "rotate-180" : ""
-                  }`}
+                className={`w-4 h-4 transition-transform ${
+                  openServices ? "rotate-180" : ""
+                }`}
               />
             </button>
             {openServices && (
@@ -211,14 +257,17 @@ const Navbar: React.FC = () => {
                         key={index}
                         to={item.path}
                         className={({ isActive }) =>
-                          `flex flex-col items-center justify-center p-2 rounded-md hover:bg-gray-100 transition-colors duration-200 ${isActive ? "bg-gray-200 font-semibold" : ""
+                          `flex flex-col items-center justify-center p-2 rounded-md hover:bg-gray-100 ${
+                            isActive ? "bg-gray-200 font-semibold" : ""
                           }`
                         }
                         style={{ color: item.color }}
                         onClick={() => setOpenServices(false)}
                       >
                         <Icon className="text-2xl" />
-                        <div className="text-sm mt-1 text-center">{item.label}</div>
+                        <div className="text-sm mt-1 text-center">
+                          {item.label}
+                        </div>
                       </NavLink>
                     );
                   })}
@@ -226,7 +275,6 @@ const Navbar: React.FC = () => {
               </div>
             )}
           </li>
-
 
           {/* ব্লগ */}
           <li>
@@ -243,8 +291,9 @@ const Navbar: React.FC = () => {
             >
               আয় করুন
               <HiChevronDown
-                className={`w-4 h-4 transition-transform duration-300 ${openEarn ? "rotate-180" : ""
-                  }`}
+                className={`w-4 h-4 transition-transform ${
+                  openEarn ? "rotate-180" : ""
+                }`}
               />
             </button>
             {openEarn && (
@@ -253,7 +302,7 @@ const Navbar: React.FC = () => {
                   <li>
                     <NavLink
                       to="/earn/bike"
-                      className="flex items-center gap-2 hover:text-[#71BBB2] transition-colors"
+                      className="flex items-center gap-2 hover:text-[#71BBB2]"
                       onClick={() => setOpenEarn(false)}
                     >
                       <FaMotorcycle className="text-lg" /> বাইক রাইড দিয়ে আয়
@@ -262,7 +311,7 @@ const Navbar: React.FC = () => {
                   <li>
                     <NavLink
                       to="/earn/car"
-                      className="flex items-center gap-2 hover:text-[#71BBB2] transition-colors"
+                      className="flex items-center gap-2 hover:text-[#71BBB2]"
                       onClick={() => setOpenEarn(false)}
                     >
                       <FaCarSide className="text-lg" /> কার রাইড দিয়ে আয়
@@ -271,10 +320,11 @@ const Navbar: React.FC = () => {
                   <li>
                     <NavLink
                       to="/earn/cng"
-                      className="flex items-center gap-2 hover:text-[#71BBB2] transition-colors"
+                      className="flex items-center gap-2 hover:text-[#71BBB2]"
                       onClick={() => setOpenEarn(false)}
                     >
-                      <MdOutlineElectricRickshaw className="text-lg" /> সিএনজি রাইড দিয়ে আয়
+                      <MdOutlineElectricRickshaw className="text-lg" /> সিএনজি
+                      রাইড দিয়ে আয়
                     </NavLink>
                   </li>
                 </ul>
@@ -290,8 +340,9 @@ const Navbar: React.FC = () => {
             >
               অনন্যা
               <HiChevronDown
-                className={`w-4 h-4 transition-transform duration-300 ${openCompany ? "rotate-180" : ""
-                  }`}
+                className={`w-4 h-4 transition-transform ${
+                  openCompany ? "rotate-180" : ""
+                }`}
               />
             </button>
             {openCompany && (
@@ -299,10 +350,10 @@ const Navbar: React.FC = () => {
                 {othersItems.map((item: OtherItem, index: number) => {
                   const Icon = item.icon;
                   return (
-                    <li key={index} className="rounded-md">
+                    <li key={index}>
                       <NavLink
                         to={item.path}
-                        className="flex items-center gap-2 hover:text-[#71BBB2] cursor-pointer p-2 transition-colors duration-200"
+                        className="flex items-center gap-2 hover:text-[#71BBB2] p-2"
                       >
                         <span style={{ color: item.color }}>
                           <Icon size={18} />
@@ -324,57 +375,48 @@ const Navbar: React.FC = () => {
             >
               হেল্প
               <HiChevronDown
-                className={`w-4 h-4 transition-transform duration-300 ${openHelp ? "rotate-180" : ""
-                  }`}
+                className={`w-4 h-4 transition-transform ${
+                  openHelp ? "rotate-180" : ""
+                }`}
               />
             </button>
             {openHelp && (
               <div className="absolute left-0 top-full mt-2 w-64 rounded-md bg-white text-[#27445D] p-4 shadow-lg z-50">
                 <ul className="flex flex-col gap-2">
                   <li>
-                    <NavLink to="/faq" className="hover:text-[#71BBB2] block">
-                      সাধারণ জিজ্ঞাসা (FAQ)
-                    </NavLink>
+                    <NavLink to="/faq"> সাধারণ জিজ্ঞাসা (FAQ)</NavLink>
                   </li>
                   <li>
-                    <NavLink to="/customercare" className="hover:text-[#71BBB2] block">
-                      কাস্টমার কেয়ার
-                    </NavLink>
+                    <NavLink to="/customercare"> কাস্টমার কেয়ার</NavLink>
                   </li>
                   <li>
-                    <NavLink to="/userguide" className="hover:text-[#71BBB2] block">
-                      ইউজার গাইড
-                    </NavLink>
+                    <NavLink to="/userguide"> ইউজার গাইড</NavLink>
                   </li>
                   <li>
-                    <NavLink to="/driverguide" className="hover:text-[#71BBB2] block">
-                      ড্রাইভার গাইড
-                    </NavLink>
+                    <NavLink to="/driverguide"> ড্রাইভার গাইড</NavLink>
                   </li>
                   <li>
-                    <NavLink to="/safety-policy" className="hover:text-[#71BBB2] block">
-                      সেফটি ও প্রাইভেসি নীতিমালা
-                    </NavLink>
+                    <NavLink to="/safety-policy"> সেফটি ও প্রাইভেসি নীতিমালা</NavLink>
                   </li>
                   <li>
-                    <NavLink to="/complaints" className="hover:text-[#71BBB2] block">
-                      অভিযোগ/প্রস্তাব দিন
-                    </NavLink>
+                    <NavLink to="/complaints"> অভিযোগ/প্রস্তাব দিন</NavLink>
                   </li>
-                  <li className="text-sm mt-2">হেল্পলাইন : +০৩৮২৫৮৯৫৭৮৪</li>
+                  <li className="text-sm mt-2">
+                    হেল্পলাইন : +০৩৮২৫৮৯৫৭৮৪
+                  </li>
                 </ul>
               </div>
             )}
           </li>
         </ul>
-
-        <ul className="menu menu-horizontal px-1 gap-2">{links}</ul>
-
       </div>
 
       <div className="navbar-end">
         <NavLink to="/signup">
-          <Button label="নিবন্ধন করুন" className="!bg-[#71BBB2] !text-white !border-none !px-4 !py-2 !rounded-md hover:!bg-white hover:!text-[#71BBB2]" />
+          <Button
+            label="নিবন্ধন করুন"
+            className="!bg-[#71BBB2] !text-white !border-none !px-4 !py-2 !rounded-md hover:!bg-white hover:!text-[#71BBB2]"
+          />
         </NavLink>
       </div>
     </div>
