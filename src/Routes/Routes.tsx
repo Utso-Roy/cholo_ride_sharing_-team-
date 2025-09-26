@@ -47,6 +47,11 @@ import CngEarnings from "../pages/CngEarnings";
 
 
 
+//Services Pages
+import CNGRidePage from "../pages/Services/CNGRidePage";
+import TrackRide from "../pages/Services/TrackRide";
+
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -67,6 +72,10 @@ const router = createBrowserRouter([
       // Blog
       { path: "/blogs", element: <BlogListPage /> },
       { path: "/blogs/:id", element: <BlogDetailsPage /> },
+
+      //Service page
+      { path: "/cng", element: <CNGRidePage></CNGRidePage> },
+      { path: "/track", element: <TrackRide></TrackRide> },
 
       // Others
       { path: "/aboutUs", element: <AboutUs /> },
