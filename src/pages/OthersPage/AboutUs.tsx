@@ -74,7 +74,7 @@ export default function About(): JSX.Element {
       </section>
 
       {/* Mission & Vision / Story */}
-      <section className="py-16 px-6 md:px-12 bg-white mb-20 w-full flex flex-col md:flex-row gap-10">
+      <section className="py-16 px-6 md:px-12 bg-white mb-5 w-full flex flex-col md:flex-row gap-10">
         <div className="flex-1 h-64 md:h-[550px]" data-aos="fade-right">
           <img
             src={aboutBanner2}
@@ -105,7 +105,7 @@ export default function About(): JSX.Element {
       </section>
 
       {/* Stats */}
-      <section className="w-full py-16 rounded-2xl bg-[#e6fcf9] text-center mb-20 px-4">
+      <section className="w-full py-16 rounded-2xl bg-[#e6fcf9] text-center mb-5 px-4">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-7xl mx-auto">
           {stats.map((stat, idx) => (
             <Card
@@ -123,7 +123,7 @@ export default function About(): JSX.Element {
       </section>
 
       {/* Values */}
-      <section className="w-full py-16 px-4 bg-[#e6fcf9] mb-20">
+      <section className="w-full py-16 px-4 bg-[#e6fcf9] mb-5">
         <h2 className="text-3xl md:text-5xl font-bold mb-12 text-[#27445D] text-center" data-aos="fade-up">
           আমাদের মূল্যবোধ
         </h2>
