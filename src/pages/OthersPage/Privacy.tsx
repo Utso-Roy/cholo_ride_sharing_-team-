@@ -89,7 +89,7 @@ const Privacy: React.FC = () => {
         <h2 className="text-4xl font-bold text-center text-[#27445D] mb-10">
           আমাদের সুবিধাসমূহ
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-6xl mx-auto text-center">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 max-full px-6  mx-auto text-center">
           {features.map((feature) => (
             <div
               key={feature.id}
