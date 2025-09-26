@@ -12,19 +12,14 @@ import { FileUpload } from "primereact/fileupload";
 import GoogleLogin from "./GoogleLogin";
 
 const SignUp: React.FC = () => {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm();
-
+  const { register, handleSubmit, watch, formState: { errors }, setValue } = useForm();
   const location = useLocation();
   const navigate = useNavigate();
   const from = location.state?.from || "/";
 
   const [profilePic, setProfilePic] = useState("");
-  const password = watch("password") || "";
+  const [passwordValue, setPasswordValue] = useState("");
+  const password = watch("password") || passwordValue;
 
   const validations = {
     length: password.length >= 8,
@@ -46,7 +41,7 @@ const SignUp: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row min-h-screen">
+    <div className="flex flex-col md:flex-row min-h-screen bg-gray-50">
       {/* Left Section */}
       <div className="w-full md:w-1/3 flex items-center justify-center bg-gradient-to-br from-[#71BBB2] to-[#5AA29F] p-6">
         <div className="bg-white/10 rounded-2xl shadow-lg px-6 py-8 max-w-sm text-center border border-white/20">
@@ -69,7 +64,7 @@ const SignUp: React.FC = () => {
       </div>
 
       {/* Right Section (Sign Up Form) */}
-      <div className="w-full md:w-2/3 flex items-center justify-center p-6 bg-[#f7faf9]">
+      <div className="w-full md:w-2/3 flex items-center justify-center p-6">
         <div className="bg-white w-full max-w-md shadow-2xl rounded-3xl p-8">
           <div className="flex justify-center mb-4">
             <Lottie
@@ -78,34 +73,29 @@ const SignUp: React.FC = () => {
               style={{ width: "100%", maxWidth: 120 }}
             />
           </div>
+
           <h1 className="text-2xl font-bold text-center text-[#27445D] mb-6">
             রাইড বুক করতে একাউন্ট তৈরি করুন
           </h1>
 
-         <form
-  onSubmit={handleSubmit(onSubmit)}
-  className="space-y-5 w-full max-w-md mx-auto"
->
+         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 w-full max-w-md mx-auto">
   {/* Name */}
-  <div>
+  <div className="w-full">
     <label className="block text-sm font-medium mb-2 text-gray-700">
       আপনার নাম
     </label>
-    <span className="p-input-icon-left w-full">
-      <i className="pi pi-user" />
-      <InputText
-        placeholder="আপনার নাম"
-        {...register("name", { required: true })}
-        className="w-full"
-      />
-    </span>
+    <InputText
+      placeholder="আপনার নাম"
+      {...register("name", { required: true })}
+      className="w-full border border-gray-300 rounded-md p-2"
+    />
     {errors.name && (
       <p className="text-red-500 text-sm mt-1">নাম আবশ্যক</p>
     )}
   </div>
 
   {/* Profile Pic */}
-  <div>
+  <div className="w-full">
     <label className="block text-sm font-medium mb-2 text-gray-700">
       প্রোফাইল ছবি
     </label>
@@ -115,70 +105,55 @@ const SignUp: React.FC = () => {
       accept="image/*"
       maxFileSize={1000000}
       chooseLabel="ছবি আপলোড করুন"
-      className="w-full"
+      className=" w-full"
       customUpload
       uploadHandler={handleFileSelect}
     />
     {profilePic && (
-      <p className="text-xs text-green-600 mt-1">
-         {profilePic} নির্বাচিত হয়েছে
-      </p>
+      <p className="text-xs text-green-600 mt-1">{profilePic} নির্বাচিত হয়েছে</p>
     )}
   </div>
 
   {/* Email */}
-  <div>
+  <div className="w-full">
     <label className="block text-sm font-medium mb-2 text-gray-700">
       ইমেইল
     </label>
-    <span className="p-input-icon-left w-full">
-      <i className="pi pi-envelope" />
-      <InputText
-        type="email"
-        placeholder="ইমেইল লিখুন"
-        {...register("email", { required: true })}
-        className="w-full"
-      />
-    </span>
+    <InputText
+      type="email"
+      placeholder="ইমেইল লিখুন"
+      {...register("email", { required: true })}
+      className="w-full border border-gray-300 rounded-md p-2"
+    />
     {errors.email && (
       <p className="text-red-500 text-sm mt-1">ইমেইল আবশ্যক</p>
     )}
   </div>
 
   {/* Password */}
-  <div>
+  <div className="w-full">
     <label className="block text-sm font-medium mb-2 text-gray-700">
       পাসওয়ার্ড
     </label>
     <Password
+      value={passwordValue}
+      onChange={(e) => {
+        setPasswordValue(e.target.value);
+        setValue("password", e.target.value);
+      }}
       toggleMask
-      feedback={false}
+      feedback
       placeholder="পাসওয়ার্ড লিখুন"
-      {...register("password", {
-        required: "পাসওয়ার্ড আবশ্যক",
-        minLength: {
-          value: 8,
-          message: "কমপক্ষে ৮ অক্ষর দিতে হবে",
-        },
-        pattern: {
-          value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/,
-          message:
-            "বড় হাতের, ছোট হাতের, সংখ্যা ও বিশেষ অক্ষর থাকতে হবে",
-        },
-      })}
-      className="w-full"
-      inputClassName="w-full"
+      className="w-full border border-gray-300 rounded-md p-2"
     />
     {errors.password && (
-      <p className="text-red-500 text-sm mt-1">
-        {String(errors.password.message)}
-      </p>
+      <p className="text-red-500 text-sm mt-1">{String(errors.password.message)}</p>
     )}
   </div>
 
   {/* Password Validation */}
   {password && (
-    <ul className="text-xs text-gray-600 ml-1 mt-2 space-y-1">
+    <ul className="text-xs text-gray-600 ml-1 mt-2 space-y-1 w-full">
       <li className={validations.length ? "text-green-600" : "text-red-500"}>
         {validations.length ? "✅" : "❌"} কমপক্ষে ৮ অক্ষর দিন
       </li>
@@ -197,7 +172,7 @@ const SignUp: React.FC = () => {
     </ul>
   )}
 
-  {/* Submit */}
+  {/* Submit Button */}
   <Button
     type="submit"
     label="নিবন্ধন করুন"
