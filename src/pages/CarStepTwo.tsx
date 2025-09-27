@@ -11,8 +11,11 @@ import { Gender, useCarApply } from "../context/car";
 
 import { FaUserCheck, FaCar, FaClipboardCheck } from "react-icons/fa";
 
-// 🔧 টোস্ট ফিচার অন করতে true করে দাও
-const ENABLE_TOAST = false;
+import { useMutation } from "@tanstack/react-query";
+import { api } from "../lib/api";
+
+
+const ENABLE_TOAST = true;
 
 const CITY_OPTIONS = [
   { label: "ঢাকা", value: "Dhaka" },
@@ -52,19 +55,23 @@ const CarStepTwo = () => {
     if (!file) return;
 
     setDriver({ ...driver, photo: file });
+    
+    
     const nextUrl = URL.createObjectURL(file);
     setPreviewUrl((prev) => {
       if (prev) URL.revokeObjectURL(prev);
       return nextUrl;
     });
-    fileRef.current?.clear?.();
+    // fileRef.current?.clear?.();
   };
 
   const removePhoto = () => {
     if (previewUrl) URL.revokeObjectURL(previewUrl);
     setPreviewUrl(null);
     setDriver({ ...driver, photo: null });
+    
     fileRef.current?.clear?.();
+    
     setFileKey((k) => k + 1);
   };
 
@@ -86,6 +93,52 @@ const CarStepTwo = () => {
       console.info(`[${type.toUpperCase()}] ${detail}`);
     }
   };
+
+  const submitMutation = useMutation({
+      mutationFn: async ({ driver, vehicle }: any) => {
+        const dobVal = Array.isArray(driver.dob) ? driver.dob[0] : driver.dob;
+        const dobStr =
+          dobVal instanceof Date ? dobVal.toISOString() : String(dobVal ?? "");
+  
+        const fd = new FormData();
+        // --- driver fields ---
+        fd.set("firstName", driver.firstName);
+        fd.set("lastName", driver.lastName);
+        fd.set("phone", driver.phone);
+        fd.set("city", driver.city);
+        fd.set("gender", driver.gender);
+  
+        fd.set("nid", driver.nid);
+        fd.set("license", driver.license);
+        if (driver.photo) fd.set("photo", driver.photo, driver.photo.name);
+        fd.set("dob", dobStr);
+  
+        // --- vehicle fields ---
+        fd.set("brand", vehicle.brand);
+        fd.set("model", vehicle.model);
+        fd.set("regNo", vehicle.regNo);
+        fd.set("year", vehicle.year);
+        fd.set("fitnessNo", vehicle.fitnessNo);
+        fd.set("taxTokenNo", vehicle.taxTokenNo);
+  
+        console.groupCollapsed("FormData preview");
+        for (const [k, v] of fd.entries()) {
+          if (v instanceof File) {
+            console.log(k, { name: v.name, type: v.type, size: v.size });
+          } else {
+            console.log(k, v);
+          }
+        }
+        console.groupEnd();
+  
+        if (!(driver.photo instanceof File)) {
+          console.warn("photo is NOT a File:", driver.photo);
+        }
+  
+        const res = await api.post("/api/car-applications", fd);
+        return res.data;
+      },
+    });
 
   const submitAll = async () => {
     const invalid =
@@ -111,16 +164,58 @@ const CarStepTwo = () => {
     }
 
     setIsSubmitting(true);
-    try {
-      notify("success", "আবেদন জমা হয়েছে (ডেমো)!");
-      // এখানে পরবর্তীতে fetch(...) দিয়ে সার্ভারে পাঠানো যাবে
-    } catch (err: any) {
-      notify("error", err?.message || "সাবমিট ব্যর্থ হয়েছে।");
-    } finally {
-      setIsSubmitting(false);
-    }
-    reset();
-    navigate("/");
+    submitMutation.mutate(
+      { driver, vehicle },
+      {
+        onSuccess: (data) => {
+          notify("success", "আবেদন জমা হয়েছে!");
+          // চাইলে data.id দেখাতে পারেন
+          reset();
+          navigate("/");
+        },
+        onError: (err: any) => {
+          const data = err?.response?.data;
+          console.error("Submit error:", data);
+
+          // Zod field errors (object: { fieldName: string[] })
+          const fe = data?.details?.fieldErrors as
+            | Record<string, string[]>
+            | undefined;
+
+          // First error message (if any)
+          const firstField = fe && Object.keys(fe)[0];
+          const firstMsg = firstField && fe[firstField]?.[0];
+
+          // Optional: nice label mapping (API keys → Bangla labels)
+          const label: Record<string, string> = {
+            "driver.firstName": "নামের প্রথম অংশ",
+            "driver.lastName": "নামের শেষ অংশ",
+            "driver.phone": "মোবাইল নাম্বার",
+            "driver.city": "শহর",
+            "driver.gender": "লিঙ্গ",
+            "driver.dob": "জন্মতারিখ",
+            "driver.nid": "এনআইডি",
+            "driver.license": "ড্রাইভিং লাইসেন্স",
+            "vehicle.brand": "ব্র্যান্ড",
+            "vehicle.model": "মডেল",
+            "vehicle.regNo": "রেজিস্ট্রেশন নম্বর",
+            "vehicle.year": "সাল",
+            "vehicle.fitnessNo": "ফিটনেস নম্বর",
+            "vehicle.taxTokenNo": "ট্যাক্স টোকেন নম্বর",
+          };
+
+          const msg = data?.error || err?.message || "সাবমিট ব্যর্থ হয়েছে";
+
+          if (firstField && firstMsg) {
+            notify("error", `${label[firstField] || firstField}: ${firstMsg}`);
+          } else {
+            notify("error", msg);
+          }
+        },
+
+        onSettled: () => setIsSubmitting(false),
+      }
+    );
   };
 
   return (
@@ -270,8 +365,8 @@ const CarStepTwo = () => {
                         mode="basic"
                         name="photo"
                         chooseLabel="ছবি নির্বাচন"
-                        accept="image/*"
-                        maxFileSize={2 * 1024 * 1024}
+                        accept="image/jpeg, image/png"
+                        // maxFileSize={2 * 1024 * 1024}
                         customUpload
                         onSelect={onPhoto}
                         // pt={{
@@ -421,10 +516,12 @@ const CarStepTwo = () => {
             />
             <Button
               label={isSubmitting ? "সাবমিট হচ্ছে..." : "সাবমিট"}
-              icon={isSubmitting ? "pi pi-spin pi-spinner" : "pi pi-check"}
+              icon={submitMutation.isPending
+                  ? "pi pi-spin pi-spinner"
+                  : "pi pi-check"}
               className="!bg-[#71BBB2] !border-none hover:!bg-[#5AA29F]"
               onClick={submitAll}
-              disabled={isSubmitting}
+              disabled={submitMutation.isPending}
             />
           </div>
         </section>

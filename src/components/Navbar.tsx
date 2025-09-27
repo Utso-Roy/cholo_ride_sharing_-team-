@@ -201,7 +201,7 @@ const Navbar: React.FC = () => {
 
         <NavLink to="/" className="cursor-pointer text-xl font-bold text-white">
           চলো
-
+        </NavLink>
         {/* Mobile dropdown */}
         <div className="dropdown">
           <button
@@ -232,7 +232,7 @@ const Navbar: React.FC = () => {
         </div>
 
         {/* Brand */}
-        <NavLink to="/" className="btn btn-ghost text-xl text-white font-bold">
+        <NavLink to="/" className="btn btn-ghost text-xl text-white font-bold hidden lg:inline-flex">
           চলো
 
         </NavLink>
