@@ -7,6 +7,7 @@ import { Avatar } from "primereact/avatar";
 import { Rating } from "primereact/rating";
 import BookingForm, { BookingFormData } from "./BookingForm";
 import { NavLink } from "react-router";
+import HowToBook from "./HowToBook";
 
 const PRIMARY = "#274450";
 const ACCENT = "#71BBB2";
@@ -118,6 +119,9 @@ export default function CNGRidePage() {
                     </motion.div>
                 </div>
             </motion.section>
+
+            {/* HowToBook  */}
+            <HowToBook></HowToBook>
 
             {/* Booking Form */}
             <BookingForm googleMapsApiKey="AIzaSyCbbOBVZNUTdhdDoJliYuXz4k1mi2OtWc8" onConfirm={handleBookingConfirm} />

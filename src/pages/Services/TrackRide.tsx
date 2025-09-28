@@ -86,8 +86,6 @@ export default function TrackRide() {
                 </div>
             </motion.section>
 
-            <HowToBook></HowToBook>
-
             {/* Features Section */}
             <motion.section
                 initial={{ opacity: 0, y: 40 }}
@@ -121,6 +119,8 @@ export default function TrackRide() {
                 </div>
             </motion.section>
 
+            {/* //HowToBook */}
+            <HowToBook></HowToBook>
 
             {/* Booking Form */}
             <BookingForm googleMapsApiKey="AIzaSyCbbOBVZNUTdhdDoJliYuXz4k1mi2OtWc8" onConfirm={handleBookingConfirm} />

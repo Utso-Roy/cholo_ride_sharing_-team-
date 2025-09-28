@@ -125,27 +125,28 @@ const HowToBook: React.FC = () => {
     return (
         <div className=" py-10 px-5 md:px-16 relative overflow-hidden">
             {/* Title */}
-            <h2 className="text-3xl md:text-5xl font-bold text-center text-[#274450] mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold text-center text-[#274450] mb-5 md:mb-10">
                 কীভাবে রাইড বুক করবেন?
             </h2>
 
             {/* Dot Line Road */}
-            <svg className="absolute left-1/2 transform -translate-x-1/2 top-24 w-1 md:w-2 h-[90%] hidden md:block">
+            <svg className="absolute left-1/2 transform -translate-x-1/2 top- w-2 md:w-2 h-[85%] ">
                 <line x1="0" y1="0" x2="0" y2="100%" stroke="#71BBB2" strokeWidth="4" strokeDasharray="8 12" />
             </svg>
 
             {/* Car Animation */}
             <motion.div
-                style={{ position: "absolute", left: "50%", translateX: "-50%", top: 0 }}
-                animate={{ y: ["0%", "100%"] }}
+                style={{ position: "absolute", left: "50%", translateX: "-50%", top: 200 }}
+                animate={{ y: ["0%", "1000%"] }}
                 transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
                 className="text-3xl z-20"
             >
                 🚗
             </motion.div>
 
+
             {/* Steps */}
-            <div className="flex flex-col gap-24 relative z-10 mt-4">
+            <div className="flex flex-col gap-5 md:gap-10 relative z-10 mt-4">
                 {steps.map((step, index) => {
                     const cardColor = index % 2 === 0 ? "#274450" : "#497D74";
 
@@ -170,18 +171,27 @@ const HowToBook: React.FC = () => {
                             </div>
 
                             {/* Card */}
-                            <Card
-                                className="w-full md:w-2/3 text-white border-2 rounded-4xl shadow-xl hover:shadow-2xl transition-shadow duration-300 z-10"
+
+                            <div
+                                className="w-full md:w-2/3 p-8 text-white border-2 rounded-3xl shadow-xl hover:shadow-2xl transition-shadow duration-300 z-10"
                                 style={{ backgroundColor: cardColor, borderColor: "#71BBB2" }}
                             >
-                                <h3 className="text-xl text-white md:text-2xl font-semibold mb-2">{step.id}. {step.title}</h3>
+                                <h3 className="text-xl text-white md:text-2xl font-semibold mb-2">
+                                    {step.id}. {step.title}
+                                </h3>
                                 <p className="text-lg text-white md:text-base">{step.description}</p>
-                            </Card>
+                            </div>
+
+
+
+
+
+
                         </motion.div>
                     );
                 })}
             </div>
-        </div>
+        </div >
     );
 };
 
