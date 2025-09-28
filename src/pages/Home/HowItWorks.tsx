@@ -1,4 +1,3 @@
-// HowItWorks.tsx
 import React from "react";
 import { FaMotorcycle, FaCarSide, FaCreditCard, FaSmile } from "react-icons/fa";
 import { motion } from "framer-motion";
