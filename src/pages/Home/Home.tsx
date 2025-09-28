@@ -23,8 +23,7 @@ const Home = () => {
       <section>
         <OurServices></OurServices>
       </section>
-       <section>
-
+      <section>
         <WhyChooseUs></WhyChooseUs>
       </section>
 
@@ -48,14 +47,12 @@ const Home = () => {
       </section>
 
       <section>
-
         <Statistics></Statistics>
       </section>
-      
+
       <section>
         <HowItWorks></HowItWorks>
       </section>
-      
 
       <section>
         <Partners></Partners>
