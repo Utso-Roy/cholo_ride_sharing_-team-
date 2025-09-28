@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { Avatar } from "primereact/avatar";
 import { Rating } from "primereact/rating";
 import BookingForm, { BookingFormData } from "./BookingForm";
+import HowToBook from "./HowToBook";
 
 const PRIMARY = "#274450";
 const ACCENT = "#71BBB2";
@@ -84,6 +85,8 @@ export default function TrackRide() {
                     </a>
                 </div>
             </motion.section>
+
+            <HowToBook></HowToBook>
 
             {/* Features Section */}
             <motion.section
