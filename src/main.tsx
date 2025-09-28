@@ -7,10 +7,16 @@ import "primeicons/primeicons.css";
 import { RouterProvider } from "react-router";
 import router from "./Routes/Routes";
 
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
+
 const rootElement = document.getElementById("root") as HTMLElement;
 
 createRoot(rootElement).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
   </StrictMode>
 );

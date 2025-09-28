@@ -1,4 +1,4 @@
-/// src/pages/Blog_Page/BlogDetailsPage.tsx
+// src/pages/Blog_Page/BlogDetailsPage.tsx
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { motion } from "framer-motion";

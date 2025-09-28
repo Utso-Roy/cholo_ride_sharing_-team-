@@ -2,7 +2,7 @@ import { FaArrowRight } from "react-icons/fa";
 
 const OurStory = () => {
   return (
-    <section className="max-w-7xl mx-auto px-4 md:px-12 py-16">
+    <section className="w-full mx-auto px-6 md:px-12 py-16">
       {/* Hero Banner */}
       <div
         className="relative h-64 md:h-96 rounded-2xl overflow-hidden mb-12"
@@ -31,7 +31,7 @@ const OurStory = () => {
           যাত্রার শুরু
         </h2>
         <p
-          className="max-w-3xl mx-auto text-gray-600 leading-relaxed mb-8"
+          className="w-ful mx-auto text-gray-600 leading-relaxed mb-8"
           data-aos="fade-up"
           data-aos-delay="200"
         >

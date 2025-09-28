@@ -1,9 +1,8 @@
 import React from 'react';
+import { Navigate } from 'react-router';
 
 const CngEarnings = () => {
-    return (
-        <div className="p-10">সিএনজি রাইড দিয়ে আয় — শীঘ্রই…</div>
-    );
+    return <Navigate to="/earn/cng"/>;;
 };
 
 export default CngEarnings;
