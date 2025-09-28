@@ -92,9 +92,9 @@ export default function CNGRidePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
                 viewport={{ once: true }}
-                className="bg-[#EFE9D5] rounded-2xl shadow-lg p-8 mx-5 md:mx-10"
+                className="bg-[#274450] rounded-2xl shadow-lg p-8 mx-5 md:mx-10"
             >
-                <h2 className="text-2xl md:text-3xl font-bold text-[#274450] mb-8 text-center">
+                <h2 className="text-2xl md:text-3xl font-bold text-white mb-8 text-center">
                     কেন CNG রাইড বেছে নেবেন?
                 </h2>
 
