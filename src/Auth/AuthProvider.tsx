@@ -1,4 +1,11 @@
-import React, { createContext, useEffect, useState, ReactNode } from "react";
+import React, {
+  createContext,
+  useEffect,
+  useState,
+  ReactNode,
+  Dispatch,
+  SetStateAction,
+} from "react";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -17,12 +24,14 @@ interface AuthContextType {
   googleLogin: () => Promise<User>;
   logOut: () => Promise<void>;
   user: User | null;
-  setUser: React.Dispatch<React.SetStateAction<User | null>>;
+  setUser: Dispatch<SetStateAction<User | null>>;
   loading: boolean;
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  setLoading: Dispatch<SetStateAction<boolean>>;
 }
 
-export const AuthContext = createContext<AuthContextType | undefined>(undefined);
+export const AuthContext = createContext<AuthContextType | undefined>(
+  undefined
+);
 
 interface AuthProviderProps {
   children: ReactNode;
@@ -32,35 +41,36 @@ const auth = getAuth(app);
 
 const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
 
-  const signup = (email: string, password: string) => {
-    return createUserWithEmailAndPassword(auth, email, password).then(result => result.user);
+  const signup = async (email: string, password: string): Promise<User> => {
+    const result = await createUserWithEmailAndPassword(auth, email, password);
+    return result.user;
   };
 
-  const loginUser = (email: string, password: string) => {
-    return signInWithEmailAndPassword(auth, email, password).then(result => result.user);
+  const loginUser = async (email: string, password: string): Promise<User> => {
+    const result = await signInWithEmailAndPassword(auth, email, password);
+    return result.user;
   };
 
-  // Google login
   const googleProvider = new GoogleAuthProvider();
-  const googleLogin = () => {
-    return signInWithPopup(auth, googleProvider).then(result => result.user);
+  const googleLogin = async (): Promise<User> => {
+    const result = await signInWithPopup(auth, googleProvider);
+    return result.user;
   };
 
-  // Logout
-  const logOut = () => {
-    return signOut(auth);
+  const logOut = async (): Promise<void> => {
+    await signOut(auth);
   };
 
- useEffect(() => {
-  const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-    setUser(currentUser);
-    setLoading(false);
-  });
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setLoading(false);
+    });
 
-  return () => unsubscribe();
-}, []);
+    return () => unsubscribe();
+  }, []);
 
   const authInfo: AuthContextType = {
     signup,
@@ -73,7 +83,9 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setLoading,
   };
 
-  return <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
+  );
 };
 
 export default AuthProvider;

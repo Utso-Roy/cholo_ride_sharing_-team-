@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { HiChevronDown } from "react-icons/hi";
 import { FaMotorcycle, FaCarSide } from "react-icons/fa";
-import { MdOutlineElectricRickshaw } from "react-icons/md";
-import { NavLink, useLocation } from "react-router";
+import { MdDashboard, MdOutlineElectricRickshaw } from "react-icons/md";
+import { Link, NavLink, useLocation, useNavigate } from "react-router";
 import { Button } from "primereact/button";
 import serviceItems from "../Utils/ServiceItems/serviceItems";
 import othersItems from "../Utils/ServiceItems/othersItems";
 import { IconType } from "react-icons";
-
+import { AuthContext } from "../Auth/AuthProvider";
+import { IoMdLogOut } from "react-icons/io";
+import { toast } from "react-toastify";
 interface ServiceItem {
   label: string;
   icon: IconType;
@@ -24,6 +26,8 @@ interface OtherItem {
 
 const Navbar: React.FC = () => {
   const location = useLocation();
+  const { user, logOut, setUser } = useContext(AuthContext);
+  const navigate =  useNavigate()
 
   const [openServices, setOpenServices] = useState(false);
   const [openHelp, setOpenHelp] = useState(false);
@@ -246,6 +250,23 @@ const Navbar: React.FC = () => {
     </>
   );
 
+
+
+  const logoutBtn = () => {
+
+      logOut()
+      .then(() => {
+        setUser(null);
+        navigate('/login')
+        toast.success("Logged out successfully!");
+      })
+      .catch((error) => {
+        console.log(error.message);
+        toast.error("Logout failed!");
+      });
+    
+  }
+
   return (
     <div className="navbar bg-[#27445D] sticky top-0 text-white shadow-md z-50">
       <div className="navbar-start flex items-center gap-4">
@@ -286,15 +307,54 @@ const Navbar: React.FC = () => {
       </div>
 
       {/* Navbar End */}
-     <div className="navbar-end">
-  <NavLink to="/signup">
-   <Button
-  label="নিবন্ধন করুন"
-  className="!bg-white !text-[#71BBB2] font-bold px-4 py-2 rounded-full shadow-lg hover:scale-105 transition-transform border-none"
-/>
-  </NavLink>
-</div>
-    
+      <div className="navbar-end">
+        {user && user?.email ? (
+          <div className="dropdown dropdown-end">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn   btn-ghost btn-circle avatar"
+            >
+              <div className="w-10 cursor-pointer rounded-full">
+                <img
+                  alt="User Avatar"
+                  src={
+                    user?.photoURL ||
+                    "https://randomuser.me/api/portraits/men/32.jpg"
+                  }
+                />
+              </div>
+            </div>
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-200 text-[#21BEDA] rounded-box w-52"
+            >
+              <li className="dark:text-[#21BEDA]">
+                <span>{user?.displayName}</span>
+              </li>
+
+              <li>
+                <Link className="cursor-pointer  flex items-center gap-2 font-semibold transition-colors duration-200 rounded-md px-2 py-1">
+                  <MdDashboard className="text-lg" /> Dashboard
+                </Link>
+              </li>
+
+              <li>
+                <button onClick={logoutBtn} className="w-full text-left flex items-center gap-2 cursor-pointer  font-semibold transition-colors duration-200 rounded-md px-2 py-1">
+                  <IoMdLogOut className="text-lg" /> Logout
+                </button>
+              </li>
+            </ul>
+          </div>
+        ) : (
+          <NavLink to="/signup">
+            <Button
+              label="নিবন্ধন করুন"
+              className="!bg-white !text-[#71BBB2] font-bold px-4 py-2 rounded-full shadow-lg hover:scale-105 transition-transform border-none"
+            />
+          </NavLink>
+        )}
+      </div>
     </div>
   );
 };
