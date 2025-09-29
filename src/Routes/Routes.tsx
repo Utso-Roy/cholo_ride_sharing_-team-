@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router";
 import Error from "../Error/Error";
 import RootLayout from "../Layout/RootLayout";
-
 import Home from "../pages/Home/Home";
 import AboutUs from "../pages/OthersPage/AboutUs";
 import OurStory from "../pages/OthersPage/OurStory";
@@ -37,7 +36,6 @@ import ForgetPasswordwithNumber from "../Access/ForgetPasswordwithNumber";
 import CngStepOne from "../pages/CngStepOne";
 import CngStepTwo from "../pages/CngStepTwo";
 
-
 import PrivacyPolicy from "../Utils/Help/PrivacyPolicy/PrivacyPolicy";
 import FeedbackForm from "../Utils/Help/FeedbackForm/FeedbackForm";
 import SocialActivitiesPage from "../pages/OthersPage/SocialActivitiesPage";
@@ -45,12 +43,11 @@ import SocialActivitiesDetails from "../pages/OthersPage/SocialActivitiesDetails
 import CarEarnings from "../pages/CarEarnings";
 import CngEarnings from "../pages/CngEarnings";
 
-
-
 //Services Pages
 import CNGRidePage from "../pages/Services/CNGRidePage";
 import TrackRide from "../pages/Services/TrackRide";
-
+import DashboardLayout from "../Layout/DashboardLayout";
+import Profile from "../DashboardPages/Profile";
 
 const router = createBrowserRouter([
   {
@@ -80,11 +77,11 @@ const router = createBrowserRouter([
       // Others
       { path: "/aboutUs", element: <AboutUs /> },
       { path: "/our-story", element: <OurStory /> },
-      { path: "/career", element: <Career/>},
-      { path: "/policy", element: <Privacy/>},
-      { path: "/partnership", element: <Partnership/>},
-      { path: "/social", element: <SocialActivitiesPage/>},
-      { path: "/activities/:id", element: <SocialActivitiesDetails/>},
+      { path: "/career", element: <Career /> },
+      { path: "/policy", element: <Privacy /> },
+      { path: "/partnership", element: <Partnership /> },
+      { path: "/social", element: <SocialActivitiesPage /> },
+      { path: "/activities/:id", element: <SocialActivitiesDetails /> },
 
       // Earnings / Nested Routes
       {
@@ -98,35 +95,54 @@ const router = createBrowserRouter([
 
       {
         element: <ForgetPasswordwithEmail></ForgetPasswordwithEmail>,
-        path: "/forget-password-with-email"
+        path: "/forget-password-with-email",
       },
       {
         element: <ForgetPasswordwithNumber></ForgetPasswordwithNumber>,
-        path: "/forget-password-with-number"
+        path: "/forget-password-with-number",
       },
       { path: "/earn/car", element: <CarEarnings /> },
       { path: "/earn/cng", element: <CngEarnings /> },
-      { path: "/earn/car",
+      {
+        path: "/earn/car",
         element: <CarLayout />,
         children: [
-          {index: true, element: <CarStepOne/>},
-          {path: "details", element: <CarStepTwo/>}
+          { index: true, element: <CarStepOne /> },
+          { path: "details", element: <CarStepTwo /> },
         ],
-       },
-      { path: "/earn/cng",
+      },
+      {
+        path: "/earn/cng",
         element: <CNGLayout />,
         children: [
-          {index: true, element: <CngStepOne/>},
-          {path: "details", element: <CngStepTwo/>}
-        ]
-       },
-        
+          { index: true, element: <CngStepOne /> },
+          { path: "details", element: <CngStepTwo /> },
+        ],
+      },
 
       // Auth
       { path: "/signup", element: <SignUp /> },
       { path: "/login", element: <Login /> },
     ],
   },
+
+
+
+  {
+     path: "/dashboard",
+    element: <DashboardLayout />,
+    errorElement: <Error />,
+    children: [
+      {
+        index: true,
+        element: <Profile />,
+        path: "/dashboard/profile",
+
+        
+       }
+    
+    ]
+  }
 ]);
 
 export default router;

@@ -334,7 +334,7 @@ const Navbar: React.FC = () => {
               </li>
 
               <li>
-                <Link className="cursor-pointer  flex items-center gap-2 font-semibold transition-colors duration-200 rounded-md px-2 py-1">
+                <Link to="/dashboard" className="cursor-pointer  flex items-center gap-2 font-semibold transition-colors duration-200 rounded-md px-2 py-1">
                   <MdDashboard className="text-lg" /> Dashboard
                 </Link>
               </li>
