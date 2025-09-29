@@ -72,6 +72,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     return () => unsubscribe();
   }, []);
 
+    console.log(user)
   const authInfo: AuthContextType = {
     signup,
     loginUser,

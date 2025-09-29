@@ -7,7 +7,7 @@ import type { AuthContextType } from '../Auth/AuthProvider';
 const GoogleLogin: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const from = (location.state as { from?: string })?.from || '/';
+//   const from = (location.state as { from?: string })?.from || '/';
 
   const authContext = useContext(AuthContext) as AuthContextType;
   const { setUser, googleLogin } = authContext;
@@ -17,7 +17,7 @@ const GoogleLogin: React.FC = () => {
       const result = await googleLogin();
       setUser(result);
       toast.success("Google Login successful!");
-      navigate(from, { replace: true });
+      navigate('/');
     } catch (err: any) {
       console.error(err.message);
       toast.error("Google Login failed! Please try again later.");

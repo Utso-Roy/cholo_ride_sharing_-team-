@@ -8,7 +8,6 @@ import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
 import { Button } from "primereact/button";
 import { Divider } from "primereact/divider";
-import { FileUpload } from "primereact/fileupload";
 import GoogleLogin from "./GoogleLogin";
 import { AuthContext } from "../Auth/AuthProvider";
 import { toast } from "react-toastify";
@@ -43,33 +42,34 @@ const SignUp: React.FC = () => {
     special: /[\W_]/.test(password),
   };
 
-  const handleFileSelect = async (event: any) => {
-    const file = event.files?.[0];
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) {
+      toast.error("ফাইল নির্বাচন করা হয়নি!");
+      return;
+    }
 
     setIsUploading(true);
 
-    const formData = new FormData();
-    formData.append("image", file);
-
     try {
+      const formData = new FormData();
+      formData.append("image", file);
+
       const res = await fetch(
         `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_API_KEY}`,
         { method: "POST", body: formData }
       );
       const data = await res.json();
-      console.log("IMGBB response:", data);
 
-      const imageUrl = data?.data?.display_url;
-
-      if (data.success && imageUrl) {
-        setProfilePic(imageUrl);
-        toast.success("Profile picture uploaded successfully!");
+      if (data.success && data.data.display_url) {
+        setProfilePic(data.data.display_url);
+        toast.success("ছবি আপলোড হয়েছে ");
       } else {
-        toast.error("Image upload failed. Please try again.");
+        toast.error("ছবি আপলোড ব্যর্থ। আবার চেষ্টা করুন।");
       }
     } catch (err) {
       console.error("Image upload error:", err);
-      toast.error("Image upload failed. Please try again.");
+      toast.error("ছবি আপলোড ব্যর্থ। আবার চেষ্টা করুন।");
     } finally {
       setIsUploading(false);
     }
@@ -77,7 +77,7 @@ const SignUp: React.FC = () => {
 
   const onSubmit = async (data: FormData) => {
     if (isUploading) {
-      toast.info("Please wait for the image to finish uploading.");
+      toast.info("ছবি আপলোড শেষ না হওয়া পর্যন্ত অপেক্ষা করুন।");
       return;
     }
 
@@ -87,16 +87,15 @@ const SignUp: React.FC = () => {
       if (user) {
         await updateProfile(user, {
           displayName: data.name,
-          photoURL: profilePic || undefined, 
+          photoURL: profilePic || undefined,
         });
       }
 
-      toast.success("Sign up successful!");
-      console.log(user)
+      toast.success("নিবন্ধন সফল!");
       navigate(from);
     } catch (error: any) {
       console.error("Signup error:", error.message);
-      toast.error(`Signup failed: ${error.message}`);
+      toast.error(`নিবন্ধন ব্যর্থ: ${error.message}`);
     }
   };
 
@@ -132,24 +131,16 @@ const SignUp: React.FC = () => {
               {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
             </div>
 
-            {/* Profile Pic */}
+            {/* Profile Pic with DaisyUI */}
             <div className="w-full">
               <label className="block text-sm font-medium mb-2 text-gray-700">প্রোফাইল ছবি</label>
-              <FileUpload
-                mode="basic"
-                name="profilePic"
+              <input
+                type="file"
                 accept="image/*"
-                maxFileSize={1000000}
-                chooseLabel="ছবি আপলোড করুন"
-                className="w-full"
-                customUpload
-                uploadHandler={handleFileSelect}
+                onChange={handleFileChange}
+                className="file-input file-input-bordered file-input-lg w-full"
               />
-              {profilePic ? (
-                <p className="text-xs text-green-600 mt-1">ছবি আপলোড হয়েছে ✅</p>
-              ) : (
-                <p className="text-xs text-gray-500 mt-1">ছবি অপশনাল</p>
-              )}
+              
             </div>
 
             {/* Email */}
