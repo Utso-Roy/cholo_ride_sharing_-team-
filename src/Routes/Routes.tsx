@@ -50,7 +50,6 @@ import CngEarnings from "../pages/CngEarnings";
 //Services Pages
 import CNGRidePage from "../pages/Services/CNGRidePage";
 import TrackRide from "../pages/Services/TrackRide";
-import BookingForm from "../pages/Services/BookingForm";
 import BikeRide from "../pages/Services/BikeRide";
 import CarRide from "../pages/Services/CarRide";
 import Ambulance from "../pages/Services/Ambulance";
@@ -58,6 +57,7 @@ import JourneyPackage from "../pages/Services/JourneyPackage";
 import SchoolBus from "../pages/Services/SchoolBus";
 import ShuttleBus from "../pages/Services/ShuttleBus";
 import Shipment from "../pages/Services/Shipment";
+import RideBooking from "../pages/Services/RideBooking";
 
 
 const router = createBrowserRouter([
@@ -91,7 +91,7 @@ const router = createBrowserRouter([
       { path: "/SchoolBus", element: <SchoolBus></SchoolBus> },
       { path: "/ShuttleBus", element: <ShuttleBus></ShuttleBus> },
       { path: "/Shipment", element: <Shipment></Shipment> },
-      { path: "/bookingform", element: <BookingForm></BookingForm> },
+      { path: "/RideBooking", element: <RideBooking></RideBooking> },
 
       // Others
       { path: "/aboutUs", element: <AboutUs /> },

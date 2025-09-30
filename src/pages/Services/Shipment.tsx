@@ -96,7 +96,7 @@ export default function Shipment() {
             {/* BTN  */}
             <div className="flex justify-center items-center my-10 pb-5">
 
-                <NavLink to="/bookingform">
+                <NavLink to="/RideBooking">
                     <Button
                         label="এখনই রাইড বুক করুন"
                         className="!bg-[#274450]  !text-white !border-none !px-4 !py-3 !rounded-md hover:!bg-[#497D74]"

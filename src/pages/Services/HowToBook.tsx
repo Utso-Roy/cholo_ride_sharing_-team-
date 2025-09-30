@@ -16,7 +16,7 @@ const HowToBook: React.FC = () => {
     return (
         <div className="relative py-10 px-5 md:px-16">
             {/* Lottie Background */}
-            <div className="absolute inset-0 z-0 opacity-30">
+            <div className="absolute inset-0 z-0 opacity-30  ">
                 <Lottie
                     animationData={lottieData}
                     loop
