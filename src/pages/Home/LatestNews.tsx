@@ -44,7 +44,7 @@ const blogs: Blog[] = [
 const LatestNews: React.FC = () => {
   return (
     <section className="py-16 bg-gradient-to-r from-[#e6fcf9] to-gray-50">
-      <div className="container mx-auto px-4">
+      <div className=" mx-auto px-6">
         <h2 className="text-3xl font-bold text-center text-[#27445D] mb-2">
   সর্বশেষ খবর
 </h2>
@@ -52,7 +52,7 @@ const LatestNews: React.FC = () => {
   নতুন অফার, নিরাপত্তা নির্দেশিকা এবং ভেরিফায়েড ড্রাইভারদের তথ্য পেতে পড়ুন।
 </p>
 
-        <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-6">
+        <div className="grid sm:grid-cols-2  md:grid-cols-4 gap-6">
           {blogs.map((blog) => (
             <div
               key={blog.id}

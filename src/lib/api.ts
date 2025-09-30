@@ -1,17 +1,14 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 
 export const api = axios.create({
-  baseURL: "http://localhost:3000", // or keep your proxy to 3000 if configured
+  baseURL: "http://localhost:3000",
 });
 
-// IMPORTANT: let Axios set the boundary for FormData
-api.interceptors.request.use((config) => {
+api.interceptors.request.use((config: AxiosRequestConfig) => {
   if (config.data instanceof FormData) {
-    // Remove any preset header so browser sets proper multipart boundary
-    if (config.headers) {
-      delete config.headers["Content-Type"];
-      delete config.headers["content-type"];
-    }
+    if (!config.headers) config.headers = {};
+    if ("Content-Type" in config.headers) delete config.headers["Content-Type"];
+    if ("content-type" in config.headers) delete config.headers["content-type"];
   }
   return config;
 });

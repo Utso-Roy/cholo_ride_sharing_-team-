@@ -3,6 +3,9 @@ import { useForm } from 'react-hook-form';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import { Link, useNavigate } from 'react-router';
 import GoogleLogin from './GoogleLogin';
+import Lottie from 'lottie-react';
+import taxiLottie from '../../public/Lottie/TAXI.json';
+import taxi2Lottie from '../../public/Lottie/TAXI 2.json';
 
 const Login = () => {
     const {
@@ -42,106 +45,122 @@ const Login = () => {
     };
 
     return (
-        <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl rounded-3xl mx-auto my-4">
-            <div className="card-body">
-                <h2 className="text-4xl text-center font-bold mb-4">Login</h2>
-
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-
-                    {/* Email */}
-                    <div>
-                        <label className="label">Email</label>
-                        <input
-                            type="email"
-                            {...register('email', { required: true })}
-                            className="input input-bordered w-full"
-                            placeholder="Email"
-                        />
-                        {errors.email && (
-                            <p className="text-red-500 text-sm mt-1">Email is required</p>
-                        )}
-                    </div>
-
-                    {/* Password */}
-                    <div>
-                        <label className="label">Password</label>
-                        <div className="relative">
-                            <input
-                                type={showPassword ? 'text' : 'password'}
-                                {...register('password', {
-                                    required: 'Password is required',
-                                    pattern: {
-                                        value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/,
-                                        message:
-                                            'Password must be at least 8 characters long and contain uppercase, lowercase, number, and special character',
-                                    },
-                                })}
-                                className="input input-bordered w-full pr-10"
-                                placeholder="Password"
-                            />
-                            {password.length > 0 && (
-                                <button
-                                    type="button"
-                                    onClick={() => setShowPassword(!showPassword)}
-                                    className="absolute top-1/2 right-3 -translate-y-1/2 text-xl text-gray-500"
-                                >
-                                    {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
-                                </button>
-                            )}
+        <div className="flex flex-col md:flex-row min-h-screen bg-base-100">
+            {/* Left Section */}
+            <div className="w-full md:w-1/3 flex items-center justify-center bg-gradient-to-br from-[#71BBB2] to-[#5AA29F] p-4 md:p-0">
+                <div className="flex flex-col items-center justify-center w-full">
+                    <div className="bg-white/10 rounded-2xl shadow-lg px-4 py-6 md:px-6 md:py-8 max-w-xs md:max-w-sm mx-auto text-center border border-white/20">
+                        <div className="flex justify-center mb-2">
+                            <Lottie animationData={taxiLottie} loop={true} style={{ width: '100%', maxWidth: 180, height: 'auto' }} />
                         </div>
-
-                        {password && (
-                            <ul className="text-sm mt-2 space-y-1">
-                                <li className={validations.length ? 'text-green-600' : 'text-red-500'}>
-                                    {validations.length ? '✅' : '❌'} At least 8 characters
-                                </li>
-                                <li className={validations.upper ? 'text-green-600' : 'text-red-500'}>
-                                    {validations.upper ? '✅' : '❌'} At least one uppercase letter
-                                </li>
-                                <li className={validations.lower ? 'text-green-600' : 'text-red-500'}>
-                                    {validations.lower ? '✅' : '❌'} At least one lowercase letter
-                                </li>
-                                <li className={validations.number ? 'text-green-600' : 'text-red-500'}>
-                                    {validations.number ? '✅' : '❌'} At least one number
-                                </li>
-                                <li className={validations.special ? 'text-green-600' : 'text-red-500'}>
-                                    {validations.special ? '✅' : '❌'} At least one special character
-                                </li>
-                            </ul>
-                        )}
-
-                        {errors.password && (
-                            <p className="text-red-500 mt-1 text-sm">{String(errors.password.message)}</p>
-                        )}
+                        <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-3">স্বাগতম!</h2>
+                        <p className="text-white text-sm md:text-base lg:text-lg">লগইন করে আপনার যাত্রা শুরু করুন সহজেই ।</p>
                     </div>
-
-                    {/* Forgot Password */}
-                    <div className="text-right">
-                        <button
-                            type="button"
-                            className="text-sm text-blue-500 hover:underline"
-                            onClick={handleForgotPassword}
-                        >
-                            Forgot password?
-                        </button>
+                </div>
+            </div>
+            {/* Right Section (Login Form) */}
+            <div className="w-full md:w-2/3 flex items-center justify-center p-4 bg-[#e6f6f5]">
+                <div className="card bg-[#e6f6f5] w-full max-w-sm shadow-2xl rounded-3xl mx-auto my-6">
+                    <div className="card-body text-gray-800">
+                        <div className="flex justify-center mb-2">
+                            <Lottie animationData={taxi2Lottie} loop={true} style={{ width: '100%', maxWidth: 140, height: 'auto' }} />
+                        </div>
+                        <h2 className="text-3xl font-bold text-center text-gray-900 mb-4">লগইন করুন</h2>
+                        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 mt-2">
+                            {/* Email */}
+                            <div>
+                                <label className="label">ইমেইল</label>
+                                <input
+                                    type="email"
+                                    {...register('email', { required: true })}
+                                    className="input input-bordered w-full bg-white text-black placeholder-gray-500"
+                                    placeholder="ইমেইল"
+                                />
+                                {errors.email && (
+                                    <p className="text-red-500 text-sm mt-1">ইমেইল আবশ্যক</p>
+                                )}
+                            </div>
+                            {/* Password */}
+                            <div>
+                                <label className="label">পাসওয়ার্ড</label>
+                                <div className="relative">
+                                    <input
+                                        type={showPassword ? 'text' : 'password'}
+                                        {...register('password', {
+                                            required: 'Password is required',
+                                            pattern: {
+                                                value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/,
+                                                message:
+                                                    'Password must be at least 8 characters long and contain uppercase, lowercase, number, and special character',
+                                            },
+                                        })}
+                                        className="input input-bordered w-full pr-10 bg-white text-black placeholder-gray-500"
+                                        placeholder="পাসওয়ার্ড"
+                                    />
+                                    {password.length > 0 && (
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowPassword(!showPassword)}
+                                            className="absolute top-1/2 right-3 -translate-y-1/2 text-xl text-gray-500"
+                                        >
+                                            {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+                                        </button>
+                                    )}
+                                </div>
+                                {password && (
+                                    <ul className="text-sm mt-2 space-y-1">
+                                        <li className={validations.length ? 'text-green-600' : 'text-red-500'}>
+                                            {validations.length ? '✅' : '❌'} কমপক্ষে ৮ অক্ষর
+                                        </li>
+                                        <li className={validations.upper ? 'text-green-600' : 'text-red-500'}>
+                                            {validations.upper ? '✅' : '❌'} কমপক্ষে একটি বড় হাতের অক্ষর
+                                        </li>
+                                        <li className={validations.lower ? 'text-green-600' : 'text-red-500'}>
+                                            {validations.lower ? '✅' : '❌'} কমপক্ষে একটি ছোট হাতের অক্ষর
+                                        </li>
+                                        <li className={validations.number ? 'text-green-600' : 'text-red-500'}>
+                                            {validations.number ? '✅' : '❌'} কমপক্ষে একটি সংখ্যা
+                                        </li>
+                                        <li className={validations.special ? 'text-green-600' : 'text-red-500'}>
+                                            {validations.special ? '✅' : '❌'} কমপক্ষে একটি বিশেষ অক্ষর
+                                        </li>
+                                    </ul>
+                                )}
+                                {errors.password && (
+                                    <p className="text-red-500 mt-1 text-sm">{
+                                        String(errors.password.message) === 'Password is required'
+                                            ? 'পাসওয়ার্ড আবশ্যক'
+                                            : String(errors.password.message) === 'Password must be at least 8 characters long and contain uppercase, lowercase, number, and special character'
+                                            ? 'পাসওয়ার্ড কমপক্ষে ৮ অক্ষরের হতে হবে এবং বড় হাতের, ছোট হাতের, সংখ্যা ও বিশেষ অক্ষর থাকতে হবে'
+                                            : String(errors.password.message)
+                                    }</p>
+                                )}
+                            </div>
+                            {/* Forgot Password */}
+                            <div className="text-right">
+                                <Link
+                                    to="/forget-password-with-email"
+                                    className="text-sm text-blue-500 hover:underline"
+                                >
+                                    পাসওয়ার্ড ভুলে গেছেন?
+                                </Link>
+                            </div>
+                            {/* Submit */}
+                            <button type="submit" className="btn bg-[#71BBB2] hover:bg-[#5AA29F] text-white border-none w-full mt-2">
+                                লগইন করুন
+                            </button>
+                            {/* Sign Up Link */}
+                            <p className="mt-2 text-sm text-center">
+                                একাউন্ট নেই?{' '}
+                                <Link to="/signup" className="text-blue-500 hover:underline">
+                                    নিবন্ধন করুন
+                                </Link>
+                            </p>
+                        </form>
+                        <div className="mt-4">
+                            <GoogleLogin></GoogleLogin>
+                        </div>
                     </div>
-
-                    {/* Submit */}
-                    <button type="submit" className="btn btn-primary w-full mt-2">
-                        Login
-                    </button>
-
-                    {/* Sign Up Link */}
-                    <p className="mt-2 text-sm text-center">
-                        Don't have an account?{' '}
-                        <Link to="/signup" className="text-blue-500 hover:underline">
-                            Sign Up
-                        </Link>
-                    </p>
-                </form>
-
-                <div className="mt-4">
-                    <GoogleLogin></GoogleLogin>
                 </div>
             </div>
         </div>

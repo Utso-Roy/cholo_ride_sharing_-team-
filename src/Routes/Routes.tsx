@@ -2,9 +2,7 @@ import { createBrowserRouter } from "react-router";
 import Error from "../Error/Error";
 import RootLayout from "../Layout/RootLayout";
 
-// Pages
 import Home from "../pages/Home/Home";
-// otherpage
 import AboutUs from "../pages/OthersPage/AboutUs";
 import OurStory from "../pages/OthersPage/OurStory";
 import Career from "../pages/OthersPage/Career";
@@ -33,6 +31,8 @@ import CNGLayout from "../Layout/CNGLayout";
 // Auth
 import SignUp from "../Access/SignUp";
 import Login from "../Access/Login";
+import ForgetPasswordwithEmail from "../Access/ForgetPasswordwithEmail";
+import ForgetPasswordwithNumber from "../Access/ForgetPasswordwithNumber";
 
 import CngStepOne from "../pages/CngStepOne";
 import CngStepTwo from "../pages/CngStepTwo";
@@ -42,7 +42,14 @@ import PrivacyPolicy from "../Utils/Help/PrivacyPolicy/PrivacyPolicy";
 import FeedbackForm from "../Utils/Help/FeedbackForm/FeedbackForm";
 import SocialActivitiesPage from "../pages/OthersPage/SocialActivitiesPage";
 import SocialActivitiesDetails from "../pages/OthersPage/SocialActivitiesDetails";
+import CarEarnings from "../pages/CarEarnings";
+import CngEarnings from "../pages/CngEarnings";
 
+
+
+//Services Pages
+import CNGRidePage from "../pages/Services/CNGRidePage";
+import TrackRide from "../pages/Services/TrackRide";
 
 
 const router = createBrowserRouter([
@@ -66,6 +73,10 @@ const router = createBrowserRouter([
       { path: "/blogs", element: <BlogListPage /> },
       { path: "/blogs/:id", element: <BlogDetailsPage /> },
 
+      //Service page
+      { path: "/cng", element: <CNGRidePage></CNGRidePage> },
+      { path: "/track", element: <TrackRide></TrackRide> },
+
       // Others
       { path: "/aboutUs", element: <AboutUs /> },
       { path: "/our-story", element: <OurStory /> },
@@ -84,6 +95,17 @@ const router = createBrowserRouter([
           { path: "details", element: <BikeStepTwo /> },
         ],
       },
+
+      {
+        element: <ForgetPasswordwithEmail></ForgetPasswordwithEmail>,
+        path: "/forget-password-with-email"
+      },
+      {
+        element: <ForgetPasswordwithNumber></ForgetPasswordwithNumber>,
+        path: "/forget-password-with-number"
+      },
+      { path: "/earn/car", element: <CarEarnings /> },
+      { path: "/earn/cng", element: <CngEarnings /> },
       { path: "/earn/car",
         element: <CarLayout />,
         children: [
