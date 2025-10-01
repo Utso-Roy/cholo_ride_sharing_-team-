@@ -248,8 +248,10 @@ const Navbar: React.FC = () => {
 
   return (
     <div className="navbar bg-[#27445D] sticky top-0 text-white shadow-md z-50">
+      {/* Navbar Start */}
+
       <div className="navbar-start flex items-center gap-4">
-        <NavLink to="/" className="text-xl font-bold">
+        <NavLink to="/" className="cursor-pointer text-xl font-bold">
           চলো
         </NavLink>
 
@@ -278,6 +280,14 @@ const Navbar: React.FC = () => {
             {links}
           </ul>
         </div>
+
+
+        {/* Brand */}
+        <NavLink to="/" className="btn btn-ghost text-xl text-white font-bold hidden lg:inline-flex">
+          চলো
+
+        </NavLink>
+
       </div>
 
       {/* Desktop menu */}
