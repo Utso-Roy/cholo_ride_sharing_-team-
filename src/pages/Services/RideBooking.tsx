@@ -1,4 +1,4 @@
-// RideBooking.tsx
+/// RideBooking.tsx
 import React from "react";
 import Lottie from "lottie-react";
 import lottieData from "../../../public/Booking.json";
