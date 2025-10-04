@@ -9,7 +9,7 @@ import { Dialog } from "primereact/dialog";
 import { motion } from "framer-motion";
 
 // TypeScript Google Maps types
-// <reference types="@types/google.maps" />
+//<reference types="@types/google.maps" /> 
 
 const PRIMARY = "#274450";
 const ACCENT = "#71BBB2";

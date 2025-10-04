@@ -11,9 +11,11 @@ import { Gender, useCNGApply } from "../context/cng";
 
 import { FaUserCheck, FaShuttleVan, FaClipboardCheck } from "react-icons/fa";
 
+import { useMutation } from "@tanstack/react-query";
+import { api } from "../lib/api";
 
 // 🔧 টোস্ট অন করতে true করে দাও (ডিফল্টে কনসোলে দেখায়)
-const ENABLE_TOAST = false;
+const ENABLE_TOAST = true;
 
 const CITY_OPTIONS = [
   { label: "ঢাকা", value: "Dhaka" },
@@ -67,7 +69,9 @@ const CngStepTwo = () => {
     if (previewUrl) URL.revokeObjectURL(previewUrl);
     setPreviewUrl(null);
     setDriver({ ...driver, photo: null });
+
     fileRef.current?.clear?.();
+
     setFileKey((k) => k + 1);
   };
 
@@ -81,7 +85,8 @@ const CngStepTwo = () => {
     if (ENABLE_TOAST) {
       toast.current?.show({
         severity: type,
-        summary: type === "success" ? "সফল" : type === "warn" ? "সতর্কতা" : "ত্রুটি",
+        summary:
+          type === "success" ? "সফল" : type === "warn" ? "সতর্কতা" : "ত্রুটি",
         detail,
         life: 2400,
       });
@@ -89,6 +94,53 @@ const CngStepTwo = () => {
       console.info(`[${type.toUpperCase()}] ${detail}`);
     }
   };
+
+  const submitMutation = useMutation({
+    mutationFn: async ({ driver, vehicle }: any) => {
+      const dobVal = Array.isArray(driver.dob) ? driver.dob[0] : driver.dob;
+      const dobStr =
+        dobVal instanceof Date ? dobVal.toISOString() : String(dobVal ?? "");
+
+      const fd = new FormData();
+      // --- driver fields ---
+      fd.set("firstName", driver.firstName);
+      fd.set("lastName", driver.lastName);
+      fd.set("phone", driver.phone);
+      fd.set("city", driver.city);
+      fd.set("gender", driver.gender);
+
+      fd.set("nid", driver.nid);
+      fd.set("license", driver.license);
+      if (driver.photo) fd.set("photo", driver.photo, driver.photo.name);
+      fd.set("dob", dobStr);
+
+      // --- vehicle fields ---
+      fd.set("brand", vehicle.brand);
+      fd.set("model", vehicle.model);
+      fd.set("regNo", vehicle.regNo);
+      fd.set("year", vehicle.year);
+      fd.set("fitnessNo", vehicle.fitnessNo);
+      fd.set("taxTokenNo", vehicle.taxTokenNo);
+      fd.set("routePermitNo", vehicle.routePermitNo);
+
+      console.groupCollapsed("FormData preview");
+      for (const [k, v] of fd.entries()) {
+        if (v instanceof File) {
+          console.log(k, { name: v.name, type: v.type, size: v.size });
+        } else {
+          console.log(k, v);
+        }
+      }
+      console.groupEnd();
+
+      if (!(driver.photo instanceof File)) {
+        console.warn("photo is NOT a File:", driver.photo);
+      }
+
+      const res = await api.post("/api/cng-applications", fd);
+      return res.data;
+    },
+  });
 
   const submitAll = async () => {
     // ধাপ–২ ভ্যালিডেশন (ড্রাইভার + ভেহিকল)
@@ -116,15 +168,60 @@ const CngStepTwo = () => {
     }
 
     setIsSubmitting(true);
-    try {
-      notify("success", "আবেদন জমা হয়েছে (ডেমো)!");
-    } catch (err: any) {
-      notify("error", err?.message || "সাবমিট ব্যর্থ হয়েছে।");
-    } finally {
-      setIsSubmitting(false);
-    }
-    reset();
-    navigate("/");
+    submitMutation.mutate(
+      { driver, vehicle },
+      {
+        onSuccess: (data) => {
+          notify("success", "আবেদন জমা হয়েছে!");
+          // চাইলে data.id দেখাতে পারেন
+          reset();
+          navigate("/");
+        },
+        onError: (err: any) => {
+          const data = err?.response?.data;
+          console.error("Submit error:", data);
+
+          // Zod field errors (object: { fieldName: string[] })
+          const fe = data?.details?.fieldErrors as
+            | Record<string, string[]>
+            | undefined;
+
+          // First error message (if any)
+          const firstField = fe && Object.keys(fe)[0];
+          const firstMsg = firstField && fe[firstField]?.[0];
+
+          // Optional: nice label mapping (API keys → Bangla labels)
+          const label: Record<string, string> = {
+            "driver.firstName": "নামের প্রথম অংশ",
+            "driver.lastName": "নামের শেষ অংশ",
+            "driver.phone": "মোবাইল নাম্বার",
+            "driver.city": "শহর",
+            "driver.gender": "লিঙ্গ",
+            "driver.dob": "জন্মতারিখ",
+            "driver.nid": "এনআইডি",
+            "driver.license": "ড্রাইভিং লাইসেন্স",
+            "vehicle.brand": "ব্র্যান্ড",
+            "vehicle.model": "মডেল",
+            "vehicle.regNo": "রেজিস্ট্রেশন নম্বর",
+            "vehicle.year": "সাল",
+            "vehicle.fitnessNo": "ফিটনেস নম্বর",
+            "vehicle.taxTokenNo": "ট্যাক্স টোকেন নম্বর",
+            "vehicle.routePermitNo": "রুট পারমিট নম্বর",
+          };
+
+          const msg = data?.error || err?.message || "সাবমিট ব্যর্থ হয়েছে";
+
+          if (firstField && firstMsg) {
+            notify("error", `${label[firstField] || firstField}: ${firstMsg}`);
+          } else {
+            notify("error", msg);
+          }
+        },
+
+        onSettled: () => setIsSubmitting(false),
+      }
+    );
+
   };
 
   return (
@@ -144,8 +241,12 @@ const CngStepTwo = () => {
               <label>নামের প্রথম অংশ*</label>
               <InputText
                 value={driver.firstName}
-                onChange={(e) => setDriver({ ...driver, firstName: e.target.value })}
-                className={classNames({ "p-invalid": !driver.firstName?.trim() })}
+                onChange={(e) =>
+                  setDriver({ ...driver, firstName: e.target.value })
+                }
+                className={classNames({
+                  "p-invalid": !driver.firstName?.trim(),
+                })}
                 placeholder="যেমন: রহিম"
               />
             </div>
@@ -154,19 +255,29 @@ const CngStepTwo = () => {
               <label>নামের শেষ অংশ*</label>
               <InputText
                 value={driver.lastName}
-                onChange={(e) => setDriver({ ...driver, lastName: e.target.value })}
-                className={classNames({ "p-invalid": !driver.lastName?.trim() })}
+                onChange={(e) =>
+                  setDriver({ ...driver, lastName: e.target.value })
+                }
+                className={classNames({
+                  "p-invalid": !driver.lastName?.trim(),
+                })}
                 placeholder="যেমন: উদ্দিন"
               />
             </div>
 
             <div className="flex flex-col gap-2">
-              <label>মোবাইল নম্বর* <span className="opacity-70">(01XXXXXXXXX)</span></label>
+              <label>
+                মোবাইল নম্বর* <span className="opacity-70">(01XXXXXXXXX)</span>
+              </label>
               <InputText
                 keyfilter="int"
                 value={driver.phone}
-                onChange={(e) => setDriver({ ...driver, phone: e.target.value })}
-                className={classNames({ "p-invalid": !/^01[0-9]{9}$/.test(driver.phone || "") })}
+                onChange={(e) =>
+                  setDriver({ ...driver, phone: e.target.value })
+                }
+                className={classNames({
+                  "p-invalid": !/^01[0-9]{9}$/.test(driver.phone || ""),
+                })}
                 placeholder="01XXXXXXXXX"
               />
             </div>
@@ -188,7 +299,10 @@ const CngStepTwo = () => {
               <label>লিঙ্গ*</label>
               <div className="flex items-center gap-6">
                 {(["male", "female", "other"] as Gender[]).map((g) => (
-                  <label key={g} className="flex items-center gap-2 cursor-pointer">
+                  <label
+                    key={g}
+                    className="flex items-center gap-2 cursor-pointer"
+                  >
                     <input
                       type="radio"
                       name="gender"
@@ -196,7 +310,11 @@ const CngStepTwo = () => {
                       onChange={() => setDriver({ ...driver, gender: g })}
                     />
                     <span>
-                      {g === "male" ? "পুরুষ" : g === "female" ? "নারী" : "অন্যান্য"}
+                      {g === "male"
+                        ? "পুরুষ"
+                        : g === "female"
+                        ? "নারী"
+                        : "অন্যান্য"}
                     </span>
                   </label>
                 ))}
@@ -221,7 +339,9 @@ const CngStepTwo = () => {
               <InputText
                 value={driver.nid}
                 onChange={(e) => setDriver({ ...driver, nid: e.target.value })}
-                className={classNames({ "p-invalid": !(driver.nid && driver.nid.trim().length >= 10) })}
+                className={classNames({
+                  "p-invalid": !(driver.nid && driver.nid.trim().length >= 10),
+                })}
                 placeholder="কমপক্ষে ১০ সংখ্যা"
               />
             </div>
@@ -230,8 +350,14 @@ const CngStepTwo = () => {
               <label>ড্রাইভিং লাইসেন্স নম্বর*</label>
               <InputText
                 value={driver.license}
-                onChange={(e) => setDriver({ ...driver, license: e.target.value })}
-                className={classNames({ "p-invalid": !(driver.license && driver.license.trim().length >= 6) })}
+                onChange={(e) =>
+                  setDriver({ ...driver, license: e.target.value })
+                }
+                className={classNames({
+                  "p-invalid": !(
+                    driver.license && driver.license.trim().length >= 6
+                  ),
+                })}
                 placeholder="কমপক্ষে ৬ অক্ষর"
               />
             </div>
@@ -244,8 +370,8 @@ const CngStepTwo = () => {
                 mode="basic"
                 name="photo"
                 chooseLabel="ছবি নির্বাচন"
-                accept="image/*"
-                maxFileSize={2 * 1024 * 1024}
+                accept="image/jpeg, image/png"
+                // maxFileSize={2 * 1024 * 1024}
                 customUpload
                 onSelect={onPhoto}
                 chooseOptions={{
@@ -256,7 +382,9 @@ const CngStepTwo = () => {
                 }}
               />
               {driver.photo && !previewUrl && (
-                <small className="text-gray-700">নির্বাচিত: {driver.photo.name}</small>
+                <small className="text-gray-700">
+                  নির্বাচিত: {driver.photo.name}
+                </small>
               )}
 
               {previewUrl && (
@@ -268,7 +396,8 @@ const CngStepTwo = () => {
                   />
                   <div className="flex items-center gap-2">
                     <small className="text-gray-700">
-                      {driver.photo?.name} ({Math.round((driver.photo?.size ?? 0) / 1024)} KB)
+                      {driver.photo?.name} (
+                      {Math.round((driver.photo?.size ?? 0) / 1024)} KB)
                     </small>
                     <Button
                       label="রিমুভ"
@@ -279,7 +408,9 @@ const CngStepTwo = () => {
                   </div>
                 </div>
               )}
-              <small className="opacity-70">সমর্থিত: JPG/PNG • সর্বোচ্চ 2MB • পরিষ্কার মুখের ছবি দিন</small>
+              <small className="opacity-70">
+                সমর্থিত: JPG/PNG • সর্বোচ্চ 2MB • পরিষ্কার মুখের ছবি দিন
+              </small>
             </div>
           </div>
         </section>
@@ -296,8 +427,13 @@ const CngStepTwo = () => {
               <label>ব্র্যান্ড সিলেক্ট করুন*</label>
               <Dropdown
                 value={vehicle.brand}
-                onChange={(e) => setVehicle({ ...vehicle, brand: e.value, model: null })}
-                options={Object.keys(BRAND_MODELS).map((b) => ({ label: b, value: b }))}
+                onChange={(e) =>
+                  setVehicle({ ...vehicle, brand: e.value, model: null })
+                }
+                options={Object.keys(BRAND_MODELS).map((b) => ({
+                  label: b,
+                  value: b,
+                }))}
                 placeholder="ব্র্যান্ড নির্বাচন"
                 className={classNames({ "p-invalid": !vehicle.brand })}
               />
@@ -319,18 +455,22 @@ const CngStepTwo = () => {
               <label>রেজিস্ট্রেশন নাম্বার*</label>
               <InputText
                 value={vehicle.regNo}
-                onChange={(e) => setVehicle({ ...vehicle, regNo: e.target.value })}
+                onChange={(e) =>
+                  setVehicle({ ...vehicle, regNo: e.target.value })
+                }
                 placeholder="যেমন: DHA-XX-1234"
                 className={classNames({ "p-invalid": !vehicle.regNo?.trim() })}
               />
             </div>
 
             <div className="flex flex-col gap-2">
-              <label>মডেল ইয়ার/বছর*</label>
+              <label>বছর*</label>
               <InputText
                 keyfilter="int"
                 value={vehicle.year}
-                onChange={(e) => setVehicle({ ...vehicle, year: e.target.value })}
+                onChange={(e) =>
+                  setVehicle({ ...vehicle, year: e.target.value })
+                }
                 placeholder="যেমন: 2019"
                 className={classNames({ "p-invalid": !vehicle.year?.trim() })}
               />
@@ -340,9 +480,13 @@ const CngStepTwo = () => {
               <label>ফিটনেস নাম্বার*</label>
               <InputText
                 value={vehicle.fitnessNo}
-                onChange={(e) => setVehicle({ ...vehicle, fitnessNo: e.target.value })}
+                onChange={(e) =>
+                  setVehicle({ ...vehicle, fitnessNo: e.target.value })
+                }
                 placeholder="যেমন: FT-458921"
-                className={classNames({ "p-invalid": !vehicle.fitnessNo?.trim() })}
+                className={classNames({
+                  "p-invalid": !vehicle.fitnessNo?.trim(),
+                })}
               />
             </div>
 
@@ -350,9 +494,13 @@ const CngStepTwo = () => {
               <label>ট্যাক্স টোকেন নাম্বার*</label>
               <InputText
                 value={vehicle.taxTokenNo}
-                onChange={(e) => setVehicle({ ...vehicle, taxTokenNo: e.target.value })}
+                onChange={(e) =>
+                  setVehicle({ ...vehicle, taxTokenNo: e.target.value })
+                }
                 placeholder="যেমন: TT-2025-XXXX"
-                className={classNames({ "p-invalid": !vehicle.taxTokenNo?.trim() })}
+                className={classNames({
+                  "p-invalid": !vehicle.taxTokenNo?.trim(),
+                })}
               />
             </div>
 
@@ -360,9 +508,13 @@ const CngStepTwo = () => {
               <label>রুট পারমিট নাম্বার*</label>
               <InputText
                 value={vehicle.routePermitNo}
-                onChange={(e) => setVehicle({ ...vehicle, routePermitNo: e.target.value })}
+                onChange={(e) =>
+                  setVehicle({ ...vehicle, routePermitNo: e.target.value })
+                }
                 placeholder="যেমন: RP-XXXXX"
-                className={classNames({ "p-invalid": !vehicle.routePermitNo?.trim() })}
+                className={classNames({
+                  "p-invalid": !vehicle.routePermitNo?.trim(),
+                })}
               />
             </div>
           </div>
@@ -376,10 +528,10 @@ const CngStepTwo = () => {
             />
             <Button
               label={isSubmitting ? "সাবমিট হচ্ছে..." : "সাবমিট"}
-              icon={isSubmitting ? "pi pi-spin pi-spinner" : "pi pi-check"}
+              icon={submitMutation.isPending ? "pi pi-spin pi-spinner" : "pi pi-check"}
               className="!bg-[#71BBB2] !border-none hover:!bg-[#5AA29F]"
               onClick={submitAll}
-              disabled={isSubmitting}
+              disabled={submitMutation.isPending}
             />
           </div>
         </section>
@@ -394,7 +546,10 @@ const CngStepTwo = () => {
             <li>সঠিক মোবাইল ফরম্যাট (01XXXXXXXXX)</li>
             <li>NID ≥ ১০ সংখ্যা, লাইসেন্স ≥ ৬ অক্ষর</li>
             <li>পরিষ্কার মুখের ছবি (jpg/png ≤ 2MB)</li>
-            <li>ব্র্যান্ড/মডেল, রেজিস্ট্রেশন, ফিটনেস, ট্যাক্স টোকেন ও রুট পারমিট সঠিকভাবে দিন</li>
+            <li>
+              ব্র্যান্ড/মডেল, রেজিস্ট্রেশন, ফিটনেস, ট্যাক্স টোকেন ও রুট পারমিট
+              সঠিকভাবে দিন
+            </li>
           </ul>
         </section>
       </div>
