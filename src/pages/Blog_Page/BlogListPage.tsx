@@ -6,6 +6,7 @@ import Lottie from "lottie-react";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "primereact/button";
 import { Link } from "react-router";
+import Loading from "../../Loading/Loading";
 
 type Blog = {
     id: number;
@@ -22,7 +23,7 @@ export const BlogListPage: React.FC = () => {
     const [query, setQuery] = useState("");
     const [category, setCategory] = useState("সবগুলো ব্লগ দেখুন");
 
-    // ✅ TanStack Query 
+    //  TanStack Query 
     const { data: blogs = [], isLoading, error } = useQuery<Blog[]>({
         queryKey: ["blogs"],
         queryFn: async () => {
@@ -31,7 +32,7 @@ export const BlogListPage: React.FC = () => {
         },
     });
 
-    // ✅ Filter logic useMemo 
+    // Filter logic useMemo 
     const filtered = useMemo(() => {
         let result = [...blogs];
 
@@ -64,7 +65,7 @@ export const BlogListPage: React.FC = () => {
     ];
 
     if (isLoading) {
-        return <p className="text-center py-10 text-lg">লোড হচ্ছে...</p>;
+        return <Loading></Loading>;
     }
 
     if (error) {

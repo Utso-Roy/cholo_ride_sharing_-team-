@@ -14,6 +14,7 @@ import Partners from "./Partners";
 import Newsletter from "./Newsletter";
 
 const Home = () => {
+
   return (
     <div className="space-y-5">
       <section>
@@ -59,6 +60,8 @@ const Home = () => {
       <section>
         <Newsletter></Newsletter>
       </section>
+
+      
     </div>
   );
 };

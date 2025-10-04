@@ -47,7 +47,7 @@ const Statistics: React.FC = () => {
               className="flex flex-col items-center gap-4 bg-white rounded-2xl p-8 shadow hover:shadow-2xl transition cursor-pointer"
             >
               <div>{stat.icon}</div>
-              <h3 className="text-4xl font-extrabold text-[#27445D]">
+              <h3 className="text-3xl font-extrabold text-[#27445D]">
                 <CountUp end={stat.count} duration={2.5} separator="," />
                 {stat.id === 3 ? "+ ঘন্টা" : "+"}
               </h3>

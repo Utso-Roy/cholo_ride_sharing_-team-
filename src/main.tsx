@@ -6,8 +6,9 @@ import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import { RouterProvider } from "react-router";
 import router from "./Routes/Routes";
-
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import AuthProvider from "./Auth/AuthProvider";
+  import { ToastContainer } from 'react-toastify';
 
 const queryClient = new QueryClient();
 
@@ -15,8 +16,11 @@ const rootElement = document.getElementById("root") as HTMLElement;
 
 createRoot(rootElement).render(
   <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-    </QueryClientProvider>
+    <AuthProvider>
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+          <ToastContainer />
+      </QueryClientProvider>
+    </AuthProvider>
   </StrictMode>
 );
