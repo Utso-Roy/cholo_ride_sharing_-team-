@@ -303,11 +303,7 @@ const Navbar: React.FC = () => {
         </div>
 
 
-        {/* Brand */}
-        <NavLink to="/" className="btn btn-ghost text-xl text-white font-bold hidden lg:inline-flex">
-          চলো
-
-        </NavLink>
+    
 
       </div>
 
