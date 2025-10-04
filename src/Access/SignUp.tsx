@@ -12,6 +12,7 @@ import GoogleLogin from "./GoogleLogin";
 import { AuthContext } from "../Auth/AuthProvider";
 import { toast } from "react-toastify";
 import { updateProfile } from "firebase/auth";
+import { api5000 } from "../lib/api";
 
 interface FormData {
   name: string;
@@ -90,6 +91,16 @@ const SignUp: React.FC = () => {
           photoURL: profilePic || undefined,
         });
       }
+
+          const saveUser = {
+        name: data.name,
+        email: data.email,
+        photo: profilePic || null,
+        createdAt: new Date(),
+        role : 'user'
+      };
+
+     await api5000.post('/users',saveUser)
 
       toast.success("নিবন্ধন সফল!");
       navigate(from);
