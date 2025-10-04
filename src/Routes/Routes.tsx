@@ -50,6 +50,15 @@ import CngEarnings from "../pages/CngEarnings";
 //Services Pages
 import CNGRidePage from "../pages/Services/CNGRidePage";
 import TrackRide from "../pages/Services/TrackRide";
+import BikeRide from "../pages/Services/BikeRide";
+import CarRide from "../pages/Services/CarRide";
+import Ambulance from "../pages/Services/Ambulance";
+import JourneyPackage from "../pages/Services/JourneyPackage";
+import SchoolBus from "../pages/Services/SchoolBus";
+import ShuttleBus from "../pages/Services/ShuttleBus";
+import Shipment from "../pages/Services/Shipment";
+import RideBooking from "../pages/Services/RideBooking";
+
 
 
 const router = createBrowserRouter([
@@ -74,17 +83,25 @@ const router = createBrowserRouter([
       { path: "/blogs/:id", element: <BlogDetailsPage /> },
 
       //Service page
+      { path: "/bike", element: <BikeRide></BikeRide> },
+      { path: "/car", element: <CarRide></CarRide> },
       { path: "/cng", element: <CNGRidePage></CNGRidePage> },
       { path: "/track", element: <TrackRide></TrackRide> },
+      { path: "/ambulance", element: <Ambulance></Ambulance> },
+      { path: "/JourneyPackage", element: <JourneyPackage></JourneyPackage> },
+      { path: "/SchoolBus", element: <SchoolBus></SchoolBus> },
+      { path: "/ShuttleBus", element: <ShuttleBus></ShuttleBus> },
+      { path: "/Shipment", element: <Shipment></Shipment> },
+      { path: "/RideBooking", element: <RideBooking></RideBooking> },
 
       // Others
       { path: "/aboutUs", element: <AboutUs /> },
       { path: "/our-story", element: <OurStory /> },
-      { path: "/career", element: <Career/>},
-      { path: "/policy", element: <Privacy/>},
-      { path: "/partnership", element: <Partnership/>},
-      { path: "/social", element: <SocialActivitiesPage/>},
-      { path: "/activities/:id", element: <SocialActivitiesDetails/>},
+      { path: "/career", element: <Career /> },
+      { path: "/policy", element: <Privacy /> },
+      { path: "/partnership", element: <Partnership /> },
+      { path: "/social", element: <SocialActivitiesPage /> },
+      { path: "/activities/:id", element: <SocialActivitiesDetails /> },
 
       // Earnings / Nested Routes
       {
@@ -106,21 +123,23 @@ const router = createBrowserRouter([
       },
       { path: "/earn/car", element: <CarEarnings /> },
       { path: "/earn/cng", element: <CngEarnings /> },
-      { path: "/earn/car",
+      {
+        path: "/earn/car",
         element: <CarLayout />,
         children: [
-          {index: true, element: <CarStepOne/>},
-          {path: "details", element: <CarStepTwo/>}
+          { index: true, element: <CarStepOne /> },
+          { path: "details", element: <CarStepTwo /> }
         ],
-       },
-      { path: "/earn/cng",
+      },
+      {
+        path: "/earn/cng",
         element: <CNGLayout />,
         children: [
-          {index: true, element: <CngStepOne/>},
-          {path: "details", element: <CngStepTwo/>}
+          { index: true, element: <CngStepOne /> },
+          { path: "details", element: <CngStepTwo /> }
         ]
-       },
-        
+      },
+
 
       // Auth
       { path: "/signup", element: <SignUp /> },

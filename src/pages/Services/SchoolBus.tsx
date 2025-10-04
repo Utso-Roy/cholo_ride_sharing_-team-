@@ -1,4 +1,4 @@
-// src/pages/CNGRidePage.tsx
+// src/pages/SchoolBus.tsx
 import React, { useState } from "react";
 import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
@@ -6,15 +6,17 @@ import { motion } from "framer-motion";
 import { Avatar } from "primereact/avatar";
 import { Rating } from "primereact/rating";
 import BookingForm, { BookingFormData } from "./BookingForm";
-import { NavLink } from "react-router";
 import HowToBook from "./HowToBook";
+import { NavLink } from "react-router";
 import Lottie from "lottie-react";
 import lottieData from "../../../public/map.json";
 
 const PRIMARY = "#274450";
 const ACCENT = "#71BBB2";
 
-export default function CNGRidePage() {
+
+
+export default function SchoolBus() {
 
     return (
         <div className="relative space-y-12">
@@ -35,22 +37,22 @@ export default function CNGRidePage() {
                 transition={{ duration: 0.6 }}
                 className="relative h-[350px] md:h-[400px] w-full flex items-center justify-center text-center overflow-hidden"
                 style={{
-                    backgroundImage: "url('https://i.ibb.co.com/KzbtHDgP/cng.webp')",
+                    backgroundImage: "url('https://i.ibb.co.com/sJWM4D61/School-Bus.png')",
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                 }}
             >
                 <div className="absolute inset-0 bg-[#274450]/60"></div>
                 <div className="relative z-10 text-white px-4">
-                    <h1 className="text-3xl md:text-5xl font-bold mb-4">তাৎক্ষণিক সিএনজি রাইড বুক করুন</h1>
+                    <h1 className="text-3xl md:text-5xl font-bold mb-4">এখনই স্কুল বাস সার্ভিস বুক করুন</h1>
                     <p className="text-lg md:text-2xl mb-6">সাশ্রয়ী · দ্রুত · নিরাপদ</p>
-                    <a
-                        href="#booking-form"
-                        className="inline-block bg-accent hover:bg-[#497D74] px-6 py-3 rounded-lg font-bold transition-colors"
-                        style={{ backgroundColor: ACCENT }}
-                    >
-                        এখনই বুক করুন
-                    </a>
+
+                    <NavLink to="/bookingform">
+                        <Button
+                            label="এখনই রাইড বুক করুন"
+                            className="!bg-[#71BBB2] !text-white !border-none !px-4 !py-3 !rounded-md hover:!bg-white hover:!text-[#71BBB2] "
+                        />
+                    </NavLink>
                 </div>
             </motion.section>
 
@@ -63,35 +65,33 @@ export default function CNGRidePage() {
                 className="bg-[#274450] rounded-2xl shadow-lg p-8 mx-5 md:mx-10"
             >
                 <h2 className="text-2xl md:text-3xl font-bold text-white mb-8 text-center">
-                    কেন CNG রাইড বেছে নেবেন?
+                    কেন ট্রাক রাইড ব্যবহার করবেন?
                 </h2>
 
                 <div className="grid md:grid-cols-3 gap-6">
                     <motion.div whileHover={{ scale: 1.05 }} className="bg-[#71BBB2] text-white rounded-xl p-6 shadow-md flex flex-col items-center text-center">
-                        <span className="text-3xl mb-3">⚡</span>
-                        <h3 className="font-semibold text-lg mb-2">দ্রুত রাইড</h3>
-                        <p className="text-sm">আমাদের নিকটস্থ CNG চালক থেকে কয়েক মিনিটেই রাইড পেয়ে যান, ঝামেলাহীন সার্ভিস।</p>
+                        <span className="text-3xl mb-3">🚚</span>
+                        <h3 className="font-semibold text-lg mb-2">রিয়েল-টাইম ট্র্যাকিং</h3>
+                        <p className="text-sm">আপনার ট্রাকের অবস্থান এবং অগ্রগতি যেকোনো সময় রিয়েল-টাইমে দেখুন।</p>
                     </motion.div>
 
                     <motion.div whileHover={{ scale: 1.05 }} className="bg-[#497D74] text-white rounded-xl p-6 shadow-md flex flex-col items-center text-center">
-                        <span className="text-3xl mb-3">💰</span>
-                        <h3 className="font-semibold text-lg mb-2">সাশ্রয়ী ভাড়া</h3>
-                        <p className="text-sm">প্রতি কিলোমিটারে সেরা ভাড়া, কোনো লুকানো চার্জ নেই। আগেই ভাড়া দেখে নিশ্চিত হোন।</p>
+                        <span className="text-3xl mb-3">⏱️</span>
+                        <h3 className="font-semibold text-lg mb-2">সঠিক ETA</h3>
+                        <p className="text-sm">ডেলিভারি এবং ট্রাকের আনুমানিক আগমনের সময় নিশ্চিতভাবে জানুন।</p>
                     </motion.div>
 
                     <motion.div whileHover={{ scale: 1.05 }} className="bg-[#71BBB2] text-white rounded-xl p-6 shadow-md flex flex-col items-center text-center">
-                        <span className="text-3xl mb-3">📍</span>
-                        <h3 className="font-semibold text-lg mb-2">লাইভ ট্র্যাকিং</h3>
-                        <p className="text-sm">রাইডের অগ্রগতি এবং চালকের অবস্থান রিয়েল-টাইমে মোবাইল স্ক্রিনে দেখতে পারবেন।</p>
+                        <span className="text-3xl mb-3">🔒</span>
+                        <h3 className="font-semibold text-lg mb-2">নিরাপদ ডেলিভারি</h3>
+                        <p className="text-sm">আপনার মালামাল নিরাপদে গন্তব্যে পৌঁছানোর নিশ্চয়তা সহ।</p>
                     </motion.div>
                 </div>
             </motion.section>
 
-            {/* HowToBook  */}
+            {/* //HowToBook */}
             <HowToBook></HowToBook>
 
-            {/* Booking Form */}
-            {/* <BookingForm googleMapsApiKey="AIzaSyCbbOBVZNUTdhdDoJliYuXz4k1mi2OtWc8" onConfirm={handleBookingConfirm} /> */}
 
             {/* BTN  */}
             <div className="flex justify-center items-center my-10 pb-5">
@@ -104,7 +104,6 @@ export default function CNGRidePage() {
                 </NavLink>
 
             </div>
-
 
         </div>
     );
