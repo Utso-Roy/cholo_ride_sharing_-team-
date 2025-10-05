@@ -8,6 +8,7 @@ import {
   FaChartPie,
   FaUserShield,
 } from "react-icons/fa";
+import { NavLink } from "react-router";
 
 const Sidebar = () => {
   return (
@@ -20,23 +21,35 @@ const Sidebar = () => {
       {/* Menu Section */}
       <nav className="flex-1 px-4 py-6 space-y-2 bg-[#71BBB2] overflow-y-auto">
         {[
-          { icon: <FaHome />, label: "Dashboard" },
-          { icon: <FaCarSide />, label: "Rides" },
-          { icon: <FaUsers />, label: "Drivers" },
-          { icon: <FaUserShield />, label: "Users" },
-          { icon: <FaMoneyBill />, label: "Payments" },
-          { icon: <FaChartPie />, label: "Reports" },
+          { to: "/dashboard", icon: <FaHome />, label: "Dashboard" },
+          { to: "/dashboard/rides", icon: <FaCarSide />, label: "Rides" },
+          { to: "/dashboard/drivers", icon: <FaUsers />, label: "Drivers" },
+          { to: "/dashboard/users", icon: <FaUserShield />, label: "Users" },
+          {
+            to: "/dashboard/payments",
+            icon: <FaMoneyBill />,
+            label: "Payments",
+          },
+          { to: "/dashboard/reports", icon: <FaChartPie />, label: "Reports" },
         ].map((item, idx) => (
-          <a
+          <NavLink
+            to={item.to}
             key={idx}
-            href="#"
-            className="flex items-center gap-3 p-3 rounded-lg hover:bg-[#5aa49c] hover:text-white transition-all duration-300 cursor-pointer group"
+            // href="#"
+            className={({ isActive }) =>
+              `flex items-center gap-3 p-3 rounded-lg transition-all duration-300
+         ${
+           isActive
+             ? "bg-[#5aa49c] text-white"
+             : "hover:bg-[#5aa49c] hover:text-white"
+         }`
+            }
           >
             <span className="text-lg transition-transform duration-200 group-hover:scale-110">
               {item.icon}
             </span>
             <span className="font-medium tracking-wide">{item.label}</span>
-          </a>
+          </NavLink>
         ))}
       </nav>
 
