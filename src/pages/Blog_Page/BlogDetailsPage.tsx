@@ -20,7 +20,7 @@ export const BlogDetailsPage: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("/blogs.json")
+    fetch("http://localhost:5000/api/blogs")
       .then(res => res.json())
       .then((data: Blog[]) => {
         const found = data.find(b => String(b.id) === id);

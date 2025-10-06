@@ -27,7 +27,8 @@ export const BlogListPage: React.FC = () => {
     const { data: blogs = [], isLoading, error } = useQuery<Blog[]>({
         queryKey: ["blogs"],
         queryFn: async () => {
-            const res = await fetch("/blogs.json");
+            // const res = await fetch("/blogs.json");
+            const res = await fetch("http://localhost:5000/api/blogs");
             return res.json();
         },
     });

@@ -6,6 +6,15 @@ import { Calendar } from "primereact/calendar";
 import { Card } from "primereact/card";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router";
+import Swal from "sweetalert2";
+
+const categories = [
+    "Category",
+    "সর্বশেষ ব্লগ",
+    "নিরাপত্তা ও সুরক্ষা টিপস",
+    "ট্রাফিক ও ভ্রমণ গাইড",
+    "ড্রাইভার/পার্টনার সফলতার গল্প",
+];
 
 export default function AddBlog() {
     const navigate = useNavigate();
@@ -15,7 +24,7 @@ export default function AddBlog() {
         thumbnail: "",
         short_description: "",
         content: "",
-        category: "",
+        category: categories[0],
         author: localStorage.getItem("name") || "Admin",
         date: new Date(),
         status: "draft",
@@ -30,10 +39,10 @@ export default function AddBlog() {
         if (!KEY) throw new Error("ImgBB key missing");
         const form = new FormData();
         form.append("image", file);
-        const res = await fetch(
-            `https://api.imgbb.com/1/upload?key=${KEY}`,
-            { method: "POST", body: form }
-        );
+        const res = await fetch(`https://api.imgbb.com/1/upload?key=${KEY}`, {
+            method: "POST",
+            body: form,
+        });
         const json = await res.json();
         if (!json.success) throw new Error("Upload failed");
         return json.data.url as string;
@@ -48,7 +57,7 @@ export default function AddBlog() {
             setData((prev) => ({ ...prev, thumbnail: url }));
         } catch (err) {
             console.error(err);
-            alert("Upload failed");
+            Swal.fire("Upload Failed", "Could not upload image", "error");
         } finally {
             setSubmitting(false);
         }
@@ -62,12 +71,20 @@ export default function AddBlog() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(data),
             });
-            if (!res.ok) throw new Error("Failed");
-            alert("✅ Blog created successfully as draft!");
-            navigate("/dashboard/content-management");
+            if (!res.ok) throw new Error("Failed to create blog");
+
+            // ✅ SweetAlert success
+            await Swal.fire({
+                icon: "success",
+                title: "Blog Created!",
+                text: "Blog created successfully as draft.",
+                confirmButtonColor: "#497D74",
+            });
+
+            navigate("/dashboard/ContentManagement");
         } catch (err) {
             console.error(err);
-            alert("❌ Something went wrong");
+            Swal.fire("Error", "Something went wrong!", "error");
         } finally {
             setSubmitting(false);
         }
@@ -75,17 +92,17 @@ export default function AddBlog() {
 
     return (
         <motion.div
-            className="min-h-screen flex justify-center items-start md:items-center bg-[#EFE9D5] p-4 pt-16 md:pt-8"
+            className="px-5 md:px-10 py-5 "
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
         >
-            <Card className="w-full md:w-3/4 lg:w-2/3 shadow-2xl bg-white rounded-3xl border-t-8 border-[#71BBB2]">
+            <Card className=" !shadow-xl bg-white !rounded-2xl border border-t-8 border-[#71BBB2] ">
                 <h2 className="text-2xl md:text-3xl font-bold text-[#274450] text-center mb-6">
                     ✍️ Add New Blog
                 </h2>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 px-4 md:px-6 pb-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:px-4 pb-6">
                     {/* Title */}
                     <span className="p-float-label">
                         <InputText
@@ -97,15 +114,23 @@ export default function AddBlog() {
                         <label htmlFor="title">Blog Title</label>
                     </span>
 
-                    {/* Category */}
+                    {/* Category Dropdown */}
                     <span className="p-float-label">
-                        <InputText
+                        <select
                             id="category"
                             value={data.category}
-                            onChange={(e) => setData({ ...data, category: e.target.value })}
-                            className="w-full"
-                        />
-                        <label htmlFor="category">Category</label>
+                            onChange={(e) =>
+                                setData({ ...data, category: e.target.value })
+                            }
+                            className="w-full border border-gray-300 rounded px-3 py-2 text-[#274450] focus:outline-none focus:ring-2 focus:ring-[#497D74]"
+                        >
+                            {categories.map((cat) => (
+                                <option key={cat} value={cat}>
+                                    {cat}
+                                </option>
+                            ))}
+                        </select>
+                        <label htmlFor="category" className="!p-8"></label>
                     </span>
 
                     {/* Author */}
@@ -178,7 +203,9 @@ export default function AddBlog() {
                             className="border border-gray-300 p-2 rounded-md"
                         />
                         {submitting && (
-                            <p className="text-sm text-[#497D74] animate-pulse">Uploading...</p>
+                            <p className="text-sm text-[#497D74] animate-pulse">
+                                Uploading...
+                            </p>
                         )}
                         {data.thumbnail && (
                             <img

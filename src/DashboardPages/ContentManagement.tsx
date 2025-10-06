@@ -1,17 +1,10 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
-
 
 export type Blog = {
     _id?: string;
     title: string;
     thumbnail?: string;
-    short_description: string;
-    content: string;
-    category: string;
-    author: string;
-    date: string;
     status: 'draft' | 'published';
 };
 
@@ -22,119 +15,118 @@ export default function ContentManagement() {
     const [blogs, setBlogs] = useState<Blog[]>([]);
     const [loading, setLoading] = useState(false);
     const [filter, setFilter] = useState<'all' | 'draft' | 'published'>('all');
-    const [q, setQ] = useState('');
-    const [page, setPage] = useState(1);
-    const perPage = 9;
 
     const fetchBlogs = async () => {
         setLoading(true);
         try {
             const params = new URLSearchParams();
             if (filter !== 'all') params.set('status', filter);
-            params.set('page', String(page));
-            params.set('limit', String(perPage));
-            if (q) params.set('q', q);
-            const res = await fetch(`/ api / blogs ? ${params.toString()} `);
+            const res = await fetch(`http://localhost:5000/api/blogs?${params.toString()}`);
             const data = await res.json();
-            setBlogs(data.blogs || data);
+            setBlogs(data);
         } catch (err) {
             console.error(err);
-        } finally { setLoading(false); }
+        } finally {
+            setLoading(false);
+        }
     };
 
-    useEffect(() => { fetchBlogs(); }, [filter, page]);
-
-    const counts = useMemo(() => ({
-        draft: blogs.filter(b => b.status === 'draft').length,
-        published: blogs.filter(b => b.status === 'published').length
-    }), [blogs]);
+    useEffect(() => { fetchBlogs(); }, [filter]);
 
     const toggleStatus = async (id?: string, current?: 'draft' | 'published') => {
-        if (!isAdmin()) return alert('Only admins can change status');
-        if (!id) return;
+        if (!isAdmin() || !id || !current) return;
         try {
-            const ns = current === 'draft' ? 'published' : 'draft';
-            await fetch(`/ api / blogs / ${id} /status`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: ns }) });
+            const newStatus = current === 'draft' ? 'published' : 'draft';
+            await fetch(`http://localhost:5000/api/blogs/${id}/status`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ status: newStatus }),
+            });
             fetchBlogs();
-        } catch (err) { console.error(err); alert('Failed to change status'); }
+        } catch (err) { console.error(err); }
     };
 
     const remove = async (id?: string) => {
-        if (!isAdmin()) return alert('Only admins can delete');
-        if (!id) return;
+        if (!isAdmin() || !id) return;
         if (!confirm('Delete this blog?')) return;
-        try { await fetch(`/api/blogs/${id}`, { method: 'DELETE' }); fetchBlogs(); }
-        catch (err) { console.error(err); alert('Delete failed'); }
+        try {
+            await fetch(`http://localhost:5000/api/blogs/${id}`, { method: 'DELETE' });
+            fetchBlogs();
+        } catch (err) { console.error(err); }
     };
 
     return (
-        <div className="p-6 min-h-screen bg-[#EFE9D5]">
-            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6">
-                <div>
-                    <h1 className="text-2xl font-bold text-[#274450]">Content Management</h1>
-                    <p className="text-sm text-gray-700">Manage blog drafts and published posts</p>
-                </div>
-
-                <div className="flex items-center gap-3 w-full md:w-auto">
-                    <div className="flex items-center gap-2 flex-1 md:flex-none border rounded px-2 py-1 bg-white">
-                        <input className="outline-none flex-1" placeholder="Search title or author..." value={q} onChange={e => setQ(e.target.value)} />
-                        <button onClick={() => fetchBlogs()} className="text-sm px-3 py-1">Search</button>
-                    </div>
-
-                    <select value={filter} onChange={e => { setFilter(e.target.value as any); setPage(1); }} className="px-3 py-1 rounded border bg-white">
-                        <option value="all">All ({blogs.length})</option>
-                        <option value="draft">Draft ({counts.draft})</option>
-                        <option value="published">Published ({counts.published})</option>
-                    </select>
-
-                    <button onClick={() => navigate('/dashboard/ContentManagement/add-blog')} className="bg-[#274450] text-white px-4 py-2 rounded">+ Add Blog</button>
-                </div>
+        <div className="p-6 bg-white">
+            {/* Header */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
+                <h1 className="text-2xl md:text-4xl font-bold text-[#274450]">Content Management</h1>
+                <button
+                    onClick={() => navigate('/dashboard/ContentManagement/add-blog')}
+                    className="bg-[#497D74] text-white px-4 py-2 rounded hover:bg-[#274450] transition-colors"
+                >
+                    Add Blog
+                </button>
             </div>
 
-            <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-                {loading && <div className="col-span-full">Loading...</div>}
-                {!loading && blogs.length === 0 && <div className="col-span-full text-center py-10">No blogs yet.</div>}
+            {/* Filter */}
+            <div className="mb-4">
+                <select
+                    value={filter}
+                    onChange={e => setFilter(e.target.value as any)}
+                    className="px-3 py-2 border rounded text-[#71BBB2]"
+                >
+                    <option value="all">All</option>
+                    <option value="draft">Draft</option>
+                    <option value="published">Published</option>
+                </select>
+            </div>
+
+            {/* Blog Cards */}
+            <div className="flex flex-col gap-4">
+                {loading && <div>Loading...</div>}
+                {!loading && blogs.length === 0 && <div>No blogs yet.</div>}
 
                 {blogs.map(blog => (
-                    <motion.div key={blog._id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} whileHover={{ scale: 1.01 }} className="bg-white rounded-2xl shadow overflow-hidden flex flex-col">
-                        <div className="h-44 w-full bg-gray-100">
-                            {blog.thumbnail ? <img src={blog.thumbnail} alt={blog.title} className="w-full h-full object-cover" /> : <div className="h-full flex items-center justify-center text-gray-400">No image</div>}
-                        </div>
-                        <div className="p-4 flex-1 flex flex-col">
-                            <h3 className="text-lg font-semibold text-[#274450]">{blog.title}</h3>
-                            <p className="text-sm text-gray-600 mt-2 flex-1">{blog.short_description}</p>
-
-                            <div className="mt-3 flex items-center justify-between gap-2">
-                                <div className="text-xs text-gray-500">
-                                    <div>{blog.author}</div>
-                                    <div>{new Date(blog.date).toLocaleDateString()}</div>
-                                </div>
-
-                                <div className="flex items-center gap-2">
-                                    <span className={`px-2 py-1 rounded-full text-xs ${blog.status === 'published' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`}>{blog.status}</span>
-
-                                    <button onClick={() => navigate(`/dashboard/content-management/edit/${blog._id}`)} className="px-2 py-1 border rounded">Edit</button>
-
-                                    {blog.status === 'draft' ? (
-                                        <button onClick={() => toggleStatus(blog._id, blog.status)} className="px-2 py-1 rounded bg-[#71BBB2] text-white">Publish</button>
-                                    ) : (
-                                        <button onClick={() => toggleStatus(blog._id, blog.status)} className="px-2 py-1 border rounded">Unpublish</button>
-                                    )}
-
-                                    <button onClick={() => remove(blog._id)} className="px-2 py-1 border rounded text-red-600">Delete</button>
-                                </div>
+                    <div
+                        key={blog._id}
+                        className="flex items-center justify-between border border-[#71BBB2] rounded-xl p-4 shadow-md hover:shadow-md transition-shadow"
+                    >
+                        <div className="flex items-center gap-4">
+                            {blog.thumbnail ? (
+                                <img src={blog.thumbnail} alt={blog.title} className="w-20 h-20 object-cover rounded" />
+                            ) : (
+                                <div className="w-20 h-20 bg-gray-200 flex items-center justify-center text-gray-500 rounded">No Image</div>
+                            )}
+                            <div>
+                                <h3 className="text-[#274450] font-semibold">{blog.title}</h3>
+                                <span className={`text-sm ${blog.status === 'published' ? 'text-green-600' : 'text-yellow-600'}`}>
+                                    {blog.status === 'published' ? 'Published' : 'Draft'}
+                                </span>
                             </div>
                         </div>
-                    </motion.div>
-                ))}
-            </div>
 
-            <div className="mt-6 flex items-center justify-between">
-                <div className="text-sm text-gray-700">Page {page}</div>
-                <div className="flex gap-2">
-                    <button onClick={() => setPage(p => Math.max(1, p - 1))} className="px-3 py-1 border rounded">Prev</button>
-                    <button onClick={() => setPage(p => p + 1)} className="px-3 py-1 border rounded">Next</button>
-                </div>
+                        <div className="grid md:grid-cols-3  items-center gap-2">
+                            <button
+                                onClick={() => toggleStatus(blog._id, blog.status)}
+                                className={`px-3 py-1 rounded ${blog.status === 'draft' ? 'bg-[#497D74] text-white hover:bg-[#274450]' : 'bg-yellow-400 text-white hover:bg-yellow-500'} transition-colors`}
+                            >
+                                {blog.status === 'draft' ? 'Publish' : 'Unpublish'}
+                            </button>
+                            <button
+                                onClick={() => navigate(`/dashboard/content-management/edit/${blog._id}`)}
+                                className="px-3 py-1 bg-[#274450] text-white rounded hover:bg-[#497D74] transition-colors"
+                            >
+                                Edit
+                            </button>
+                            <button
+                                onClick={() => remove(blog._id)}
+                                className="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
+                            >
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                ))}
             </div>
         </div>
     );
