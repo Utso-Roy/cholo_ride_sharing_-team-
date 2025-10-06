@@ -56,6 +56,8 @@ import SchoolBus from "../pages/Services/SchoolBus";
 import ShuttleBus from "../pages/Services/ShuttleBus";
 import Shipment from "../pages/Services/Shipment";
 import RideBooking from "../pages/Services/RideBooking";
+import ContentManagement from "../DashboardPages/ContentManagement";
+import AddBlog from "../DashboardPages/AddBlog";
 
 const router = createBrowserRouter([
   {
@@ -145,6 +147,8 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Profile /> }, // default page
       { path: "profile", element: <Profile /> },
+      { path: "ContentManagement", element: <ContentManagement></ContentManagement> },
+      { path: "ContentManagement/add-blog", element: <AddBlog></AddBlog> }
     ],
   },
 ]);
