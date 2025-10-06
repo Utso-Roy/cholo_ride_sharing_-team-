@@ -18,21 +18,21 @@ const DashboardLayout = () => {
       </div>
 
 
-        <div
-          className={`
+      <div
+        className={`
           fixed z-40 inset-y-0 left-0 bg-white shadow-md transform
           ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
           md:translate-x-0 md:static md:inset-auto md:flex md:flex-col
           transition-transform duration-300 ease-in-out
           w-64
         `}
-        >
-          <Sidebar />
-        </div>
-     
+      >
+        <Sidebar />
+      </div>
+
 
       {/* Main Content */}
-      <div className="flex-1 p-4 md:ml-64 overflow-auto">
+      <div className="flex-1 p-4  overflow-auto">
         <Outlet />
       </div>
 

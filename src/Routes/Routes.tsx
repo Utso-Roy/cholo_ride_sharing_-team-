@@ -59,6 +59,8 @@ import RideBooking from "../pages/Services/RideBooking";
 import ContentManagement from "../DashboardPages/ContentManagement";
 import AddBlog from "../DashboardPages/AddBlog";
 
+
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -78,7 +80,7 @@ const router = createBrowserRouter([
 
       // Blog
       { path: "blogs", element: <BlogListPage /> },
-      { path: "blogs/:id", element: <BlogDetailsPage /> },
+      { path: "/blogs/:id", element: <BlogDetailsPage /> },
 
       // Services
       { path: "bike", element: <BikeRide /> },

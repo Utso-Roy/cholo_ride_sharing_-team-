@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router";
 import { motion } from "framer-motion";
 
 type Blog = {
-  id: number;
+  _id: string;
   title: string;
   thumbnail: string;
   short_description: string;
@@ -20,10 +20,10 @@ export const BlogDetailsPage: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/blogs")
+    fetch(`http://localhost:5000/api/blogs/${id}`)
       .then(res => res.json())
       .then((data: Blog[]) => {
-        const found = data.find(b => String(b.id) === id);
+        const found = data.find(b => String(b._id) === id);
         setBlog(found || null);
       });
   }, [id]);
