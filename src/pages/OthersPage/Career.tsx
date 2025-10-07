@@ -25,7 +25,6 @@ const heroSlides = [
 
 
 
-// Job type interface
 interface Job {
     _id: string;
     title: string;

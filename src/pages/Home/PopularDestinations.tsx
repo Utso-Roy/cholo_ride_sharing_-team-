@@ -13,43 +13,43 @@ const destinations: Destination[] = [
     id: 1,
     name: "ঢাকা → চট্টগ্রাম",
     distance: "250 km",
-    image: "https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?auto=format&fit=crop&w=800&q=60",
+    image: "https://i.ibb.co.com/HpfG3CXM/dhaka-chottogram.jpg",
   },
   {
     id: 2,
     name: "ঢাকা→ সিলেট",
     distance: "240 km",
-    image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=60",
+    image: "https://i.ibb.co.com/wZbyGmd6/sylhet.jpg",
   },
   {
     id: 3,
     name: "ঢাকা → খুলনা",
     distance: "210 km",
-    image: "https://images.unsplash.com/photo-1520342868574-5fa3804e551c?auto=format&fit=crop&w=800&q=60",
+    image: "https://i.ibb.co.com/ddc5q4h/khulna.jpg",
   },
   {
     id: 4,
     name: "ঢাকা → রাজশাহী",
     distance: "220 km",
-    image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=800&q=60",
+    image: "https://i.ibb.co.com/BVckXvXX/rajshahi.jpg",
   },
   {
     id: 5,
     name: "ঢাকা → বরিশাল",
     distance: "200 km",
-    image: "https://images.unsplash.com/photo-1520342868574-5fa3804e551c?auto=format&fit=crop&w=800&q=60",
+    image: "https://i.ibb.co.com/KxRR2zMH/images-1.jpg",
   },
   {
     id: 6,
     name: "ঢাকা → রংপুর",
     distance: "300 km",
-    image: "https://images.unsplash.com/photo-1520342868574-5fa3804e551c?auto=format&fit=crop&w=800&q=60",
+    image: "https://i.ibb.co.com/MDXdyhL8/rongpur.jpg",
   },
 ];
 
 const PopularDestinations: React.FC = () => {
   return (
-    <section className="py-16 bg-[#e6fcf9]">
+    <section className="py-16  bg-gradient-to-r from-[#e6fcf9] to-gray-50">
       <div className="w-full px-6 text-center">
         <h2 className="text-4xl text-[#27445D] font-bold ">
          জনপ্রিয় 

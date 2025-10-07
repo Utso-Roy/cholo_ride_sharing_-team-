@@ -6,7 +6,7 @@ export type CarDriver = {
   gender?: Gender; dob?: Date | null; nid?: string; license?: string; photo?: File | null;
 };
 export type CarVehicle = {
-  brand: string | null; model: string | null; regNo: string; year: string; fitnessNo: string;
+  brand: string | null; model: string | null; regNo: string; year: string; fitnessNo: string; taxTokenNo: string;
 };
 
 const carDriverInit: CarDriver = {
@@ -14,8 +14,8 @@ const carDriverInit: CarDriver = {
   gender: undefined, dob: null, nid: "", license: "", photo: null,
 };
 const carVehicleInit: CarVehicle = {
-  brand: null, model: null, regNo: "", year: "", fitnessNo: "",
+  brand: null, model: null, regNo: "", year: "", fitnessNo: "", taxTokenNo: "",
 };
 
-export const { Provider: CarApplyProvider, useApply: useBikeApply } =
+export const { Provider: CarApplyProvider, useApply: useCarApply } =
   makeApplyContext<CarDriver, CarVehicle>(carDriverInit, carVehicleInit);

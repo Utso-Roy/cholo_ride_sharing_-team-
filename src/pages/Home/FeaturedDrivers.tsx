@@ -12,29 +12,29 @@ interface Driver {
 const featuredDrivers: Driver[] = [
   {
     id: 1,
-    name: "জাহিদুল ইসলাম",
-    photo: "https://randomuser.me/api/portraits/men/32.jpg",
+    name: "উৎস রায়",
+    photo: "https://i.ibb.co.com/jZb600Gj/Whats-App-Image-2025-09-24-at-9-42-01-AM.jpg",
     rating: 4.9,
     completedRides: 1200,
   },
   {
     id: 2,
-    name: "সাবিনা খাতুন",
-    photo: "https://randomuser.me/api/portraits/women/44.jpg",
+    name: "দেবজিত রায়",
+    photo: "https://i.ibb.co.com/Wv5NNTN7/Whats-App-Image-2025-09-19-at-5-30-16-PM.jpg",
     rating: 4.8,
     completedRides: 980,
   },
   {
     id: 3,
-    name: "রফিকুল হাসান",
-    photo: "https://randomuser.me/api/portraits/men/56.jpg",
+    name: "বিজয় দাস",
+    photo: "https://i.ibb.co.com/hRMbsXXw/IMG-20250625-WA0000-1.jpg",
     rating: 4.7,
     completedRides: 870,
   },
   {
     id: 4,
-    name: "মমতাজা বেগম",
-    photo: "https://randomuser.me/api/portraits/women/66.jpg",
+    name: "শুভ দেবনাথ",
+    photo: "https://i.ibb.co.com/zY19KjZ/Whats-App-Image-2025-09-19-at-5-29-24-PM.jpg",
     rating: 4.9,
     completedRides: 1020,
   },
@@ -42,7 +42,7 @@ const featuredDrivers: Driver[] = [
 
 const FeaturedDrivers: React.FC = () => {
   return (
-    <section className="py-16 bg-[#e6fcf9]">
+    <section className="py-16  bg-gradient-to-r from-[#e6fcf9] to-gray-50">
       <div className="w-full px-6 text-center">
         <h2 className="text-4xl font-bold text-[#27445D]  flex items-center justify-center gap-3">
           শীর্ষ ড্রাইভার / রাইডার

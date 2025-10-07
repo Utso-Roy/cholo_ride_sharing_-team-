@@ -7,8 +7,14 @@ import FareEstimator from "./FareEstimator";
 import Testimonials from "./Testimonials";
 import CallToAction from "./CallToAction";
 import Statistics from "./Statistics";
+import WhyChooseUs from "./WhyChooseUs";
+import LatestNews from "./LatestNews";
+import HowItWorks from "./HowItWorks";
+import Partners from "./Partners";
+import Newsletter from "./Newsletter";
 
 const Home = () => {
+
   return (
     <div className="space-y-5">
       <section>
@@ -16,6 +22,13 @@ const Home = () => {
       </section>
       <section>
         <OurServices></OurServices>
+      </section>
+      <section>
+        <WhyChooseUs></WhyChooseUs>
+      </section>
+
+      <section>
+        <LatestNews></LatestNews>
       </section>
       <section>
         <PopularDestinations></PopularDestinations>
@@ -34,11 +47,21 @@ const Home = () => {
       </section>
 
       <section>
-
         <Statistics></Statistics>
       </section>
+
+      <section>
+        <HowItWorks></HowItWorks>
+      </section>
+
+      <section>
+        <Partners></Partners>
+      </section>
+      <section>
+        <Newsletter></Newsletter>
+      </section>
+
       
-      <section></section>
     </div>
   );
 };
