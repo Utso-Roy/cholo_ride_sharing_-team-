@@ -8,19 +8,23 @@ import {
   FaChartPie,
   FaUserShield,
 } from "react-icons/fa";
+import { Link } from "react-router";
 
 const Sidebar = () => {
   return (
     <div className="h-screen w-64 bg-[#71BBB2] text-[#083c3a] flex flex-col shadow-xl border-r border-[#9ad2cb]">
       {/* Logo Section */}
       <div className="p-6 text-center font-extrabold text-2xl tracking-wide bg-[#e6f6f5] border-b border-[#9ad2cb] shadow-md">
-        Ride<span className="text-[#2e736d]">Admin</span>
+        <Link to="/">
+        
+         Ride<span className="text-[#2e736d]">Admin</span>
+        </Link>
       </div>
 
       {/* Menu Section */}
       <nav className="flex-1 px-4 py-6 space-y-2 bg-[#71BBB2] overflow-y-auto">
         {[
-          { icon: <FaHome />, label: "Dashboard" },
+          { icon: <FaHome />, label: "Home" },
           { icon: <FaCarSide />, label: "Rides" },
           { icon: <FaUsers />, label: "Drivers" },
           { icon: <FaUserShield />, label: "Users" },
