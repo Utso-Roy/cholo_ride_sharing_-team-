@@ -96,6 +96,16 @@ const Sidebar = () => {
         {menuItems.map((item, idx) => (
           <NavLink
         {[
+          { to: "/dashboard", icon: <FaHome />, label: "Dashboard" },
+          { to: "/dashboard/rides", icon: <FaCarSide />, label: "Rides" },
+          { to: "/dashboard/drivers", icon: <FaUsers />, label: "Drivers" },
+          { to: "/dashboard/users", icon: <FaUserShield />, label: "Users" },
+          {
+            to: "/dashboard/payments",
+            icon: <FaMoneyBill />,
+            label: "Payments",
+          },
+          { to: "/dashboard/reports", icon: <FaChartPie />, label: "Reports" },
           { icon: <FaHome />, label: "Home" },
           { icon: <FaCarSide />, label: "Rides" },
           { icon: <FaUsers />, label: "Drivers" },
@@ -103,8 +113,17 @@ const Sidebar = () => {
           { icon: <FaMoneyBill />, label: "Payments" },
           { icon: <FaChartPie />, label: "Reports" },
         ].map((item, idx) => (
-          <a
+          <NavLink
+            to={item.to}
             key={idx}
+            // href="#"
+            className={({ isActive }) =>
+              `flex items-center gap-3 p-3 rounded-lg transition-all duration-300
+         ${
+           isActive
+             ? "bg-[#5aa49c] text-white"
+             : "hover:bg-[#5aa49c] hover:text-white"
+         }`
             to={item.path}
             className={({ isActive }) =>
               `flex items-center gap-3 p-3 rounded-lg transition-all duration-300 cursor-pointer group
