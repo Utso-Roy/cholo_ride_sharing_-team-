@@ -56,6 +56,7 @@ import SchoolBus from "../pages/Services/SchoolBus";
 import ShuttleBus from "../pages/Services/ShuttleBus";
 import Shipment from "../pages/Services/Shipment";
 import RideBooking from "../pages/Services/RideBooking";
+import ManagePartners from "../DashboardPages/ManagePartners";
 import Drivers from "../pages/Dashboard/Drivers";
 
 //Dashboard
@@ -154,6 +155,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Profile /> }, // default page
       { path: "profile", element: <Profile /> },
+      { path: "manage-partners", element:<ManagePartners/>}
       { path: "drivers", element: <Drivers/>}
       { path: "ContentManagement", element: <ContentManagement></ContentManagement> },
       { path: "ContentManagement/add-blog", element: <AddBlog></AddBlog> }

@@ -65,6 +65,8 @@ import {
   FaCog,
   FaChartPie,
   FaUserShield,
+  FaHandshake,
+  FaBriefcase,
 } from "react-icons/fa";
 import { NavLink } from "react-router";
 import { Link } from "react-router";
@@ -96,6 +98,24 @@ const Sidebar = () => {
         {menuItems.map((item, idx) => (
           <NavLink
         {[
+          { icon: <FaHome />, label: "Dashboard", path: "/dashboard" },
+          { icon: <FaCarSide />, label: "Rides", path: "/dashboard/rides" },
+          { icon: <FaUsers />, label: "Drivers", path: "/dashboard/drivers" },
+          { icon: <FaUserShield />, label: "Users", path: "/dashboard/users" },
+          { icon: <FaMoneyBill />, label: "Payments", path: "/dashboard/payments" },
+          { icon: <FaChartPie />, label: "Reports", path: "/dashboard/reports" },
+          { icon: <FaHandshake />, label: "Manage Partners", path: "/dashboard/manage-partners" },
+          { icon: <FaBriefcase />, label: "Manage Jobs", path: "/dashboard/manage-jobs" },
+        ].map((item, idx) => (
+          <NavLink
+            key={idx}
+            to={item.path}
+            end
+            className={({ isActive }) =>
+              `flex items-center gap-3 p-3 rounded-lg transition-all duration-300 cursor-pointer group
+              ${isActive
+                ? "bg-[#2e736d] text-white"
+                : "hover:bg-[#5aa49c] hover:text-white"}`
           { to: "/dashboard", icon: <FaHome />, label: "Dashboard" },
           { to: "/dashboard/rides", icon: <FaCarSide />, label: "Rides" },
           { to: "/dashboard/drivers", icon: <FaUsers />, label: "Drivers" },
