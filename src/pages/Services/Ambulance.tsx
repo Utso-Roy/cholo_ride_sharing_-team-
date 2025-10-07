@@ -47,7 +47,7 @@ export default function Ambulance() {
                     <h1 className="text-3xl md:text-5xl font-bold mb-4">এখনই অ্যাম্বুলেন্স সার্ভিস বুক করুন</h1>
                     <p className="text-lg md:text-2xl mb-6">সাশ্রয়ী · দ্রুত · নিরাপদ</p>
 
-                    <NavLink to="/bookingform">
+                    <NavLink to="/ridebooking">
                         <Button
                             label="এখনই রাইড বুক করুন"
                             className="!bg-[#71BBB2] !text-white !border-none !px-4 !py-3 !rounded-md hover:!bg-white hover:!text-[#71BBB2] "
@@ -96,7 +96,7 @@ export default function Ambulance() {
             {/* BTN  */}
             <div className="flex justify-center items-center my-10 pb-5">
 
-                <NavLink to="/bookingform">
+                <NavLink to="/ridebooking">
                     <Button
                         label="এখনই রাইড বুক করুন"
                         className="!bg-[#274450]  !text-white !border-none !px-4 !py-3 !rounded-md hover:!bg-[#497D74]"
