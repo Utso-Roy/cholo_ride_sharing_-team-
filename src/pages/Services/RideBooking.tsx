@@ -1,25 +1,31 @@
-/// RideBooking.tsx
+// RideBooking.tsx
 import React from "react";
 import Lottie from "lottie-react";
 import lottieData from "../../../public/Booking.json";
+import BookingForm from "./BookingForm";
 
 const RideBooking: React.FC = () => {
     return (
-        <div className="relative h-[400px] overflow-hidden w-[100vw] -ml-[calc((100vw-100%)/2)]">
-            {/* Lottie Background */}
-            <div className="absolute inset-0 z-0 opacity-30">
-                <Lottie
-                    animationData={lottieData}
-                    loop
-                    autoplay
-                    className="w-full h-full object-cover"
-                />
-            </div>
+        <div>
+            <div className="relative w-screen h-[200px] overflow-hidden -ml-[calc((100vw-100%)/2)]">
+                {/* Lottie Background */}
+                <div className="absolute inset-0 z-0">
+                    <Lottie
+                        animationData={lottieData}
+                        loop
+                        autoplay
+                        style={{ width: "100vw", height: "200px", objectFit: "cover" }}
+                    />
+                </div>
 
-            {/* Title */}
-            <h2 className="text-3xl md:text-5xl font-bold text-center text-[#274450] mb-5 md:mb-10 relative z-10">
-                কীভাবে রাইড বুক করবেন?
-            </h2>
+                {/* Centered Title */}
+                {/* <div className="absolute inset-0 flex items-center justify-center z-10 px-4">
+                    <h2 className="text-lg md:text-2xl font-bold text-[#71BBB2] text-center drop-shadow-md">
+                        নিচের তথ্য প্রদান করে রাইড বুক করুন !!
+                    </h2>
+                </div> */}
+            </div>
+            <BookingForm></BookingForm>
         </div>
     );
 };
