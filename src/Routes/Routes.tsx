@@ -56,7 +56,7 @@ import SchoolBus from "../pages/Services/SchoolBus";
 import ShuttleBus from "../pages/Services/ShuttleBus";
 import Shipment from "../pages/Services/Shipment";
 import RideBooking from "../pages/Services/RideBooking";
-import Drivers from "../pages/Dashboard/Drivers";
+import Drivers from "../DashboardPages/Drivers";
 
 const router = createBrowserRouter([
   {
