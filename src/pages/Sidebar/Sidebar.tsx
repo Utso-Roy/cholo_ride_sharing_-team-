@@ -17,7 +17,10 @@ const Sidebar = () => {
     <div className="h-screen w-64 bg-[#71BBB2] text-[#083c3a] flex flex-col shadow-xl border-r border-[#9ad2cb]">
       {/* Logo Section */}
       <div className="p-6 text-center font-extrabold text-2xl tracking-wide bg-[#e6f6f5] border-b border-[#9ad2cb] shadow-md">
-        Ride<span className="text-[#2e736d]">Admin</span>
+        <Link to="/">
+        
+         Ride<span className="text-[#2e736d]">Admin</span>
+        </Link>
       </div>
 
       {/* Menu Section */}
