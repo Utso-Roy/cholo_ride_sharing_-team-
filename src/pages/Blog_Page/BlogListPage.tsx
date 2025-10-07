@@ -23,7 +23,7 @@ export const BlogListPage: React.FC = () => {
     const [query, setQuery] = useState("");
     const [category, setCategory] = useState("সবগুলো ব্লগ দেখুন");
 
-    //  TanStack Query 
+    //  TanStack Query
     const { data: blogs = [], isLoading, error } = useQuery<Blog[]>({
         queryKey: ["blogs"],
         queryFn: async () => {
@@ -33,7 +33,7 @@ export const BlogListPage: React.FC = () => {
         },
     });
 
-    // Filter logic useMemo 
+    // Filter logic useMemo
     const filtered = useMemo(() => {
         let result = [...blogs];
 
@@ -144,18 +144,14 @@ export const BlogListPage: React.FC = () => {
                                     {blog.author} • {blog.date}
                                 </span>
 
-                                {/* ✅ PrimeReact Button */}
-                                <Link to={`/blogs/${blog._id}`}>
-                                    <Button
-                                        label="বিস্তারিত"
-                                        className="p-button-sm"
-                                        style={{
-                                            backgroundColor: "#497D74",
-                                            border: "none",
-                                            fontWeight: "bold",
-                                        }}
-                                    />
+                                <Link
+                                    to={`/blogs/${blog._id}`}
+                                    className="px-3 py-1 rounded-md text-white font-bold text-sm"
+                                    style={{ backgroundColor: "#497D74" }}
+                                >
+                                    বিস্তারিত
                                 </Link>
+
                             </div>
                         </div>
                     </motion.div>
@@ -164,5 +160,7 @@ export const BlogListPage: React.FC = () => {
         </div>
     );
 };
+
+
 
 

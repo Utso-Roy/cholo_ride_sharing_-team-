@@ -56,8 +56,12 @@ import SchoolBus from "../pages/Services/SchoolBus";
 import ShuttleBus from "../pages/Services/ShuttleBus";
 import Shipment from "../pages/Services/Shipment";
 import RideBooking from "../pages/Services/RideBooking";
+
+//Dashboard
 import ContentManagement from "../DashboardPages/ContentManagement";
 import AddBlog from "../DashboardPages/AddBlog";
+
+
 
 
 
@@ -80,7 +84,7 @@ const router = createBrowserRouter([
 
       // Blog
       { path: "blogs", element: <BlogListPage /> },
-      { path: "/blogs/:id", element: <BlogDetailsPage /> },
+      { path: "blogs/:id", element: <BlogDetailsPage /> },
 
       // Services
       { path: "bike", element: <BikeRide /> },

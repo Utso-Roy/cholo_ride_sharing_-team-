@@ -12,6 +12,7 @@ import { ToastContainer } from 'react-toastify';
 
 
 
+
 const queryClient = new QueryClient();
 
 const rootElement = document.getElementById("root") as HTMLElement;
@@ -26,3 +27,5 @@ createRoot(rootElement).render(
     </AuthProvider>
   </StrictMode>
 );
+
+

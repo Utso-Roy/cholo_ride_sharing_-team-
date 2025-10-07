@@ -17,28 +17,48 @@ type Blog = {
 export const BlogDetailsPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [blog, setBlog] = useState<Blog | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (!id) return;
+
+    setLoading(true);
     fetch(`http://localhost:5000/api/blogs/${id}`)
-      .then(res => res.json())
-      .then((data: Blog[]) => {
-        const found = data.find(b => String(b._id) === id);
-        setBlog(found || null);
-      });
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to fetch blog");
+        return res.json();
+      })
+      .then((data: Blog | Blog[]) => {
+        // যদি array আসে, find করে নিবে
+        if (Array.isArray(data)) {
+          const found = data.find((b) => String(b._id) === id);
+          setBlog(found || null);
+        } else {
+          setBlog(data);
+        }
+      })
+      .catch((err) => setError(err.message))
+      .finally(() => setLoading(false));
   }, [id]);
 
-  if (!blog)
+  if (loading)
     return (
       <div className="min-h-screen flex items-center justify-center text-[#274450] font-semibold">
         লোড হচ্ছে...
       </div>
     );
 
+  if (error || !blog)
+    return (
+      <div className="min-h-screen flex items-center justify-center text-red-600 font-semibold">
+        ব্লগ লোড করতে সমস্যা হয়েছে।
+      </div>
+    );
+
   return (
     <div className="max-w-4xl mx-auto px-6 py-10">
-
-
       {/* Title */}
       <motion.h1
         initial={{ opacity: 0, y: -40 }}
@@ -57,21 +77,23 @@ export const BlogDetailsPage: React.FC = () => {
         className="text-sm mb-6 flex flex-wrap gap-2 items-center text-gray-600"
       >
         <span className="font-medium text-[#274450]">{blog.author}</span> •{" "}
-        {blog.date} •{" "}
+        {new Date(blog.date).toLocaleDateString()} •{" "}
         <span className="px-2 py-1 bg-[#71BBB2] text-white rounded-md text-xs">
           {blog.category}
         </span>
       </motion.div>
 
       {/* Thumbnail */}
-      <motion.img
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.6 }}
-        src={blog.thumbnail}
-        alt={blog.title}
-        className="w-full h-90 object-cover rounded-xl shadow-xs mb-8"
-      />
+      {blog.thumbnail && (
+        <motion.img
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6 }}
+          src={blog.thumbnail}
+          alt={blog.title}
+          className="w-full h-90 object-cover rounded-xl shadow-xs mb-8"
+        />
+      )}
 
       {/* Blog Content */}
       <motion.div
@@ -90,13 +112,12 @@ export const BlogDetailsPage: React.FC = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => navigate(-1)}
-          className="my-4  px-4 py-2 mb-6 rounded-lg border-3 border-[#497D74] text-[#274450] font-bold hover:bg-[#274450] hover:text-white transition btn"
+          className="my-4 px-4 py-2 mb-6 rounded-lg border-3 border-[#497D74] text-[#274450] font-bold hover:bg-[#274450] hover:text-white transition"
         >
           ← ব্লগে ফিরে যান
         </motion.button>
-
       </div>
-
     </div>
   );
 };
+
