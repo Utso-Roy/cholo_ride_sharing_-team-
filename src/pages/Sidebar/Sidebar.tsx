@@ -67,6 +67,7 @@ import {
   FaUserShield,
 } from "react-icons/fa";
 import { NavLink } from "react-router";
+import { Link } from "react-router";
 
 const Sidebar = () => {
   /// মেনু আইটেমগুলোর ডেটা অ্যারে আকারে রাখা হয়েছে
@@ -84,13 +85,25 @@ const Sidebar = () => {
     <div className="h-screen w-64 bg-[#71BBB2] text-[#083c3a] flex flex-col shadow-xl border-r border-[#9ad2cb] fixed md:static z-40">
       {/* 🔹 Logo Section */}
       <div className="p-6 text-center font-extrabold text-2xl tracking-wide bg-[#e6f6f5] border-b border-[#9ad2cb] shadow-md">
-        Ride<span className="text-[#2e736d]">Admin</span>
+        <Link to="/">
+        
+         Ride<span className="text-[#2e736d]">Admin</span>
+        </Link>
       </div>
 
       {/* 🔹 Menu Section */}
       <nav className="flex-1 px-4 py-6 space-y-2 bg-[#71BBB2] overflow-y-auto">
         {menuItems.map((item, idx) => (
           <NavLink
+        {[
+          { icon: <FaHome />, label: "Home" },
+          { icon: <FaCarSide />, label: "Rides" },
+          { icon: <FaUsers />, label: "Drivers" },
+          { icon: <FaUserShield />, label: "Users" },
+          { icon: <FaMoneyBill />, label: "Payments" },
+          { icon: <FaChartPie />, label: "Reports" },
+        ].map((item, idx) => (
+          <a
             key={idx}
             to={item.path}
             className={({ isActive }) =>
