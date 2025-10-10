@@ -13,7 +13,6 @@ import {
 import { NavLink, Link } from "react-router";
 
 const Sidebar = () => {
-  // 🔹 মেনু আইটেমগুলোর তালিকা
   const menuItems = [
     { icon: <FaHome />, label: "Dashboard", path: "/dashboard" },
     { icon: <FaCarSide />, label: "Rides", path: "/dashboard/rides" },
@@ -23,6 +22,8 @@ const Sidebar = () => {
     { icon: <FaChartPie />, label: "Reports", path: "/dashboard/reports" },
     { icon: <FaHandshake />, label: "Manage Partners", path: "/dashboard/manage-partners" },
     { icon: <FaBriefcase />, label: "Manage Jobs", path: "/dashboard/manage-jobs" },
+    { icon: <FaChartPie />, label: "Content Management", path: "/dashboard/ContentManagement" },
+  
   ];
 
   return (
@@ -34,7 +35,7 @@ const Sidebar = () => {
         </Link>
       </div>
 
-      {/* 🔹 Menu Section */}
+      {/*  Menu Section */}
       <nav className="flex-1 px-4 py-6 space-y-2 bg-[#71BBB2] overflow-y-auto">
         {menuItems.map((item, idx) => (
           <NavLink

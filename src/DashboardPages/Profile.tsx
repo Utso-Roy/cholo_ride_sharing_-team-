@@ -1,14 +1,5 @@
 import React, { useContext, useEffect, useState, ChangeEvent, FormEvent } from "react";
-import {
-  FaUserEdit,
-  FaEnvelope,
-  FaMapMarkerAlt,
-  FaPhoneAlt,
-  FaCrown,
-  FaUsers,
-  FaCarSide,
-  FaChartPie,
-} from "react-icons/fa";
+import { FaUserEdit, FaEnvelope, FaMapMarkerAlt, FaPhoneAlt, FaCrown, FaUsers, FaCarSide, FaChartPie } from "react-icons/fa";
 import Loading from "../Loading/Loading";
 import { AuthContext } from "../Auth/AuthProvider";
 import { toast } from "react-toastify";
@@ -25,6 +16,7 @@ interface User {
 
 const Profile: React.FC = () => {
   const { user } = useContext(AuthContext) as { user: { email: string } };
+
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
@@ -40,17 +32,15 @@ const Profile: React.FC = () => {
       try {
         setLoading(true);
         const res = await fetch(`${import.meta.env.VITE_API_URL}/users/${user.email}`);
-        if (!res.ok) throw new Error("Failed to fetch user");
-        const data: User[] = await res.json();
-        setUsers(data);
+        if (!res.ok) throw new Error("User not found");
 
-        if (data[0]) {
-          setFormData({
-            name: data[0].name || "",
-            email: data[0].email,
-            photo: data[0].photo || "",
-          });
-        }
+        const data: User = await res.json();
+        setUsers([data]);
+        setFormData({
+          name: data.name || "",
+          email: data.email,
+          photo: data.photo || "",
+        });
       } catch (err: any) {
         setError(err.message || "Something went wrong!");
       } finally {
@@ -61,52 +51,44 @@ const Profile: React.FC = () => {
     fetchUser();
   }, [user]);
 
-  // Handle input changes
+  // Handle form input change
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  // Submit updated profile
- const handleSubmit = async (e: FormEvent) => {
-  e.preventDefault();
-
-  if (!formData.name || !formData.email) {
-    toast.error("Name and email are required!");
-    return;
-  }
-
-  try {
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/users/${user.email}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    });
-
-    if (res.status === 404) {
-      toast.error("User not found!");
+  // Handle profile update
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    if (!formData.name || !formData.email) {
+      toast.error("Name and email are required!");
       return;
     }
 
-    if (!res.ok) {
-      const errorData = await res.json().catch(() => ({}));
-      throw new Error(errorData.message || "Failed to update profile");
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/users/${user.email}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+
+      const updatedUser: User = await res.json();
+
+      // Update state for instant UI refresh
+      setUsers(prev => prev.map(u => u.email === updatedUser.email ? updatedUser : u));
+      setFormData({
+        name: updatedUser.name,
+        email: updatedUser.email,
+        photo: updatedUser.photo || "",
+      });
+
+      setIsModalOpen(false);
+      toast.success("Profile updated successfully!");
+    } catch (err: any) {
+      toast.error(err.message || "Something went wrong!");
     }
-
-    const updatedUser: User | null = await res.json().catch(() => null);
-
-    if (!updatedUser) {
-      toast.error("User not found!");
-      return;
-    }
-
-    setUsers([updatedUser]); // update state
-    setIsModalOpen(false);
-    toast.success("Profile updated successfully!");
-  } catch (err: any) {
-    toast.error(err.message || "Something went wrong!");
-  }
-};
+  };
 
   if (loading) return <Loading />;
 
