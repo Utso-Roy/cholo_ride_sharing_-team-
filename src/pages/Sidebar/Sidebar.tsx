@@ -22,8 +22,7 @@ const Sidebar = () => {
     { icon: <FaChartPie />, label: "Reports", path: "/dashboard/reports" },
     { icon: <FaHandshake />, label: "Manage Partners", path: "/dashboard/manage-partners" },
     { icon: <FaBriefcase />, label: "Manage Jobs", path: "/dashboard/manage-jobs" },
-    { icon: <FaChartPie />, label: "Content Management", path: "/dashboard/ContentManagement" },
-  
+    { icon: <FaBriefcase />, label: "Content_Management", path: "/dashboard/ContentManagement" },
   ];
 
   return (
@@ -43,10 +42,9 @@ const Sidebar = () => {
             to={item.path}
             end
             className={({ isActive }) =>
-              `flex items-center gap-3 p-3 rounded-lg transition-all duration-300 cursor-pointer group ${
-                isActive
-                  ? "bg-[#2e736d] text-white"
-                  : "hover:bg-[#5aa49c] hover:text-white"
+              `flex items-center gap-3 p-3 rounded-lg transition-all duration-300 cursor-pointer group ${isActive
+                ? "bg-[#2e736d] text-white"
+                : "hover:bg-[#5aa49c] hover:text-white"
               }`
             }
           >

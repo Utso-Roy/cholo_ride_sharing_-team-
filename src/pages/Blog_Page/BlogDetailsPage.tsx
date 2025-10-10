@@ -25,7 +25,7 @@ export const BlogDetailsPage: React.FC = () => {
     if (!id) return;
 
     setLoading(true);
-    fetch(`http://localhost:5000/api/blogs/${id}`)
+    fetch(`http://localhost:3000/api/blogs/${id}`)
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch blog");
         return res.json();
