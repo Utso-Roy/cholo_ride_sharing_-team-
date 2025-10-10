@@ -27,7 +27,7 @@ interface OtherItem {
 const Navbar: React.FC = () => {
   const location = useLocation();
   const { user, logOut, setUser } = useContext(AuthContext);
-  const navigate =  useNavigate()
+  const navigate = useNavigate()
 
   const [openServices, setOpenServices] = useState(false);
   const [openHelp, setOpenHelp] = useState(false);
@@ -45,8 +45,7 @@ const Navbar: React.FC = () => {
     isActive ? "text-[#71BBB2]" : "hover:text-[#71BBB2] transition-colors";
 
   const getDropdownClass = (isOpen: boolean) =>
-    `flex items-center gap-1 cursor-pointer transition-colors duration-300 ${
-      isOpen ? "text-[#71BBB2]" : "text-white hover:text-[#71BBB2]"
+    `flex items-center gap-1 cursor-pointer transition-colors duration-300 ${isOpen ? "text-[#71BBB2]" : "text-white hover:text-[#71BBB2]"
     }`;
 
   const links = (
@@ -65,9 +64,8 @@ const Navbar: React.FC = () => {
         >
           সার্ভিসসমূহ
           <HiChevronDown
-            className={`w-4 h-4 transition-transform ${
-              openServices ? "rotate-180" : ""
-            }`}
+            className={`w-4 h-4 transition-transform ${openServices ? "rotate-180" : ""
+              }`}
           />
         </button>
         {openServices && (
@@ -80,8 +78,7 @@ const Navbar: React.FC = () => {
                     key={idx}
                     to={item.path}
                     className={({ isActive }) =>
-                      `flex flex-col items-center justify-center p-2 rounded-md hover:bg-gray-100 transition-colors duration-200 ${
-                        isActive ? "bg-gray-200 font-semibold" : ""
+                      `flex flex-col items-center justify-center p-2 rounded-md hover:bg-gray-100 transition-colors duration-200 ${isActive ? "bg-gray-200 font-semibold" : ""
                       }`
                     }
                     style={{ color: item.color }}
@@ -111,9 +108,8 @@ const Navbar: React.FC = () => {
         >
           আয় করুন
           <HiChevronDown
-            className={`w-4 h-4 transition-transform ${
-              openEarn ? "rotate-180" : ""
-            }`}
+            className={`w-4 h-4 transition-transform ${openEarn ? "rotate-180" : ""
+              }`}
           />
         </button>
         {openEarn && (
@@ -159,9 +155,8 @@ const Navbar: React.FC = () => {
         >
           অনন্যা
           <HiChevronDown
-            className={`w-4 h-4 transition-transform ${
-              openCompany ? "rotate-180" : ""
-            }`}
+            className={`w-4 h-4 transition-transform ${openCompany ? "rotate-180" : ""
+              }`}
           />
         </button>
         {openCompany && (
@@ -192,9 +187,8 @@ const Navbar: React.FC = () => {
         >
           হেল্প
           <HiChevronDown
-            className={`w-4 h-4 transition-transform ${
-              openHelp ? "rotate-180" : ""
-            }`}
+            className={`w-4 h-4 transition-transform ${openHelp ? "rotate-180" : ""
+              }`}
           />
         </button>
         {openHelp && (
@@ -254,7 +248,7 @@ const Navbar: React.FC = () => {
 
   const logoutBtn = () => {
 
-      logOut()
+    logOut()
       .then(() => {
         setUser(null);
         navigate('/login')
@@ -264,7 +258,7 @@ const Navbar: React.FC = () => {
         console.log(error.message);
         toast.error("Logout failed!");
       });
-    
+
   }
 
   return (
@@ -303,7 +297,7 @@ const Navbar: React.FC = () => {
         </div>
 
 
-    
+
 
       </div>
 
