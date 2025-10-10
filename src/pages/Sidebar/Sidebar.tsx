@@ -69,7 +69,7 @@ import {
 import { NavLink } from "react-router";
 
 const Sidebar = () => {
-  // মেনু আইটেমগুলোর ডেটা অ্যারে আকারে রাখা হয়েছে
+  /// মেনু আইটেমগুলোর ডেটা অ্যারে আকারে রাখা হয়েছে
   const menuItems = [
     { icon: <FaHome />, label: "Dashboard", path: "/dashboard" },
     { icon: <FaCarSide />, label: "Rides", path: "/rides" },
