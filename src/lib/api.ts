@@ -2,11 +2,11 @@ import axios, { AxiosRequestConfig } from "axios";
 
 
 export const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "http://localhost:5000",
+  baseURL: import.meta.env.VITE_API_URL || "http://localhost:3000",
 });
 
 export const api5000 = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: "http://localhost:3000",
 });
 
 api.interceptors.request.use((config: AxiosRequestConfig) => {
