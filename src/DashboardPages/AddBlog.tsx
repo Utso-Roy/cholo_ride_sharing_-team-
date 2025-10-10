@@ -73,7 +73,6 @@ export default function AddBlog() {
             });
             if (!res.ok) throw new Error("Failed to create blog");
 
-            // ✅ SweetAlert success
             await Swal.fire({
                 icon: "success",
                 title: "Blog Created!",

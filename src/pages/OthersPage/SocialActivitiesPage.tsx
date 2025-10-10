@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router";
 import { FiFilter, FiSearch } from "react-icons/fi";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 interface Activity {
-  id: number;
+  _id: string;
   title: string;
   description: string;
   image: string;
@@ -15,18 +17,19 @@ interface Activity {
 }
 
 export default function SocialActivitiesPage() {
-  const [activities, setActivities] = useState<Activity[]>([]);
+ 
   const [visibleCount, setVisibleCount] = useState(9);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterBadge, setFilterBadge] = useState("all");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    fetch("/socialActivities.json")
-      .then((res) => res.json())
-      .then((data) => setActivities(data))
-      .catch((err) => console.error(err));
-  }, []);
+   const { data: activities = [], isLoading, isError } = useQuery<Activity[]>({
+    queryKey: ["activities"],
+    queryFn: async () => {
+      const res = await axios.get("http://localhost:5000/activities");
+      return res.data;
+    },
+  });
 
   const toggleVisibility = () => {
     if (visibleCount >= activities.length) {
@@ -118,7 +121,7 @@ export default function SocialActivitiesPage() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-full mx-auto px-6">
         {filteredActivities.slice(0, visibleCount).map((activity) => (
           <motion.div
-            key={activity.id}
+            key={activity._id}
             className="bg-white rounded-2xl shadow-lg overflow-hidden hover:scale-105 transition-transform duration-500 relative"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -142,7 +145,7 @@ export default function SocialActivitiesPage() {
               </span>
 
               <button
-                onClick={() => navigate(`/activities/${activity.id}`)}
+                onClick={() => navigate(`/activities/${activity._id}`)}
                 className="mt-4 bg-[#71BBB2] text-white text-sm font-semibold px-6 py-2 rounded-full shadow hover:bg-[#1f3245] transition-colors duration-300 absolute bottom-4 right-4"
               >
                 বিস্তারিত
