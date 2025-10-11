@@ -155,14 +155,10 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Profile /> }, // default page
       { path: "profile", element: <Profile /> },
-<<<<<<< HEAD
       { path: "drivers", element: <Drivers/>},
-      { path: "users", element: <Users/>}
-=======
-      { path: "drivers", element: <Drivers/>}
+      { path: "users", element: <Users/>},
       { path: "ContentManagement", element: <ContentManagement></ContentManagement> },
       { path: "ContentManagement/add-blog", element: <AddBlog></AddBlog> }
->>>>>>> 741825400f566d3a5232ffa3f0054791af307213
     ],
   },
 ]);
