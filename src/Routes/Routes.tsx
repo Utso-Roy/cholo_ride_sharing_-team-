@@ -59,6 +59,14 @@ import RideBooking from "../pages/Services/RideBooking";
 import Drivers from "../DashboardPages/Drivers";
 import Users from "../DashboardPages/Users";
 
+//Dashboard
+import ContentManagement from "../DashboardPages/ContentManagement";
+import AddBlog from "../DashboardPages/AddBlog";
+
+
+
+
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -147,8 +155,14 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Profile /> }, // default page
       { path: "profile", element: <Profile /> },
+<<<<<<< HEAD
       { path: "drivers", element: <Drivers/>},
       { path: "users", element: <Users/>}
+=======
+      { path: "drivers", element: <Drivers/>}
+      { path: "ContentManagement", element: <ContentManagement></ContentManagement> },
+      { path: "ContentManagement/add-blog", element: <AddBlog></AddBlog> }
+>>>>>>> 741825400f566d3a5232ffa3f0054791af307213
     ],
   },
 ]);

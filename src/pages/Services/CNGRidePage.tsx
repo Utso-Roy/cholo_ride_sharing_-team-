@@ -5,7 +5,6 @@ import { Button } from "primereact/button";
 import { motion } from "framer-motion";
 import { Avatar } from "primereact/avatar";
 import { Rating } from "primereact/rating";
-import BookingForm, { BookingFormData } from "./BookingForm";
 import { NavLink } from "react-router";
 import HowToBook from "./HowToBook";
 import Lottie from "lottie-react";
@@ -44,13 +43,12 @@ export default function CNGRidePage() {
                 <div className="relative z-10 text-white px-4">
                     <h1 className="text-3xl md:text-5xl font-bold mb-4">তাৎক্ষণিক সিএনজি রাইড বুক করুন</h1>
                     <p className="text-lg md:text-2xl mb-6">সাশ্রয়ী · দ্রুত · নিরাপদ</p>
-                    <a
-                        href="#booking-form"
-                        className="inline-block bg-accent hover:bg-[#497D74] px-6 py-3 rounded-lg font-bold transition-colors"
-                        style={{ backgroundColor: ACCENT }}
-                    >
-                        এখনই বুক করুন
-                    </a>
+                    <NavLink to="/ridebooking">
+                        <Button
+                            label="এখনই রাইড বুক করুন"
+                            className="!bg-[#71BBB2] !text-white !border-none !px-4 !py-3 !rounded-md hover:!bg-white hover:!text-[#71BBB2] "
+                        />
+                    </NavLink>
                 </div>
             </motion.section>
 
@@ -96,7 +94,7 @@ export default function CNGRidePage() {
             {/* BTN  */}
             <div className="flex justify-center items-center my-10 pb-5">
 
-                <NavLink to="/bookingform">
+                <NavLink to="/ridebooking">
                     <Button
                         label="এখনই রাইড বুক করুন"
                         className="!bg-[#274450]  !text-white !border-none !px-4 !py-3 !rounded-md hover:!bg-[#497D74]"
