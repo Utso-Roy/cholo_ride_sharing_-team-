@@ -1,3 +1,4 @@
+import api from '../lib/api';
 import { UsersResponse } from '../types/User';
 
 export type SortKey = 'name' | 'email' | 'role' | 'createdAt';
@@ -18,7 +19,16 @@ export async function fetchUsers(params: {
     sort,
     order,
   });
-  const res = await fetch(`/api/users?${qs}`, { signal, credentials: 'include' });
-  if (!res.ok) throw new Error(await res.text().catch(() => res.statusText));
-  return res.json();
+  const { data } = await api.get<UsersResponse>("/api/users", {
+    params: {
+      page,
+      limit,
+      search: search.trim() || undefined,
+      sort,
+      order,
+    },
+    signal,
+  });
+
+  return data;
 }

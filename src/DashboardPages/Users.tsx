@@ -34,7 +34,8 @@ const Users = () => {
         </div>
       </header>
 
-      {error && <div className="border border-red-200 bg-red-50 text-red-700 rounded p-3">{error}</div>}
+      {/* {error && <div className="border border-red-200 bg-red-50 text-red-700 rounded p-3">{error}
+        </div>} */}
 
       <UsersTable
         rows={data?.data ?? []}

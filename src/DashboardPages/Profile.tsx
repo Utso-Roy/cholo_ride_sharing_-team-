@@ -39,7 +39,7 @@ const Profile: React.FC = () => {
     const fetchUser = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/users/${user.email}`);
+        const res = await fetch(`${import.meta.env.VITE_API_BASE}/users/${user.email}`);
         if (!res.ok) throw new Error("Failed to fetch user");
         const data: User[] = await res.json();
         setUsers(data);
@@ -77,7 +77,7 @@ const Profile: React.FC = () => {
   }
 
   try {
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/users/${user.email}`, {
+    const res = await fetch(`${import.meta.env.VITE_API_BASE}/users/${user.email}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
