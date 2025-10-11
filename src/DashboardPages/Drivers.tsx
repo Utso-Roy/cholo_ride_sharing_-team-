@@ -33,7 +33,7 @@ type ApiResponse = {
   items: DriverDoc[];
 };
 
-const API_BASE = import.meta.env.VITE_API_URL || ""; // e.g. http://localhost:3000
+import { api } from "../lib/api";
 
 const Drivers: React.FC = () => {
   const [data, setData] = useState<DriverDoc[]>([]);
@@ -68,11 +68,15 @@ const Drivers: React.FC = () => {
         if (q.trim()) qs.set("q", q.trim());
         if (status !== "all") qs.set("status", status);
 
-        const res = await fetch(`${API_BASE}/api/drivers?${qs.toString()}`, {
+        const { data: json } = await api.get<ApiResponse>("/api/drivers", {
+          params: {
+            page,
+            limit,
+            q: q.trim() || undefined,
+            status: status !== "all" ? status : undefined,
+          },
           signal: abort.signal,
         });
-        if (!res.ok) throw new Error(`Failed: ${res.status}`);
-        const json: ApiResponse = await res.json();
         setData(json.items || []);
         setTotal(json.total || 0);
       } catch (e: any) {
@@ -87,9 +91,8 @@ const Drivers: React.FC = () => {
   const handleView = async (id: string) => {
     try {
       setLoadingDetail(true);
-      const res = await fetch(`${API_BASE}/api/drivers/${id}`);
-      if (!res.ok) throw new Error(`Failed to load driver`);
-      const data: DriverDoc = await res.json();
+      const { data } = await api.get<DriverDoc>(`/api/drivers/${id}`);
+      setSelected(data);
       setSelected(data);
       setShowModal(true);
     } catch (err: any) {
@@ -151,13 +154,13 @@ const Drivers: React.FC = () => {
                 </td>
               </tr>
             )}
-            {!loading && err && (
+            {/* {!loading && err && (
               <tr>
                 <td className="p-3 text-red-600" colSpan={8}>
                   {err}
                 </td>
               </tr>
-            )}
+            )} */}
             {!loading && !err && data.length === 0 && (
               <tr>
                 <td className="p-3" colSpan={8}>
@@ -213,57 +216,84 @@ const Drivers: React.FC = () => {
       </div>
 
       {showModal && selected && (
-  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-    <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg relative">
-      <button
-        className="absolute top-2 right-2 text-gray-500 hover:text-black"
-        onClick={() => setShowModal(false)}
-      >
-        ✕
-      </button>
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg relative">
+            <button
+              className="absolute top-2 right-2 text-gray-500 hover:text-black"
+              onClick={() => setShowModal(false)}
+            >
+              ✕
+            </button>
 
-      <h2 className="text-xl font-semibold mb-4">
-        {selected.driver.firstName} {selected.driver.lastName} 
-        <span className="ml-2 text-sm bg-gray-100 px-2 py-1 rounded">
-          {selected.vehicleType.toUpperCase()}
-        </span>
-      </h2>
+            <h2 className="text-xl font-semibold mb-4">
+              {selected.driver.firstName} {selected.driver.lastName}
+              <span className="ml-2 text-sm bg-gray-100 px-2 py-1 rounded">
+                {selected.vehicleType.toUpperCase()}
+              </span>
+            </h2>
 
-      <div className="grid grid-cols-2 gap-3 text-sm">
-        <p><strong>Phone:</strong> {selected.driver.phone}</p>
-        <p><strong>City:</strong> {selected.driver.city}</p>
-        <p><strong>License:</strong> {selected.driver.license}</p>
-        <p><strong>NID:</strong> {selected.driver.nid}</p>
-        <p><strong>DOB:</strong> {new Date(selected.driver.dob).toLocaleDateString()}</p>
-        <p><strong>Status:</strong> {selected.status}</p>
-      </div>
+            <div className="grid grid-cols-2 gap-3 text-sm">
+              <p>
+                <strong>Phone:</strong> {selected.driver.phone}
+              </p>
+              <p>
+                <strong>City:</strong> {selected.driver.city}
+              </p>
+              <p>
+                <strong>License:</strong> {selected.driver.license}
+              </p>
+              <p>
+                <strong>NID:</strong> {selected.driver.nid}
+              </p>
+              <p>
+                <strong>DOB:</strong>{" "}
+                {new Date(selected.driver.dob).toLocaleDateString()}
+              </p>
+              <p>
+                <strong>Status:</strong> {selected.status}
+              </p>
+            </div>
 
-      <hr className="my-3" />
+            <hr className="my-3" />
 
-      <h3 className="font-semibold">Vehicle Info</h3>
-      <div className="grid grid-cols-2 gap-3 text-sm mb-3">
-        <p><strong>Brand:</strong> {selected.vehicle.brand}</p>
-        <p><strong>Model:</strong> {selected.vehicle.model}</p>
-        <p><strong>Reg No:</strong> {selected.vehicle.regNo}</p>
-        <p><strong>Year:</strong> {selected.vehicle.year}</p>
-        <p><strong>Fitness No:</strong> {selected.vehicle.fitnessNo}</p>
-        <p><strong>Tax Token:</strong> {selected.vehicle.taxTokenNo}</p>
-        {selected.vehicle.routePermitNo && (
-          <p><strong>Route Permit:</strong> {selected.vehicle.routePermitNo}</p>
-        )}
-      </div>
+            <h3 className="font-semibold">Vehicle Info</h3>
+            <div className="grid grid-cols-2 gap-3 text-sm mb-3">
+              <p>
+                <strong>Brand:</strong> {selected.vehicle.brand}
+              </p>
+              <p>
+                <strong>Model:</strong> {selected.vehicle.model}
+              </p>
+              <p>
+                <strong>Reg No:</strong> {selected.vehicle.regNo}
+              </p>
+              <p>
+                <strong>Year:</strong> {selected.vehicle.year}
+              </p>
+              <p>
+                <strong>Fitness No:</strong> {selected.vehicle.fitnessNo}
+              </p>
+              <p>
+                <strong>Tax Token:</strong> {selected.vehicle.taxTokenNo}
+              </p>
+              {selected.vehicle.routePermitNo && (
+                <p>
+                  <strong>Route Permit:</strong>{" "}
+                  {selected.vehicle.routePermitNo}
+                </p>
+              )}
+            </div>
 
-      <div className="flex justify-center">
-        <img
-          src={`${API_BASE}${selected.driver.photoUrl}`}
-          alt="Driver"
-          className="h-32 w-32 object-cover rounded"
-        />
-      </div>
-    </div>
-  </div>
-)}
-
+            <div className="flex justify-center">
+              <img
+                src={`${api.defaults.baseURL || ""}${selected.driver.photoUrl}`}
+                alt="Driver"
+                className="h-32 w-32 object-cover rounded"
+              />
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* pagination */}
       <div className="mt-4 flex items-center justify-between">
