@@ -8,26 +8,32 @@ type Props = {
   sort: SortKey;
   order: 'asc' | 'desc';
   onSort: (key: SortKey) => void;
+  onChangeRole: (userId: string, newRole: 'moderator' | 'admin') => void;
 };
 
-const headers: { key: SortKey; label: string; className?: string }[] = [
+const headers: { key: SortKey |'actions'; label: string; className?: string }[] = [
   { key: 'name', label: 'User' },
   { key: 'email', label: 'Email' },
   { key: 'role', label: 'Role' },
   { key: 'createdAt', label: 'Joined', className: 'whitespace-nowrap' },
+  { key: 'actions', label: 'Actions', className: 'text-right' },
 ];
 
-export default function UsersTable({ rows, loading, sort, order, onSort }: Props) {
+export default function UsersTable({ rows, loading, sort, order, onSort, onChangeRole }: Props) {
   return (
     <div className="overflow-x-auto rounded border border-gray-200">
       <table className="min-w-[720px] w-full text-sm">
         <thead className="bg-gray-50 sticky top-0">
           <tr>
-            {headers.map(h => (
-              <Th key={h.key} active={sort === h.key} dir={order} onClick={() => onSort(h.key)} className={h.className}>
-                {h.label}
-              </Th>
-            ))}
+            {headers.map(h =>
+              h.key === 'actions' ? (
+                <th key={h.key} className={`px-4 py-3 text-xs font-semibold ${h.className ?? ''}`}>{h.label}</th>
+              ) : (
+                <Th key={h.key} active={sort === h.key} dir={order} onClick={() => onSort(h.key as SortKey)} className={h.className}>
+                  {h.label}
+                </Th>
+              )
+            )}
           </tr>
         </thead>
         <tbody>
@@ -58,6 +64,26 @@ export default function UsersTable({ rows, loading, sort, order, onSort }: Props
                 <td className="px-4 py-3 border-t capitalize">{u.role ?? 'user'}</td>
                 <td className="px-4 py-3 border-t whitespace-nowrap">
                   {u.createdAt ? new Date(u.createdAt).toLocaleDateString() : '—'}
+                </td>
+                <td className="px-4 py-3 border-t">
+                  <div className="flex justify-end gap-2">
+                    <button
+                      className="px-2 py-1 border rounded text-xs"
+                      onClick={() => onChangeRole(u._id, 'moderator')}
+                      disabled={u.role === 'moderator'}
+                      title="Make Moderator"
+                    >
+                      Make Moderator
+                    </button>
+                    <button
+                      className="px-2 py-1 border rounded text-xs"
+                      onClick={() => onChangeRole(u._id, 'admin')}
+                      disabled={u.role === 'admin'}
+                      title="Make Admin"
+                    >
+                      Make Admin
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))

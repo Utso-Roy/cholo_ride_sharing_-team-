@@ -32,3 +32,8 @@ export async function fetchUsers(params: {
 
   return data;
 }
+
+export async function updateUserRole(userId: string, role: "user" | "moderator" | "admin") {
+  const { data } = await api.patch<{ ok: boolean; user: any }>(`/api/users/${userId}/role`, { role });
+  return data.user; // updated user doc
+}
