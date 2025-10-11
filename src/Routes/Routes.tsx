@@ -57,6 +57,7 @@ import ShuttleBus from "../pages/Services/ShuttleBus";
 import Shipment from "../pages/Services/Shipment";
 import RideBooking from "../pages/Services/RideBooking";
 import Drivers from "../DashboardPages/Drivers";
+import Users from "../DashboardPages/Users";
 
 const router = createBrowserRouter([
   {
@@ -146,7 +147,8 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Profile /> }, // default page
       { path: "profile", element: <Profile /> },
-      { path: "drivers", element: <Drivers/>}
+      { path: "drivers", element: <Drivers/>},
+      { path: "users", element: <Users/>}
     ],
   },
 ]);
