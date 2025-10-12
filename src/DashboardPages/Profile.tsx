@@ -31,7 +31,6 @@ const Profile: React.FC = () => {
     const fetchUser = async () => {
       try {
         setLoading(true);
-        // Encode email to handle special characters like @
         const res = await fetch(
           `${import.meta.env.VITE_API_URL}/users/${encodeURIComponent(user.email)}`
         );
@@ -39,12 +38,13 @@ const Profile: React.FC = () => {
 
         // Response is a single object, not an array
         const data: User = await res.json();
-        setUsers([data]); // wrap in array to keep state consistent
-
+        setUsers([data]); 
         setFormData({
           name: data.name || "",
           email: data.email,
           photo: data.photo || "",
+          phone: data.phone || "",
+          address: data.address || ""
         });
       } catch (err: any) {
         setError(err.message || "Something went wrong!");
@@ -56,53 +56,43 @@ const Profile: React.FC = () => {
     fetchUser();
   }, [user]);
 
-
   // Handle input changes
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  // Submit updated profile
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
+  // Submit updated profile 
+ const handleSubmit = async (e: FormEvent) => {
+  e.preventDefault();
+  if (!formData.name || !formData.email) return toast.error("Name and email required");
 
-    if (!formData.name || !formData.email) {
-      toast.error("Name and email are required!");
-      return;
-    }
-
-    try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/users/${user.email}`, {
+  try {
+    const res = await fetch(
+      `${import.meta.env.VITE_API_URL}/users/${encodeURIComponent(user?.email.toLowerCase())}`,
+      {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
-      });
-
-      if (res.status === 404) {
-        toast.error("User not found!");
-        return;
       }
+    );
 
-      if (!res.ok) {
-        const errorData = await res.json().catch(() => ({}));
-        throw new Error(errorData.message || "Failed to update profile");
-      }
-
-      const updatedUser: User | null = await res.json().catch(() => null);
-
-      if (!updatedUser) {
-        toast.error("User not found!");
-        return;
-      }
-
-      setUsers([updatedUser]); // update state
-      setIsModalOpen(false);
-      toast.success("Profile updated successfully!");
-    } catch (err: any) {
-      toast.error(err.message || "Something went wrong!");
+    if (!res.ok) {
+      const errText = await res.text();
+      throw new Error(errText || "Update failed");
     }
-  };
+
+    const updatedUser = await res.json();
+    setUsers([updatedUser]);
+    setFormData(updatedUser);
+    setIsModalOpen(false);
+    toast.success("Profile updated successfully!");
+  } catch (err: any) {
+    console.error("Frontend update error:", err);
+    toast.error(err.message);
+  }
+};
+
 
   if (loading) return <Loading />;
 
@@ -197,12 +187,62 @@ const Profile: React.FC = () => {
           <div className="bg-white rounded-2xl p-6 w-11/12 sm:w-96 relative">
             <h2 className="text-xl font-semibold mb-4">Update Profile</h2>
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-              <input type="text" name="name" placeholder="Name" value={formData.name} onChange={handleChange} className="border p-2 rounded-md w-full" />
-              <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} className="border p-2 rounded-md w-full" />
-              <input type="text" name="photo" placeholder="Photo URL" value={formData.photo} onChange={handleChange} className="border p-2 rounded-md w-full" />
+              <input 
+                type="text" 
+                name="name" 
+                placeholder="Name" 
+                value={formData.name} 
+                onChange={handleChange} 
+                className="border p-2 rounded-md w-full" 
+                required
+              />
+              <input 
+                type="email" 
+                name="email" 
+                placeholder="Email" 
+                value={formData.email} 
+                onChange={handleChange} 
+                className="border p-2 rounded-md w-full" 
+                required
+              />
+              <input 
+                type="text" 
+                name="photo" 
+                placeholder="Photo URL" 
+                value={formData.photo} 
+                onChange={handleChange} 
+                className="border p-2 rounded-md w-full" 
+              />
+              <input 
+                type="text" 
+                name="phone" 
+                placeholder="Phone" 
+                value={formData.phone || ""} 
+                onChange={handleChange} 
+                className="border p-2 rounded-md w-full" 
+              />
+              <input 
+                type="text" 
+                name="address" 
+                placeholder="Address" 
+                value={formData.address || ""} 
+                onChange={handleChange} 
+                className="border p-2 rounded-md w-full" 
+              />
               <div className="flex justify-end gap-2 mt-2">
-                <button type="button" onClick={() => setIsModalOpen(false)} className="px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400">Cancel</button>
-                <button type="submit" className="px-4 py-2 bg-[#71BBB2] text-white rounded-md hover:bg-[#5ea49a]">Save</button>
+                <button 
+                  type="button" 
+                  onClick={() => setIsModalOpen(false)} 
+                  className="px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button 
+                  type="submit" 
+                  className="px-4 py-2 bg-[#71BBB2] text-white rounded-md hover:bg-[#5ea49a] transition-colors"
+                >
+                  Save Changes
+                </button>
               </div>
             </form>
           </div>
