@@ -33,35 +33,6 @@ const Profile: React.FC = () => {
   const [formData, setFormData] = useState<User>({ name: "", email: "", photo: "" });
 
   // Fetch user data
-  // useEffect(() => {
-  //   if (!user?.email) return;
-
-  //   const fetchUser = async () => {
-  //     try {
-  //       setLoading(true);
-  //       const res = await fetch(`${import.meta.env.VITE_API_URL}/users/${user.email}`);
-  //       if (!res.ok) throw new Error("Failed to fetch user");
-  //       const data: User[] = await res.json();
-  //       setUsers(data);
-
-  //       if (data[0]) {
-  //         setFormData({
-  //           name: data[0].name || "",
-  //           email: data[0].email,
-  //           photo: data[0].photo || "",
-  //         });
-  //       }
-  //     } catch (err: any) {
-  //       setError(err.message || "Something went wrong!");
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   fetchUser();
-  // }, [user]);
-
-  // Fetch user data
   useEffect(() => {
     if (!user?.email) return;
 
