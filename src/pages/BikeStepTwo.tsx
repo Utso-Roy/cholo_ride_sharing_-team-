@@ -147,7 +147,7 @@ const BikeStepTwo = () => {
       //   console.warn("photo is NOT a File:", driver.photo);
       // }
 
-      const res = await api.post("/api/bike-applications", fd);
+      const res = await api.post("http://localhost:3000/api/bike-applications", fd);
       return res.data;
     },
   });
@@ -325,8 +325,8 @@ const BikeStepTwo = () => {
                       {g === "male"
                         ? "পুরুষ"
                         : g === "female"
-                        ? "নারী"
-                        : "অন্যান্য"}
+                          ? "নারী"
+                          : "অন্যান্য"}
                     </span>
                   </label>
                 ))}
