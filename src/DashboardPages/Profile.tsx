@@ -31,11 +31,16 @@ const Profile: React.FC = () => {
     const fetchUser = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/users/${user.email}`);
-        if (!res.ok) throw new Error("User not found");
+        // Encode email to handle special characters like @
+        const res = await fetch(
+          `${import.meta.env.VITE_API_URL}/users/${encodeURIComponent(user.email)}`
+        );
+        if (!res.ok) throw new Error("Failed to fetch user");
 
+        // Response is a single object, not an array
         const data: User = await res.json();
-        setUsers([data]);
+        setUsers([data]); // wrap in array to keep state consistent
+
         setFormData({
           name: data.name || "",
           email: data.email,
@@ -51,15 +56,17 @@ const Profile: React.FC = () => {
     fetchUser();
   }, [user]);
 
-  // Handle form input change
+
+  // Handle input changes
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  // Handle profile update
+  // Submit updated profile
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+
     if (!formData.name || !formData.email) {
       toast.error("Name and email are required!");
       return;
@@ -72,17 +79,24 @@ const Profile: React.FC = () => {
         body: JSON.stringify(formData),
       });
 
+      if (res.status === 404) {
+        toast.error("User not found!");
+        return;
+      }
 
-      const updatedUser: User = await res.json();
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.message || "Failed to update profile");
+      }
 
-      // Update state for instant UI refresh
-      setUsers(prev => prev.map(u => u.email === updatedUser.email ? updatedUser : u));
-      setFormData({
-        name: updatedUser.name,
-        email: updatedUser.email,
-        photo: updatedUser.photo || "",
-      });
+      const updatedUser: User | null = await res.json().catch(() => null);
 
+      if (!updatedUser) {
+        toast.error("User not found!");
+        return;
+      }
+
+      setUsers([updatedUser]); // update state
       setIsModalOpen(false);
       toast.success("Profile updated successfully!");
     } catch (err: any) {
