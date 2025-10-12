@@ -1,14 +1,5 @@
 import React, { useContext, useEffect, useState, ChangeEvent, FormEvent } from "react";
-import {
-  FaUserEdit,
-  FaEnvelope,
-  FaMapMarkerAlt,
-  FaPhoneAlt,
-  FaCrown,
-  FaUsers,
-  FaCarSide,
-  FaChartPie,
-} from "react-icons/fa";
+import { FaUserEdit, FaEnvelope, FaMapMarkerAlt, FaPhoneAlt, FaCrown, FaUsers, FaCarSide, FaChartPie } from "react-icons/fa";
 import Loading from "../Loading/Loading";
 import { AuthContext } from "../Auth/AuthProvider";
 import { toast } from "react-toastify";
@@ -25,6 +16,7 @@ interface User {
 
 const Profile: React.FC = () => {
   const { user } = useContext(AuthContext) as { user: { email: string } };
+
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");

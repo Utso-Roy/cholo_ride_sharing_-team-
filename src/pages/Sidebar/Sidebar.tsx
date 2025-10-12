@@ -13,7 +13,6 @@ import {
 import { NavLink, Link } from "react-router";
 
 const Sidebar = () => {
-  /// 🔹 মেনু আইটেমগুলোর তালিকা
   const menuItems = [
     { icon: <FaHome />, label: "Dashboard", path: "/dashboard" },
     { icon: <FaCarSide />, label: "Rides", path: "/dashboard/rides" },
@@ -35,7 +34,7 @@ const Sidebar = () => {
         </Link>
       </div>
 
-      {/* 🔹 Menu Section */}
+      {/*  Menu Section */}
       <nav className="flex-1 px-4 py-6 space-y-2 bg-[#71BBB2] overflow-y-auto">
         {menuItems.map((item, idx) => (
           <NavLink

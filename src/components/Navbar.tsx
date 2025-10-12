@@ -329,10 +329,7 @@ const Navbar: React.FC = () => {
               tabIndex={0}
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-200 text-[#21BEDA] rounded-box w-52"
             >
-              <li className="dark:text-[#21BEDA]">
-                <span>{user?.displayName}</span>
-              </li>
-
+              
               <li>
                 <Link to="/dashboard" className="cursor-pointer  flex items-center gap-2 font-semibold transition-colors duration-200 rounded-md px-2 py-1">
                   <MdDashboard className="text-lg" /> Dashboard
