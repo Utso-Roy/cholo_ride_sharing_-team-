@@ -33,24 +33,56 @@ const Profile: React.FC = () => {
   const [formData, setFormData] = useState<User>({ name: "", email: "", photo: "" });
 
   // Fetch user data
+  // useEffect(() => {
+  //   if (!user?.email) return;
+
+  //   const fetchUser = async () => {
+  //     try {
+  //       setLoading(true);
+  //       const res = await fetch(`${import.meta.env.VITE_API_URL}/users/${user.email}`);
+  //       if (!res.ok) throw new Error("Failed to fetch user");
+  //       const data: User[] = await res.json();
+  //       setUsers(data);
+
+  //       if (data[0]) {
+  //         setFormData({
+  //           name: data[0].name || "",
+  //           email: data[0].email,
+  //           photo: data[0].photo || "",
+  //         });
+  //       }
+  //     } catch (err: any) {
+  //       setError(err.message || "Something went wrong!");
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchUser();
+  // }, [user]);
+
+  // Fetch user data
   useEffect(() => {
     if (!user?.email) return;
 
     const fetchUser = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/users/${user.email}`);
+        // Encode email to handle special characters like @
+        const res = await fetch(
+          `${import.meta.env.VITE_API_URL}/users/${encodeURIComponent(user.email)}`
+        );
         if (!res.ok) throw new Error("Failed to fetch user");
-        const data: User[] = await res.json();
-        setUsers(data);
 
-        if (data[0]) {
-          setFormData({
-            name: data[0].name || "",
-            email: data[0].email,
-            photo: data[0].photo || "",
-          });
-        }
+        // Response is a single object, not an array
+        const data: User = await res.json();
+        setUsers([data]); // wrap in array to keep state consistent
+
+        setFormData({
+          name: data.name || "",
+          email: data.email,
+          photo: data.photo || "",
+        });
       } catch (err: any) {
         setError(err.message || "Something went wrong!");
       } finally {
@@ -61,6 +93,7 @@ const Profile: React.FC = () => {
     fetchUser();
   }, [user]);
 
+
   // Handle input changes
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -68,45 +101,45 @@ const Profile: React.FC = () => {
   };
 
   // Submit updated profile
- const handleSubmit = async (e: FormEvent) => {
-  e.preventDefault();
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
 
-  if (!formData.name || !formData.email) {
-    toast.error("Name and email are required!");
-    return;
-  }
-
-  try {
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/users/${user.email}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    });
-
-    if (res.status === 404) {
-      toast.error("User not found!");
+    if (!formData.name || !formData.email) {
+      toast.error("Name and email are required!");
       return;
     }
 
-    if (!res.ok) {
-      const errorData = await res.json().catch(() => ({}));
-      throw new Error(errorData.message || "Failed to update profile");
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/users/${user.email}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (res.status === 404) {
+        toast.error("User not found!");
+        return;
+      }
+
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.message || "Failed to update profile");
+      }
+
+      const updatedUser: User | null = await res.json().catch(() => null);
+
+      if (!updatedUser) {
+        toast.error("User not found!");
+        return;
+      }
+
+      setUsers([updatedUser]); // update state
+      setIsModalOpen(false);
+      toast.success("Profile updated successfully!");
+    } catch (err: any) {
+      toast.error(err.message || "Something went wrong!");
     }
-
-    const updatedUser: User | null = await res.json().catch(() => null);
-
-    if (!updatedUser) {
-      toast.error("User not found!");
-      return;
-    }
-
-    setUsers([updatedUser]); // update state
-    setIsModalOpen(false);
-    toast.success("Profile updated successfully!");
-  } catch (err: any) {
-    toast.error(err.message || "Something went wrong!");
-  }
-};
+  };
 
   if (loading) return <Loading />;
 

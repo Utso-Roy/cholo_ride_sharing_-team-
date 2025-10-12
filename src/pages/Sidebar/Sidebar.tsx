@@ -13,7 +13,7 @@ import {
 import { NavLink, Link } from "react-router";
 
 const Sidebar = () => {
-  // 🔹 মেনু আইটেমগুলোর তালিকা
+  /// 🔹 মেনু আইটেমগুলোর তালিকা
   const menuItems = [
     { icon: <FaHome />, label: "Dashboard", path: "/dashboard" },
     { icon: <FaCarSide />, label: "Rides", path: "/dashboard/rides" },
