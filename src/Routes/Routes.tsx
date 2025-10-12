@@ -32,8 +32,6 @@ import CngStepOne from "../pages/CngStepOne";
 import CngStepTwo from "../pages/CngStepTwo";
 import CarEarnings from "../pages/CarEarnings";
 import CngEarnings from "../pages/CngEarnings";
-
-// Auth
 import SignUp from "../Access/SignUp";
 import Login from "../Access/Login";
 import ForgetPasswordwithEmail from "../Access/ForgetPasswordwithEmail";
@@ -58,14 +56,13 @@ import Shipment from "../pages/Services/Shipment";
 import RideBooking from "../pages/Services/RideBooking";
 import Drivers from "../DashboardPages/Drivers";
 // import Users from "../DashboardPages/Users";
+import ManagePartners from "../DashboardPages/ManagePartners";
 
-//Dashboard
+// Dashboard Pages
 import ContentManagement from "../DashboardPages/ContentManagement";
 import AddBlog from "../DashboardPages/AddBlog";
-
-
-
-
+import Users from "../DashboardPages/users";
+import Dashboard from "../DashboardPages/Dashboard";
 
 const router = createBrowserRouter([
   {
@@ -147,18 +144,20 @@ const router = createBrowserRouter([
     ],
   },
 
-  // Dashboard Routes
   {
     path: "/dashboard",
     element: <DashboardLayout />,
     errorElement: <Error />,
     children: [
-      { index: true, element: <Profile /> }, // default page
-      { path: "profile", element: <Profile /> },
-      { path: "drivers", element: <Drivers/>},
-      // { path: "users", element: <Users/>},
-      { path: "ContentManagement", element: <ContentManagement></ContentManagement> },
-      { path: "ContentManagement/add-blog", element: <AddBlog></AddBlog> }
+      { index: true, element: <Dashboard /> }, 
+      { path: "profile", element: <Profile></Profile>},
+      { path: "manage-partners", element: <ManagePartners /> },
+      { path: "drivers", element: <Drivers /> },
+      { path: "ContentManagement", element: <ContentManagement /> },
+      { path: "ContentManagement/add-blog", element: <AddBlog /> },
+      {
+        path :"/dashboard/users" , element : <Users></Users>
+      }
     ],
   },
 ]);

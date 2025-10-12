@@ -7,19 +7,24 @@ import {
   FaCog,
   FaChartPie,
   FaUserShield,
+  FaHandshake,
+  FaBriefcase,
+  FaUser,
 } from "react-icons/fa";
 import { NavLink, Link } from "react-router";
 
 const Sidebar = () => {
-  // 🔹 মেনু আইটেম
   const menuItems = [
-    { icon: <FaHome />, label: "Dashboard", to: "/dashboard" },
-    { icon: <FaCarSide />, label: "Rides", to: "/dashboard/rides" },
-    { icon: <FaUsers />, label: "Drivers", to: "/dashboard/drivers" },
-    { icon: <FaUserShield />, label: "Users", to: "/dashboard/users" },
-    { icon: <FaMoneyBill />, label: "Payments", to: "/dashboard/payments" },
-    { icon: <FaChartPie />, label: "Reports", to: "/dashboard/reports" },
-    { icon: <FaChartPie />, label: "Content Management", to: "/dashboard/content-management" },
+    { icon: <FaHome />, label: "Dashboard", path: "/dashboard" },
+        { icon: <FaUser />, label: "My Profile", path: "/dashboard/profile" },
+    { icon: <FaCarSide />, label: "Rides", path: "/dashboard/rides" },
+    { icon: <FaUsers />, label: "Drivers", path: "/dashboard/drivers" },
+    { icon: <FaUserShield />, label: "Users", path: "/dashboard/users" },
+    { icon: <FaMoneyBill />, label: "Payments", path: "/dashboard/payments" },
+    { icon: <FaChartPie />, label: "Reports", path: "/dashboard/reports" },
+    { icon: <FaHandshake />, label: "Manage Partners", path: "/dashboard/manage-partners" },
+    { icon: <FaBriefcase />, label: "Manage Jobs", path: "/dashboard/manage-jobs" },
+    { icon: <FaBriefcase />, label: "Content Management", path: "/dashboard/ContentManagement" },
   ];
 
   const baseItemClass =
@@ -36,15 +41,18 @@ const Sidebar = () => {
         </Link>
       </div>
 
-      {/* 🔹 Menu */}
+      {/*  Menu Section */}
       <nav className="flex-1 px-4 py-6 space-y-2 bg-[#71BBB2] overflow-y-auto">
         {menuItems.map((item, idx) => (
           <NavLink
             key={idx}
-            to={item.to}
-            end={item.to === "/dashboard"} // dashboard root exact-active
+            to={item.path}
+            end
             className={({ isActive }) =>
-              `${baseItemClass} ${isActive ? activeClass : hoverClass}`
+              `flex items-center gap-3 p-3 rounded-lg transition-all duration-300 cursor-pointer group ${isActive
+                ? "bg-[#2e736d] text-white"
+                : "hover:bg-[#5aa49c] hover:text-white"
+              }`
             }
           >
             <span className="text-lg transition-transform duration-200 group-hover:scale-110">

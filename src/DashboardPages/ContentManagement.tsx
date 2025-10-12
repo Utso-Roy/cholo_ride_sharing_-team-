@@ -21,7 +21,7 @@ export default function ContentManagement() {
         try {
             const params = new URLSearchParams();
             if (filter !== 'all') params.set('status', filter);
-            const res = await fetch(`http://localhost:5000/api/blogs?${params.toString()}`);
+            const res = await fetch(`http://localhost:3000/api/blogs?${params.toString()}`);
             const data = await res.json();
             setBlogs(data);
         } catch (err) {
@@ -37,7 +37,7 @@ export default function ContentManagement() {
         if (!isAdmin() || !id || !current) return;
         try {
             const newStatus = current === 'draft' ? 'published' : 'draft';
-            await fetch(`http://localhost:5000/api/blogs/${id}/status`, {
+            await fetch(`http://localhost:3000/api/blogs/${id}/status`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ status: newStatus }),
@@ -50,7 +50,7 @@ export default function ContentManagement() {
         if (!isAdmin() || !id) return;
         if (!confirm('Delete this blog?')) return;
         try {
-            await fetch(`http://localhost:5000/api/blogs/${id}`, { method: 'DELETE' });
+            await fetch(`http://localhost:3000/api/blogs/${id}`, { method: 'DELETE' });
             fetchBlogs();
         } catch (err) { console.error(err); }
     };

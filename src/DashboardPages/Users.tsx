@@ -1,144 +1,150 @@
-// import React, { useCallback } from "react";
-// import { useUsers } from "../hooks/useUsers";
-// import { SortKey, updateUserRole } from "../api/users";
-// import UsersTable from "../components/UsersTable";
+import React, { useEffect, useState } from "react";
+import axios, { AxiosResponse } from "axios";
+import { DataTable } from "primereact/datatable";
+import { Column } from "primereact/column";
+import { Tag } from "primereact/tag";
+import { Button } from "primereact/button";
+import Loading from "../Loading/Loading";
+import { toast } from "react-toastify";
 
+interface User {
+  _id: string;
+  name: string;
+  email: string;
+  role?: string;
+}
 
-// const Users = () => {
-//   const {
-//     page,
-//     setPage,
-//     limit,
-//     setLimit,
-//     search,
-//     setSearch,
-//     sort,
-//     setSort,
-//     order,
-//     setOrder,
-//     data,
-//     loading,
-//     error,
-//     totalPages,
-//   } = useUsers();
+const Users: React.FC = () => {
+  const [users, setUsers] = useState<User[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [updating, setUpdating] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
-//   const handleSort = useCallback(
-//     (key: SortKey) => {
-//       if (sort === key) setOrder(order === "asc" ? "desc" : "asc");
-//       else {
-//         setSort(key);
-//         setOrder("asc");
-//       }
-//     },
-//     [sort, order, setSort, setOrder]
-//   );
+  // ✅ Fetch all users
+  const fetchUsers = async () => {
+    try {
+      setLoading(true);
+      const res: AxiosResponse<User[]> = await axios.get(
+        `${import.meta.env.VITE_API_URL}/users`
+      );
+      setUsers(res.data);
+      setError(null);
+    } catch (err: any) {
+      setError(err.message || "Failed to load users");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-//   // optimistic update helper (optional)
-//   const replaceRowRole = (userId: string, role: "moderator" | "admin") => {
-//     if (!data) return;
-//     const next = {
-//       ...data,
-//       data: data.data.map((u) => (u._id === userId ? { ...u, role } : u)),
-//     };
-//     // NOTE: useUsers owns the state; a simple way is to force refetch by tweaking a key.
-//     // If you want to set it directly, lift state up or add a setter in the hook.
-//   };
+  // ✅ Make moderator
+  const makeModerator = async (email: string) => {
+    try {
+      setUpdating(email);
+      const res: AxiosResponse<any> = await axios.put(
+        `${import.meta.env.VITE_API_URL}/usersRole/${encodeURIComponent(email)}`,
+        { role: "moderator" }
+      );
 
-//   const handleChangeRole = async (
-//     userId: string,
-//     role: "moderator" | "admin"
-//   ) => {
-//     const sure = window.confirm(
-//       `Are you sure you want to make this user ${role}?`
-//     );
-//     if (!sure) return;
+      if (res.data && (res.data.role === "moderator" || res.data.success)) {
+        toast.success("User promoted to Moderator!");
+      } else {
+        toast.info("User is already a Moderator or update not needed.");
+      }
 
-//     try {
-//       await updateUserRole(userId, role);
-//       // simplest: trigger a soft refresh by nudging the page state
-//       // (setPage(page) won't trigger; do a tiny toggle)
-//       setPage((p) => p); // cause effect to refetch if your hook reacts—if not, do:
-//       // Alternative: change search to same value to trigger useEffect:
-//       // setSearch(s => s + '');
-//     } catch (e: any) {
-//       alert(e?.response?.data?.error || e.message || "Failed to update role");
-//     }
-//   };
+      // Refetch users
+      fetchUsers();
+    } catch (err) {
+      toast.error("Failed to update user role!");
+    } finally {
+      setUpdating(null);
+    }
+  };
 
-//   return (
-//     <div className="p-4 md:p-6 space-y-4">
-//       <header className="flex flex-col md:flex-row md:items-center gap-3 justify-between">
-//         <h1 className="text-xl font-semibold">Users</h1>
-//         <div className="flex items-center gap-3">
-//           <input
-//             value={search}
-//             onChange={(e) => setSearch(e.target.value)}
-//             placeholder="Search name or email…"
-//             className="border rounded px-3 py-2 w-64"
-//           />
-//           <select
-//             value={limit}
-//             onChange={(e) => setLimit(Number(e.target.value))}
-//             className="border rounded px-2 py-2"
-//           >
-//             {[10, 20, 50, 100].map((n) => (
-//               <option key={n} value={n}>
-//                 {n}/page
-//               </option>
-//             ))}
-//           </select>
-//         </div>
-//       </header>
+  // Fetch users on mount
+  useEffect(() => {
+    fetchUsers();
+  }, []);
 
-//       {/* {error && <div className="border border-red-200 bg-red-50 text-red-700 rounded p-3">{error}
-//         </div>} */}
+  if (loading) return <Loading />;
 
-//       <UsersTable
-//         rows={data?.data ?? []}
-//         loading={loading}
-//         sort={sort}
-//         order={order}
-//         onSort={handleSort}
-//          onChangeRole={handleChangeRole}
-//       />
+  if (error)
+    return (
+      <p className="text-center text-red-500 mt-10 text-lg">
+        Error: {error}
+      </p>
+    );
 
-//       <div className="flex items-center justify-between">
-//         <span className="text-sm text-gray-600">
-//           Page {page} of {totalPages} {data ? `— ${data.total} total` : ""}
-//         </span>
-//         <div className="flex gap-2">
-//           <button
-//             className="border rounded px-3 py-2 disabled:opacity-50"
-//             onClick={() => setPage(1)}
-//             disabled={page <= 1 || loading}
-//           >
-//             « First
-//           </button>
-//           <button
-//             className="border rounded px-3 py-2 disabled:opacity-50"
-//             onClick={() => setPage((p) => Math.max(1, p - 1))}
-//             disabled={page <= 1 || loading}
-//           >
-//             ‹ Prev
-//           </button>
-//           <button
-//             className="border rounded px-3 py-2 disabled:opacity-50"
-//             onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-//             disabled={page >= totalPages || loading}
-//           >
-//             Next ›
-//           </button>
-//           <button
-//             className="border rounded px-3 py-2 disabled:opacity-50"
-//             onClick={() => setPage(totalPages)}
-//             disabled={page >= totalPages || loading}
-//           >
-//             Last »
-//           </button>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
+  // ✅ Role column
+  const roleBodyTemplate = (rowData: User) => (
+    <Tag
+      value={rowData.role || "User"}
+      severity={
+        rowData.role === "admin"
+          ? "success"
+          : rowData.role === "moderator"
+          ? "warning"
+          : "info"
+      }
+    />
+  );
 
-// export default Users;
+  // ✅ Action column
+  const actionBodyTemplate = (rowData: User) => {
+    if (rowData.role === "admin") {
+      return <Tag value="Admin" severity="success" />;
+    }
+
+    if (rowData.role === "moderator") {
+      return <Tag value="Moderator" severity="warning" />;
+    }
+
+    return (
+      <Button
+        label="Make Moderator"
+        icon="pi pi-user-edit"
+        className="p-button-sm p-button-success"
+        onClick={() => makeModerator(rowData.email)}
+        loading={updating === rowData.email}
+      />
+    );
+  };
+
+  return (
+    <div className="max-w-6xl mx-auto p-6">
+      <h1 className="text-3xl font-bold mb-6 text-center text-green-700">
+        All Users
+      </h1>
+
+      <div className="card shadow-2xl rounded-2xl p-4 bg-white">
+        <DataTable
+          value={users}
+          paginator
+          rows={5}
+          stripedRows
+          showGridlines
+          removableSort
+          tableStyle={{ minWidth: "55rem" }}
+          emptyMessage="No users found."
+          responsiveLayout="scroll"
+        >
+          <Column field="name" header="Name" sortable style={{ width: "25%" }} />
+          <Column field="email" header="Email" sortable style={{ width: "35%" }} />
+          <Column
+            field="role"
+            header="Role"
+            body={roleBodyTemplate}
+            sortable
+            style={{ width: "20%" }}
+          />
+          <Column
+            header="Action"
+            body={actionBodyTemplate}
+            style={{ width: "20%" }}
+          />
+        </DataTable>
+      </div>
+    </div>
+  );
+};
+
+export default Users;
