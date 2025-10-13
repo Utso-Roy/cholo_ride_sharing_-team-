@@ -77,10 +77,6 @@ const Profile: React.FC = () => {
       }
     );
 
-    if (!res.ok) {
-      const errText = await res.text();
-      throw new Error(errText || "Update failed");
-    }
 
     const updatedUser = await res.json();
     setUsers([updatedUser]);
@@ -113,10 +109,7 @@ const Profile: React.FC = () => {
   const userData = users[0];
   const { name, displayName, email, photo, role, phone, address } = userData;
 
-  const driversCount = users.filter(u => u.role === "driver").length || 8;
-  const ridersCount = users.filter(u => u.role === "rider").length || 10;
-  const usersCount = users.filter(u => u.role === "report").length || 15;
-
+ 
   return (
     <div className="min-h-screen bg-gray-50 p-6 flex flex-col items-center">
       {/* Profile Card */}
@@ -163,24 +156,7 @@ const Profile: React.FC = () => {
       </div>
 
       {/* Stats Cards */}
-      <div className="w-full max-w-6xl mt-16 grid grid-cols-1 sm:grid-cols-3 gap-6">
-        <div className="bg-white p-6 rounded-2xl shadow-md flex flex-col items-center hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-          <FaUsers className="text-[#71BBB2] text-4xl mb-3" />
-          <h3 className="text-2xl font-bold text-gray-800">{driversCount}</h3>
-          <p className="text-gray-500 mt-1">Drivers</p>
-        </div>
-        <div className="bg-white p-6 rounded-2xl shadow-md flex flex-col items-center hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-          <FaCarSide className="text-[#71BBB2] text-4xl mb-3" />
-          <h3 className="text-2xl font-bold text-gray-800">{ridersCount}</h3>
-          <p className="text-gray-500 mt-1">Riders</p>
-        </div>
-        <div className="bg-white p-6 rounded-2xl shadow-md flex flex-col items-center hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-          <FaChartPie className="text-[#71BBB2] text-4xl mb-3" />
-          <h3 className="text-2xl font-bold text-gray-800">{usersCount}</h3>
-          <p className="text-gray-500 mt-1">Report</p>
-        </div>
-      </div>
-
+     
       {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">

@@ -20,7 +20,7 @@ const Users: React.FC = () => {
   const [updating, setUpdating] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  // ✅ Fetch all users
+  //  Fetch all users
   const fetchUsers = async () => {
     try {
       setLoading(true);
@@ -36,7 +36,8 @@ const Users: React.FC = () => {
     }
   };
 
-  // ✅ Make moderator
+  console.log(import.meta.env.VITE_API_URL)
+  //  Make Moderator
   const makeModerator = async (email: string) => {
     try {
       setUpdating(email);
@@ -45,22 +46,26 @@ const Users: React.FC = () => {
         { role: "moderator" }
       );
 
-      if (res.data && (res.data.role === "moderator" || res.data.success)) {
-        toast.success("User promoted to Moderator!");
+      //  Response check — backend should send { success: true, role: "moderator" }
+      if (res.data?.success || res.data?.role === "moderator") {
+        toast.success(" User promoted to Moderator!");
+      } else if (res.data?.message === "User not found") {
+        toast.error(" User not found in database!");
       } else {
-        toast.info("User is already a Moderator or update not needed.");
+        toast.info("ℹ User is already a Moderator or update not needed.");
       }
 
-      // Refetch users
-      fetchUsers();
-    } catch (err) {
-      toast.error("Failed to update user role!");
+      // Refetch user list
+      await fetchUsers();
+    } catch (err: any) {
+      console.error("Error updating user:", err);
+      toast.error("⚠️ Failed to update user role!");
     } finally {
       setUpdating(null);
     }
   };
 
-  // Fetch users on mount
+  //  Fetch users on mount
   useEffect(() => {
     fetchUsers();
   }, []);
@@ -74,7 +79,7 @@ const Users: React.FC = () => {
       </p>
     );
 
-  // ✅ Role column
+  // Role column
   const roleBodyTemplate = (rowData: User) => (
     <Tag
       value={rowData.role || "User"}
@@ -88,7 +93,7 @@ const Users: React.FC = () => {
     />
   );
 
-  // ✅ Action column
+  //  Action column
   const actionBodyTemplate = (rowData: User) => {
     if (rowData.role === "admin") {
       return <Tag value="Admin" severity="success" />;
