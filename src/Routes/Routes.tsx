@@ -54,8 +54,9 @@ import SchoolBus from "../pages/Services/SchoolBus";
 import ShuttleBus from "../pages/Services/ShuttleBus";
 import Shipment from "../pages/Services/Shipment";
 import RideBooking from "../pages/Services/RideBooking";
+import Drivers from "../DashboardPages/Drivers";
+// import Users from "../DashboardPages/Users";
 import ManagePartners from "../DashboardPages/ManagePartners";
-import Drivers from "../pages/Dashboard/Drivers";
 
 // Dashboard Pages
 import ContentManagement from "../DashboardPages/ContentManagement";
