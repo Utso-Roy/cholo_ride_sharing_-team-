@@ -101,7 +101,6 @@ const BikeStepTwo = () => {
         life: 2400,
       });
     } else {
-      // আপাতত কনসোলে দেখাই; UI তে কোনো টস্ট নেই
       console.info(`[${type.toUpperCase()}] ${detail}`);
     }
   };

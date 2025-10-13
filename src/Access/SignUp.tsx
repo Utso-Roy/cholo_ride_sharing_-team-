@@ -12,7 +12,7 @@ import GoogleLogin from "./GoogleLogin";
 import { AuthContext } from "../Auth/AuthProvider";
 import { toast } from "react-toastify";
 import { updateProfile } from "firebase/auth";
-import { api5000 } from "../lib/api";
+import { api } from "../lib/api";
 
 interface FormData {
   name: string;
@@ -100,7 +100,7 @@ const SignUp: React.FC = () => {
         role : 'user'
       };
 
-     await api5000.post('/users',saveUser)
+     await api.post('/users',saveUser)
 
       toast.success("নিবন্ধন সফল!");
       navigate(from);

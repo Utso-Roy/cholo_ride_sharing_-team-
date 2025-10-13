@@ -9,13 +9,14 @@ import {
   FaUserShield,
   FaHandshake,
   FaBriefcase,
+  FaUser,
 } from "react-icons/fa";
 import { NavLink, Link } from "react-router";
 
 const Sidebar = () => {
-  /// 🔹 মেনু আইটেমগুলোর তালিকা
   const menuItems = [
     { icon: <FaHome />, label: "Dashboard", path: "/dashboard" },
+        { icon: <FaUser />, label: "My Profile", path: "/dashboard/profile" },
     { icon: <FaCarSide />, label: "Rides", path: "/dashboard/rides" },
     { icon: <FaUsers />, label: "Drivers", path: "/dashboard/drivers" },
     { icon: <FaUserShield />, label: "Users", path: "/dashboard/users" },
@@ -23,19 +24,24 @@ const Sidebar = () => {
     { icon: <FaChartPie />, label: "Reports", path: "/dashboard/reports" },
     { icon: <FaHandshake />, label: "Manage Partners", path: "/dashboard/manage-partners" },
     { icon: <FaBriefcase />, label: "Manage Jobs", path: "/dashboard/manage-jobs" },
-    { icon: <FaBriefcase />, label: "Content_Management", path: "/dashboard/ContentManagement" },
+    { icon: <FaBriefcase />, label: "Content Management", path: "/dashboard/ContentManagement" },
   ];
+
+  const baseItemClass =
+    "flex items-center gap-3 p-3 rounded-lg transition-all duration-300 cursor-pointer group";
+  const activeClass = "bg-[#5aa49c] text-white";
+  const hoverClass = "hover:bg-[#5aa49c] hover:text-white";
 
   return (
     <div className="h-screen w-64 bg-[#71BBB2] text-[#083c3a] flex flex-col shadow-xl border-r border-[#9ad2cb] fixed md:static z-40">
-      {/* 🔹 Logo Section */}
+      {/* 🔹 Logo */}
       <div className="p-6 text-center font-extrabold text-2xl tracking-wide bg-[#e6f6f5] border-b border-[#9ad2cb] shadow-md">
         <Link to="/">
           Ride<span className="text-[#2e736d]">Admin</span>
         </Link>
       </div>
 
-      {/* 🔹 Menu Section */}
+      {/*  Menu Section */}
       <nav className="flex-1 px-4 py-6 space-y-2 bg-[#71BBB2] overflow-y-auto">
         {menuItems.map((item, idx) => (
           <NavLink
@@ -57,8 +63,8 @@ const Sidebar = () => {
         ))}
       </nav>
 
-      {/* 🔹 Footer Section */}
-      <div className="border-t border-[#9ad2cb] bg-[#e6f6f5] p-4 flex items-center justify-between hover:bg-[#d9efed] transition-all duration-300 cursor-pointer">
+      {/* 🔹 Footer */}
+      <div className="border-t border-[#9ad2cb] bg-[#e6f6f5] p-4 flex items-center justify-between hover:bg-[#d9efed] transition-all duration-300">
         <div className="flex items-center gap-3">
           <FaCog className="text-[#2e736d]" />
           <span className="font-medium">Settings</span>

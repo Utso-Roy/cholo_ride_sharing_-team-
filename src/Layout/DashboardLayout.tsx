@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Sidebar from "../pages/Sidebar/Sidebar";
-import { NavLink, Outlet } from "react-router"; 
+import { NavLink, Outlet } from "react-router";
 import { HiMenu } from "react-icons/hi";
 
 const DashboardLayout = () => {
