@@ -20,7 +20,7 @@ export default function ManagePartners() {
   const { data: partners = [], isLoading } = useQuery<Partner[]>({
     queryKey: ["partners-admin"],
     queryFn: async () => {
-      const res = await axios.get<Partner[]>("http://localhost:5000/partners");
+      const res = await axios.get<Partner[]>("http://localhost:3000/partners");
       return res.data;
     },
   });
@@ -29,7 +29,7 @@ export default function ManagePartners() {
   const addPartner = useMutation({
     mutationFn: async () => {
       setLoading(true);
-      const res = await axios.post<Partner>("http://localhost:5000/partners", newPartner);
+      const res = await axios.post<Partner>("http://localhost:3000/partners", newPartner);
       return res.data;
     },
     onSuccess: () => {
@@ -47,7 +47,7 @@ export default function ManagePartners() {
   
   const deletePartner = useMutation({
     mutationFn: async (id: string) => {
-      await axios.delete(`http://localhost:5000/partners/${id}`);
+      await axios.delete(`http://localhost:3000/partners/${id}`);
     },
     onSuccess: () => {
       Swal.fire("🗑 Deleted!", "Partner has been removed.", "success");

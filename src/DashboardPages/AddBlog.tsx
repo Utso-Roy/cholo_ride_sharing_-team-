@@ -66,14 +66,13 @@ export default function AddBlog() {
     const createBlog = async () => {
         setSubmitting(true);
         try {
-            const res = await fetch("http://localhost:5000/api/blogs", {
+            const res = await fetch("http://localhost:3000/api/blogs", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(data),
             });
             if (!res.ok) throw new Error("Failed to create blog");
 
-            // ✅ SweetAlert success
             await Swal.fire({
                 icon: "success",
                 title: "Blog Created!",

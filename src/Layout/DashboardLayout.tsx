@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
-import Sidebar from '../pages/Sidebar/Sidebar';
-import { NavLink, Outlet } from 'react-router';
-import { HiMenu } from 'react-icons/hi';
+import React, { useState } from "react";
+import Sidebar from "../pages/Sidebar/Sidebar";
+import { Outlet } from "react-router"; 
+import { HiMenu } from "react-icons/hi";
 
 const DashboardLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
     <div className="flex h-screen">
+      {/* 🔹 Mobile Menu Button */}
       <div className="md:hidden absolute top-4 left-4 z-50">
         <button
           onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -17,11 +18,11 @@ const DashboardLayout = () => {
         </button>
       </div>
 
-
+      {/* 🔹 Sidebar */}
       <div
         className={`
           fixed z-40 inset-y-0 left-0 bg-white shadow-md transform
-          ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
+          ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
           md:translate-x-0 md:static md:inset-auto md:flex md:flex-col
           transition-transform duration-300 ease-in-out
           w-64
@@ -30,13 +31,12 @@ const DashboardLayout = () => {
         <Sidebar />
       </div>
 
-
-      {/* Main Content */}
-      <div className="flex-1 p-4  overflow-auto">
-      <div className="flex-1 p-4 overflow-auto">
+      {/* 🔹 Main Content */}
+      <div className="flex-1 p-4 overflow-auto bg-gray-50">
         <Outlet />
       </div>
 
+      {/* 🔹 Overlay (for mobile sidebar) */}
       {sidebarOpen && (
         <div
           onClick={() => setSidebarOpen(false)}

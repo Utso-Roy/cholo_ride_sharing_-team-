@@ -1,19 +1,31 @@
-import axios, { AxiosRequestConfig } from "axios";
+import axios from "axios";
 
+const baseURL =
+  import.meta.env.VITE_API_BASE?.replace(/\/$/, "") || "http://localhost:3000";
 
 export const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "http://localhost:5000",
+  baseURL,            // -> http://localhost:3000
+  withCredentials: false,
+  timeout: 15000,
 });
 
-export const api5000 = axios.create({
-  baseURL: "http://localhost:5000",
-});
+// (optional) tiny helper to see what URL you’re hitting
+if (import.meta.env.DEV) {
+  // eslint-disable-next-line no-console
+  console.log("[api] baseURL =", api.defaults.baseURL);
+}
 
-api.interceptors.request.use((config: AxiosRequestConfig) => {
+// export const api5000 = axios.create({
+//   baseURL: "http://localhost:5000",
+// });
+
+api.interceptors.request.use((config) => {
   if (config.data instanceof FormData) {
-    if (!config.headers) config.headers = {};
-    if ("Content-Type" in config.headers) delete config.headers["Content-Type"];
-    if ("content-type" in config.headers) delete config.headers["content-type"];
+    // Axios will automatically set correct headers for multipart/form-data
+    delete config.headers?.["Content-Type"];
+    delete config.headers?.["content-type"];
   }
   return config;
 });
+
+export default api;

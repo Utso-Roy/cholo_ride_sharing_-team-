@@ -1,14 +1,5 @@
 import React, { useContext, useEffect, useState, ChangeEvent, FormEvent } from "react";
-import {
-  FaUserEdit,
-  FaEnvelope,
-  FaMapMarkerAlt,
-  FaPhoneAlt,
-  FaCrown,
-  FaUsers,
-  FaCarSide,
-  FaChartPie,
-} from "react-icons/fa";
+import { FaUserEdit, FaEnvelope, FaMapMarkerAlt, FaPhoneAlt, FaCrown, FaUsers, FaCarSide, FaChartPie } from "react-icons/fa";
 import Loading from "../Loading/Loading";
 import { AuthContext } from "../Auth/AuthProvider";
 import { toast } from "react-toastify";
@@ -25,6 +16,7 @@ interface User {
 
 const Profile: React.FC = () => {
   const { user } = useContext(AuthContext) as { user: { email: string } };
+
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
@@ -39,18 +31,21 @@ const Profile: React.FC = () => {
     const fetchUser = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/users/${user.email}`);
+        const res = await fetch(
+          `${import.meta.env.VITE_API_URL}/users/${encodeURIComponent(user.email)}`
+        );
         if (!res.ok) throw new Error("Failed to fetch user");
-        const data: User[] = await res.json();
-        setUsers(data);
 
-        if (data[0]) {
-          setFormData({
-            name: data[0].name || "",
-            email: data[0].email,
-            photo: data[0].photo || "",
-          });
-        }
+        // Response is a single object, not an array
+        const data: User = await res.json();
+        setUsers([data]); 
+        setFormData({
+          name: data.name || "",
+          email: data.email,
+          photo: data.photo || "",
+          phone: data.phone || "",
+          address: data.address || ""
+        });
       } catch (err: any) {
         setError(err.message || "Something went wrong!");
       } finally {
@@ -67,46 +62,43 @@ const Profile: React.FC = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  // Submit updated profile
+  // Submit updated profile 
  const handleSubmit = async (e: FormEvent) => {
   e.preventDefault();
-
-  if (!formData.name || !formData.email) {
-    toast.error("Name and email are required!");
-    return;
-  }
+  if (!formData.name || !formData.email) return toast.error("Name and email required");
 
   try {
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/users/${user.email}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    });
+//     const res = await fetch(`${import.meta.env.VITE_API_BASE}/users/${user.email}`, {
+//       method: "PUT",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify(formData),
+//     });
 
-    if (res.status === 404) {
-      toast.error("User not found!");
-      return;
-    }
+//     if (res.status === 404) {
+//       toast.error("User not found!");
+//       return;
+//     }
+    const res = await fetch(
+      `${import.meta.env.VITE_API_URL}/users/${encodeURIComponent(user?.email.toLowerCase())}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      }
+    );
 
-    if (!res.ok) {
-      const errorData = await res.json().catch(() => ({}));
-      throw new Error(errorData.message || "Failed to update profile");
-    }
 
-    const updatedUser: User | null = await res.json().catch(() => null);
-
-    if (!updatedUser) {
-      toast.error("User not found!");
-      return;
-    }
-
-    setUsers([updatedUser]); // update state
+    const updatedUser = await res.json();
+    setUsers([updatedUser]);
+    setFormData(updatedUser);
     setIsModalOpen(false);
     toast.success("Profile updated successfully!");
   } catch (err: any) {
-    toast.error(err.message || "Something went wrong!");
+    console.error("Frontend update error:", err);
+    toast.error(err.message);
   }
 };
+
 
   if (loading) return <Loading />;
 
@@ -127,10 +119,7 @@ const Profile: React.FC = () => {
   const userData = users[0];
   const { name, displayName, email, photo, role, phone, address } = userData;
 
-  const driversCount = users.filter(u => u.role === "driver").length || 8;
-  const ridersCount = users.filter(u => u.role === "rider").length || 10;
-  const usersCount = users.filter(u => u.role === "report").length || 15;
-
+ 
   return (
     <div className="min-h-screen bg-gray-50 p-6 flex flex-col items-center">
       {/* Profile Card */}
@@ -177,36 +166,69 @@ const Profile: React.FC = () => {
       </div>
 
       {/* Stats Cards */}
-      <div className="w-full max-w-6xl mt-16 grid grid-cols-1 sm:grid-cols-3 gap-6">
-        <div className="bg-white p-6 rounded-2xl shadow-md flex flex-col items-center hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-          <FaUsers className="text-[#71BBB2] text-4xl mb-3" />
-          <h3 className="text-2xl font-bold text-gray-800">{driversCount}</h3>
-          <p className="text-gray-500 mt-1">Drivers</p>
-        </div>
-        <div className="bg-white p-6 rounded-2xl shadow-md flex flex-col items-center hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-          <FaCarSide className="text-[#71BBB2] text-4xl mb-3" />
-          <h3 className="text-2xl font-bold text-gray-800">{ridersCount}</h3>
-          <p className="text-gray-500 mt-1">Riders</p>
-        </div>
-        <div className="bg-white p-6 rounded-2xl shadow-md flex flex-col items-center hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-          <FaChartPie className="text-[#71BBB2] text-4xl mb-3" />
-          <h3 className="text-2xl font-bold text-gray-800">{usersCount}</h3>
-          <p className="text-gray-500 mt-1">Report</p>
-        </div>
-      </div>
-
+     
       {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-2xl p-6 w-11/12 sm:w-96 relative">
             <h2 className="text-xl font-semibold mb-4">Update Profile</h2>
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-              <input type="text" name="name" placeholder="Name" value={formData.name} onChange={handleChange} className="border p-2 rounded-md w-full" />
-              <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} className="border p-2 rounded-md w-full" />
-              <input type="text" name="photo" placeholder="Photo URL" value={formData.photo} onChange={handleChange} className="border p-2 rounded-md w-full" />
+              <input 
+                type="text" 
+                name="name" 
+                placeholder="Name" 
+                value={formData.name} 
+                onChange={handleChange} 
+                className="border p-2 rounded-md w-full" 
+                required
+              />
+              <input 
+                type="email" 
+                name="email" 
+                placeholder="Email" 
+                value={formData.email} 
+                onChange={handleChange} 
+                className="border p-2 rounded-md w-full" 
+                required
+              />
+              <input 
+                type="text" 
+                name="photo" 
+                placeholder="Photo URL" 
+                value={formData.photo} 
+                onChange={handleChange} 
+                className="border p-2 rounded-md w-full" 
+              />
+              <input 
+                type="text" 
+                name="phone" 
+                placeholder="Phone" 
+                value={formData.phone || ""} 
+                onChange={handleChange} 
+                className="border p-2 rounded-md w-full" 
+              />
+              <input 
+                type="text" 
+                name="address" 
+                placeholder="Address" 
+                value={formData.address || ""} 
+                onChange={handleChange} 
+                className="border p-2 rounded-md w-full" 
+              />
               <div className="flex justify-end gap-2 mt-2">
-                <button type="button" onClick={() => setIsModalOpen(false)} className="px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400">Cancel</button>
-                <button type="submit" className="px-4 py-2 bg-[#71BBB2] text-white rounded-md hover:bg-[#5ea49a]">Save</button>
+                <button 
+                  type="button" 
+                  onClick={() => setIsModalOpen(false)} 
+                  className="px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button 
+                  type="submit" 
+                  className="px-4 py-2 bg-[#71BBB2] text-white rounded-md hover:bg-[#5ea49a] transition-colors"
+                >
+                  Save Changes
+                </button>
               </div>
             </form>
           </div>
