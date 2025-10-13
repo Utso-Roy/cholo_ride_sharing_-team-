@@ -33,7 +33,7 @@ type ApiResponse = {
   items: DriverDoc[];
 };
 
-const API_BASE = import.meta.env.VITE_API_URL || ""; // e.g. http://localhost:3000
+const API_BASE = import.meta.env.VITE_API_URL || "";
 
 const Drivers: React.FC = () => {
   const [data, setData] = useState<DriverDoc[]>([]);
