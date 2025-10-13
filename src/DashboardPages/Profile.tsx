@@ -68,6 +68,16 @@ const Profile: React.FC = () => {
   if (!formData.name || !formData.email) return toast.error("Name and email required");
 
   try {
+//     const res = await fetch(`${import.meta.env.VITE_API_BASE}/users/${user.email}`, {
+//       method: "PUT",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify(formData),
+//     });
+
+//     if (res.status === 404) {
+//       toast.error("User not found!");
+//       return;
+//     }
     const res = await fetch(
       `${import.meta.env.VITE_API_URL}/users/${encodeURIComponent(user?.email.toLowerCase())}`,
       {

@@ -12,7 +12,7 @@ import GoogleLogin from "./GoogleLogin";
 import { AuthContext } from "../Auth/AuthProvider";
 import { toast } from "react-toastify";
 import { updateProfile } from "firebase/auth";
-import { api, } from "../lib/api";
+import { api } from "../lib/api";
 
 interface FormData {
   name: string;
