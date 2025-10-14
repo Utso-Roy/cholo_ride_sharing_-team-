@@ -16,7 +16,7 @@ import { NavLink, Link } from "react-router";
 const Sidebar = () => {
   const menuItems = [
     { icon: <FaHome />, label: "Dashboard", path: "/dashboard" },
-        { icon: <FaUser />, label: "My Profile", path: "/dashboard/profile" },
+    { icon: <FaUser />, label: "My Profile", path: "/dashboard/profile" },
     { icon: <FaCarSide />, label: "Rides", path: "/dashboard/rides" },
     { icon: <FaUsers />, label: "Drivers", path: "/dashboard/drivers" },
     { icon: <FaUserShield />, label: "Users", path: "/dashboard/users" },

@@ -96,12 +96,25 @@ export default function BikeRide() {
             {/* BTN  */}
             <div className="flex justify-center items-center my-10 pb-5">
 
-                <NavLink to="/ridebooking">
+                {/* <NavLink to="/ridebooking">
                     <Button
                         label="এখনই রাইড বুক করুন"
                         className="!bg-[#274450]  !text-white !border-none !px-4 !py-3 !rounded-md hover:!bg-[#497D74]"
                     />
+                </NavLink> */}
+                <NavLink to="/ridebooking">
+                    <button className="relative inline-flex items-center px-6 py-3 font-medium text-white rounded-xl bg-gradient-to-r from-[#7F3DFF] to-[#5B00FF] shadow-lg shadow-purple-500/50 hover:shadow-purple-500/70 transition-all duration-500 overflow-hidden">
+                        <span className="mr-2 text-xl">✨</span>
+                        এনরোল করুন
+
+                        {/* Always-running animated border */}
+                        <span className="absolute -inset-1 rounded-xl bg-gradient-to-r from-[#7F3DFF] via-[#FF00FF] to-[#5B00FF] 
+                          bg-[length:200%_200%] animate-gradient-border blur-xl opacity-50 pointer-events-none"></span>
+                    </button>
                 </NavLink>
+
+
+
 
             </div>
 

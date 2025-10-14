@@ -56,3 +56,32 @@
 //   },
 //   plugins: [],
 // };
+
+
+
+// tailwind.config.mjs
+import { defineConfig } from 'tailwindcss'
+
+export default defineConfig({
+  content: [
+    "./src/**/*.{js,jsx,ts,tsx}",
+  ],
+  theme: {
+    extend: {
+      keyframes: {
+        'gradient-border': {
+          '0%': { backgroundPosition: '0% 50%' },
+          '50%': { backgroundPosition: '100% 50%' },
+          '100%': { backgroundPosition: '0% 50%' },
+        },
+      },
+      animation: {
+        'gradient-border': 'gradient-border 3s ease infinite',
+      },
+      backgroundSize: {
+        '200%': '200% 200%',
+      },
+    },
+  },
+  plugins: [],
+})
