@@ -59,24 +59,20 @@
 
 
 
-// tailwind.config.mjs
-import { defineConfig } from 'tailwindcss'
-
-export default defineConfig({
-  content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
-  ],
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       keyframes: {
-        'gradient-border': {
-          '0%': { backgroundPosition: '0% 50%' },
-          '50%': { backgroundPosition: '100% 50%' },
-          '100%': { backgroundPosition: '0% 50%' },
+        borderSlide: {
+          '0%': { 'background-position': '0% 50%' },
+          '50%': { 'background-position': '100% 50%' },
+          '100%': { 'background-position': '0% 50%' },
         },
       },
       animation: {
-        'gradient-border': 'gradient-border 3s ease infinite',
+        'border-slide': 'borderSlide 3s linear infinite',
       },
       backgroundSize: {
         '200%': '200% 200%',
@@ -84,4 +80,4 @@ export default defineConfig({
     },
   },
   plugins: [],
-})
+}
