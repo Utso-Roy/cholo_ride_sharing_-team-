@@ -24,7 +24,7 @@ const Sidebar = () => {
     { icon: <FaChartPie />, label: "Reports", path: "/dashboard/reports" },
     { icon: <FaHandshake />, label: "Manage Partners", path: "/dashboard/manage-partners" },
     { icon: <FaBriefcase />, label: "Manage Jobs", path: "/dashboard/manage-jobs" },
-    { icon: <FaBriefcase />, label: "Content Management", path: "/dashboard/ContentManagement" },
+    { icon: <FaBriefcase />, label: "Content Management", path: "/dashboard/content-Management" },
   ];
 
   const baseItemClass =

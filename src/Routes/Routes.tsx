@@ -63,6 +63,7 @@ import ContentManagement from "../DashboardPages/ContentManagement";
 import AddBlog from "../DashboardPages/AddBlog";
 import Users from "../DashboardPages/users";
 import Dashboard from "../DashboardPages/Dashboard";
+import EditBlog from "../DashboardPages/EditBlog";
 
 const router = createBrowserRouter([
   {
@@ -149,17 +150,20 @@ const router = createBrowserRouter([
     element: <DashboardLayout />,
     errorElement: <Error />,
     children: [
-      { index: true, element: <Dashboard /> }, 
-      { path: "profile", element: <Profile></Profile>},
+      { index: true, element: <Dashboard /> },
+      { path: "profile", element: <Profile></Profile> },
       { path: "manage-partners", element: <ManagePartners /> },
       { path: "drivers", element: <Drivers /> },
-      { path: "ContentManagement", element: <ContentManagement /> },
-      { path: "ContentManagement/add-blog", element: <AddBlog /> },
+      { path: "content-Management", element: <ContentManagement /> },
+      { path: "content-Management/add-blog", element: <AddBlog /> },
+      { path: "content-Management/edit/:id", element: <EditBlog /> },
       {
-        path :"/dashboard/users" , element : <Users></Users>
+        path: "/dashboard/users", element: <Users></Users>
       }
     ],
   },
+
+
 ]);
 
 export default router;

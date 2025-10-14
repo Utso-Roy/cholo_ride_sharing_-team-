@@ -80,7 +80,7 @@ export default function AddBlog() {
                 confirmButtonColor: "#497D74",
             });
 
-            navigate("/dashboard/ContentManagement");
+            navigate("/dashboard/content-management");
         } catch (err) {
             console.error(err);
             Swal.fire("Error", "Something went wrong!", "error");
