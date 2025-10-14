@@ -49,10 +49,23 @@ export default function BikeRide() {
 
                     <NavLink to="/ridebooking">
                         <Button
-                            label="এখনই রাইড বুক করুন"
-                            className="!bg-[#71BBB2] !text-white !border-none !px-4 !py-3 !rounded-md hover:!bg-white hover:!text-[#71BBB2] "
-                        />
+                            className="
+                     relative !bg-gradient-to-r from-[#497D74] to-[#74B49B]
+                     !text-white !border-none !px-4 !py-3 !rounded-xl 
+                     overflow-hidden
+                     before:absolute before:-inset-1 before:rounded-xl
+                     before:bg-gradient-to-r before:from-[#497D74] before:via-[#74B49B] before:to-[#497D74]
+                     before:bg-[length:200%_200%] before:animate-border-slide
+                     before:z-[-1]
+                     hover:scale-105 transition-transform duration-300
+                     "
+                        >
+                            <span className="mr-2 text-2xl animate-pulse">✨</span>
+                            এখনই রাইড বুক করুন
+                        </Button>
                     </NavLink>
+
+
                 </div>
             </motion.section>
 
@@ -106,26 +119,23 @@ export default function BikeRide() {
                     </Button>
                 </NavLink> */}
 
-
                 <NavLink to="/ridebooking">
                     <Button
                         className="
-      relative !bg-[#274450] !text-white !border-none !px-4 !py-3 !rounded-xl 
-      overflow-hidden
-      before:absolute before:-inset-1 before:rounded-xl
-      before:bg-gradient-to-r before:from-[#497D74] before:via-[#74B49B] before:to-[#497D74]
-      before:bg-[length:200%_200%] before:animate-border-slide
-      before:z-[-1]
-      hover:scale-105 transition-transform duration-300
-    "
+                     relative !bg-gradient-to-r from-[#497D74] to-[#74B49B]
+                     !text-white !border-none !px-4 !py-3 !rounded-xl 
+                     overflow-hidden
+                     before:absolute before:-inset-1 before:rounded-xl
+                     before:bg-gradient-to-r before:from-[#497D74] before:via-[#74B49B] before:to-[#497D74]
+                     before:bg-[length:200%_200%] before:animate-border-slide
+                     before:z-[-1]
+                     hover:scale-105 transition-transform duration-300
+                     "
                     >
-                        <span className="mr-2 text-xl animate-pulse">✨</span>
+                        <span className="mr-2 text-2xl animate-pulse">✨</span>
                         এখনই রাইড বুক করুন
                     </Button>
                 </NavLink>
-
-
-
 
 
 
