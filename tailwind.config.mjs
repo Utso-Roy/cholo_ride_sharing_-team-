@@ -59,25 +59,3 @@
 
 
 
-/** @type {import('tailwindcss').Config} */
-export default {
-  content: ["./src/**/*.{js,ts,jsx,tsx}"],
-  theme: {
-    extend: {
-      keyframes: {
-        borderSlide: {
-          '0%': { 'background-position': '0% 50%' },
-          '50%': { 'background-position': '100% 50%' },
-          '100%': { 'background-position': '0% 50%' },
-        },
-      },
-      animation: {
-        'border-slide': 'borderSlide 3s linear infinite',
-      },
-      backgroundSize: {
-        '200%': '200% 200%',
-      },
-    },
-  },
-  plugins: [],
-}
