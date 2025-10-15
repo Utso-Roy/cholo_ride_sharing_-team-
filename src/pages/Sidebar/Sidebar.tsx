@@ -10,7 +10,7 @@ import {
   FaHandshake,
   FaBriefcase,
   FaUser,
-   FaClipboardList,
+  FaClipboardList,
   FaFileAlt,
   FaCheckCircle,
   FaExclamationTriangle,
@@ -22,18 +22,34 @@ import {
 
 import { NavLink, Link } from "react-router";
 import api from "../../lib/api";
-import AuthProvider, { AuthContext } from "../../Auth/AuthProvider";
 
-const Sidebar = () => {
-  const [users, setUsers] = useState([]);
-  const { user } = useContext(AuthContext);
+import { AuthContext } from "../../Auth/AuthProvider";
+
+type Role = "admin" | "moderator" | "rider" | "user" | undefined;
+
+interface AppUser {
+  _id?: string;
+  name?: string;
+  email?: string;
+  role?: Role;
+}
+
+interface MenuItem {
+  label: string;
+  path?: string;                 
+  icon?: React.ReactNode;        
+}
+
+const Sidebar: React.FC = () => {
+  const [users, setUsers] = useState<AppUser[]>([]);
+  const { user } = useContext(AuthContext) as { user?: { email?: string } };
 
   console.log(user?.email);
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await api.get("/users");
+        const res = await api.get<AppUser[]>("/users"); // typed axios response
         setUsers(res.data);
       } catch (err) {
         console.error(err);
@@ -42,9 +58,9 @@ const Sidebar = () => {
     fetchUser();
   }, []);
 
-  const currentUser = users.find((u) => u?.email == user?.email);
+  const currentUser = users.find((u) => u?.email === user?.email);
 
-  const adminItems = [
+  const adminItems: MenuItem[] = [
     { icon: <FaHome />, label: "Dashboard", path: "/dashboard" },
     { icon: <FaUser />, label: "My Profile", path: "/dashboard/profile" },
     { icon: <FaCarSide />, label: "Rides", path: "/dashboard/rides" },
@@ -52,128 +68,46 @@ const Sidebar = () => {
     { icon: <FaUserShield />, label: "Users", path: "/dashboard/users" },
     { icon: <FaMoneyBill />, label: "Payments", path: "/dashboard/payments" },
     { icon: <FaChartPie />, label: "Reports", path: "/dashboard/reports" },
-    {
-      icon: <FaHandshake />,
-      label: "Manage Partners",
-      path: "/dashboard/manage-partners",
-    },
-    {
-      icon: <FaBriefcase />,
-      label: "Manage Jobs",
-      path: "/dashboard/manage-jobs",
-    },
-    {
-      icon: <FaBriefcase />,
-      label: "Content Management",
-      path: "/dashboard/ContentManagement",
-    },
+    { icon: <FaHandshake />, label: "Manage Partners", path: "/dashboard/manage-partners" },
+    { icon: <FaBriefcase />, label: "Manage Jobs", path: "/dashboard/manage-jobs" },
+    { icon: <FaBriefcase />, label: "Content Management", path: "/dashboard/ContentManagement" },
   ];
 
-  const moderatorItems = [
-     {
-    icon: <FaHome />,
-    label: "Overview",
-    path: "/dashboard/mod/overview",
-  },
-  {
-    icon: <FaFileAlt />,
-    label: "Reports",
-    path: "/dashboard/mod/reports",
-  },
-  {
-    icon: <FaClipboardList />,
-    label: "Report Detail",
-    path: "/dashboard/mod/reports/:reportId",
-  },
-  {
-    icon: <FaCheckCircle />,
-    label: "Verifications",
-    path: "/dashboard/mod/verifications",
-  },
-  {
-    icon: <FaUsers />,
-    label: "Driver KYC",
-    path: "/dashboard/mod/verifications/drivers/:id",
-  },
-  {
-    icon: <FaCarSide />,
-    label: "Vehicle Verifications",
-    path: "/dashboard/mod/verifications/vehicles/:id",
-  },
-  {
-    icon: <FaExclamationTriangle />,
-    label: "Rides Queue",
-    path: "/dashboard/mod/rides/queue",
-  },
-  {
-    icon: <FaCarSide />,
-    label: "Ride Detail",
-    path: "/dashboard/mod/rides/:rideId",
-  },
-  {
-    icon: <FaUserShield />,
-    label: "Disputes",
-    path: "/dashboard/mod/disputes",
-  },
-  {
-    icon: <FaClipboardList />,
-    label: "Dispute Detail",
-    path: "/dashboard/mod/disputes/:disputeId",
-  },
-  {
-    icon: <FaExclamationTriangle />,
-    label: "Incidents",
-    path: "/dashboard/mod/safety/incidents",
-  },
-  {
-    icon: <FaBell />,
-    label: "Watchlist",
-    path: "/dashboard/mod/safety/watchlist",
-  },
-  {
-    icon: <FaEnvelopeOpenText />,
-    label: "Message Templates",
-    path: "/dashboard/mod/comms/templates",
-  },
-  {
-    icon: <FaEnvelopeOpenText />,
-    label: "Broadcasts",
-    path: "/dashboard/mod/comms/broadcasts",
-  },
-  {
-    icon: <FaChartLine />,
-    label: "Audit Actions",
-    path: "/dashboard/mod/audit/actions",
-  },
-  {
-    icon: <FaChartLine />,
-    label: "Audit Metrics",
-    path: "/dashboard/mod/audit/metrics",
-  },
-  {
-    icon: <FaCogs />,
-    label: "Profile",
-    path: "/dashboard/profile",
-  },
-  ];
-  const riderItems = [
-    {
-      label: "utso",
-    },
-  ];
-  const userItems = [
-    {
-      label: "utso",
-    },
+  const moderatorItems: MenuItem[] = [
+    { icon: <FaHome />, label: "Overview", path: "/dashboard/mod/overview" },
+    { icon: <FaFileAlt />, label: "Reports", path: "/dashboard/mod/reports" },
+    { icon: <FaClipboardList />, label: "Report Detail", path: "/dashboard/mod/reports/:reportId" },
+    { icon: <FaCheckCircle />, label: "Verifications", path: "/dashboard/mod/verifications" },
+    { icon: <FaUsers />, label: "Driver KYC", path: "/dashboard/mod/verifications/drivers/:id" },
+    { icon: <FaCarSide />, label: "Vehicle Verifications", path: "/dashboard/mod/verifications/vehicles/:id" },
+    { icon: <FaExclamationTriangle />, label: "Rides Queue", path: "/dashboard/mod/rides/queue" },
+    { icon: <FaCarSide />, label: "Ride Detail", path: "/dashboard/mod/rides/:rideId" },
+    { icon: <FaUserShield />, label: "Disputes", path: "/dashboard/mod/disputes" },
+    { icon: <FaClipboardList />, label: "Dispute Detail", path: "/dashboard/mod/disputes/:disputeId" },
+    { icon: <FaExclamationTriangle />, label: "Incidents", path: "/dashboard/mod/safety/incidents" },
+    { icon: <FaBell />, label: "Watchlist", path: "/dashboard/mod/safety/watchlist" },
+    { icon: <FaEnvelopeOpenText />, label: "Message Templates", path: "/dashboard/mod/comms/templates" },
+    { icon: <FaEnvelopeOpenText />, label: "Broadcasts", path: "/dashboard/mod/comms/broadcasts" },
+    { icon: <FaChartLine />, label: "Audit Actions", path: "/dashboard/mod/audit/actions" },
+    { icon: <FaChartLine />, label: "Audit Metrics", path: "/dashboard/mod/audit/metrics" },
+    { icon: <FaCogs />, label: "Profile", path: "/dashboard/profile" },
   ];
 
-  let roleToRender = [];
+  const riderItems: MenuItem[] = [
+    { label: "utso", path: "/dashboard", icon: <FaHome /> }, // placeholder kept safe
+  ];
 
-  if (currentUser?.role == "admin") {
+  const userItems: MenuItem[] = [
+    { label: "utso", path: "/dashboard", icon: <FaHome /> }, // placeholder kept safe
+  ];
+
+  let roleToRender: MenuItem[] = [];
+
+  if (currentUser?.role === "admin") {
     roleToRender = adminItems;
-  } else if (currentUser?.role == "moderator") {
+  } else if (currentUser?.role === "moderator") {
     roleToRender = moderatorItems;
-  } else if (currentUser?.role == "rider") {
+  } else if (currentUser?.role === "rider") {
     roleToRender = riderItems;
   } else {
     roleToRender = userItems;
@@ -188,12 +122,12 @@ const Sidebar = () => {
         </Link>
       </div>
 
-      {/*  Menu Section */}
+      {/* Menu Section */}
       <nav className="flex-1 px-4 py-6 space-y-2 bg-[#71BBB2] overflow-y-auto">
         {roleToRender.map((item, idx) => (
           <NavLink
             key={idx}
-            to={item.path}
+            to={item.path ?? "#"} // safe fallback for placeholders
             end
             className={({ isActive }) =>
               `flex items-center gap-3 p-3 rounded-lg transition-all duration-300 cursor-pointer group ${
