@@ -152,8 +152,8 @@ const Profile: React.FC = () => {
 
           <div className="mt-6 flex flex-col sm:flex-row justify-center gap-6 text-gray-700 text-sm sm:text-base">
             <div className="flex items-center gap-2"><FaEnvelope className="text-[#71BBB2]" /><span>{email}</span></div>
-            <div className="flex items-center gap-2"><FaMapMarkerAlt className="text-[#71BBB2]" /><span>{address || "Dhaka, Bangladesh"}</span></div>
-            <div className="flex items-center gap-2"><FaPhoneAlt className="text-[#71BBB2]" /><span>{phone || "+880 123-456-789"}</span></div>
+            <div className="flex items-center gap-2"><FaMapMarkerAlt className="text-[#71BBB2]" /><span>{address || "Add Address"}</span></div>
+            <div className="flex items-center gap-2"><FaPhoneAlt className="text-[#71BBB2]" /><span>{phone || "Add Number"}</span></div>
           </div>
 
           <button
