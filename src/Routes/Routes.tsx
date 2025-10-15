@@ -61,8 +61,9 @@ import ManagePartners from "../DashboardPages/ManagePartners";
 // Dashboard Pages
 import ContentManagement from "../DashboardPages/ContentManagement";
 import AddBlog from "../DashboardPages/AddBlog";
-import Users from "../DashboardPages/users";
+
 import Dashboard from "../DashboardPages/Dashboard";
+import Users from "../DashboardPages/Users";
 
 const router = createBrowserRouter([
   {
@@ -156,7 +157,7 @@ const router = createBrowserRouter([
       { path: "ContentManagement", element: <ContentManagement /> },
       { path: "ContentManagement/add-blog", element: <AddBlog /> },
       {
-        path :"/dashboard/users" , element : <Users></Users>
+        path :"/dashboard/users" , element : <Users/>
       }
     ],
   },

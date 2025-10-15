@@ -9,21 +9,13 @@ import {
   FaUserShield,
   FaHandshake,
   FaBriefcase,
-  FaUser,
-  FaClipboardList,
-  FaFileAlt,
-  FaCheckCircle,
-  FaExclamationTriangle,
-  FaBell,
-  FaEnvelopeOpenText,
-  FaChartLine,
-  FaCogs,
+  FaUser
 } from "react-icons/fa";
 
 import { NavLink, Link } from "react-router";
 import api from "../../lib/api";
-
 import { AuthContext } from "../../Auth/AuthProvider";
+import { moderatorMenuItems } from "../../Utils/ModeratorMenu/moderatorMenu";
 
 type Role = "admin" | "moderator" | "rider" | "user" | undefined;
 
@@ -73,25 +65,6 @@ const Sidebar: React.FC = () => {
     { icon: <FaBriefcase />, label: "Content Management", path: "/dashboard/ContentManagement" },
   ];
 
-  const moderatorItems: MenuItem[] = [
-    { icon: <FaHome />, label: "Overview", path: "/dashboard/mod/overview" },
-    { icon: <FaFileAlt />, label: "Reports", path: "/dashboard/mod/reports" },
-    { icon: <FaClipboardList />, label: "Report Detail", path: "/dashboard/mod/reports/:reportId" },
-    { icon: <FaCheckCircle />, label: "Verifications", path: "/dashboard/mod/verifications" },
-    { icon: <FaUsers />, label: "Driver KYC", path: "/dashboard/mod/verifications/drivers/:id" },
-    { icon: <FaCarSide />, label: "Vehicle Verifications", path: "/dashboard/mod/verifications/vehicles/:id" },
-    { icon: <FaExclamationTriangle />, label: "Rides Queue", path: "/dashboard/mod/rides/queue" },
-    { icon: <FaCarSide />, label: "Ride Detail", path: "/dashboard/mod/rides/:rideId" },
-    { icon: <FaUserShield />, label: "Disputes", path: "/dashboard/mod/disputes" },
-    { icon: <FaClipboardList />, label: "Dispute Detail", path: "/dashboard/mod/disputes/:disputeId" },
-    { icon: <FaExclamationTriangle />, label: "Incidents", path: "/dashboard/mod/safety/incidents" },
-    { icon: <FaBell />, label: "Watchlist", path: "/dashboard/mod/safety/watchlist" },
-    { icon: <FaEnvelopeOpenText />, label: "Message Templates", path: "/dashboard/mod/comms/templates" },
-    { icon: <FaEnvelopeOpenText />, label: "Broadcasts", path: "/dashboard/mod/comms/broadcasts" },
-    { icon: <FaChartLine />, label: "Audit Actions", path: "/dashboard/mod/audit/actions" },
-    { icon: <FaChartLine />, label: "Audit Metrics", path: "/dashboard/mod/audit/metrics" },
-    { icon: <FaCogs />, label: "Profile", path: "/dashboard/profile" },
-  ];
 
   const riderItems: MenuItem[] = [
     { label: "utso", path: "/dashboard", icon: <FaHome /> }, // placeholder kept safe
@@ -106,7 +79,7 @@ const Sidebar: React.FC = () => {
   if (currentUser?.role === "admin") {
     roleToRender = adminItems;
   } else if (currentUser?.role === "moderator") {
-    roleToRender = moderatorItems;
+    roleToRender = moderatorMenuItems;
   } else if (currentUser?.role === "rider") {
     roleToRender = riderItems;
   } else {
