@@ -64,6 +64,8 @@ import AddBlog from "../DashboardPages/AddBlog";
 
 import Dashboard from "../DashboardPages/Dashboard";
 import Users from "../DashboardPages/Users";
+import ReportsList from "../DashboardPages/Moderator/Reports/ReportsList";
+
 
 const router = createBrowserRouter([
   {
@@ -158,7 +160,8 @@ const router = createBrowserRouter([
       { path: "ContentManagement/add-blog", element: <AddBlog /> },
       {
         path :"/dashboard/users" , element : <Users/>
-      }
+      },
+      { path: 'mod/reports', element: <ReportsList/>}
     ],
   },
 ]);
