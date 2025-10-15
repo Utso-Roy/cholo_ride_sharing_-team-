@@ -21,7 +21,7 @@ export default function SocialActivitiesDetails() {
   const { data: activity, isLoading, isError } = useQuery<Activity | null>({
     queryKey: ["activity", id],
     queryFn: async () => {
-      const res = await axios.get(`http://localhost:5000/activities/${id}`);
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/activities/${id}`);
       return res.data;
     },
   });

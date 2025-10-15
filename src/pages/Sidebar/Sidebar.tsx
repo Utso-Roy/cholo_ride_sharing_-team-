@@ -10,6 +10,7 @@ import {
   FaHandshake,
   FaBriefcase,
   FaUser,
+  FaHeart,
 } from "react-icons/fa";
 import { NavLink, Link } from "react-router";
 
@@ -24,6 +25,7 @@ const Sidebar = () => {
     { icon: <FaChartPie />, label: "Reports", path: "/dashboard/reports" },
     { icon: <FaHandshake />, label: "Manage Partners", path: "/dashboard/manage-partners" },
     { icon: <FaBriefcase />, label: "Manage Jobs", path: "/dashboard/manage-jobs" },
+     { icon: <FaHeart />, label: "Manage Activities", path: "/dashboard/manage-activities" },
     { icon: <FaBriefcase />, label: "Content Management", path: "/dashboard/ContentManagement" },
   ];
 
