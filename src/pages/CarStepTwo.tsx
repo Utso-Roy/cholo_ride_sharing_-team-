@@ -121,19 +121,19 @@ const CarStepTwo = () => {
         fd.set("fitnessNo", vehicle.fitnessNo);
         fd.set("taxTokenNo", vehicle.taxTokenNo);
   
-        console.groupCollapsed("FormData preview");
-        for (const [k, v] of fd.entries()) {
-          if (v instanceof File) {
-            console.log(k, { name: v.name, type: v.type, size: v.size });
-          } else {
-            console.log(k, v);
-          }
-        }
-        console.groupEnd();
+        // console.groupCollapsed("FormData preview");
+        // for (const [k, v] of fd.entries()) {
+        //   if (v instanceof File) {
+        //     console.log(k, { name: v.name, type: v.type, size: v.size });
+        //   } else {
+        //     console.log(k, v);
+        //   }
+        // }
+        // console.groupEnd();
   
-        if (!(driver.photo instanceof File)) {
-          console.warn("photo is NOT a File:", driver.photo);
-        }
+        // if (!(driver.photo instanceof File)) {
+        //   console.warn("photo is NOT a File:", driver.photo);
+        // }
   
         const res = await api.post("/api/car-applications", fd);
         return res.data;
