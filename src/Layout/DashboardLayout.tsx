@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Sidebar from "../pages/Sidebar/Sidebar";
-import { NavLink, Outlet } from "react-router"; 
+import { Outlet } from "react-router"; 
 import { HiMenu } from "react-icons/hi";
 
 const DashboardLayout = () => {
@@ -44,7 +44,6 @@ const DashboardLayout = () => {
         ></div>
       )}
     </div>
-    
   );
 };
 

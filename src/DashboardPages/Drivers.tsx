@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useState } from "react";
-
 type DriverDoc = {
   _id: string;
   vehicleType: "bike" | "car" | "cng";
@@ -33,6 +32,7 @@ type ApiResponse = {
   items: DriverDoc[];
 };
 
+const API_BASE = import.meta.env.VITE_API_URL || "";
 import { api } from "../lib/api";
 
 const Drivers: React.FC = () => {

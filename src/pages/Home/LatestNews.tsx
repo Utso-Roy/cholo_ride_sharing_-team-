@@ -29,14 +29,14 @@ const blogs: Blog[] = [
     id: 3,
     title: "Verified ড্রাইভারদের সাথে যাত্রা",
     description: "নিশ্চিন্তে যাত্রা করতে Verified ড্রাইভারদের নির্বাচন করুন।",
-    image: "https://i.ibb.co.com/PGrMfc2d/Driver-Verification-Logo.png",
+    image: "https://i.ibb.co.com/Kz2xfFPM/Gemini-Generated-Image-y93h70y93h70y93h.png",
     link: "/blog/3",
   },
   {
     id: 4,
     title: "নতুন রুট ও সার্ভিস আপডেট",
     description: "আপনার যাত্রার সুবিধার জন্য নতুন রুট এবং সার্ভিস সমূহ।",
-    image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=60",
+    image: "https://i.ibb.co.com/0jtcYcD6/Gemini-Generated-Image-c50jcoc50jcoc50j.png",
     link: "/blog/4",
   },
 ];
