@@ -153,7 +153,7 @@ const Sidebar = () => {
   {
     icon: <FaCogs />,
     label: "Profile",
-    path: "/dashboard/mod/profile",
+    path: "/dashboard/profile",
   },
   ];
   const riderItems = [
