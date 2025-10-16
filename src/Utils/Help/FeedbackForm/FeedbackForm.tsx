@@ -3,6 +3,8 @@ import { Card } from "primereact/card";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Button } from "primereact/button";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 const FeedbackForm: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -11,19 +13,44 @@ const FeedbackForm: React.FC = () => {
     message: "",
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    console.log(formData);
-    alert("আপনার অভিযোগ/প্রস্তাব সফলভাবে পাঠানো হয়েছে!");
-    setFormData({ name: "", email: "", message: "" });
+
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/feedbacks",
+        formData
+      );
+      if (response.status === 201) {
+        Swal.fire({
+          icon: "success",
+          title: "সফল হয়েছে!",
+          text: "আপনার অভিযোগ/প্রস্তাব সফলভাবে পাঠানো হয়েছে।",
+          confirmButtonColor: "#00796B",
+        });
+        setFormData({ name: "", email: "", message: "" });
+      }
+    } catch (error: any) {
+      console.error("Error sending feedback:", error);
+      Swal.fire({
+        icon: "error",
+        title: "ভুল হয়েছে!",
+        text:
+          error.response?.data?.message ||
+          "কিছু সমস্যা হয়েছে, আবার চেষ্টা করুন।",
+        confirmButtonColor: "#d33",
+      });
+    }
   };
 
   return (
-    <div className="bg-gradient-to-br from-[#E3FDFD] via-[#CBF1F5] to-[#A6E3E9] min-h-screen flex items-center justify-center py-12 px-4">
+    <div className="bg-gradient-to-r from-[#e6fcf9] to-gray-50 min-h-screen flex items-center justify-center py-12 px-4">
       <Card className="w-full max-w-2xl p-8 shadow-2xl rounded-3xl border border-gray-200 hover:shadow-3xl transition-transform transform hover:-translate-y-2 bg-white">
         <h2 className="text-4xl font-extrabold text-center text-[#27445D] mb-8 drop-shadow-sm">
           অভিযোগ/প্রস্তাব দিন
