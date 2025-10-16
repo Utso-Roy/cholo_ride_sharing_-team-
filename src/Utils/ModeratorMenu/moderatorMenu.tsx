@@ -23,7 +23,6 @@ export interface MenuItem {
 export const moderatorMenuItems: MenuItem[] = [
   { icon: <FaHome />, label: "Overview", path: "/dashboard" },
   { icon: <FaFileAlt />, label: "Reports", path: "/dashboard/mod/reports" },
-  { icon: <FaClipboardList />, label: "Report Detail", path: "/dashboard/mod/reports/:reportId" },
   { icon: <FaCheckCircle />, label: "Verifications", path: "/dashboard/mod/verifications" },
   { icon: <FaUsers />, label: "Driver KYC", path: "/dashboard/mod/verifications/drivers/:id" },
   { icon: <FaCarSide />, label: "Vehicle Verifications", path: "/dashboard/mod/verifications/vehicles/:id" },
