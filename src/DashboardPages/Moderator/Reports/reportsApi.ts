@@ -49,6 +49,7 @@ export async function bulkAction(payload: {
   action: "assign_to_me" | "status" | "add_note";
   value?: any;
   reason: string;
+  actorId: string;
 }) {
   const res = await api.post("/api/mod/reports/bulk", payload);
   return res.data;

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import {
   DataTable,
   DataTableSelectionChangeEvent,
@@ -21,6 +21,7 @@ import {
   ReportsQuery,
 } from "./reportsApi";
 import { useNavigate } from "react-router";
+import { AuthContext } from "../../../Auth/AuthProvider";
 
 const statusOptions = [
   { label: "Open", value: "open" },
@@ -61,6 +62,14 @@ function formatDate(iso: string) {
 const ReportsList: React.FC = () => {
   const navigate = useNavigate();
   const toast = useRef<Toast>(null);
+
+  const auth = useContext(AuthContext);
+  if (!auth) {
+    // Provider ছাড়া রেন্ডার হলে – চাইলে লোডার/এরর দেখাতে পারেন
+    return null;
+  }
+  const { user } = auth;
+  const actorId = user?.uid ?? user?.email ?? "mod";
 
   // table state
   const [loading, setLoading] = useState(false);
@@ -166,6 +175,7 @@ const ReportsList: React.FC = () => {
             ids: selection.map((s) => s._id),
             action: "assign_to_me",
             reason: "Taking ownership",
+            actorId,
           });
           toast.current?.show({
             severity: "success",
@@ -179,9 +189,7 @@ const ReportsList: React.FC = () => {
         } catch {
           toast.current?.show({
             severity: "error",
-            summary: "Failed",
-            detail: "Could not assign.",
-          });
+            summary: "ব্যর্থ", detail: "এ্যাসাইন করা সফল হয়নি" });
         }
       },
     });
@@ -205,6 +213,7 @@ const ReportsList: React.FC = () => {
             action: "status",
             value: statusChangeValue,
             reason: "Bulk status update",
+            actorId,
           });
           toast.current?.show({
             severity: "success",
@@ -230,12 +239,45 @@ const ReportsList: React.FC = () => {
   // bulk: add note
   const doAddNote = async () => {
     if (!selection.length || !noteText.trim()) return;
+    const toAssign = selection.filter(r => r.assigneeId !== actorId); // skip already mine
+if (!toAssign.length) {
+  toast.current?.show({ severity: "info", summary: "No change", detail: "All selected are already assigned to you." });
+  return;
+}
+
+const ownedByOthers = toAssign.filter(r => !!r.assigneeId && r.assigneeId !== actorId);
+
+confirmDialog({
+  header: "Assign to me",
+  message: ownedByOthers.length
+    ? `Take over ${toAssign.length} report(s)? (${ownedByOthers.length} currently assigned to others)`
+    : `Assign ${toAssign.length} report(s) to you?`,
+  acceptLabel: "Yes",
+  rejectLabel: "No",
+  accept: async () => {
+    try {
+      await bulkAction({
+        ids: toAssign.map(s => s._id),
+        action: "assign_to_me",
+        reason: ownedByOthers.length ? "Takeover by moderator" : "Taking ownership",
+        actorId,
+      });
+      toast.current?.show({ severity: "success", summary: "Assigned", detail: "Ownership updated." });
+      const res = await fetchReports(query);
+      setRows(res.data); setTotal(res.total);
+      setSelection([]);
+    } catch {
+      toast.current?.show({ severity: "error", summary: "ব্যর্থ", detail: "এ্যাসাইন করা সফল হয়নি" });
+    }
+  },
+});
     try {
       await bulkAction({
         ids: selection.map((s) => s._id),
         action: "add_note",
         value: noteText.trim(),
         reason: "Moderator note",
+        actorId,
       });
       toast.current?.show({
         severity: "success",
@@ -256,6 +298,8 @@ const ReportsList: React.FC = () => {
       });
     }
   };
+
+  
 
   // cells
   const createdAtBody = (r: ReportRow) => (
