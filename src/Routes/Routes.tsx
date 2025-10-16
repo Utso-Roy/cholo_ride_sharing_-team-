@@ -65,6 +65,7 @@ import AddBlog from "../DashboardPages/AddBlog";
 import Dashboard from "../DashboardPages/Dashboard";
 import Users from "../DashboardPages/Users";
 import ReportsList from "../DashboardPages/Moderator/Reports/ReportsList";
+import ReportDetailPage from "../DashboardPages/Moderator/Reports/ReportDetail";
 
 
 const router = createBrowserRouter([
@@ -161,7 +162,11 @@ const router = createBrowserRouter([
       {
         path :"/dashboard/users" , element : <Users/>
       },
-      { path: 'mod/reports', element: <ReportsList/>}
+      { path: 'mod/reports', element: <ReportsList/>},
+      {
+        path: 'mod/reports/:reportId',
+        element: <ReportDetailPage/>
+      }
     ],
   },
 ]);

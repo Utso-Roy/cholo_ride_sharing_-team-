@@ -14,7 +14,13 @@ import { InputText } from "primereact/inputtext";
 import { Dialog } from "primereact/dialog";
 import { Toast } from "primereact/toast";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
-import { bulkAction, fetchReports, ReportRow, ReportsQuery } from "./reportsApi";
+import {
+  bulkAction,
+  fetchReports,
+  ReportRow,
+  ReportsQuery,
+} from "./reportsApi";
+import { useNavigate } from "react-router";
 
 const statusOptions = [
   { label: "Open", value: "open" },
@@ -38,7 +44,10 @@ const ageOptions = [
   { label: "> 72h", value: "72h" },
 ];
 
-function getSlaSeverity(deadlineAt: string, warnBeforeHours = 4 as number): "success"|"warning"|"danger" {
+function getSlaSeverity(
+  deadlineAt: string,
+  warnBeforeHours = 4 as number
+): "success" | "warning" | "danger" {
   const diffMs = new Date(deadlineAt).getTime() - Date.now();
   if (isNaN(diffMs)) return "danger"; // invalid date → fail safe
   if (diffMs <= 0) return "danger";
@@ -50,6 +59,7 @@ function formatDate(iso: string) {
 }
 
 const ReportsList: React.FC = () => {
+  const navigate = useNavigate();
   const toast = useRef<Toast>(null);
 
   // table state
@@ -96,7 +106,18 @@ const ReportsList: React.FC = () => {
       age: age ?? undefined,
       search: search || undefined,
     }),
-    [page, limit, sortField, sortOrder, status, category, assignee, hasEvidence, age, search]
+    [
+      page,
+      limit,
+      sortField,
+      sortOrder,
+      status,
+      category,
+      assignee,
+      hasEvidence,
+      age,
+      search,
+    ]
   );
 
   useEffect(() => {
@@ -146,20 +167,30 @@ const ReportsList: React.FC = () => {
             action: "assign_to_me",
             reason: "Taking ownership",
           });
-          toast.current?.show({ severity: "success", summary: "Assigned", detail: "Selected reports assigned." });
+          toast.current?.show({
+            severity: "success",
+            summary: "Assigned",
+            detail: "Selected reports assigned.",
+          });
           const res = await fetchReports(query);
           setRows(res.data);
           setTotal(res.total);
           setSelection([]);
         } catch {
-          toast.current?.show({ severity: "error", summary: "Failed", detail: "Could not assign." });
+          toast.current?.show({
+            severity: "error",
+            summary: "Failed",
+            detail: "Could not assign.",
+          });
         }
       },
     });
   };
 
   // bulk: change status
-  const [statusChangeValue, setStatusChangeValue] = useState<string | null>(null);
+  const [statusChangeValue, setStatusChangeValue] = useState<string | null>(
+    null
+  );
   const doChangeStatus = () => {
     if (!selection.length || !statusChangeValue) return;
     confirmDialog({
@@ -175,14 +206,22 @@ const ReportsList: React.FC = () => {
             value: statusChangeValue,
             reason: "Bulk status update",
           });
-          toast.current?.show({ severity: "success", summary: "Updated", detail: "Status updated." });
+          toast.current?.show({
+            severity: "success",
+            summary: "Updated",
+            detail: "Status updated.",
+          });
           const res = await fetchReports(query);
           setRows(res.data);
           setTotal(res.total);
           setSelection([]);
           setStatusChangeValue(null);
         } catch {
-          toast.current?.show({ severity: "error", summary: "Failed", detail: "Status change failed." });
+          toast.current?.show({
+            severity: "error",
+            summary: "Failed",
+            detail: "Status change failed.",
+          });
         }
       },
     });
@@ -198,7 +237,11 @@ const ReportsList: React.FC = () => {
         value: noteText.trim(),
         reason: "Moderator note",
       });
-      toast.current?.show({ severity: "success", summary: "Noted", detail: "Note added to selected." });
+      toast.current?.show({
+        severity: "success",
+        summary: "Noted",
+        detail: "Note added to selected.",
+      });
       setNoteOpen(false);
       setNoteText("");
       const res = await fetchReports(query);
@@ -206,12 +249,18 @@ const ReportsList: React.FC = () => {
       setTotal(res.total);
       setSelection([]);
     } catch {
-      toast.current?.show({ severity: "error", summary: "Failed", detail: "Could not add note." });
+      toast.current?.show({
+        severity: "error",
+        summary: "Failed",
+        detail: "Could not add note.",
+      });
     }
   };
 
   // cells
-  const createdAtBody = (r: ReportRow) => <span>{formatDate(r.createdAt)}</span>;
+  const createdAtBody = (r: ReportRow) => (
+    <span>{formatDate(r.createdAt)}</span>
+  );
 
   const reporterSubjectBody = (r: ReportRow) => (
     <div className="flex flex-col">
@@ -223,7 +272,10 @@ const ReportsList: React.FC = () => {
   );
 
   const statusTag = (val: ReportRow["status"]) => {
-    const map: Record<string, "info" | "warning" | "success" | "danger" | "secondary"> = {
+    const map: Record<
+      string,
+      "info" | "warning" | "success" | "danger" | "secondary"
+    > = {
       open: "info",
       in_review: "warning",
       need_info: "secondary",
@@ -235,28 +287,49 @@ const ReportsList: React.FC = () => {
   const statusBody = (r: ReportRow) => statusTag(r.status);
 
   const assigneeBody = (r: ReportRow) =>
-    r.assigneeId ? <Tag severity="secondary" value={r.assigneeId} /> : <span className="opacity-60">Unassigned</span>;
+    r.assigneeId ? (
+      <Tag severity="secondary" value={r.assigneeId} />
+    ) : (
+      <span className="opacity-60">Unassigned</span>
+    );
 
   const slaBody = (r: ReportRow) => {
     const sev = getSlaSeverity(r.deadlineAt);
-    const remainingHrs = Math.floor((new Date(r.deadlineAt).getTime() - Date.now()) / 36e5);
+    const remainingHrs = Math.floor(
+      (new Date(r.deadlineAt).getTime() - Date.now()) / 36e5
+    );
     const label = remainingHrs < 0 ? "Overdue" : `${remainingHrs}h left`;
     return <Tag value={label} severity={sev as any} rounded />;
   };
 
   const repeatBody = (r: ReportRow) =>
-    r.repeatCount > 1 ? <Tag value={`Repeat ×${r.repeatCount}`} severity="warning" icon="pi pi-exclamation-triangle" /> : null;
+    r.repeatCount > 1 ? (
+      <Tag
+        value={`Repeat ×${r.repeatCount}`}
+        severity="warning"
+        icon="pi pi-exclamation-triangle"
+      />
+    ) : null;
 
   // empty-state
   const emptyTemplate = () => (
     <div className="p-6 text-center text-sm">
-      <div className="text-lg font-semibold mb-2">No open reports — last 7 days summary</div>
+      <div className="text-lg font-semibold mb-2">
+        No open reports — last 7 days summary
+      </div>
       {summary7d ? (
         <div className="flex gap-3 justify-center">
           <Tag value={`Opened: ${summary7d.opened}`} />
           <Tag value={`Resolved: ${summary7d.resolved}`} />
-          <Tag severity={summary7d.breachPct > 10 ? "warning" : "success"} value={`SLA breach: ${summary7d.breachPct}%`} />
-          <Tag value={`Top: ${summary7d.topCategories.map((t) => `${t.category}(${t.count})`).join(", ")}`} />
+          <Tag
+            severity={summary7d.breachPct > 10 ? "warning" : "success"}
+            value={`SLA breach: ${summary7d.breachPct}%`}
+          />
+          <Tag
+            value={`Top: ${summary7d.topCategories
+              .map((t) => `${t.category}(${t.count})`)
+              .join(", ")}`}
+          />
         </div>
       ) : (
         <span className="opacity-70">No data</span>
@@ -266,7 +339,12 @@ const ReportsList: React.FC = () => {
 
   const leftToolbar = (
     <div className="flex items-center gap-2">
-      <Button label="Assign to me" icon="pi pi-user-plus" onClick={doAssignToMe} disabled={!selection.length} />
+      <Button
+        label="Assign to me"
+        icon="pi pi-user-plus"
+        onClick={doAssignToMe}
+        disabled={!selection.length}
+      />
       <Dropdown
         value={statusChangeValue}
         onChange={(e) => setStatusChangeValue(e.value)}
@@ -276,8 +354,20 @@ const ReportsList: React.FC = () => {
         disabled={!selection.length}
         showClear
       />
-      <Button label="Apply" icon="pi pi-check" outlined onClick={doChangeStatus} disabled={!selection.length || !statusChangeValue} />
-      <Button label="Add note" icon="pi pi-comment" severity="secondary" onClick={() => setNoteOpen(true)} disabled={!selection.length} />
+      <Button
+        label="Apply"
+        icon="pi pi-check"
+        outlined
+        onClick={doChangeStatus}
+        disabled={!selection.length || !statusChangeValue}
+      />
+      <Button
+        label="Add note"
+        icon="pi pi-comment"
+        severity="secondary"
+        onClick={() => setNoteOpen(true)}
+        disabled={!selection.length}
+      />
     </div>
   );
 
@@ -285,14 +375,52 @@ const ReportsList: React.FC = () => {
     <div className="flex items-center gap-2">
       <span className="p-input-icon-left">
         <i className="pi pi-search" />
-        <InputText value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search id/email/text" className="w-56" />
+        <InputText
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Search id/email/text"
+          className="w-56"
+        />
       </span>
-      <Dropdown value={status} options={statusOptions} onChange={(e) => setStatus(e.value)} placeholder="Status" className="w-36" showClear />
-      <Dropdown value={category} options={categoryOptions} onChange={(e) => setCategory(e.value)} placeholder="Category" className="w-36" showClear />
-      <Dropdown value={hasEvidence} options={yesNo} onChange={(e) => setHasEvidence(e.value)} placeholder="Evidence" className="w-40" showClear />
-      <Dropdown value={age} options={ageOptions} onChange={(e) => setAge(e.value)} placeholder="Age" className="w-28" showClear />
+      <Dropdown
+        value={status}
+        options={statusOptions}
+        onChange={(e) => setStatus(e.value)}
+        placeholder="Status"
+        className="w-36"
+        showClear
+      />
+      <Dropdown
+        value={category}
+        options={categoryOptions}
+        onChange={(e) => setCategory(e.value)}
+        placeholder="Category"
+        className="w-36"
+        showClear
+      />
+      <Dropdown
+        value={hasEvidence}
+        options={yesNo}
+        onChange={(e) => setHasEvidence(e.value)}
+        placeholder="Evidence"
+        className="w-40"
+        showClear
+      />
+      <Dropdown
+        value={age}
+        options={ageOptions}
+        onChange={(e) => setAge(e.value)}
+        placeholder="Age"
+        className="w-28"
+        showClear
+      />
       {/* Assignee selector placeholder; replace with your team list */}
-      <InputText value={assignee ?? ""} onChange={(e) => setAssignee(e.target.value || null)} placeholder="Assignee ID" className="w-40" />
+      <InputText
+        value={assignee ?? ""}
+        onChange={(e) => setAssignee(e.target.value || null)}
+        placeholder="Assignee ID"
+        className="w-40"
+      />
     </div>
   );
 
@@ -310,7 +438,9 @@ const ReportsList: React.FC = () => {
         dataKey="_id"
         selectionMode="multiple"
         selection={selection}
-        onSelectionChange={(e: DataTableSelectionChangeEvent<ReportRow[]>) => setSelection(e.value as ReportRow[])}
+        onSelectionChange={(e: DataTableSelectionChangeEvent<ReportRow[]>) =>
+          setSelection(e.value as ReportRow[])
+        }
         paginator
         first={(page - 1) * limit}
         rows={limit}
@@ -324,7 +454,12 @@ const ReportsList: React.FC = () => {
         stripedRows
       >
         <Column selectionMode="multiple" headerStyle={{ width: "3rem" }} />
-        <Column field="createdAt" header="CreatedAt" sortable body={createdAtBody} />
+        <Column
+          field="createdAt"
+          header="CreatedAt"
+          sortable
+          body={createdAtBody}
+        />
         <Column field="category" header="Category" sortable />
         <Column header="Reporter → Subject" body={reporterSubjectBody} />
         <Column field="rideId" header="RideId" />
@@ -339,9 +474,10 @@ const ReportsList: React.FC = () => {
               label="Open detail"
               icon="pi pi-external-link"
               text
-              onClick={() => {
-                // NOTE: চাইলে react-router-dom useNavigate দিয়ে করুন
-                window.location.href = `/dashboard/mod/reports/${r._id}`;
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                navigate(`/dashboard/mod/reports/${r._id}`);
               }}
             />
           )}
@@ -349,7 +485,12 @@ const ReportsList: React.FC = () => {
       </DataTable>
 
       {/* Add Note Dialog */}
-      <Dialog header="Add note to selected reports" visible={noteOpen} onHide={() => setNoteOpen(false)} style={{ width: "32rem" }}>
+      <Dialog
+        header="Add note to selected reports"
+        visible={noteOpen}
+        onHide={() => setNoteOpen(false)}
+        style={{ width: "32rem" }}
+      >
         <div className="flex flex-col gap-3">
           <textarea
             className="p-inputtext p-component w-full h-32"
@@ -359,7 +500,12 @@ const ReportsList: React.FC = () => {
           />
           <div className="flex justify-end gap-2">
             <Button label="Cancel" text onClick={() => setNoteOpen(false)} />
-            <Button label="Add note" icon="pi pi-check" onClick={doAddNote} disabled={!noteText.trim()} />
+            <Button
+              label="Add note"
+              icon="pi pi-check"
+              onClick={doAddNote}
+              disabled={!noteText.trim()}
+            />
           </div>
         </div>
       </Dialog>
@@ -368,4 +514,3 @@ const ReportsList: React.FC = () => {
 };
 
 export default ReportsList;
-
