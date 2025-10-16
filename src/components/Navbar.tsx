@@ -262,12 +262,14 @@ const Navbar: React.FC = () => {
   }
 
   return (
-    <div className="navbar bg-[#27445D] sticky top-0 text-white shadow-md z-50">
+    <div className="navbar bg-[#2c4c68] sticky top-0 text-white shadow-md z-50">
       {/* Navbar Start */}
 
       <div className="navbar-start flex items-center gap-4">
         <NavLink to="/" className="cursor-pointer text-xl font-bold">
-          চলো
+          <div>
+            <img className="md:w-26 md:h-10 w-15 object-contain h-8"  src="https://i.ibb.co.com/JjNCs1G1/logo-2.png" alt="Cholo" />
+        </div>
         </NavLink>
 
         {/* Mobile dropdown */}
@@ -320,7 +322,7 @@ const Navbar: React.FC = () => {
                   alt="User Avatar"
                   src={
                     user?.photoURL ||
-                    "https://randomuser.me/api/portraits/men/32.jpg"
+                    "N/A"
                   }
                 />
               </div>
