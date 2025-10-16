@@ -53,7 +53,7 @@ import JourneyPackage from "../pages/Services/JourneyPackage";
 import SchoolBus from "../pages/Services/SchoolBus";
 import ShuttleBus from "../pages/Services/ShuttleBus";
 import Shipment from "../pages/Services/Shipment";
-import RideBooking from "../pages/Services/RideBooking";
+// import RideBooking from "../pages/Services/RideBooking";
 import Drivers from "../DashboardPages/Drivers";
 // import Users from "../DashboardPages/Users";
 import ManagePartners from "../DashboardPages/ManagePartners";
@@ -64,6 +64,7 @@ import AddBlog from "../DashboardPages/AddBlog";
 import Users from "../DashboardPages/users";
 import Dashboard from "../DashboardPages/Dashboard";
 import EditBlog from "../DashboardPages/EditBlog";
+import RideBooking from "../pages/Services/RideBooking";
 
 const router = createBrowserRouter([
   {

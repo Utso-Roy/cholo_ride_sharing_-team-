@@ -5,7 +5,7 @@ import { Button } from "primereact/button";
 import { motion } from "framer-motion";
 import { Avatar } from "primereact/avatar";
 import { Rating } from "primereact/rating";
-import BookingForm, { BookingFormData } from "./BookingForm";
+// import BookingForm, { BookingFormData } from "./BookingForm";
 import HowToBook from "./HowToBook";
 import { NavLink } from "react-router";
 import Lottie from "lottie-react";
