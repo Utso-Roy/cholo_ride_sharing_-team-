@@ -66,6 +66,7 @@ import Dashboard from "../DashboardPages/Dashboard";
 import Users from "../DashboardPages/Users";
 import ReportsList from "../DashboardPages/Moderator/Reports/ReportsList";
 import ReportDetailPage from "../DashboardPages/Moderator/Reports/ReportDetail";
+import VerificationPage from "../DashboardPages/Moderator/Verification/VerificationPage";
 
 
 const router = createBrowserRouter([
@@ -166,6 +167,10 @@ const router = createBrowserRouter([
       {
         path: 'mod/reports/:reportId',
         element: <ReportDetailPage/>
+      },
+      {
+        path: 'mod/verifications',
+        element: <VerificationPage/>
       }
     ],
   },
