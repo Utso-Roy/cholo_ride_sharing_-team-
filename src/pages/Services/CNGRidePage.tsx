@@ -43,12 +43,25 @@ export default function CNGRidePage() {
                 <div className="relative z-10 text-white px-4">
                     <h1 className="text-3xl md:text-5xl font-bold mb-4">তাৎক্ষণিক সিএনজি রাইড বুক করুন</h1>
                     <p className="text-lg md:text-2xl mb-6">সাশ্রয়ী · দ্রুত · নিরাপদ</p>
+
                     <NavLink to="/ridebooking">
                         <Button
-                            label="এখনই রাইড বুক করুন"
-                            className="!bg-[#71BBB2] !text-white !border-none !px-4 !py-3 !rounded-md hover:!bg-white hover:!text-[#71BBB2] "
-                        />
+                            className="
+                     relative !bg-gradient-to-r from-[#497D74] to-[#74B49B]
+                     !text-white !border-none !px-4 !py-3 !rounded-xl 
+                     overflow-hidden
+                     before:absolute before:-inset-1 before:rounded-xl
+                     before:bg-gradient-to-r before:from-[#497D74] before:via-[#74B49B] before:to-[#497D74]
+                     before:bg-[length:200%_200%] before:animate-border-slide
+                     before:z-[-1]
+                     hover:scale-105 transition-transform duration-300
+                     "
+                        >
+                            <span className="mr-2 text-2xl animate-pulse">✨</span>
+                            এখনই রাইড বুক করুন
+                        </Button>
                     </NavLink>
+
                 </div>
             </motion.section>
 
@@ -96,9 +109,20 @@ export default function CNGRidePage() {
 
                 <NavLink to="/ridebooking">
                     <Button
-                        label="এখনই রাইড বুক করুন"
-                        className="!bg-[#274450]  !text-white !border-none !px-4 !py-3 !rounded-md hover:!bg-[#497D74]"
-                    />
+                        className="
+                     relative !bg-gradient-to-r from-[#497D74] to-[#74B49B]
+                     !text-white !border-none !px-4 !py-3 !rounded-xl 
+                     overflow-hidden
+                     before:absolute before:-inset-1 before:rounded-xl
+                     before:bg-gradient-to-r before:from-[#497D74] before:via-[#74B49B] before:to-[#497D74]
+                     before:bg-[length:200%_200%] before:animate-border-slide
+                     before:z-[-1]
+                     hover:scale-105 transition-transform duration-300
+                     "
+                    >
+                        <span className="mr-2 text-2xl animate-pulse">✨</span>
+                        এখনই রাইড বুক করুন
+                    </Button>
                 </NavLink>
 
             </div>
