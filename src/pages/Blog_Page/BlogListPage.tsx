@@ -6,9 +6,10 @@ import Lottie from "lottie-react";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "primereact/button";
 import { Link } from "react-router";
+import Loading from "../../Loading/Loading";
 
 type Blog = {
-    id: number;
+    _id: string;
     title: string;
     thumbnail: string;
     short_description: string;
@@ -22,16 +23,17 @@ export const BlogListPage: React.FC = () => {
     const [query, setQuery] = useState("");
     const [category, setCategory] = useState("সবগুলো ব্লগ দেখুন");
 
-    // ✅ TanStack Query 
+    //  TanStack Query
     const { data: blogs = [], isLoading, error } = useQuery<Blog[]>({
         queryKey: ["blogs"],
         queryFn: async () => {
-            const res = await fetch("/blogs.json");
+            // const res = await fetch("/blogs.json");
+            const res = await fetch("http://localhost:3000/api/blogs");
             return res.json();
         },
     });
 
-    // ✅ Filter logic useMemo 
+    // Filter logic useMemo
     const filtered = useMemo(() => {
         let result = [...blogs];
 
@@ -64,7 +66,7 @@ export const BlogListPage: React.FC = () => {
     ];
 
     if (isLoading) {
-        return <p className="text-center py-10 text-lg">লোড হচ্ছে...</p>;
+        return <Loading></Loading>;
     }
 
     if (error) {
@@ -117,7 +119,7 @@ export const BlogListPage: React.FC = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 {filtered.map((blog, idx) => (
                     <motion.div
-                        key={blog.id}
+                        key={blog._id}
                         initial={{ opacity: 0, y: 50 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: idx * 0.1 }}
@@ -142,18 +144,14 @@ export const BlogListPage: React.FC = () => {
                                     {blog.author} • {blog.date}
                                 </span>
 
-                                {/* ✅ PrimeReact Button */}
-                                <Link to={`/blogs/${blog.id}`}>
-                                    <Button
-                                        label="বিস্তারিত"
-                                        className="p-button-sm"
-                                        style={{
-                                            backgroundColor: "#497D74",
-                                            border: "none",
-                                            fontWeight: "bold",
-                                        }}
-                                    />
+                                <Link
+                                    to={`/blogs/${blog._id}`}
+                                    className="px-3 py-1 rounded-md text-white font-bold text-sm"
+                                    style={{ backgroundColor: "#497D74" }}
+                                >
+                                    বিস্তারিত
                                 </Link>
+
                             </div>
                         </div>
                     </motion.div>
@@ -162,3 +160,7 @@ export const BlogListPage: React.FC = () => {
         </div>
     );
 };
+
+
+
+

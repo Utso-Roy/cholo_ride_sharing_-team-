@@ -69,7 +69,7 @@ const SwiperPage: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen ">
+    <div className=" lg:min-h-screen ">
       <section className="w-full">
         {/* Main Slider */}
         <Swiper

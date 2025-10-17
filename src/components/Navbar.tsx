@@ -1,22 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { HiChevronDown } from "react-icons/hi";
-import {
-  FaMotorcycle,
-  FaCarSide,
-  FaQuestionCircle,
-  FaHeadset,
-  FaBookOpen,
-  FaUserTie,
-  FaShieldAlt,
-  FaRegCommentDots,
-} from "react-icons/fa";
-import { MdOutlineElectricRickshaw } from "react-icons/md";
-import { NavLink, useLocation } from "react-router";
+import { FaMotorcycle, FaCarSide } from "react-icons/fa";
+import { MdDashboard, MdOutlineElectricRickshaw } from "react-icons/md";
+import { Link, NavLink, useLocation, useNavigate } from "react-router";
 import { Button } from "primereact/button";
 import serviceItems from "../Utils/ServiceItems/serviceItems";
 import othersItems from "../Utils/ServiceItems/othersItems";
 import { IconType } from "react-icons";
-
+import { AuthContext } from "../Auth/AuthProvider";
+import { IoMdLogOut } from "react-icons/io";
+import { toast } from "react-toastify";
 interface ServiceItem {
   label: string;
   icon: IconType;
@@ -33,6 +26,8 @@ interface OtherItem {
 
 const Navbar: React.FC = () => {
   const location = useLocation();
+  const { user, logOut, setUser } = useContext(AuthContext);
+  const navigate = useNavigate()
 
   const [openServices, setOpenServices] = useState(false);
   const [openHelp, setOpenHelp] = useState(false);
@@ -50,8 +45,7 @@ const Navbar: React.FC = () => {
     isActive ? "text-[#71BBB2]" : "hover:text-[#71BBB2] transition-colors";
 
   const getDropdownClass = (isOpen: boolean) =>
-    `flex items-center gap-1 cursor-pointer transition-colors duration-300 ${
-      isOpen ? "text-[#71BBB2]" : "text-white hover:text-[#71BBB2]"
+    `flex items-center gap-1 cursor-pointer transition-colors duration-300 ${isOpen ? "text-[#71BBB2]" : "text-white hover:text-[#71BBB2]"
     }`;
 
   const links = (
@@ -70,7 +64,8 @@ const Navbar: React.FC = () => {
         >
           সার্ভিসসমূহ
           <HiChevronDown
-            className={`w-4 h-4 transition-transform ${openServices ? "rotate-180" : ""}`}
+            className={`w-4 h-4 transition-transform ${openServices ? "rotate-180" : ""
+              }`}
           />
         </button>
         {openServices && (
@@ -83,8 +78,7 @@ const Navbar: React.FC = () => {
                     key={idx}
                     to={item.path}
                     className={({ isActive }) =>
-                      `flex flex-col items-center justify-center p-2 rounded-md hover:bg-gray-100 transition-colors duration-200 ${
-                        isActive ? "bg-gray-200 font-semibold" : ""
+                      `flex flex-col items-center justify-center p-2 rounded-md hover:bg-gray-100 transition-colors duration-200 ${isActive ? "bg-gray-200 font-semibold" : ""
                       }`
                     }
                     style={{ color: item.color }}
@@ -114,7 +108,8 @@ const Navbar: React.FC = () => {
         >
           আয় করুন
           <HiChevronDown
-            className={`w-4 h-4 transition-transform ${openEarn ? "rotate-180" : ""}`}
+            className={`w-4 h-4 transition-transform ${openEarn ? "rotate-180" : ""
+              }`}
           />
         </button>
         {openEarn && (
@@ -160,7 +155,8 @@ const Navbar: React.FC = () => {
         >
           অনন্যা
           <HiChevronDown
-            className={`w-4 h-4 transition-transform ${openCompany ? "rotate-180" : ""}`}
+            className={`w-4 h-4 transition-transform ${openCompany ? "rotate-180" : ""
+              }`}
           />
         </button>
         {openCompany && (
@@ -191,7 +187,8 @@ const Navbar: React.FC = () => {
         >
           হেল্প
           <HiChevronDown
-            className={`w-4 h-4 transition-transform ${openHelp ? "rotate-180" : ""}`}
+            className={`w-4 h-4 transition-transform ${openHelp ? "rotate-180" : ""
+              }`}
           />
         </button>
         {openHelp && (
@@ -203,7 +200,10 @@ const Navbar: React.FC = () => {
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/customercare" className="hover:text-[#71BBB2] block">
+                <NavLink
+                  to="/customercare"
+                  className="hover:text-[#71BBB2] block"
+                >
                   কাস্টমার কেয়ার
                 </NavLink>
               </li>
@@ -213,17 +213,26 @@ const Navbar: React.FC = () => {
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/driverguide" className="hover:text-[#71BBB2] block">
+                <NavLink
+                  to="/driverguide"
+                  className="hover:text-[#71BBB2] block"
+                >
                   ড্রাইভার গাইড
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/safety-policy" className="hover:text-[#71BBB2] block">
+                <NavLink
+                  to="/safety-policy"
+                  className="hover:text-[#71BBB2] block"
+                >
                   সেফটি ও প্রাইভেসি নীতিমালা
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/complaints" className="hover:text-[#71BBB2] block">
+                <NavLink
+                  to="/complaints"
+                  className="hover:text-[#71BBB2] block"
+                >
                   অভিযোগ/প্রস্তাব দিন
                 </NavLink>
               </li>
@@ -235,10 +244,29 @@ const Navbar: React.FC = () => {
     </>
   );
 
+
+
+  const logoutBtn = () => {
+
+    logOut()
+      .then(() => {
+        setUser(null);
+        navigate('/login')
+        toast.success("Logged out successfully!");
+      })
+      .catch((error) => {
+        console.log(error.message);
+        toast.error("Logout failed!");
+      });
+
+  }
+
   return (
     <div className="navbar bg-[#27445D] sticky top-0 text-white shadow-md z-50">
+      {/* Navbar Start */}
+
       <div className="navbar-start flex items-center gap-4">
-        <NavLink to="/" className="text-xl font-bold">
+        <NavLink to="/" className="cursor-pointer text-xl font-bold">
           চলো
         </NavLink>
 
@@ -252,13 +280,25 @@ const Navbar: React.FC = () => {
               viewBox="0 0 24 24"
               stroke="currentColor"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 6h16M4 12h8m-8 6h16"
+              />
             </svg>
           </button>
-          <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-50 p-2 shadow bg-[#27445D] rounded-box w-60">
+          <ul
+            tabIndex={0}
+            className="menu menu-sm dropdown-content mt-3 z-50 p-2 shadow bg-[#27445D] rounded-box w-60"
+          >
             {links}
           </ul>
         </div>
+
+
+
+
       </div>
 
       {/* Desktop menu */}
@@ -266,13 +306,51 @@ const Navbar: React.FC = () => {
         <ul className="menu menu-horizontal px-1 gap-2">{links}</ul>
       </div>
 
+      {/* Navbar End */}
       <div className="navbar-end">
-        <NavLink to="/signup">
-          <Button
-            label="নিবন্ধন করুন"
-            className="!bg-[#71BBB2] !text-white !border-none !px-4 !py-2 !rounded-md hover:!bg-white hover:!text-[#71BBB2]"
-          />
-        </NavLink>
+        {user && user?.email ? (
+          <div className="dropdown dropdown-end">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn   btn-ghost btn-circle avatar"
+            >
+              <div className="w-10 cursor-pointer rounded-full">
+                <img
+                  alt="User Avatar"
+                  src={
+                    user?.photoURL ||
+                    "https://randomuser.me/api/portraits/men/32.jpg"
+                  }
+                />
+              </div>
+            </div>
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-200 text-[#21BEDA] rounded-box w-52"
+            >
+              
+              <li>
+                <Link to="/dashboard" className="cursor-pointer  flex items-center gap-2 font-semibold transition-colors duration-200 rounded-md px-2 py-1">
+                  <MdDashboard className="text-lg" /> Dashboard
+                </Link>
+              </li>
+
+              <li>
+                <button onClick={logoutBtn} className="w-full text-left flex items-center gap-2 cursor-pointer  font-semibold transition-colors duration-200 rounded-md px-2 py-1">
+                  <IoMdLogOut className="text-lg" /> Logout
+                </button>
+              </li>
+            </ul>
+          </div>
+        ) : (
+          <NavLink to="/signup">
+            <Button
+              label="নিবন্ধন করুন"
+              className="!bg-white !text-[#71BBB2] font-bold px-4 py-2 rounded-full shadow-lg hover:scale-105 transition-transform border-none"
+            />
+          </NavLink>
+        )}
       </div>
     </div>
   );

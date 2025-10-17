@@ -15,7 +15,6 @@ import { FaUserCheck, FaMotorcycle, FaClipboardCheck } from "react-icons/fa";
 import { useMutation } from "@tanstack/react-query";
 import { api } from "../lib/api";
 
-// 🔧 ফিচার ফ্ল্যাগ (পরে true করে দিলেই Toast অন)
 const ENABLE_TOAST = true;
 
 const CITY_OPTIONS = [
@@ -41,7 +40,6 @@ const BikeStepTwo = () => {
   const navigate = useNavigate();
   const fileRef = useRef<FileUpload | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  // রোবাস্ট রিসেটের জন্য (ফলব্যাক): FileUpload রিমাউন্ট করাতে key ব্যবহার
   const [fileKey, setFileKey] = useState(0);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -64,11 +62,9 @@ const BikeStepTwo = () => {
     // Preview URL
     const nextUrl = URL.createObjectURL(file);
     setPreviewUrl((prev) => {
-      if (prev) URL.revokeObjectURL(prev); // আগের URL ক্লিনআপ
+      if (prev) URL.revokeObjectURL(prev);
       return nextUrl;
     });
-    // // clear the state after remove preview
-    // fileRef.current?.clear?.();
   };
 
   const removePhoto = () => {
@@ -76,21 +72,17 @@ const BikeStepTwo = () => {
     setPreviewUrl(null);
     setDriver({ ...driver, photo: null });
 
-    // ইনপুট ক্লিয়ার
     fileRef.current?.clear?.();
 
-    // ফলব্যাক: কিছু সেটাপে clear() যথেষ্ট না হলে রিমাউন্ট
     setFileKey((k) => k + 1);
   };
 
-  // আনমাউন্ট হলে/URL বদলালে প্রিভিউ URL ক্লিনআপ
   useEffect(() => {
     return () => {
       if (previewUrl) URL.revokeObjectURL(previewUrl);
     };
   }, [previewUrl]);
 
-  // নোটিফায়ার হেল্পার
   const notify = (type: "success" | "warn" | "error", detail: string) => {
     if (ENABLE_TOAST) {
       toast.current?.show({
@@ -101,7 +93,6 @@ const BikeStepTwo = () => {
         life: 2400,
       });
     } else {
-      // আপাতত কনসোলে দেখাই; UI তে কোনো টস্ট নেই
       console.info(`[${type.toUpperCase()}] ${detail}`);
     }
   };
@@ -133,27 +124,12 @@ const BikeStepTwo = () => {
       fd.set("fitnessNo", vehicle.fitnessNo);
       fd.set("taxTokenNo", vehicle.taxTokenNo);
 
-      console.groupCollapsed("FormData preview");
-      for (const [k, v] of fd.entries()) {
-        if (v instanceof File) {
-          console.log(k, { name: v.name, type: v.type, size: v.size });
-        } else {
-          console.log(k, v);
-        }
-      }
-      console.groupEnd();
-
-      if (!(driver.photo instanceof File)) {
-        console.warn("photo is NOT a File:", driver.photo);
-      }
-
       const res = await api.post("/api/bike-applications", fd);
       return res.data;
     },
   });
 
   const submitAll = async () => {
-    // ধাপ–২ ভ্যালিডেশন (ড্রাইভার + ভেহিকল)
     const invalid =
       !driver.firstName?.trim() ||
       !driver.lastName?.trim() ||
@@ -182,7 +158,6 @@ const BikeStepTwo = () => {
       {
         onSuccess: (data) => {
           notify("success", "আবেদন জমা হয়েছে!");
-          // চাইলে data.id দেখাতে পারেন
           reset();
           navigate("/");
         },
@@ -190,16 +165,13 @@ const BikeStepTwo = () => {
           const data = err?.response?.data;
           console.error("Submit error:", data);
 
-          // Zod field errors (object: { fieldName: string[] })
           const fe = data?.details?.fieldErrors as
             | Record<string, string[]>
             | undefined;
 
-          // First error message (if any)
           const firstField = fe && Object.keys(fe)[0];
           const firstMsg = firstField && fe[firstField]?.[0];
 
-          // Optional: nice label mapping (API keys → Bangla labels)
           const label: Record<string, string> = {
             "driver.firstName": "নামের প্রথম অংশ",
             "driver.lastName": "নামের শেষ অংশ",
@@ -234,11 +206,6 @@ const BikeStepTwo = () => {
   return (
     <main className="px-4 md:px-10 py-10 bg-white">
       {ENABLE_TOAST && <Toast ref={toast} position="top-center" />}
-
-      {/* টপে Steps (ভিজুয়াল)
-      <div className="bg-white rounded-lg shadow p-4 mb-6">
-        <Steps model={stepItems} activeIndex={1} readOnly />
-      </div> */}
 
       <div className="max-w-4xl mx-auto flex flex-col gap-6">
         {/* Driver Details */}
@@ -385,17 +352,9 @@ const BikeStepTwo = () => {
                 name="photo"
                 chooseLabel="ছবি নির্বাচন"
                 accept="image/jpeg, image/png"
-                // maxFileSize={2 * 1024 * 1024}
                 customUpload
                 onSelect={onPhoto}
-                // pt={{
-                //   chooseButton: {
-                //     className:
-                //       "!bg-[#71BBB2] !border-none hover:!bg-[#5AA29F] " +
-                //       "focus:!ring-2 focus:!ring-[#71BBB2]/40 !text-[#27445D] font-medium",
-                //   },
-                // }}
-                /* 🔹 বিকল্প: কিছু ভার্সনে chooseOptions ও কাজ করে */
+               
                 chooseOptions={{
                   label: "ছবি নির্বাচন",
                   className:
@@ -403,7 +362,6 @@ const BikeStepTwo = () => {
                     "!text-[#27445D] font-medium",
                 }}
               />
-              {/* নির্বাচিত ফাইলের নাম */}
               {driver.photo && !previewUrl && (
                 <small className="text-gray-700">
                   নির্বাচিত: {driver.photo.name}
@@ -465,7 +423,7 @@ const BikeStepTwo = () => {
             </div>
 
             <div className="flex flex-col gap-2">
-              <label>মডেল সিলেক্ট করুন*</label>
+              <label>মডেল*</label>
               <Dropdown
                 value={vehicle.model}
                 onChange={(e) => setVehicle({ ...vehicle, model: e.value })}
