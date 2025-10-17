@@ -62,6 +62,12 @@ import ManageJobsApplications from "../DashboardPages/ManageJobsApplications";
 // Dashboard Pages
 import ContentManagement from "../DashboardPages/ContentManagement";
 import AddBlog from "../DashboardPages/AddBlog";
+
+import Dashboard from "../DashboardPages/Dashboard";
+import Users from "../DashboardPages/Users";
+import ReportsList from "../DashboardPages/Moderator/Reports/ReportsList";
+import ReportDetailPage from "../DashboardPages/Moderator/Reports/ReportDetail";
+import VerificationPage from "../DashboardPages/Moderator/Verification/VerificationPage";
 import Users from "../DashboardPages/Users";
 import Dashboard from "../DashboardPages/Dashboard";
 import ManageSocialActivities from "../pages/OthersPage/ManageSocialActivities";
@@ -161,6 +167,17 @@ const router = createBrowserRouter([
       { path: "ContentManagement", element: <ContentManagement /> },
       { path: "ContentManagement/add-blog", element: <AddBlog /> },
       {
+        path :"/dashboard/users" , element : <Users/>
+      },
+      { path: 'mod/reports', element: <ReportsList/>},
+      {
+        path: 'mod/reports/:reportId',
+        element: <ReportDetailPage/>
+      },
+      {
+        path: 'mod/verifications',
+        element: <VerificationPage/>
+      }
         path :"/dashboard/users" , element : <Users></Users>
       },
     ],
