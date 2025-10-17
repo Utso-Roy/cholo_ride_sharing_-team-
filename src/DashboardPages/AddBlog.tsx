@@ -5,7 +5,7 @@ import { Button } from "primereact/button";
 import { Calendar } from "primereact/calendar";
 import { Card } from "primereact/card";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const categories = [
@@ -83,7 +83,7 @@ export default function AddBlog() {
         confirmButtonColor: "#497D74",
       });
 
-      navigate("/dashboard/ContentManagement");
+      navigate("/dashboard/content-management"); // ✅ final correct path
     } catch (err) {
       console.error(err);
       Swal.fire("Error", "Something went wrong!", "error");
@@ -94,12 +94,12 @@ export default function AddBlog() {
 
   return (
     <motion.div
-      className="px-5 md:px-10 py-5 "
+      className="px-5 md:px-10 py-5"
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
     >
-      <Card className=" !shadow-xl bg-white !rounded-2xl border border-t-8 border-[#71BBB2] ">
+      <Card className="!shadow-xl bg-white !rounded-2xl border border-t-8 border-[#71BBB2]">
         <h2 className="text-2xl md:text-3xl font-bold text-[#274450] text-center mb-6">
           ✍️ Add New Blog
         </h2>

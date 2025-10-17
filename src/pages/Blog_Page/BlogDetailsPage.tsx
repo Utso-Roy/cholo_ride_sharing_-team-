@@ -25,7 +25,9 @@ export const BlogDetailsPage: React.FC = () => {
     if (!id) return;
 
     setLoading(true);
-    fetch(`http://localhost:3000/api/blogs/${id}`)
+    fetch(
+      `https://cholo-ride-sharing-website-server-side.onrender.com/api/blogs/${id}`
+    )
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch blog");
         return res.json();
@@ -120,4 +122,3 @@ export const BlogDetailsPage: React.FC = () => {
     </div>
   );
 };
-
