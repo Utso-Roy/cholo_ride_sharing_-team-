@@ -53,16 +53,26 @@ import JourneyPackage from "../pages/Services/JourneyPackage";
 import SchoolBus from "../pages/Services/SchoolBus";
 import ShuttleBus from "../pages/Services/ShuttleBus";
 import Shipment from "../pages/Services/Shipment";
-import RideBooking from "../pages/Services/RideBooking";
+// import RideBooking from "../pages/Services/RideBooking";
 import Drivers from "../DashboardPages/Drivers";
 // import Users from "../DashboardPages/Users";
 import ManagePartners from "../DashboardPages/ManagePartners";
+import ManageJobsApplications from "../DashboardPages/ManageJobsApplications";
 
 // Dashboard Pages
 import ContentManagement from "../DashboardPages/ContentManagement";
 import AddBlog from "../DashboardPages/AddBlog";
-import Users from "../DashboardPages/users";
+
+import Users from "../DashboardPages/Users";
+import ReportsList from "../DashboardPages/Moderator/Reports/ReportsList";
+import ReportDetailPage from "../DashboardPages/Moderator/Reports/ReportDetail";
+import VerificationPage from "../DashboardPages/Moderator/Verification/VerificationPage";
+
+import ManageSocialActivities from "../pages/OthersPage/ManageSocialActivities";
 import Dashboard from "../DashboardPages/Dashboard";
+import EditBlog from "../DashboardPages/EditBlog";
+import RideBooking from "../pages/Services/RideBooking";
+
 
 const router = createBrowserRouter([
   {
@@ -149,17 +159,37 @@ const router = createBrowserRouter([
     element: <DashboardLayout />,
     errorElement: <Error />,
     children: [
-      { index: true, element: <Dashboard /> }, 
-      { path: "profile", element: <Profile></Profile>},
+      { index: true, element: <Dashboard /> },
+      { path: "profile", element: <Profile></Profile> },
       { path: "manage-partners", element: <ManagePartners /> },
+      { path: "manage-jobs", element: <ManageJobsApplications/> },
+      { path: "manage-activities", element: <ManageSocialActivities/> },
       { path: "drivers", element: <Drivers /> },
-      { path: "ContentManagement", element: <ContentManagement /> },
+      { path: "content-Management", element: <ContentManagement /> },
+      { path: "content-Management/add-blog", element: <AddBlog /> },
+      { path: "content-Management/edit/:id", element: <EditBlog /> },
+      {
+        path: "/dashboard/users", element: <Users></Users>
+      },
+      { path: "/dashboard/content-management", element: <ContentManagement /> },
       { path: "ContentManagement/add-blog", element: <AddBlog /> },
       {
-        path :"/dashboard/users" , element : <Users></Users>
+        path :"/dashboard/users" , element : <Users/>
+      },
+      { path: 'mod/reports', element: <ReportsList/>},
+      {
+        path: 'mod/reports/:reportId',
+        element: <ReportDetailPage/>
+      },
+      {
+        path: 'mod/verifications',
+        element: <VerificationPage/>
       }
+      
     ],
   },
+
+
 ]);
 
 export default router;

@@ -2,6 +2,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useState } from "react";
+import Loading from "../Loading/Loading";
 
 
 interface Partner {
@@ -20,7 +21,7 @@ export default function ManagePartners() {
   const { data: partners = [], isLoading } = useQuery<Partner[]>({
     queryKey: ["partners-admin"],
     queryFn: async () => {
-      const res = await axios.get<Partner[]>("http://localhost:3000/partners");
+      const res = await axios.get<Partner[]>(`${import.meta.env.VITE_API_URL}/partners`);
       return res.data;
     },
   });
@@ -29,7 +30,7 @@ export default function ManagePartners() {
   const addPartner = useMutation({
     mutationFn: async () => {
       setLoading(true);
-      const res = await axios.post<Partner>("http://localhost:3000/partners", newPartner);
+      const res = await axios.post<Partner>(`${import.meta.env.VITE_API_URL}/partners`, newPartner);
       return res.data;
     },
     onSuccess: () => {
@@ -47,7 +48,7 @@ export default function ManagePartners() {
   
   const deletePartner = useMutation({
     mutationFn: async (id: string) => {
-      await axios.delete(`http://localhost:3000/partners/${id}`);
+      await axios.delete(`${import.meta.env.VITE_API_URL}/partners/${id}`);
     },
     onSuccess: () => {
       Swal.fire("🗑 Deleted!", "Partner has been removed.", "success");
@@ -59,7 +60,7 @@ export default function ManagePartners() {
   });
 
   if (isLoading)
-    return <p className="text-center mt-10 text-lg font-medium">Loading partners...</p>;
+    return <Loading/>;
 
   return (
     <div className="w-full mx-auto p-6">

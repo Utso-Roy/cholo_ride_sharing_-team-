@@ -2,6 +2,7 @@ import { Carousel } from "primereact/carousel";
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import Loading from "../../Loading/Loading";
 
 interface Partner {
   _id: string;
@@ -14,12 +15,12 @@ export default function PartnershipSection() {
   const { data: partners = [], isLoading, isError } = useQuery<Partner[]>({
     queryKey: ["partners"],
     queryFn: async () => {
-      const res = await axios.get("http://localhost:5000/partners");
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/partners`);
       return res.data;
     },
   });
 
-  if (isLoading) return <p className="text-center my-20">লোড হচ্ছে...</p>;
+  if (isLoading) return <Loading/>;
   if (isError) return <p className="text-center my-20">ডেটা আনতে সমস্যা হয়েছে!</p>;
 
   const responsiveOptions = [

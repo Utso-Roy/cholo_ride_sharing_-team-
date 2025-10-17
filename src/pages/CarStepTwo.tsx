@@ -55,8 +55,8 @@ const CarStepTwo = () => {
     if (!file) return;
 
     setDriver({ ...driver, photo: file });
-    
-    
+
+
     const nextUrl = URL.createObjectURL(file);
     setPreviewUrl((prev) => {
       if (prev) URL.revokeObjectURL(prev);
@@ -69,9 +69,9 @@ const CarStepTwo = () => {
     if (previewUrl) URL.revokeObjectURL(previewUrl);
     setPreviewUrl(null);
     setDriver({ ...driver, photo: null });
-    
+
     fileRef.current?.clear?.();
-    
+
     setFileKey((k) => k + 1);
   };
 
@@ -95,50 +95,50 @@ const CarStepTwo = () => {
   };
 
   const submitMutation = useMutation({
-      mutationFn: async ({ driver, vehicle }: any) => {
-        const dobVal = Array.isArray(driver.dob) ? driver.dob[0] : driver.dob;
-        const dobStr =
-          dobVal instanceof Date ? dobVal.toISOString() : String(dobVal ?? "");
-  
-        const fd = new FormData();
-        // --- driver fields ---
-        fd.set("firstName", driver.firstName);
-        fd.set("lastName", driver.lastName);
-        fd.set("phone", driver.phone);
-        fd.set("city", driver.city);
-        fd.set("gender", driver.gender);
-  
-        fd.set("nid", driver.nid);
-        fd.set("license", driver.license);
-        if (driver.photo) fd.set("photo", driver.photo, driver.photo.name);
-        fd.set("dob", dobStr);
-  
-        // --- vehicle fields ---
-        fd.set("brand", vehicle.brand);
-        fd.set("model", vehicle.model);
-        fd.set("regNo", vehicle.regNo);
-        fd.set("year", vehicle.year);
-        fd.set("fitnessNo", vehicle.fitnessNo);
-        fd.set("taxTokenNo", vehicle.taxTokenNo);
-  
-        console.groupCollapsed("FormData preview");
-        for (const [k, v] of fd.entries()) {
-          if (v instanceof File) {
-            console.log(k, { name: v.name, type: v.type, size: v.size });
-          } else {
-            console.log(k, v);
-          }
+    mutationFn: async ({ driver, vehicle }: any) => {
+      const dobVal = Array.isArray(driver.dob) ? driver.dob[0] : driver.dob;
+      const dobStr =
+        dobVal instanceof Date ? dobVal.toISOString() : String(dobVal ?? "");
+
+      const fd = new FormData();
+      // --- driver fields ---
+      fd.set("firstName", driver.firstName);
+      fd.set("lastName", driver.lastName);
+      fd.set("phone", driver.phone);
+      fd.set("city", driver.city);
+      fd.set("gender", driver.gender);
+
+      fd.set("nid", driver.nid);
+      fd.set("license", driver.license);
+      if (driver.photo) fd.set("photo", driver.photo, driver.photo.name);
+      fd.set("dob", dobStr);
+
+      // --- vehicle fields ---
+      fd.set("brand", vehicle.brand);
+      fd.set("model", vehicle.model);
+      fd.set("regNo", vehicle.regNo);
+      fd.set("year", vehicle.year);
+      fd.set("fitnessNo", vehicle.fitnessNo);
+      fd.set("taxTokenNo", vehicle.taxTokenNo);
+
+      console.groupCollapsed("FormData preview");
+      for (const [k, v] of fd.entries()) {
+        if (v instanceof File) {
+          console.log(k, { name: v.name, type: v.type, size: v.size });
+        } else {
+          console.log(k, v);
         }
-        console.groupEnd();
-  
-        if (!(driver.photo instanceof File)) {
-          console.warn("photo is NOT a File:", driver.photo);
-        }
-  
-        const res = await api.post("/api/car-applications", fd);
-        return res.data;
-      },
-    });
+      }
+      console.groupEnd();
+
+      if (!(driver.photo instanceof File)) {
+        console.warn("photo is NOT a File:", driver.photo);
+      }
+
+      const res = await api.post("/api/car-applications", fd);
+      return res.data;
+    },
+  });
 
   const submitAll = async () => {
     const invalid =
@@ -225,201 +225,201 @@ const CarStepTwo = () => {
       <div className="max-w-4xl mx-auto flex flex-col gap-6">
         {/* Driver Details */}
         <section className="bg-[#e6fcf9] rounded-lg shadow p-5 md:p-6 text-[#27445D]">
-                  <header className="flex items-center gap-2 mb-4">
-                    <FaUserCheck />
-                    <h2 className="text-xl font-bold text-gray-700">নিজের তথ্য</h2>
-                  </header>
-        
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div className="flex flex-col gap-2">
-                      <label>নামের প্রথম অংশ*</label>
-                      <InputText
-                        value={driver.firstName}
-                        onChange={(e) =>
-                          setDriver({ ...driver, firstName: e.target.value })
-                        }
-                        className={classNames({
-                          "p-invalid": !driver.firstName?.trim(),
-                        })}
-                        placeholder="যেমন: রহিম"
-                      />
-                    </div>
-        
-                    <div className="flex flex-col gap-2">
-                      <label>নামের শেষ অংশ*</label>
-                      <InputText
-                        value={driver.lastName}
-                        onChange={(e) =>
-                          setDriver({ ...driver, lastName: e.target.value })
-                        }
-                        className={classNames({
-                          "p-invalid": !driver.lastName?.trim(),
-                        })}
-                        placeholder="যেমন: উদ্দিন"
-                      />
-                    </div>
-        
-                    <div className="flex flex-col gap-2">
-                      <label>
-                        মোবাইল নম্বর* <span className="opacity-70">(01XXXXXXXXX)</span>
-                      </label>
-                      <InputText
-                        keyfilter="int"
-                        value={driver.phone}
-                        onChange={(e) =>
-                          setDriver({ ...driver, phone: e.target.value })
-                        }
-                        className={classNames({
-                          "p-invalid": !/^01[0-9]{9}$/.test(driver.phone || ""),
-                        })}
-                        placeholder="01XXXXXXXXX"
-                      />
-                    </div>
-        
-                    <div className="flex flex-col gap-2">
-                      <label>শহর*</label>
-                      <Dropdown
-                        value={driver.city}
-                        onChange={(e) => setDriver({ ...driver, city: e.value })}
-                        options={CITY_OPTIONS}
-                        optionLabel="label"
-                        optionValue="value"
-                        placeholder="শহর নির্বাচন করুন"
-                        className={classNames({ "p-invalid": !driver.city })}
-                      />
-                    </div>
-        
-                    <div className="flex flex-col gap-2 md:col-span-2">
-                      <label>লিঙ্গ*</label>
-                      <div className="flex items-center gap-6">
-                        {(["male", "female", "other"] as Gender[]).map((g) => (
-                          <label
-                            key={g}
-                            className="flex items-center gap-2 cursor-pointer"
-                          >
-                            <input
-                              type="radio"
-                              name="gender"
-                              checked={driver.gender === g}
-                              onChange={() => setDriver({ ...driver, gender: g })}
-                            />
-                            <span>
-                              {g === "male"
-                                ? "পুরুষ"
-                                : g === "female"
-                                ? "নারী"
-                                : "অন্যান্য"}
-                            </span>
-                          </label>
-                        ))}
-                      </div>
-                    </div>
-        
-                    <div className="flex flex-col gap-2">
-                      <label>জন্ম তারিখ*</label>
-                      <Calendar
-                        value={driver.dob ?? null}
-                        onChange={(e) => setDriver({ ...driver, dob: e.value as Date })}
-                        dateFormat="dd/mm/yy"
-                        showIcon
-                        maxDate={new Date()}
-                        placeholder="জন্ম তারিখ নির্বাচন করুন"
-                        className={classNames({ "p-invalid": !driver.dob })}
-                      />
-                    </div>
-        
-                    <div className="flex flex-col gap-2">
-                      <label>ন্যাশনাল আইডি নম্বর*</label>
-                      <InputText
-                        value={driver.nid}
-                        onChange={(e) => setDriver({ ...driver, nid: e.target.value })}
-                        className={classNames({
-                          "p-invalid": !(driver.nid && driver.nid.trim().length >= 10),
-                        })}
-                        placeholder="কমপক্ষে ১০ সংখ্যা"
-                      />
-                    </div>
-        
-                    <div className="flex flex-col gap-2">
-                      <label>ড্রাইভিং লাইসেন্স নম্বর*</label>
-                      <InputText
-                        value={driver.license}
-                        onChange={(e) =>
-                          setDriver({ ...driver, license: e.target.value })
-                        }
-                        className={classNames({
-                          "p-invalid": !(
-                            driver.license && driver.license.trim().length >= 6
-                          ),
-                        })}
-                        placeholder="কমপক্ষে ৬ অক্ষর"
-                      />
-                    </div>
-        
-                    <div className="flex flex-col gap-2 md:col-span-2">
-                      <label>ছবি আপলোড করুন (jpg/png)*</label>
-        
-                      <FileUpload
-                        key={fileKey}
-                        ref={fileRef}
-                        mode="basic"
-                        name="photo"
-                        chooseLabel="ছবি নির্বাচন"
-                        accept="image/jpeg, image/png"
-                        // maxFileSize={2 * 1024 * 1024}
-                        customUpload
-                        onSelect={onPhoto}
-                        // pt={{
-                        //   chooseButton: {
-                        //     className:
-                        //       "!bg-[#71BBB2] !border-none hover:!bg-[#5AA29F] " +
-                        //       "focus:!ring-2 focus:!ring-[#71BBB2]/40 !text-[#27445D] font-medium",
-                        //   },
-                        // }}
-                        /* 🔹 বিকল্প: কিছু ভার্সনে chooseOptions ও কাজ করে */
-                        chooseOptions={{
-                          label: "ছবি নির্বাচন",
-                          className:
-                            "!bg-white border-none hover:!bg-[#27445D] hover:!text-white " +
-                            "!text-[#27445D] font-medium",
-                        }}
-                      />
-                      {/* নির্বাচিত ফাইলের নাম */}
-                      {driver.photo && !previewUrl && (
-                        <small className="text-gray-700">
-                          নির্বাচিত: {driver.photo.name}
-                        </small>
-                      )}
-        
-                      {/* প্রিভিউ */}
-                      {previewUrl && (
-                        <div className="mt-3 flex items-center gap-3">
-                          <img
-                            src={previewUrl}
-                            alt="প্রিভিউ"
-                            className="h-20 w-20 rounded object-cover ring-1 ring-[#27445D]/20"
-                          />
-                          <div className="flex items-center gap-2">
-                            <small className="text-gray-700">
-                              {driver.photo?.name} (
-                              {Math.round((driver.photo?.size ?? 0) / 1024)} KB)
-                            </small>
-                            <Button
-                              label="রিমুভ"
-                              icon="pi pi-times"
-                              className="p-button-text text-[#27445D]"
-                              onClick={removePhoto}
-                            />
-                          </div>
-                        </div>
-                      )}
-        
-                      <small className="opacity-70">
-                        সমর্থিত: JPG/PNG • সর্বোচ্চ 2MB • পরিষ্কার মুখের ছবি দিন
-                      </small>
-                    </div>
+          <header className="flex items-center gap-2 mb-4">
+            <FaUserCheck />
+            <h2 className="text-xl font-bold text-gray-700">নিজের তথ্য</h2>
+          </header>
+
+          <div className="grid md:grid-cols-2 gap-4">
+            <div className="flex flex-col gap-2">
+              <label>নামের প্রথম অংশ*</label>
+              <InputText
+                value={driver.firstName}
+                onChange={(e) =>
+                  setDriver({ ...driver, firstName: e.target.value })
+                }
+                className={classNames({
+                  "p-invalid": !driver.firstName?.trim(),
+                })}
+                placeholder="যেমন: রহিম"
+              />
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <label>নামের শেষ অংশ*</label>
+              <InputText
+                value={driver.lastName}
+                onChange={(e) =>
+                  setDriver({ ...driver, lastName: e.target.value })
+                }
+                className={classNames({
+                  "p-invalid": !driver.lastName?.trim(),
+                })}
+                placeholder="যেমন: উদ্দিন"
+              />
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <label>
+                মোবাইল নম্বর* <span className="opacity-70">(01XXXXXXXXX)</span>
+              </label>
+              <InputText
+                keyfilter="int"
+                value={driver.phone}
+                onChange={(e) =>
+                  setDriver({ ...driver, phone: e.target.value })
+                }
+                className={classNames({
+                  "p-invalid": !/^01[0-9]{9}$/.test(driver.phone || ""),
+                })}
+                placeholder="01XXXXXXXXX"
+              />
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <label>শহর*</label>
+              <Dropdown
+                value={driver.city}
+                onChange={(e) => setDriver({ ...driver, city: e.value })}
+                options={CITY_OPTIONS}
+                optionLabel="label"
+                optionValue="value"
+                placeholder="শহর নির্বাচন করুন"
+                className={classNames({ "p-invalid": !driver.city })}
+              />
+            </div>
+
+            <div className="flex flex-col gap-2 md:col-span-2">
+              <label>লিঙ্গ*</label>
+              <div className="flex items-center gap-6">
+                {(["male", "female", "other"] as Gender[]).map((g) => (
+                  <label
+                    key={g}
+                    className="flex items-center gap-2 cursor-pointer"
+                  >
+                    <input
+                      type="radio"
+                      name="gender"
+                      checked={driver.gender === g}
+                      onChange={() => setDriver({ ...driver, gender: g })}
+                    />
+                    <span>
+                      {g === "male"
+                        ? "পুরুষ"
+                        : g === "female"
+                          ? "নারী"
+                          : "অন্যান্য"}
+                    </span>
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <label>জন্ম তারিখ*</label>
+              <Calendar
+                value={driver.dob ?? null}
+                onChange={(e) => setDriver({ ...driver, dob: e.value as Date })}
+                dateFormat="dd/mm/yy"
+                showIcon
+                maxDate={new Date()}
+                placeholder="জন্ম তারিখ নির্বাচন করুন"
+                className={classNames({ "p-invalid": !driver.dob })}
+              />
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <label>ন্যাশনাল আইডি নম্বর*</label>
+              <InputText
+                value={driver.nid}
+                onChange={(e) => setDriver({ ...driver, nid: e.target.value })}
+                className={classNames({
+                  "p-invalid": !(driver.nid && driver.nid.trim().length >= 10),
+                })}
+                placeholder="কমপক্ষে ১০ সংখ্যা"
+              />
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <label>ড্রাইভিং লাইসেন্স নম্বর*</label>
+              <InputText
+                value={driver.license}
+                onChange={(e) =>
+                  setDriver({ ...driver, license: e.target.value })
+                }
+                className={classNames({
+                  "p-invalid": !(
+                    driver.license && driver.license.trim().length >= 6
+                  ),
+                })}
+                placeholder="কমপক্ষে ৬ অক্ষর"
+              />
+            </div>
+
+            <div className="flex flex-col gap-2 md:col-span-2">
+              <label>ছবি আপলোড করুন (jpg/png)*</label>
+
+              <FileUpload
+                key={fileKey}
+                ref={fileRef}
+                mode="basic"
+                name="photo"
+                chooseLabel="ছবি নির্বাচন"
+                accept="image/jpeg, image/png"
+                // maxFileSize={2 * 1024 * 1024}
+                customUpload
+                onSelect={onPhoto}
+                // pt={{
+                //   chooseButton: {
+                //     className:
+                //       "!bg-[#71BBB2] !border-none hover:!bg-[#5AA29F] " +
+                //       "focus:!ring-2 focus:!ring-[#71BBB2]/40 !text-[#27445D] font-medium",
+                //   },
+                // }}
+                /* 🔹 বিকল্প: কিছু ভার্সনে chooseOptions ও কাজ করে */
+                chooseOptions={{
+                  label: "ছবি নির্বাচন",
+                  className:
+                    "!bg-white border-none hover:!bg-[#27445D] hover:!text-white " +
+                    "!text-[#27445D] font-medium",
+                }}
+              />
+              {/* নির্বাচিত ফাইলের নাম */}
+              {driver.photo && !previewUrl && (
+                <small className="text-gray-700">
+                  নির্বাচিত: {driver.photo.name}
+                </small>
+              )}
+
+              {/* প্রিভিউ */}
+              {previewUrl && (
+                <div className="mt-3 flex items-center gap-3">
+                  <img
+                    src={previewUrl}
+                    alt="প্রিভিউ"
+                    className="h-20 w-20 rounded object-cover ring-1 ring-[#27445D]/20"
+                  />
+                  <div className="flex items-center gap-2">
+                    <small className="text-gray-700">
+                      {driver.photo?.name} (
+                      {Math.round((driver.photo?.size ?? 0) / 1024)} KB)
+                    </small>
+                    <Button
+                      label="রিমুভ"
+                      icon="pi pi-times"
+                      className="p-button-text text-[#27445D]"
+                      onClick={removePhoto}
+                    />
                   </div>
-                </section>
+                </div>
+              )}
+
+              <small className="opacity-70">
+                সমর্থিত: JPG/PNG • সর্বোচ্চ 2MB • পরিষ্কার মুখের ছবি দিন
+              </small>
+            </div>
+          </div>
+        </section>
 
         {/* Vehicle Details */}
         <section className="bg-[#e6fcf9] text-[#27445D] rounded-lg shadow p-5 md:p-6">
@@ -517,8 +517,8 @@ const CarStepTwo = () => {
             <Button
               label={isSubmitting ? "সাবমিট হচ্ছে..." : "সাবমিট"}
               icon={submitMutation.isPending
-                  ? "pi pi-spin pi-spinner"
-                  : "pi pi-check"}
+                ? "pi pi-spin pi-spinner"
+                : "pi pi-check"}
               className="!bg-[#71BBB2] !border-none hover:!bg-[#5AA29F]"
               onClick={submitAll}
               disabled={submitMutation.isPending}

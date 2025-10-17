@@ -26,7 +26,7 @@ export default function SocialActivitiesPage() {
    const { data: activities = [], isLoading, isError } = useQuery<Activity[]>({
     queryKey: ["activities"],
     queryFn: async () => {
-      const res = await axios.get("http://localhost:5000/activities");
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/activities`);
       return res.data;
     },
   });
