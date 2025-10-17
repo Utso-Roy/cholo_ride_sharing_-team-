@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Sidebar from "../pages/Sidebar/Sidebar";
 import { NavLink, Outlet } from "react-router";
 import { HiMenu } from "react-icons/hi";
+import MessengerButton from "../components/MessengerButton";
+import Sidebar from "../pages/Sidebar/Sidebar";
 
 const DashboardLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -28,12 +30,13 @@ const DashboardLayout = () => {
           w-64
         `}
       >
-        <Sidebar />
+        <Sidebar/>
       </div>
 
       {/* 🔹 Main Content */}
       <div className="flex-1 p-4 overflow-auto bg-gray-50">
         <Outlet />
+        <MessengerButton/>
       </div>
 
       {/* 🔹 Overlay (for mobile sidebar) */}

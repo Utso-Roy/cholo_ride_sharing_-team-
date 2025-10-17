@@ -1,4 +1,14 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { DataTable, DataTablePageEvent } from "primereact/datatable";
+import { Column } from "primereact/column";
+import { Toolbar } from "primereact/toolbar";
+import { Dropdown } from "primereact/dropdown";
+import { InputText } from "primereact/inputtext";
+import { Tag } from "primereact/tag";
+import { Button } from "primereact/button";
+import { Sidebar } from "primereact/sidebar";
+import { Toast } from "primereact/toast";
+import api from "../lib/api";
 
 type DriverDoc = {
   _id: string;
@@ -14,6 +24,7 @@ type DriverDoc = {
     photoUrl?: string;
     nid: string;
     dob: string;
+    email?: string;
   };
   vehicle: {
     brand: string;
@@ -22,7 +33,8 @@ type DriverDoc = {
     year?: string;
     fitnessNo: string;
     taxTokenNo: string;
-    routePermitNo: string;
+    routePermitNo?: string;
+    insuranceExpiry?: string;
   };
 };
 
@@ -33,296 +45,334 @@ type ApiResponse = {
   items: DriverDoc[];
 };
 
-import { api } from "../lib/api";
+const fmtDate = (iso?: string) => (iso ? new Date(iso).toLocaleDateString() : "—");
+const toAbsolute = (url?: string) => {
+  if (!url) return "";
+  if (/^https?:\/\//i.test(url)) return url;
+  const base = (api as any)?.defaults?.baseURL || "";
+  if (!base) return url;
+  return `${base.replace(/\/+$/, "")}/${url.replace(/^\/+/, "")}`;
+};
 
-const Drivers: React.FC = () => {
-  const [data, setData] = useState<DriverDoc[]>([]);
-  const [page, setPage] = useState(1);
-  const [limit] = useState(10);
-  const [q, setQ] = useState("");
-  const [status, setStatus] = useState<
-    "all" | "pending" | "approved" | "rejected"
-  >("all");
+export default function Drivers() {
+  const [rows, setRows] = useState<DriverDoc[]>([]);
   const [total, setTotal] = useState(0);
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
+  const [q, setQ] = useState("");
+  const [status, setStatus] = useState<"all" | "pending" | "approved" | "rejected">("all");
   const [loading, setLoading] = useState(false);
-  const [err, setErr] = useState<string | null>(null);
+
   const [selected, setSelected] = useState<DriverDoc | null>(null);
-  const [showModal, setShowModal] = useState(false);
+  const [drawer, setDrawer] = useState(false);
   const [loadingDetail, setLoadingDetail] = useState(false);
 
-  const totalPages = useMemo(
-    () => Math.max(1, Math.ceil(total / limit)),
-    [total, limit]
-  );
+  const toast = useRef<Toast>(null);
+  const totalPages = useMemo(() => Math.max(1, Math.ceil(total / limit)), [total, limit]);
+
+  const load = async () => {
+    try {
+      setLoading(true);
+      const { data } = await api.get<ApiResponse>("/api/drivers", {
+        params: {
+          page,
+          limit,
+          q: q.trim() || undefined,
+          status: status !== "all" ? status : undefined,
+        },
+      });
+      setRows(data.items || []);
+      setTotal(data.total || 0);
+    } catch (e: any) {
+      toast.current?.show({ severity: "error", summary: "Load failed", detail: e.message });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const abort = new AbortController();
-    (async () => {
-      try {
-        setLoading(true);
-        setErr(null);
-        const qs = new URLSearchParams({
-          page: String(page),
-          limit: String(limit),
-        });
-        if (q.trim()) qs.set("q", q.trim());
-        if (status !== "all") qs.set("status", status);
+    load();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, limit, status]);
 
-        const { data: json } = await api.get<ApiResponse>("/api/drivers", {
-          params: {
-            page,
-            limit,
-            q: q.trim() || undefined,
-            status: status !== "all" ? status : undefined,
-          },
-          signal: abort.signal,
-        });
-        setData(json.items || []);
-        setTotal(json.total || 0);
-      } catch (e: any) {
-        if (e.name !== "AbortError") setErr(e.message || "Failed to load");
-      } finally {
-        setLoading(false);
-      }
-    })();
-    return () => abort.abort();
-  }, [page, limit, q, status]);
+  const onPage = (e: DataTablePageEvent) => {
+    const nextLimit = e.rows ?? limit;
+    const first = e.first ?? (page - 1) * nextLimit;
+    setLimit(nextLimit);
+    setPage(Math.floor(first / nextLimit) + 1);
+  };
 
-  const handleView = async (id: string) => {
+  const openDetail = async (id: string) => {
     try {
       setLoadingDetail(true);
       const { data } = await api.get<DriverDoc>(`/api/drivers/${id}`);
       setSelected(data);
-      setSelected(data);
-      setShowModal(true);
-    } catch (err: any) {
-      alert(err.message || "Error loading driver details");
+      setDrawer(true);
+    } catch (e: any) {
+      toast.current?.show({ severity: "error", summary: "Error", detail: e.message });
     } finally {
       setLoadingDetail(false);
     }
   };
 
-  return (
-    <div className="py-6">
-      <div className="mb-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-        <h1 className="text-2xl font-bold">Drivers</h1>
-        <div className="flex gap-2">
-          <input
-            value={q}
-            onChange={(e) => {
-              setPage(1);
-              setQ(e.target.value);
-            }}
-            placeholder="Search name/phone/city/license/reg no…"
-            className="input input-bordered px-3 py-2 rounded border outline-none"
-          />
-          <select
-            value={status}
-            onChange={(e) => {
-              setPage(1);
-              setStatus(e.target.value as any);
-            }}
-            className="px-3 py-2 rounded border"
-          >
-            <option value="all">All statuses</option>
-            <option value="pending">Pending</option>
-            <option value="approved">Approved</option>
-            <option value="rejected">Rejected</option>
-          </select>
-        </div>
+  // table cells
+  const nameBody = (d: DriverDoc) => (
+    <div className="flex items-center gap-2">
+      <div className="font-medium">
+        {d.driver.firstName} {d.driver.lastName}
       </div>
-
-      <div className="bg-white rounded-lg shadow overflow-x-auto">
-        <table className="min-w-full text-sm">
-          <thead className="bg-gray-50 text-left">
-            <tr>
-              <th className="p-3">Driver</th>
-              <th className="p-3">Phone</th>
-              <th className="p-3">City</th>
-              <th className="p-3">Vehicle</th>
-              <th className="p-3">Reg No</th>
-              <th className="p-3">Status</th>
-              <th className="p-3">Applied</th>
-              <th className="p-3">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {loading && (
-              <tr>
-                <td className="p-3" colSpan={8}>
-                  Loading…
-                </td>
-              </tr>
-            )}
-            {/* {!loading && err && (
-              <tr>
-                <td className="p-3 text-red-600" colSpan={8}>
-                  {err}
-                </td>
-              </tr>
-            )} */}
-            {!loading && !err && data.length === 0 && (
-              <tr>
-                <td className="p-3" colSpan={8}>
-                  No drivers found.
-                </td>
-              </tr>
-            )}
-            {data.map((d) => (
-              <tr key={d._id} className="border-t">
-                <td className="p-3 font-medium">
-                  {d.driver.firstName} {d.driver.lastName}
-                  <span className="ml-2 text-xs rounded px-2 py-0.5 bg-gray-100">
-                    {d.vehicleType}
-                  </span>
-                </td>
-                <td className="p-3">{d.driver.phone}</td>
-                <td className="p-3">{d.driver.city}</td>
-                <td className="p-3">
-                  {d.vehicle.brand} {d.vehicle.model}
-                </td>
-                <td className="p-3">{d.vehicle.regNo}</td>
-                <td className="p-3">
-                  <span
-                    className={
-                      "px-2 py-1 rounded text-xs " +
-                      (d.status === "approved"
-                        ? "bg-green-100 text-green-700"
-                        : d.status === "rejected"
-                        ? "bg-red-100 text-red-700"
-                        : "bg-yellow-100 text-yellow-800")
-                    }
-                  >
-                    {d.status}
-                  </span>
-                </td>
-                <td className="p-3">
-                  {d.createdAt
-                    ? new Date(d.createdAt).toLocaleDateString()
-                    : "—"}
-                </td>
-                <td className="p-3">
-                  <button
-                    className="px-2 py-1 border rounded cursor-pointer"
-                    onClick={() => handleView(d._id)}
-                  >
-                    View
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      {showModal && selected && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg relative">
-            <button
-              className="absolute top-2 right-2 text-gray-500 hover:text-black"
-              onClick={() => setShowModal(false)}
-            >
-              ✕
-            </button>
-
-            <h2 className="text-xl font-semibold mb-4">
-              {selected.driver.firstName} {selected.driver.lastName}
-              <span className="ml-2 text-sm bg-gray-100 px-2 py-1 rounded">
-                {selected.vehicleType.toUpperCase()}
-              </span>
-            </h2>
-
-            <div className="grid grid-cols-2 gap-3 text-sm">
-              <p>
-                <strong>Phone:</strong> {selected.driver.phone}
-              </p>
-              <p>
-                <strong>City:</strong> {selected.driver.city}
-              </p>
-              <p>
-                <strong>License:</strong> {selected.driver.license}
-              </p>
-              <p>
-                <strong>NID:</strong> {selected.driver.nid}
-              </p>
-              <p>
-                <strong>DOB:</strong>{" "}
-                {new Date(selected.driver.dob).toLocaleDateString()}
-              </p>
-              <p>
-                <strong>Status:</strong> {selected.status}
-              </p>
-            </div>
-
-            <hr className="my-3" />
-
-            <h3 className="font-semibold">Vehicle Info</h3>
-            <div className="grid grid-cols-2 gap-3 text-sm mb-3">
-              <p>
-                <strong>Brand:</strong> {selected.vehicle.brand}
-              </p>
-              <p>
-                <strong>Model:</strong> {selected.vehicle.model}
-              </p>
-              <p>
-                <strong>Reg No:</strong> {selected.vehicle.regNo}
-              </p>
-              <p>
-                <strong>Year:</strong> {selected.vehicle.year}
-              </p>
-              <p>
-                <strong>Fitness No:</strong> {selected.vehicle.fitnessNo}
-              </p>
-              <p>
-                <strong>Tax Token:</strong> {selected.vehicle.taxTokenNo}
-              </p>
-              {selected.vehicle.routePermitNo && (
-                <p>
-                  <strong>Route Permit:</strong>{" "}
-                  {selected.vehicle.routePermitNo}
-                </p>
-              )}
-            </div>
-
-            <div className="flex justify-center">
-              <img
-                src={`${api.defaults.baseURL || ""}${selected.driver.photoUrl}`}
-                alt="Driver"
-                className="h-32 w-32 object-cover rounded"
-              />
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* pagination */}
-      <div className="mt-4 flex items-center justify-between">
-        <div className="text-sm text-gray-600">
-          Showing {(page - 1) * limit + 1}–{Math.min(page * limit, total)} of{" "}
-          {total}
-        </div>
-        <div className="flex gap-2">
-          <button
-            disabled={page <= 1}
-            onClick={() => setPage((p) => Math.max(1, p - 1))}
-            className="px-3 py-1 border rounded disabled:opacity-50"
-          >
-            Prev
-          </button>
-          <span className="px-2 py-1">
-            {page}/{totalPages}
-          </span>
-          <button
-            disabled={page >= totalPages}
-            onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-            className="px-3 py-1 border rounded disabled:opacity-50"
-          >
-            Next
-          </button>
-        </div>
-      </div>
+      <span className="text-xs px-2 py-0.5 border-round bg-gray-100 uppercase">{d.vehicleType}</span>
     </div>
   );
-};
 
-export default Drivers;
+  const vehicleBody = (d: DriverDoc) => (
+    <div>
+      {d.vehicle.brand} {d.vehicle.model}
+    </div>
+  );
+
+  const statusBody = (d: DriverDoc) => {
+    const map = {
+      approved: { label: "Approved", severity: "success" as const },
+      rejected: { label: "Rejected", severity: "danger" as const },
+      pending: { label: "Pending", severity: "warning" as const },
+    }[d.status];
+    return <Tag value={map.label} severity={map.severity} />;
+  };
+
+  const actionsBody = (d: DriverDoc) => (
+    <Button size="small" label="View" icon="pi pi-eye" onClick={() => openDetail(d._id)} />
+  );
+
+  // Sidebar chip styles per new palette
+  const statusChip = (s: DriverDoc["status"]) => {
+    if (s === "approved")
+      return (
+        <div className="mt-2 inline-flex items-center rounded-full bg-primary/20 dark:bg-primary/30 px-3 py-1 text-xs font-medium text-primary dark:text-primary-accent">
+          Active
+        </div>
+      );
+    if (s === "pending")
+      return (
+        <div className="mt-2 inline-flex items-center rounded-full bg-yellow-500/20 dark:bg-yellow-500/30 px-3 py-1 text-xs font-medium text-white dark:text-black">
+          Pending
+        </div>
+      );
+    return (
+      <div className="mt-2 inline-flex items-center rounded-full bg-rose-500/20 dark:bg-rose-500/30 px-3 py-1 text-xs font-medium text-rose-700 dark:text-rose-300">
+        Rejected
+      </div>
+    );
+  };
+
+  const showOnlinePing = selected?.status === "approved";
+
+  return (
+    <div className="p-4 bg-gray-100 dark:bg-background-dark min-h-screen">
+      <Toast ref={toast} />
+
+      <Toolbar
+        start={<h2 className="m-0 text-text-dark dark:text-text-light">Drivers</h2>}
+        end={
+          <div className="flex gap-2 items-center">
+            <span className="p-input-icon-left">
+              <i className="pi pi-search" />
+              <InputText
+                value={q}
+                onChange={(e) => setQ(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    setPage(1);
+                    load();
+                  }
+                }}
+                placeholder="Search name/phone/city/license/reg no…"
+                style={{ width: 280 }}
+              />
+            </span>
+            <Dropdown
+              value={status}
+              onChange={(e) => {
+                setStatus(e.value);
+                setPage(1);
+              }}
+              options={[
+                { label: "All", value: "all" },
+                { label: "Pending", value: "pending" },
+                { label: "Approved", value: "approved" },
+                { label: "Rejected", value: "rejected" },
+              ]}
+              style={{ width: 160 }}
+            />
+            <Dropdown value={limit} onChange={(e) => setLimit(e.value)} options={[10, 20, 50].map((n) => ({ label: `${n}/page`, value: n }))} style={{ width: 120 }} />
+            <Button icon="pi pi-refresh" label="Refresh" onClick={() => { setPage(1); load(); }} />
+          </div>
+        }
+      />
+
+      <DataTable
+        value={rows}
+        loading={loading}
+        dataKey="_id"
+        paginator
+        rows={limit}
+        totalRecords={total}
+        first={(page - 1) * limit}
+        onPage={onPage}
+        responsiveLayout="scroll"
+        emptyMessage="No drivers found."
+      >
+        <Column header="Driver" body={nameBody} />
+        <Column header="Phone" field="driver.phone" />
+        <Column header="City" field="driver.city" />
+        <Column header="Vehicle" body={vehicleBody} />
+        <Column header="Reg No" field="vehicle.regNo" />
+        <Column header="Status" body={statusBody} />
+        <Column header="Applied" body={(d: DriverDoc) => fmtDate(d.createdAt)} />
+        <Column header="Actions" body={actionsBody} style={{ width: 140 }} />
+      </DataTable>
+
+      <div className="mt-2 text-sm text-text-dark/70 dark:text-text-light/70">
+        Showing {(page - 1) * limit + (rows.length ? 1 : 0)}–{Math.min(page * limit, total)} of {total}
+      </div>
+
+      {/* Detail Drawer — updated to your new theme */}
+      <Sidebar
+      className="bg-[#efe9d5]"
+        visible={drawer}
+        onHide={() => setDrawer(false)}
+        position="right"
+        modal
+        blockScroll
+        showCloseIcon
+        style={{ width: "420px", maxWidth: "100%" }}
+        pt={{
+          root: { style: { borderLeft: "1px solid rgba(0,0,0,0.06)" } },
+          content: { style: { padding: 0 } },
+        }}
+      >
+        {loadingDetail && <div className="p-4 text-text-dark dark:text-text-light">Loading…</div>}
+        {!loadingDetail && selected && (
+          <div className="bg-[#efe9d5]">
+            <div className="p-6 flex flex-col gap-8">
+              {/* Profile */}
+              <div className="flex flex-col items-center gap-4">
+                <div className="relative">
+                  <div
+                    className="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-24"
+                    style={{
+                      backgroundImage: `url("${toAbsolute(selected.driver.photoUrl) || "https://placehold.co/192x192?text=Driver"}")`,
+                    }}
+                    data-alt={`${selected.driver.firstName} ${selected.driver.lastName}`}
+                  />
+                  {showOnlinePing && (
+                    <span className="absolute bottom-1 right-1 flex h-4 w-4">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-accent opacity-75" />
+                      <span className="relative inline-flex rounded-full h-4 w-4 bg-primary border-2 border-white dark:border-background-light" />
+                    </span>
+                  )}
+                </div>
+                <div className="text-center">
+                  <h1 className="text-xl font-bold text-text-dark dark:text-text-light">
+                    {selected.driver.firstName} {selected.driver.lastName}
+                  </h1>
+                  <p className="text-sm text-text-dark/70 dark:text-text-light/70">
+                    Driver ID: {selected._id}
+                  </p>
+                  {statusChip(selected.status)}
+                </div>
+              </div>
+
+
+              {/* Driver Details */}
+              <div className="flex flex-col gap-4 rounded-xl dark:bg-black/20 p-4">
+                <div>
+                  <h2 className="text-lg font-bold text-text-dark dark:text-text-light text-center">Driver Details</h2>
+                </div>
+                <div className="grid grid-cols-1">
+                  <div className="flex items-center justify-between border-t border-black/10 dark:border-white/10 py-4">
+                    <p className="text-sm text-text-dark/70 dark:text-text-light/70">Contact Number</p>
+                    <p className="text-sm font-medium text-text-dark dark:text-text-light">{selected.driver.phone}</p>
+                  </div>
+
+                  {selected.driver.email && (
+                    <div className="flex items-center justify-between border-t border-black/10 dark:border-white/10 py-4">
+                      <p className="text-sm text-text-dark/70 dark:text-text-light/70">Email Address</p>
+                      <p className="text-sm font-medium text-text-dark dark:text-text-light">{selected.driver.email}</p>
+                    </div>
+                  )}
+
+                  <div className="flex items-center justify-between border-t border-black/10 dark:border-white/10 py-4">
+                    <p className="text-sm text-text-dark/70 dark:text-text-light/70">License Number</p>
+                    <p className="text-sm font-medium text-text-dark dark:text-text-light">{selected.driver.license}</p>
+                  </div>
+
+                  <div className="flex items-center justify-between border-t border-black/10 dark:border-white/10 py-4">
+                    <p className="text-sm text-text-dark/70 dark:text-text-light/70">NID</p>
+                    <p className="text-sm font-medium text-text-dark dark:text-text-light">{selected.driver.nid}</p>
+                  </div>
+
+                  <div className="flex items-center justify-between border-t border-black/10 dark:border-white/10 py-4">
+                    <p className="text-sm text-text-dark/70 dark:text-text-light/70">Date of Birth</p>
+                    <p className="text-sm font-medium text-text-dark dark:text-text-light">{fmtDate(selected.driver.dob)}</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Vehicle Information */}
+              <div className="flex flex-col gap-4 rounded-xl bg-white/50 dark:bg-black/20 p-4">
+                <div>
+                  <h2 className="text-lg font-bold text-text-dark dark:text-text-light text-center">Vehicle Information</h2>
+                </div>
+                <div className="grid grid-cols-1">
+                  <div className="flex items-center justify-between border-t border-black/10 dark:border-white/10 py-4">
+                    <p className="text-sm text-text-dark/70 dark:text-text-light/70">Make &amp; Model</p>
+                    <p className="text-sm font-medium text-text-dark dark:text-text-light">
+                      {selected.vehicle.brand} {selected.vehicle.model}
+                    </p>
+                  </div>
+
+                  <div className="flex items-center justify-between border-t border-black/10 dark:border-white/10 py-4">
+                    <p className="text-sm text-text-dark/70 dark:text-text-light/70">License Plate</p>
+                    <p className="text-sm font-medium text-text-dark dark:text-text-light">{selected.vehicle.regNo}</p>
+                  </div>
+
+                  <div className="flex items-center justify-between border-t border-black/10 dark:border-white/10 py-4">
+                    <p className="text-sm text-text-dark/70 dark:text-text-light/70">Year</p>
+                    <p className="text-sm font-medium text-text-dark dark:text-text-light">{selected.vehicle.year || "—"}</p>
+                  </div>
+
+                  <div className="flex items-center justify-between border-t border-black/10 dark:border-white/10 py-4">
+                    <p className="text-sm text-text-dark/70 dark:text-text-light/70">Fitness No</p>
+                    <p className="text-sm font-medium text-text-dark dark:text-text-light">{selected.vehicle.fitnessNo}</p>
+                  </div>
+
+                  <div className="flex items-center justify-between border-t border-black/10 dark:border-white/10 py-4">
+                    <p className="text-sm text-text-dark/70 dark:text-text-light/70">Tax Token No</p>
+                    <p className="text-sm font-medium text-text-dark dark:text-text-light">{selected.vehicle.taxTokenNo}</p>
+                  </div>
+
+                  {selected.vehicle.routePermitNo && (
+                    <div className="flex items-center justify-between border-t border-black/10 dark:border-white/10 py-4">
+                      <p className="text-sm text-text-dark/70 dark:text-text-light/70">Route Permit No</p>
+                      <p className="text-sm font-medium text-text-dark dark:text-text-light">{selected.vehicle.routePermitNo}</p>
+                    </div>
+                  )}
+
+                  {selected.vehicle.insuranceExpiry && (
+                    <div className="flex items-center justify-between border-t border-black/10 dark:border-white/10 py-4">
+                      <p className="text-sm text-text-dark/70 dark:text-text-light/70">Insurance Expiry</p>
+                      <p className="text-sm font-medium text-text-dark dark:text-text-light">
+                        {fmtDate(selected.vehicle.insuranceExpiry)}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </Sidebar>
+    </div>
+  );
+}

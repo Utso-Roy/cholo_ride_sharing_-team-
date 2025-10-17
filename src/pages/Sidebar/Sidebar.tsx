@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   FaHome,
   FaCarSide,
@@ -10,11 +10,49 @@ import {
   FaHandshake,
   FaBriefcase,
   FaUser,
+  FaHeart,
 } from "react-icons/fa";
-import { NavLink, Link } from "react-router";
 
-const Sidebar = () => {
-  const menuItems = [
+import { Link, NavLink } from "react-router";
+import api from "../../lib/api";
+import { AuthContext } from "../../Auth/AuthProvider";
+import { moderatorMenuItems } from "../../Utils/ModeratorMenu/moderatorMenu";
+
+type Role = "admin" | "moderator" | "rider" | "user" | undefined;
+
+interface AppUser {
+  _id?: string;
+  name?: string;
+  email?: string;
+  role?: Role;
+}
+
+interface MenuItem {
+  label: string;
+  path?: string;
+  icon?: React.ReactNode;
+}
+
+const Sidebar: React.FC = () => {
+  const [users, setUsers] = useState<AppUser[]>([]);
+  const { user } = useContext(AuthContext) as { user?: { email?: string } };
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await api.get<AppUser[]>("/users");
+        setUsers(res.data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchUser();
+  }, []);
+
+  const currentUser = users.find((u) => u?.email === user?.email);
+
+  //  Admin menu items
+  const adminItems: MenuItem[] = [
     { icon: <FaHome />, label: "Dashboard", path: "/dashboard" },
     { icon: <FaUser />, label: "My Profile", path: "/dashboard/profile" },
     { icon: <FaCarSide />, label: "Rides", path: "/dashboard/rides" },
@@ -25,33 +63,71 @@ const Sidebar = () => {
     { icon: <FaHandshake />, label: "Manage Partners", path: "/dashboard/manage-partners" },
     { icon: <FaBriefcase />, label: "Manage Jobs", path: "/dashboard/manage-jobs" },
     { icon: <FaBriefcase />, label: "Content Management", path: "/dashboard/content-Management" },
+    {
+      icon: <FaHandshake />,
+      label: "Manage Partners",
+      path: "/dashboard/manage-partners",
+    },
+    {
+      icon: <FaBriefcase />,
+      label: "Manage Jobs",
+      path: "/dashboard/manage-jobs",
+    },
+    {
+      icon: <FaHeart/>,
+      label: "Manage Activities",
+      path: "/dashboard/manage-activities",
+    },
+    {
+      icon: <FaBriefcase />,
+      label: "Content Management",
+      path: "/dashboard/content-management",
+    },
   ];
 
-  const baseItemClass =
-    "flex items-center gap-3 p-3 rounded-lg transition-all duration-300 cursor-pointer group";
-  const activeClass = "bg-[#5aa49c] text-white";
-  const hoverClass = "hover:bg-[#5aa49c] hover:text-white";
+  const riderItems: MenuItem[] = [
+    { label: "Rider Dashboard", path: "/dashboard", icon: <FaHome /> },
+  ];
+
+  const userItems: MenuItem[] = [
+    { label: "User Dashboard", path: "/dashboard", icon: <FaHome /> },
+  ];
+
+  // ✅ Role-based menu rendering
+  let roleToRender: MenuItem[] = [];
+
+  if (currentUser?.role === "admin") {
+    roleToRender = adminItems;
+  } else if (currentUser?.role === "moderator") {
+    roleToRender = moderatorMenuItems;
+  } else if (currentUser?.role === "rider") {
+    roleToRender = riderItems;
+  } else {
+    roleToRender = userItems;
+  }
 
   return (
     <div className="h-screen w-64 bg-[#71BBB2] text-[#083c3a] flex flex-col shadow-xl border-r border-[#9ad2cb] fixed md:static z-40">
       {/* 🔹 Logo */}
       <div className="p-6 text-center font-extrabold text-2xl tracking-wide bg-[#e6f6f5] border-b border-[#9ad2cb] shadow-md">
-        <Link to="/">
-          Ride<span className="text-[#2e736d]">Admin</span>
+       <Link to="/">
+       
+        Ride<span className="text-[#2e736d]">{currentUser?.role}</span>
         </Link>
       </div>
 
-      {/*  Menu Section */}
+      {/* Menu Section */}
       <nav className="flex-1 px-4 py-6 space-y-2 bg-[#71BBB2] overflow-y-auto">
-        {menuItems.map((item, idx) => (
+        {roleToRender.map((item, idx) => (
           <NavLink
             key={idx}
-            to={item.path}
+            to={item.path ?? "#"}
             end
             className={({ isActive }) =>
-              `flex items-center gap-3 p-3 rounded-lg transition-all duration-300 cursor-pointer group ${isActive
-                ? "bg-[#2e736d] text-white"
-                : "hover:bg-[#5aa49c] hover:text-white"
+              `flex items-center gap-3 p-3 rounded-lg transition-all duration-300 cursor-pointer group ${
+                isActive
+                  ? "bg-[#2e736d] text-white"
+                  : "hover:bg-[#5aa49c] hover:text-white"
               }`
             }
           >

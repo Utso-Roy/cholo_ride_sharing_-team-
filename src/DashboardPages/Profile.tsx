@@ -67,12 +67,12 @@ const Profile: React.FC = () => {
     e.preventDefault();
     if (!formData.name || !formData.email) return toast.error("Name and email required");
 
-    try {
-      //     const res = await fetch(`${import.meta.env.VITE_API_BASE}/users/${user.email}`, {
-      //       method: "PUT",
-      //       headers: { "Content-Type": "application/json" },
-      //       body: JSON.stringify(formData),
-      //     });
+  try {
+    // const res = await fetch(`${import.meta.env.VITE_API_URL}/users/${user.email}`, {
+    //   method: "PUT",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify(formData),
+    // });
 
       //     if (res.status === 404) {
       //       toast.error("User not found!");
@@ -92,16 +92,17 @@ const Profile: React.FC = () => {
         throw new Error(errText || "Update failed");
       }
 
-      const updatedUser = await res.json();
-      setUsers([updatedUser]);
-      setFormData(updatedUser);
-      setIsModalOpen(false);
-      toast.success("Profile updated successfully!");
-    } catch (err: any) {
-      console.error("Frontend update error:", err);
-      toast.error(err.message);
-    }
-  };
+
+    const updatedUser = await res.json();
+    setUsers([updatedUser]);
+    setFormData(updatedUser);
+    setIsModalOpen(false);
+    toast.success("Profile updated successfully!");
+  } catch (err: any) {
+    console.error("Frontend update error:", err);
+    toast.error(err.message);
+  }
+};
 
 
   if (loading) return <Loading />;
@@ -123,10 +124,7 @@ const Profile: React.FC = () => {
   const userData = users[0];
   const { name, displayName, email, photo, role, phone, address } = userData;
 
-  const driversCount = users.filter(u => u.role === "driver").length || 8;
-  const ridersCount = users.filter(u => u.role === "rider").length || 10;
-  const usersCount = users.filter(u => u.role === "report").length || 15;
-
+ 
   return (
     <div className="min-h-screen bg-gray-50 p-6 flex flex-col items-center">
       {/* Profile Card */}
@@ -159,8 +157,8 @@ const Profile: React.FC = () => {
 
           <div className="mt-6 flex flex-col sm:flex-row justify-center gap-6 text-gray-700 text-sm sm:text-base">
             <div className="flex items-center gap-2"><FaEnvelope className="text-[#71BBB2]" /><span>{email}</span></div>
-            <div className="flex items-center gap-2"><FaMapMarkerAlt className="text-[#71BBB2]" /><span>{address || "Dhaka, Bangladesh"}</span></div>
-            <div className="flex items-center gap-2"><FaPhoneAlt className="text-[#71BBB2]" /><span>{phone || "+880 123-456-789"}</span></div>
+            <div className="flex items-center gap-2"><FaMapMarkerAlt className="text-[#71BBB2]" /><span>{address || "Add Address"}</span></div>
+            <div className="flex items-center gap-2"><FaPhoneAlt className="text-[#71BBB2]" /><span>{phone || "Add Number"}</span></div>
           </div>
 
           <button
@@ -173,24 +171,7 @@ const Profile: React.FC = () => {
       </div>
 
       {/* Stats Cards */}
-      <div className="w-full max-w-6xl mt-16 grid grid-cols-1 sm:grid-cols-3 gap-6">
-        <div className="bg-white p-6 rounded-2xl shadow-md flex flex-col items-center hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-          <FaUsers className="text-[#71BBB2] text-4xl mb-3" />
-          <h3 className="text-2xl font-bold text-gray-800">{driversCount}</h3>
-          <p className="text-gray-500 mt-1">Drivers</p>
-        </div>
-        <div className="bg-white p-6 rounded-2xl shadow-md flex flex-col items-center hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-          <FaCarSide className="text-[#71BBB2] text-4xl mb-3" />
-          <h3 className="text-2xl font-bold text-gray-800">{ridersCount}</h3>
-          <p className="text-gray-500 mt-1">Riders</p>
-        </div>
-        <div className="bg-white p-6 rounded-2xl shadow-md flex flex-col items-center hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-          <FaChartPie className="text-[#71BBB2] text-4xl mb-3" />
-          <h3 className="text-2xl font-bold text-gray-800">{usersCount}</h3>
-          <p className="text-gray-500 mt-1">Report</p>
-        </div>
-      </div>
-
+     
       {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
