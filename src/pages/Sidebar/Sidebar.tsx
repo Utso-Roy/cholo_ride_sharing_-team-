@@ -9,20 +9,11 @@ import {
   FaUserShield,
   FaHandshake,
   FaBriefcase,
-  FaUser
   FaUser,
   FaHeart,
-   FaClipboardList,
-  FaFileAlt,
-  FaCheckCircle,
-  FaExclamationTriangle,
-  FaBell,
-  FaEnvelopeOpenText,
-  FaChartLine,
-  FaCogs,
 } from "react-icons/fa";
 
-import { NavLink, Link } from "react-router";
+import { NavLink, Link } from "react-router-dom";
 import api from "../../lib/api";
 import { AuthContext } from "../../Auth/AuthProvider";
 import { moderatorMenuItems } from "../../Utils/ModeratorMenu/moderatorMenu";
@@ -38,20 +29,18 @@ interface AppUser {
 
 interface MenuItem {
   label: string;
-  path?: string;                 
-  icon?: React.ReactNode;        
+  path?: string;
+  icon?: React.ReactNode;
 }
 
 const Sidebar: React.FC = () => {
   const [users, setUsers] = useState<AppUser[]>([]);
   const { user } = useContext(AuthContext) as { user?: { email?: string } };
 
-  console.log(user?.email);
-
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await api.get<AppUser[]>("/users"); // typed axios response
+        const res = await api.get<AppUser[]>("/users");
         setUsers(res.data);
       } catch (err) {
         console.error(err);
@@ -62,6 +51,7 @@ const Sidebar: React.FC = () => {
 
   const currentUser = users.find((u) => u?.email === user?.email);
 
+  // ✅ Admin menu items
   const adminItems: MenuItem[] = [
     { icon: <FaHome />, label: "Dashboard", path: "/dashboard" },
     { icon: <FaUser />, label: "My Profile", path: "/dashboard/profile" },
@@ -72,35 +62,19 @@ const Sidebar: React.FC = () => {
     { icon: <FaChartPie />, label: "Reports", path: "/dashboard/reports" },
     { icon: <FaHandshake />, label: "Manage Partners", path: "/dashboard/manage-partners" },
     { icon: <FaBriefcase />, label: "Manage Jobs", path: "/dashboard/manage-jobs" },
-    { icon: <FaBriefcase />, label: "Content Management", path: "/dashboard/ContentManagement" },
-     { icon: <FaHeart />, label: "Manage Activities", path: "/dashboard/manage-activities" },
-    { icon: <FaBriefcase />, label: "Content Management", path: "/dashboard/ContentManagement" },
-    {
-      icon: <FaHandshake />,
-      label: "Manage Partners",
-      path: "/dashboard/manage-partners",
-    },
-    {
-      icon: <FaBriefcase />,
-      label: "Manage Jobs",
-      path: "/dashboard/manage-jobs",
-    },
-    {
-      icon: <FaBriefcase />,
-      label: "Content Management",
-      path: "/dashboard/ContentManagement",
-    },
+    { icon: <FaHeart />, label: "Manage Activities", path: "/dashboard/manage-activities" },
+    { icon: <FaBriefcase />, label: "Content Management", path: "/dashboard/content-management" },
   ];
 
-
   const riderItems: MenuItem[] = [
-    { label: "utso", path: "/dashboard", icon: <FaHome /> }, // placeholder kept safe
+    { label: "Rider Dashboard", path: "/dashboard", icon: <FaHome /> },
   ];
 
   const userItems: MenuItem[] = [
-    { label: "utso", path: "/dashboard", icon: <FaHome /> }, // placeholder kept safe
+    { label: "User Dashboard", path: "/dashboard", icon: <FaHome /> },
   ];
 
+  // ✅ Role-based menu rendering
   let roleToRender: MenuItem[] = [];
 
   if (currentUser?.role === "admin") {
@@ -127,7 +101,7 @@ const Sidebar: React.FC = () => {
         {roleToRender.map((item, idx) => (
           <NavLink
             key={idx}
-            to={item.path ?? "#"} // safe fallback for placeholders
+            to={item.path ?? "#"}
             end
             className={({ isActive }) =>
               `flex items-center gap-3 p-3 rounded-lg transition-all duration-300 cursor-pointer group ${
@@ -138,7 +112,7 @@ const Sidebar: React.FC = () => {
             }
           >
             <span className="text-lg transition-transform duration-200 group-hover:scale-110">
-              {item?.icon}
+              {item.icon}
             </span>
             <span className="font-medium tracking-wide">{item.label}</span>
           </NavLink>
