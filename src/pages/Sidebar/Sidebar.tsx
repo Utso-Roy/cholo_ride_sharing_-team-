@@ -10,6 +10,16 @@ import {
   FaHandshake,
   FaBriefcase,
   FaUser
+  FaUser,
+  FaHeart,
+   FaClipboardList,
+  FaFileAlt,
+  FaCheckCircle,
+  FaExclamationTriangle,
+  FaBell,
+  FaEnvelopeOpenText,
+  FaChartLine,
+  FaCogs,
 } from "react-icons/fa";
 
 import { NavLink, Link } from "react-router";
@@ -63,6 +73,23 @@ const Sidebar: React.FC = () => {
     { icon: <FaHandshake />, label: "Manage Partners", path: "/dashboard/manage-partners" },
     { icon: <FaBriefcase />, label: "Manage Jobs", path: "/dashboard/manage-jobs" },
     { icon: <FaBriefcase />, label: "Content Management", path: "/dashboard/ContentManagement" },
+     { icon: <FaHeart />, label: "Manage Activities", path: "/dashboard/manage-activities" },
+    { icon: <FaBriefcase />, label: "Content Management", path: "/dashboard/ContentManagement" },
+    {
+      icon: <FaHandshake />,
+      label: "Manage Partners",
+      path: "/dashboard/manage-partners",
+    },
+    {
+      icon: <FaBriefcase />,
+      label: "Manage Jobs",
+      path: "/dashboard/manage-jobs",
+    },
+    {
+      icon: <FaBriefcase />,
+      label: "Content Management",
+      path: "/dashboard/ContentManagement",
+    },
   ];
 
 

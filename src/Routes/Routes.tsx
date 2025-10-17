@@ -57,6 +57,7 @@ import RideBooking from "../pages/Services/RideBooking";
 import Drivers from "../DashboardPages/Drivers";
 // import Users from "../DashboardPages/Users";
 import ManagePartners from "../DashboardPages/ManagePartners";
+import ManageJobsApplications from "../DashboardPages/ManageJobsApplications";
 
 // Dashboard Pages
 import ContentManagement from "../DashboardPages/ContentManagement";
@@ -67,6 +68,9 @@ import Users from "../DashboardPages/Users";
 import ReportsList from "../DashboardPages/Moderator/Reports/ReportsList";
 import ReportDetailPage from "../DashboardPages/Moderator/Reports/ReportDetail";
 import VerificationPage from "../DashboardPages/Moderator/Verification/VerificationPage";
+import Users from "../DashboardPages/Users";
+import Dashboard from "../DashboardPages/Dashboard";
+import ManageSocialActivities from "../pages/OthersPage/ManageSocialActivities";
 
 
 const router = createBrowserRouter([
@@ -157,6 +161,8 @@ const router = createBrowserRouter([
       { index: true, element: <Dashboard /> }, 
       { path: "profile", element: <Profile></Profile>},
       { path: "manage-partners", element: <ManagePartners /> },
+      { path: "manage-jobs", element: <ManageJobsApplications/> },
+      { path: "manage-activities", element: <ManageSocialActivities/> },
       { path: "drivers", element: <Drivers /> },
       { path: "ContentManagement", element: <ContentManagement /> },
       { path: "ContentManagement/add-blog", element: <AddBlog /> },
@@ -172,6 +178,8 @@ const router = createBrowserRouter([
         path: 'mod/verifications',
         element: <VerificationPage/>
       }
+        path :"/dashboard/users" , element : <Users></Users>
+      },
     ],
   },
 ]);
