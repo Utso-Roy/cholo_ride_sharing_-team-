@@ -10,6 +10,7 @@ import {
   FaHandshake,
   FaBriefcase,
   FaUser,
+  FaHeart,
    FaClipboardList,
   FaFileAlt,
   FaCheckCircle,
@@ -52,6 +53,10 @@ const Sidebar = () => {
     { icon: <FaUserShield />, label: "Users", path: "/dashboard/users" },
     { icon: <FaMoneyBill />, label: "Payments", path: "/dashboard/payments" },
     { icon: <FaChartPie />, label: "Reports", path: "/dashboard/reports" },
+    { icon: <FaHandshake />, label: "Manage Partners", path: "/dashboard/manage-partners" },
+    { icon: <FaBriefcase />, label: "Manage Jobs", path: "/dashboard/manage-jobs" },
+     { icon: <FaHeart />, label: "Manage Activities", path: "/dashboard/manage-activities" },
+    { icon: <FaBriefcase />, label: "Content Management", path: "/dashboard/ContentManagement" },
     {
       icon: <FaHandshake />,
       label: "Manage Partners",
