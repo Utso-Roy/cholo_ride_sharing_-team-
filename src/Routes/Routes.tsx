@@ -55,15 +55,20 @@ import ShuttleBus from "../pages/Services/ShuttleBus";
 import Shipment from "../pages/Services/Shipment";
 import RideBooking from "../pages/Services/RideBooking";
 import Drivers from "../DashboardPages/Drivers";
+// import Users from "../DashboardPages/Users";
 import ManagePartners from "../DashboardPages/ManagePartners";
 import ManageJobsApplications from "../DashboardPages/ManageJobsApplications";
+
+// Dashboard Pages
 import ContentManagement from "../DashboardPages/ContentManagement";
 import AddBlog from "../DashboardPages/AddBlog";
+
 import Dashboard from "../DashboardPages/Dashboard";
 import Users from "../DashboardPages/Users";
 import ReportsList from "../DashboardPages/Moderator/Reports/ReportsList";
 import ReportDetailPage from "../DashboardPages/Moderator/Reports/ReportDetail";
 import VerificationPage from "../DashboardPages/Moderator/Verification/VerificationPage";
+
 import ManageSocialActivities from "../pages/OthersPage/ManageSocialActivities";
 
 
@@ -73,6 +78,7 @@ const router = createBrowserRouter([
     element: <RootLayout />,
     errorElement: <Error />,
     children: [
+      // Home
       { index: true, element: <Home /> },
 
       // Help
@@ -151,18 +157,27 @@ const router = createBrowserRouter([
     element: <DashboardLayout />,
     errorElement: <Error />,
     children: [
-      { index: true, element: <Dashboard /> },
-      { path: "profile", element: <Profile /> },
+      { index: true, element: <Dashboard /> }, 
+      { path: "profile", element: <Profile></Profile>},
       { path: "manage-partners", element: <ManagePartners /> },
-      { path: "manage-jobs", element: <ManageJobsApplications /> },
-      { path: "manage-activities", element: <ManageSocialActivities /> },
+      { path: "manage-jobs", element: <ManageJobsApplications/> },
+      { path: "manage-activities", element: <ManageSocialActivities/> },
       { path: "drivers", element: <Drivers /> },
-      { path: "content-management", element: <ContentManagement /> },
-      { path: "content-management/add-blog", element: <AddBlog /> },
-      { path: "users", element: <Users /> },
-      { path: "mod/reports", element: <ReportsList /> },
-      { path: "mod/reports/:reportId", element: <ReportDetailPage /> },
-      { path: "mod/verifications", element: <VerificationPage /> },
+      { path: "ContentManagement", element: <ContentManagement /> },
+      { path: "ContentManagement/add-blog", element: <AddBlog /> },
+      {
+        path :"/dashboard/users" , element : <Users/>
+      },
+      { path: 'mod/reports', element: <ReportsList/>},
+      {
+        path: 'mod/reports/:reportId',
+        element: <ReportDetailPage/>
+      },
+      {
+        path: 'mod/verifications',
+        element: <VerificationPage/>
+      }
+      
     ],
   },
 ]);
