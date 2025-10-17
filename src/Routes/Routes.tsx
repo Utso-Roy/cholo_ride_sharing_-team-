@@ -63,13 +63,13 @@ import ManageJobsApplications from "../DashboardPages/ManageJobsApplications";
 import ContentManagement from "../DashboardPages/ContentManagement";
 import AddBlog from "../DashboardPages/AddBlog";
 
-import Dashboard from "../DashboardPages/Dashboard";
 import Users from "../DashboardPages/Users";
 import ReportsList from "../DashboardPages/Moderator/Reports/ReportsList";
 import ReportDetailPage from "../DashboardPages/Moderator/Reports/ReportDetail";
 import VerificationPage from "../DashboardPages/Moderator/Verification/VerificationPage";
 
 import ManageSocialActivities from "../pages/OthersPage/ManageSocialActivities";
+import Dashboard from "../DashboardPages/Dashboard";
 
 
 const router = createBrowserRouter([
@@ -163,7 +163,7 @@ const router = createBrowserRouter([
       { path: "manage-jobs", element: <ManageJobsApplications/> },
       { path: "manage-activities", element: <ManageSocialActivities/> },
       { path: "drivers", element: <Drivers /> },
-      { path: "ContentManagement", element: <ContentManagement /> },
+      { path: "/dashboard/content-management", element: <ContentManagement /> },
       { path: "ContentManagement/add-blog", element: <AddBlog /> },
       {
         path :"/dashboard/users" , element : <Users/>

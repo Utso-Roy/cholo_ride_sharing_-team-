@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import Sidebar from "../pages/Sidebar/Sidebar";
 import { Outlet } from "react-router"; 
 import { HiMenu } from "react-icons/hi";
 import MessengerButton from "../components/MessengerButton";
+import Sidebar from "../pages/Sidebar/Sidebar";
 
 const DashboardLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -29,7 +29,7 @@ const DashboardLayout = () => {
           w-64
         `}
       >
-        <Sidebar />
+        <Sidebar/>
       </div>
 
       {/* 🔹 Main Content */}

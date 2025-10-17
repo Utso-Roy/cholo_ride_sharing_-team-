@@ -13,7 +13,7 @@ import {
   FaHeart,
 } from "react-icons/fa";
 
-import { NavLink, Link } from "react-router-dom";
+import { Link, NavLink } from "react-router";
 import api from "../../lib/api";
 import { AuthContext } from "../../Auth/AuthProvider";
 import { moderatorMenuItems } from "../../Utils/ModeratorMenu/moderatorMenu";
@@ -51,7 +51,7 @@ const Sidebar: React.FC = () => {
 
   const currentUser = users.find((u) => u?.email === user?.email);
 
-  // ✅ Admin menu items
+  //  Admin menu items
   const adminItems: MenuItem[] = [
     { icon: <FaHome />, label: "Dashboard", path: "/dashboard" },
     { icon: <FaUser />, label: "My Profile", path: "/dashboard/profile" },
@@ -60,10 +60,26 @@ const Sidebar: React.FC = () => {
     { icon: <FaUserShield />, label: "Users", path: "/dashboard/users" },
     { icon: <FaMoneyBill />, label: "Payments", path: "/dashboard/payments" },
     { icon: <FaChartPie />, label: "Reports", path: "/dashboard/reports" },
-    { icon: <FaHandshake />, label: "Manage Partners", path: "/dashboard/manage-partners" },
-    { icon: <FaBriefcase />, label: "Manage Jobs", path: "/dashboard/manage-jobs" },
-    { icon: <FaHeart />, label: "Manage Activities", path: "/dashboard/manage-activities" },
-    { icon: <FaBriefcase />, label: "Content Management", path: "/dashboard/content-management" },
+    {
+      icon: <FaHandshake />,
+      label: "Manage Partners",
+      path: "/dashboard/manage-partners",
+    },
+    {
+      icon: <FaBriefcase />,
+      label: "Manage Jobs",
+      path: "/dashboard/manage-jobs",
+    },
+    {
+      icon: <FaHeart/>,
+      label: "Manage Activities",
+      path: "/dashboard/manage-activities",
+    },
+    {
+      icon: <FaBriefcase />,
+      label: "Content Management",
+      path: "/dashboard/content-management",
+    },
   ];
 
   const riderItems: MenuItem[] = [
@@ -91,8 +107,9 @@ const Sidebar: React.FC = () => {
     <div className="h-screen w-64 bg-[#71BBB2] text-[#083c3a] flex flex-col shadow-xl border-r border-[#9ad2cb] fixed md:static z-40">
       {/* 🔹 Logo */}
       <div className="p-6 text-center font-extrabold text-2xl tracking-wide bg-[#e6f6f5] border-b border-[#9ad2cb] shadow-md">
-        <Link to="/">
-          Ride<span className="text-[#2e736d]">{currentUser?.role}</span>
+       <Link to="/">
+       
+        Ride<span className="text-[#2e736d]">{currentUser?.role}</span>
         </Link>
       </div>
 
