@@ -222,7 +222,7 @@ const Navbar: React.FC = () => {
               </li>
               <li>
                 <NavLink
-                  to="/safety-policy"
+                  to="/PrivacyPolicy"
                   className="hover:text-[#71BBB2] block"
                 >
                   সেফটি ও প্রাইভেসি নীতিমালা
@@ -230,7 +230,7 @@ const Navbar: React.FC = () => {
               </li>
               <li>
                 <NavLink
-                  to="/complaints"
+                  to="/FeedbackForm"
                   className="hover:text-[#71BBB2] block"
                 >
                   অভিযোগ/প্রস্তাব দিন
