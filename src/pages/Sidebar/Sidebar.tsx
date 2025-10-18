@@ -35,7 +35,7 @@ interface MenuItem {
 
 const Sidebar: React.FC = () => {
   const [users, setUsers] = useState<AppUser[]>([]);
-  const [loading, setLoading] = useState<boolean>(true); // ✅ loading state
+  const [loading, setLoading] = useState<boolean>(true); 
   const { user } = useContext(AuthContext) as { user?: { email?: string } };
 
   useEffect(() => {
