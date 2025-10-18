@@ -5,11 +5,13 @@ import { Button } from "primereact/button";
 import { motion } from "framer-motion";
 import { Avatar } from "primereact/avatar";
 import { Rating } from "primereact/rating";
-// import BookingForm, { BookingFormData } from "./BookingForm";
 import HowToBook from "./HowToBook";
 import { NavLink } from "react-router";
 import Lottie from "lottie-react";
 import lottieData from "../../../public/map.json";
+import clock from "../../assets/servicesimg/1.png"
+import car1 from "../../assets/servicesimg/2.png"
+import car2 from "../../assets/servicesimg/3.png"
 
 const PRIMARY = "#274450";
 const ACCENT = "#71BBB2";
@@ -70,7 +72,7 @@ export default function BikeRide() {
             </motion.section>
 
             {/* Features Section */}
-            <motion.section
+            {/* <motion.section
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
@@ -78,7 +80,7 @@ export default function BikeRide() {
                 className="bg-[#274450] rounded-2xl shadow-lg p-8 mx-5 md:mx-10"
             >
                 <h2 className="text-2xl md:text-3xl font-bold text-white mb-8 text-center">
-                    কেন ট্রাক রাইড ব্যবহার করবেন?
+                    কেন বাইক রাইড ব্যবহার করবেন?
                 </h2>
 
                 <div className="grid md:grid-cols-3 gap-6">
@@ -100,7 +102,65 @@ export default function BikeRide() {
                         <p className="text-sm">আপনার মালামাল নিরাপদে গন্তব্যে পৌঁছানোর নিশ্চয়তা সহ।</p>
                     </motion.div>
                 </div>
+            </motion.section> */}
+
+            <motion.section
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+                viewport={{ once: true }}
+                className="px-5 md:px-10"
+            >
+                <h2 className="text-2xl md:text-3xl font-bold text-[#274450] mb-8 text-center">
+                    কেন বাইক রাইড ব্যবহার করবেন?
+                </h2>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                    {/* Feature 1 */}
+                    <motion.div
+                        whileHover={{ scale: 1.03 }}
+                        className="bg-gradient-to-r from-white to-[#EFE9D5] rounded-xl shadow-md p-4 flex flex-col items-center text-center"
+                    >
+                        <img
+                            src={clock}
+                            alt="রিয়েল-টাইম ট্র্যাকিং"
+                            className="w-full h-[200px] object-cover rounded-lg mb-4"
+                        />
+                        <h3 className="font-semibold text-lg text-[#274450] mb-2">রিয়েল-টাইম ট্র্যাকিং</h3>
+                        <p className="text-sm text-[#274450]">আপনার বাইকের অবস্থান এবং অগ্রগতি যেকোনো সময় লাইভ ট্র্যাক করুন।</p>
+                    </motion.div>
+
+                    {/* Feature 2 */}
+                    <motion.div
+                        whileHover={{ scale: 1.03 }}
+                        className="bg-gradient-to-r from-white to-[#71BBB2] rounded-xl shadow-md p-4 flex flex-col items-center text-center"
+                    >
+                        <img
+                            src={car1}
+                            alt="সঠিক ETA"
+                            className="w-full h-[200px] object-cover rounded-lg mb-4"
+                        />
+                        <h3 className="font-semibold text-lg text-[#274450] mb-2">সঠিক ETA</h3>
+                        <p className="text-sm text-[#274450]">আপনার রাইড কখন পৌঁছাবে তা নির্ভুলভাবে জানতে পারবেন।</p>
+                    </motion.div>
+
+                    {/* Feature 3 */}
+                    <motion.div
+                        whileHover={{ scale: 1.03 }}
+                        className="bg-gradient-to-r from-white to-[#497D74] rounded-xl shadow-md p-4 flex flex-col items-center text-center"
+                    >
+                        <img
+                            src={car2}
+                            alt="নিরাপদ যাত্রা"
+                            className="w-full h-[200px] object-cover rounded-lg mb-4"
+                        />
+                        <h3 className="font-semibold text-lg text-white mb-2">নিরাপদ যাত্রা</h3>
+                        <p className="text-sm text-white">আপনার যাত্রা হবে নিরাপদ, আরামদায়ক এবং নির্ভরযোগ্য।</p>
+                    </motion.div>
+                </div>
             </motion.section>
+
+
 
             {/* //HowToBook */}
             <HowToBook></HowToBook>

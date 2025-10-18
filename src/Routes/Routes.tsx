@@ -162,8 +162,8 @@ const router = createBrowserRouter([
       { index: true, element: <Dashboard /> },
       { path: "profile", element: <Profile></Profile> },
       { path: "manage-partners", element: <ManagePartners /> },
-      { path: "manage-jobs", element: <ManageJobsApplications/> },
-      { path: "manage-activities", element: <ManageSocialActivities/> },
+      { path: "manage-jobs", element: <ManageJobsApplications /> },
+      { path: "manage-activities", element: <ManageSocialActivities /> },
       { path: "drivers", element: <Drivers /> },
       { path: "content-Management", element: <ContentManagement /> },
       { path: "content-Management/add-blog", element: <AddBlog /> },
@@ -174,18 +174,18 @@ const router = createBrowserRouter([
       { path: "/dashboard/content-management", element: <ContentManagement /> },
       { path: "ContentManagement/add-blog", element: <AddBlog /> },
       {
-        path :"/dashboard/users" , element : <Users/>
+        path: "/dashboard/users", element: <Users />
       },
-      { path: 'mod/reports', element: <ReportsList/>},
+      { path: 'mod/reports', element: <ReportsList /> },
       {
         path: 'mod/reports/:reportId',
-        element: <ReportDetailPage/>
+        element: <ReportDetailPage />
       },
       {
         path: 'mod/verifications',
-        element: <VerificationPage/>
+        element: <VerificationPage />
       }
-      
+
     ],
   },
 
