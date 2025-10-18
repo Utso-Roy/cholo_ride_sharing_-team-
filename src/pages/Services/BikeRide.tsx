@@ -111,7 +111,10 @@ export default function BikeRide() {
                 viewport={{ once: true }}
                 className="px-5 md:px-10"
             >
-                <h2 className="text-2xl md:text-3xl font-bold text-[#274450] mb-8 text-center">
+                <h2
+                    className="text-2xl md:text-3xl font-bold mb-8 text-center"
+                    style={{ color: "#274450" }}
+                >
                     কেন বাইক রাইড ব্যবহার করবেন?
                 </h2>
 
@@ -119,46 +122,80 @@ export default function BikeRide() {
                     {/* Feature 1 */}
                     <motion.div
                         whileHover={{ scale: 1.03 }}
-                        className="bg-gradient-to-r from-white to-[#EFE9D5] rounded-xl shadow-md p-4 flex flex-col items-center text-center"
+                        className="rounded-3xl p-4 flex flex-col items-center text-center
+                     border border-transparent hover:border-gray-200
+                     shadow-sm hover:shadow-lg transition-all duration-300
+                     backdrop-blur-sm"
+                        style={{
+                            background:
+                                "linear-gradient(135deg, #ffffff 0%, #F6FBF8 100%)",
+                        }}
                     >
                         <img
                             src={clock}
                             alt="রিয়েল-টাইম ট্র্যাকিং"
                             className="w-full h-[200px] object-cover rounded-lg mb-4"
                         />
-                        <h3 className="font-semibold text-lg text-[#274450] mb-2">রিয়েল-টাইম ট্র্যাকিং</h3>
-                        <p className="text-sm text-[#274450]">আপনার বাইকের অবস্থান এবং অগ্রগতি যেকোনো সময় লাইভ ট্র্যাক করুন।</p>
+                        <h3 className="font-semibold text-lg mb-2" style={{ color: "#274450" }}>
+                            রিয়েল-টাইম ট্র্যাকিং
+                        </h3>
+                        <p className="text-sm" style={{ color: "#274450" }}>
+                            আপনার বাইকের অবস্থান এবং অগ্রগতি যেকোনো সময় লাইভ ট্র্যাক করুন।
+                        </p>
                     </motion.div>
 
                     {/* Feature 2 */}
                     <motion.div
                         whileHover={{ scale: 1.03 }}
-                        className="bg-gradient-to-r from-white to-[#71BBB2] rounded-xl shadow-md p-4 flex flex-col items-center text-center"
+                        className="rounded-3xl p-4 flex flex-col items-center text-center
+                     border border-transparent hover:border-gray-200
+                     shadow-sm hover:shadow-lg transition-all duration-300
+                     backdrop-blur-sm"
+                        style={{
+                            background:
+                                "linear-gradient(135deg, #ffffff 0%, #EAF7F4 100%)",
+                        }}
                     >
                         <img
                             src={car1}
                             alt="সঠিক ETA"
                             className="w-full h-[200px] object-cover rounded-lg mb-4"
                         />
-                        <h3 className="font-semibold text-lg text-[#274450] mb-2">সঠিক ETA</h3>
-                        <p className="text-sm text-[#274450]">আপনার রাইড কখন পৌঁছাবে তা নির্ভুলভাবে জানতে পারবেন।</p>
+                        <h3 className="font-semibold text-lg mb-2" style={{ color: "#274450" }}>
+                            সঠিক ETA
+                        </h3>
+                        <p className="text-sm" style={{ color: "#274450" }}>
+                            আপনার রাইড কখন পৌঁছাবে তা নির্ভুলভাবে জানতে পারবেন।
+                        </p>
                     </motion.div>
 
                     {/* Feature 3 */}
                     <motion.div
                         whileHover={{ scale: 1.03 }}
-                        className="bg-gradient-to-r from-white to-[#497D74] rounded-xl shadow-md p-4 flex flex-col items-center text-center"
+                        className="rounded-3xl p-4 flex flex-col items-center text-center
+                     border border-transparent hover:border-gray-200
+                     shadow-sm hover:shadow-lg transition-all duration-300
+                     backdrop-blur-sm"
+                        style={{
+                            background:
+                                "linear-gradient(135deg, #ffffff 0%, #F1F7F0 100%)",
+                        }}
                     >
                         <img
                             src={car2}
                             alt="নিরাপদ যাত্রা"
                             className="w-full h-[200px] object-cover rounded-lg mb-4"
                         />
-                        <h3 className="font-semibold text-lg text-white mb-2">নিরাপদ যাত্রা</h3>
-                        <p className="text-sm text-white">আপনার যাত্রা হবে নিরাপদ, আরামদায়ক এবং নির্ভরযোগ্য।</p>
+                        <h3 className="font-semibold text-lg mb-2" style={{ color: "#274450" }}>
+                            নিরাপদ যাত্রা
+                        </h3>
+                        <p className="text-sm" style={{ color: "#274450" }}>
+                            আপনার যাত্রা হবে নিরাপদ, আরামদায়ক এবং নির্ভরযোগ্য।
+                        </p>
                     </motion.div>
                 </div>
             </motion.section>
+
 
 
 
