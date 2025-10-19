@@ -12,6 +12,9 @@ import lottieData from "../../../public/map.json";
 import clock from "../../assets/servicesimg/1.png"
 import car1 from "../../assets/servicesimg/2.png"
 import car2 from "../../assets/servicesimg/3.png"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCar } from '@fortawesome/free-solid-svg-icons'
+
 
 const PRIMARY = "#274450";
 const ACCENT = "#71BBB2";
@@ -199,6 +202,8 @@ export default function BikeRide() {
                         </Button>
                     </NavLink> */}
 
+
+
                     <NavLink to="/ridebooking">
                         <Button
                             className="
@@ -210,17 +215,15 @@ export default function BikeRide() {
       before:bg-[length:200%_200%] before:animate-border-slide
       before:z-[-1]
       hover:scale-105 transition-transform duration-300 
-      flex items-center justify-center gap-2
+      flex items-center gap-2
     "
                         >
-                            {/* Car Animation */}
-                            <span className="relative inline-block">
-                                <span className="absolute left-0 animate-car">🚗</span>
-                            </span>
+                            <FontAwesomeIcon icon={faCar} className="w-6 h-6 animate-car" />
                             <span className="text-2xl animate-pulse">✨</span>
                             এখনই রাইড বুক করুন
                         </Button>
                     </NavLink>
+
 
 
 

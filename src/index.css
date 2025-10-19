@@ -7,7 +7,7 @@
     }
 
     50% {
-        transform: translateX(20px);
+        transform: translateX(15px);
     }
 
     100% {
@@ -16,6 +16,5 @@
 }
 
 .animate-car {
-    display: inline-block;
     animation: carMove 1.5s infinite linear;
 }
