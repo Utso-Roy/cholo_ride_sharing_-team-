@@ -81,7 +81,7 @@ export default function BikeRide() {
                     className="px-5 md:px-10 "
                 >
                     <h2
-                        className="text-2xl md:text-3xl font-bold mb-8 text-center pt-8"
+                        className="text-2xl md:text-4xl font-bold mb-8 text-center pt-8"
                         style={{ color: "#274450" }}
                     >
                         কেন বাইক রাইড ব্যবহার করবেন?
@@ -91,7 +91,7 @@ export default function BikeRide() {
                         {/* Feature 1 */}
                         <motion.div
                             whileHover={{ scale: 1.03 }}
-                            className="rounded-3xl p-4 flex flex-col items-center text-center
+                            className="rounded-3xl p-4 flex flex-col items-center text-center 
                      border border-transparent hover:border-gray-200
                      shadow-sm hover:shadow-lg transition-all duration-300
                      backdrop-blur-sm"
@@ -105,10 +105,10 @@ export default function BikeRide() {
                                 alt="রিয়েল-টাইম ট্র্যাকিং"
                                 className="w-full h-[200px] object-cover rounded-lg mb-4"
                             />
-                            <h3 className="font-semibold text-lg mb-2" style={{ color: "#274450" }}>
+                            <h3 className="font-bold text-lg mb-2" style={{ color: "#274450" }}>
                                 রিয়েল-টাইম ট্র্যাকিং
                             </h3>
-                            <p className="text-sm" style={{ color: "#274450" }}>
+                            <p className="text-sm font-semibold" style={{ color: "#274450" }}>
                                 আপনার বাইকের অবস্থান এবং অগ্রগতি যেকোনো সময় লাইভ ট্র্যাক করুন।
                             </p>
                         </motion.div>
@@ -130,10 +130,10 @@ export default function BikeRide() {
                                 alt="সঠিক ETA"
                                 className="w-full h-[200px] object-cover rounded-lg mb-4"
                             />
-                            <h3 className="font-semibold text-lg mb-2" style={{ color: "#274450" }}>
+                            <h3 className="font-bold text-lg mb-2" style={{ color: "#274450" }}>
                                 সঠিক ETA
                             </h3>
-                            <p className="text-sm" style={{ color: "#274450" }}>
+                            <p className="text-sm font-semibold" style={{ color: "#274450" }}>
                                 আপনার রাইড কখন পৌঁছাবে তা নির্ভুলভাবে জানতে পারবেন।
                             </p>
                         </motion.div>
@@ -155,10 +155,10 @@ export default function BikeRide() {
                                 alt="নিরাপদ যাত্রা"
                                 className="w-full h-[200px] object-cover rounded-lg mb-4"
                             />
-                            <h3 className="font-semibold text-lg mb-2" style={{ color: "#274450" }}>
+                            <h3 className="font-bold text-lg mb-2" style={{ color: "#274450" }}>
                                 নিরাপদ যাত্রা
                             </h3>
-                            <p className="text-sm" style={{ color: "#274450" }}>
+                            <p className="text-sm font-semibold" style={{ color: "#274450" }}>
                                 আপনার যাত্রা হবে নিরাপদ, আরামদায়ক এবং নির্ভরযোগ্য।
                             </p>
                         </motion.div>
@@ -172,14 +172,14 @@ export default function BikeRide() {
                 <div className="flex justify-center items-center ">
 
                     {/* <NavLink to="/ridebooking">
-                    <Button
-                        className="!bg-[#274450]  !text-white !border-none !px-4 !py-3 !rounded-xl hover:!bg-[#497D74]"
+                        <Button
+                            className="!bg-[#274450]  !text-white !border-none !px-4 !py-3 !rounded-xl hover:!bg-[#497D74]"
 
-                    >
-                        <span className="mr-2 text-xl animate-pulse">✨</span>
-                        এখনই রাইড বুক করুন
-                    </Button>
-                </NavLink> */}
+                        >
+                            <span className="mr-2 text-xl animate-pulse">✨</span>
+                            এখনই রাইড বুক করুন
+                        </Button>
+                    </NavLink> */}
 
                     <NavLink to="/ridebooking">
                         <Button
