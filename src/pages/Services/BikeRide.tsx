@@ -181,7 +181,7 @@ export default function BikeRide() {
                         </Button>
                     </NavLink> */}
 
-                    <NavLink to="/ridebooking">
+                    {/* <NavLink to="/ridebooking">
                         <Button
                             className="
                      relative !my-10 !bg-gradient-to-r from-[#497D74] to-[#74B49B]
@@ -197,7 +197,31 @@ export default function BikeRide() {
                             <span className="mr-2 text-2xl animate-pulse">✨</span>
                             এখনই রাইড বুক করুন
                         </Button>
+                    </NavLink> */}
+
+                    <NavLink to="/ridebooking">
+                        <Button
+                            className="
+      relative !my-10 !bg-gradient-to-r from-[#497D74] to-[#74B49B]
+      !text-white !border-none !px-4 !py-3 !rounded-xl 
+      overflow-hidden
+      before:absolute before:-inset-1 before:rounded-xl
+      before:bg-gradient-to-r before:from-[#497D74] before:via-[#74B49B] before:to-[#497D74]
+      before:bg-[length:200%_200%] before:animate-border-slide
+      before:z-[-1]
+      hover:scale-105 transition-transform duration-300 
+      flex items-center justify-center gap-2
+    "
+                        >
+                            {/* Car Animation */}
+                            <span className="relative inline-block">
+                                <span className="absolute left-0 animate-car">🚗</span>
+                            </span>
+                            <span className="text-2xl animate-pulse">✨</span>
+                            এখনই রাইড বুক করুন
+                        </Button>
                     </NavLink>
+
 
 
 
