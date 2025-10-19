@@ -19,9 +19,9 @@ const HowToBook: React.FC = () => {
     return (
         <div className="relative py-10 px-5 md:px-16">
             {/* Lottie Background */}
-            <div className="absolute inset-0 z-0 opacity-30">
+            {/* <div className="absolute inset-0 z-0 opacity-30">
                 <Lottie animationData={lottieData} loop autoplay style={{ width: "100%", height: "100%" }} />
-            </div>
+            </div> */}
 
             {/* Title */}
             <h2 className="text-3xl md:text-5xl font-bold text-center text-[#274450] mb-5 md:mb-10 relative z-10">
