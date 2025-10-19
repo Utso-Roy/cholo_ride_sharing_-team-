@@ -50,7 +50,7 @@ const WhyChooseUs: React.FC = () => {
         </motion.p>
 
         {/* Features Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
           {features.map((feature, index) => (
             <motion.div
               key={index}
@@ -58,7 +58,7 @@ const WhyChooseUs: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.2 }}
               viewport={{ once: true }}
-              className="bg-white shadow-md rounded-2xl p-6 flex flex-col items-center hover:shadow-xl transition-shadow duration-300"
+              className="bg-white shadow-md  p-6 flex flex-col items-center hover:shadow-xl transition-shadow duration-300"
             >
               {feature.icon}
               <h3 className="mt-4 text-lg font-semibold text-[#27445D]">{feature.title}</h3>

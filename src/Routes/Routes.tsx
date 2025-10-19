@@ -73,6 +73,7 @@ import Dashboard from "../DashboardPages/Dashboard";
 import EditBlog from "../DashboardPages/EditBlog";
 import RideBooking from "../pages/Services/RideBooking";
 import LandingPage from "../pages/Landing/LandingPage";
+import LearnMore from "../pages/LearnMore/LearnMore";
 
 
 const router = createBrowserRouter([
@@ -94,6 +95,9 @@ const router = createBrowserRouter([
       { path: "driverguide", element: <DriverGuide /> },
       { path: "privacypolicy", element: <PrivacyPolicy /> },
       { path: "feedbackform", element: <FeedbackForm /> },
+      {
+        path : 'learnMore' , element : <LearnMore></LearnMore>
+      },
 
       // Blog
       { path: "blogs", element: <BlogListPage /> },

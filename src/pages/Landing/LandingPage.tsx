@@ -1,131 +1,158 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useContext, useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 import { FaCarSide, FaRoute, FaUserFriends } from "react-icons/fa";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, EffectFade } from "swiper/modules";
-import userPicture from "../../assets/user.jpg";
+import userPicture from "../../assets/realtime.jpg";
+import LeftPicture from "../../assets/left side.jpg";
+import rightSide from "../../assets/right side2.jpg";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
 import { Button } from "primereact/button";
-import { Link} from "react-router";
+import { Link } from "react-router";
+import { AuthContext } from "../../Auth/AuthProvider";
 
 const LandingPage = () => {
-  return (
-    <div className="relative min-h-screen flex flex-col md:flex-row items-center justify-between px-8 md:px-16 py-10 overflow-hidden">
+  useEffect(() => {
+    AOS.init({
+      duration: 1200, // Animation duration
+      easing: "ease-in-out-sine", // Smooth easing
+      once: true, // Animate only once
+    });
+  }, []);
 
-      {/* Background Image + Gradient Overlay */}
+  const slides = [
+    { src: "https://i.ibb.co.com/nsYm6vcM/Bike-1.png", title: "বাইক রাইড" },
+    { src: "https://i.ibb.co.com/KzbtHDgP/cng.webp", title: "সিএনজি সার্ভিস" },
+    { src: "https://i.ibb.co.com/HTvxSpFd/car.png", title: "কার সার্ভিস" },
+    { src: "https://i.ibb.co.com/sdTWJXgN/Bangladesh-Ace-EX2-Intra-V20-Yodha-31-SC-20240918-jpg.webp", title: "মিনি ট্রাক সার্ভিস" },
+    { src: "https://i.ibb.co.com/wNWF0ZS0/Am.png", title: "এ্যাম্বুলেন্স সার্ভিস" },
+    { src: "https://i.ibb.co.com/tMwfhQZQ/BigCar.png", title: "জার্নি প্যাকেজ" },
+    { src: "https://i.ibb.co.com/sJWM4D61/School-Bus.png", title: "স্কুল বাস সার্ভিস" },
+    { src: "https://i.ibb.co.com/4RQG3k5K/Bus.png", title: "বাস সার্ভিস" },
+    { src: "https://i.ibb.co.com/pckHwd6/cc.png", title: "পিকআপ সার্ভিস" },
+  ];
+
+  const { user } = useContext(AuthContext);
+
+  return (
+    <div className="relative min-h-screen flex flex-col md:flex-row items-center justify-between px-8 md:px-12 py-10 overflow-hidden">
+      {/* Background */}
       <div className="absolute inset-0">
         <img
           src="https://i.ibb.co.com/TMwRrtS3/world-map-page-0001.jpg"
           alt="Background"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#e6fcf9]/80 to-gray-50/80" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#e6fcf9]/80 to-gray-50/80 " />
       </div>
 
       {/* Left Section */}
-      <motion.div
+      <div
+        data-aos="fade-right"
         className="md:w-1/2 text-center md:text-left space-y-6 z-10"
-        initial={{ opacity: 0, x: -60 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 1 }}
       >
         <h1 className="text-4xl md:text-6xl font-extrabold text-[#27445D] leading-tight cursor-target">
           <span className="text-[#27445D]">চলো</span> – একসাথে যাত্রা করি
         </h1>
 
         <p className="text-gray-700 text-lg md:text-xl max-w-md mx-auto md:mx-0">
-          একটি <span className="font-semibold text-[#27445D]">রাইড-শেয়ারিং প্ল্যাটফর্ম</span>, যা আপনার প্রতিটি যাত্রা করে তোলে নিরাপদ, সাশ্রয়ী এবং পরিবেশবান্ধব। 
-          কাছের বিশ্বস্ত যাত্রীদের সাথে সংযোগ করুন এবং যাত্রার আনন্দ উপভোগ করুন 
+          একটি{" "}
+          <span className="font-semibold text-[#27445D]">
+            রাইড-শেয়ারিং প্ল্যাটফর্ম
+          </span>
+          , যা আপনার প্রতিটি যাত্রা করে তোলে নিরাপদ, সাশ্রয়ী এবং পরিবেশবান্ধব।
+          কাছের বিশ্বস্ত যাত্রীদের সাথে সংযোগ করুন এবং যাত্রার আনন্দ উপভোগ করুন।
         </p>
 
         {/* Buttons */}
-        <div className="flex flex-col sm:flex-row items-center md:items-start gap-4 md:gap-6">
-          <motion.button
-            whileHover={{ scale: 1.08 }}
-            whileTap={{ scale: 0.96 }}
-          >
-                      <Link to="/signup">
-                          
-                           <Button
+        <div
+          data-aos="fade-up"
+          className="flex flex-col sm:flex-row items-center md:items-start gap-4 md:gap-6"
+        >
+          {!user?.email && (
+            <Link to="/signup">
+              <Button
                 label="এখনই নিবন্ধন"
-  className="
-    !bg-gradient-to-r !from-[#71BBB2] !to-[#5AA9A1]
-    !text-white 
-    !font-semibold
-    !px-6 !py-3 
-    !rounded-full 
-    !shadow-md 
-    !border-none
-    hover:!shadow-xl
-    hover:!from-[#5AA9A1] hover:!to-[#71BBB2]
-    hover:scale-105
-    transition-all duration-300 ease-in-out
-    focus:!ring-2 focus:!ring-offset-2 focus:!ring-[#71BBB2]
-  "
-  icon="pi pi-user"
-  iconPos="right"
-/>
- </Link>
-          </motion.button>
+                icon="pi pi-user"
+                iconPos="right"
+                className="!bg-gradient-to-r !from-[#71BBB2] !to-[#5AA9A1] !text-white !font-semibold 
+                           !px-6 !py-3 !rounded-full !shadow-md !border-none hover:!shadow-xl 
+                           hover:!from-[#5AA9A1] hover:!to-[#71BBB2] transition-all duration-300"
+              />
+            </Link>
+          )}
 
-          <motion.button
-            className="px-8 py-3 border border-green-500 text-[#27445D] bg-white rounded-full font-semibold text-lg shadow hover:bg-green-50 transition-all cursor-target"
-            whileHover={{ scale: 1.08 }}
-            whileTap={{ scale: 0.96 }}
-          >
-            আরও জানুন
-          </motion.button>
+          <Link to="/learnMore">
+            <Button
+              label="আরও জানুন"
+              icon="pi pi-arrow-right"
+              iconPos="right"
+              className="!bg-gradient-to-r !from-[#71BBB2] !to-[#56A89E] !text-white !border-none 
+                         !px-6 !py-3 !rounded-full font-semibold shadow-md hover:shadow-xl 
+                         transition-all duration-300 hover:brightness-110"
+            />
+          </Link>
         </div>
 
-        {/* Feature Highlights */}
-        <div className="flex justify-center md:justify-start gap-6 pt-6 text-gray-700">
+        {/* Features */}
+        <div
+          data-aos="zoom-in-up"
+          className="flex justify-center md:justify-start gap-6 pt-6 text-gray-700"
+        >
           {[
             { icon: <FaCarSide />, text: "আরামদায়ক রাইড" },
             { icon: <FaUserFriends />, text: "বিশ্বস্ত ব্যবহারকারী" },
             { icon: <FaRoute />, text: "স্মার্ট রুট" },
           ].map((item, i) => (
-            <motion.div
+            <div
               key={i}
-              className="flex items-center gap-2 bg-white/60 backdrop-blur-lg px-4 py-2 rounded-full shadow-md"
-              whileHover={{ scale: 1.05 }}
+              className="flex items-center gap-2 bg-white/70 backdrop-blur-md px-4 py-2 rounded-full shadow-md hover:scale-105 transition-transform duration-300"
             >
-              <span className="text-[#27445D]">{item.icon}</span>
-              <span>{item.text}</span>
-            </motion.div>
+              <span className="text-[#27445D] text-lg">{item.icon}</span>
+              <span className="font-medium">{item.text}</span>
+            </div>
           ))}
         </div>
-      </motion.div>
+      </div>
 
-      {/* Right Section - Top Image + Bottom Slider */}
-      <motion.div
-        className="md:w-1/2 mt-12 md:mt-0 flex flex-col items-center gap-6 z-10"
-        initial={{ opacity: 0, x: 60 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 1 }}
+      {/* Right Section */}
+      <div
+        data-aos="fade-left"
+        className="md:w-1/2 mt-12 md:mt-0 flex flex-col items-center gap-5  z-10"
       >
-        {/* Top Static Image */}
-        <motion.div
-          className="w-full max-w-md rounded-3xl overflow-hidden shadow-2xl relative"
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        {/* 3 Image Group */}
+        <div
+          data-aos="zoom-in"
+          className="relative w-full max-w-3xl mx-auto flex justify-center items-center "
         >
           <img
-            src={userPicture}
-            alt="User"
-            className="w-full h-64 object-cover"
+            src={LeftPicture}
+            alt="Left"
+            className="w-40 h-52 md:w-48 md:h-60 object-cover rounded-2xl shadow-xl opacity-90 hover:opacity-100 transition-all duration-300"
           />
-          <motion.div
-            className="absolute inset-0 rounded-3xl border-4 border-green-300/40"
-            animate={{ opacity: [0.6, 1, 0.6], scale: [1, 1.02, 1] }}
-            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-          />
-        </motion.div>
 
-        {/* Bottom Slider */}
-        <motion.div
+          <div className="relative z-20">
+            <img
+              src={userPicture}
+              alt="Main"
+              className="w-48 h-60 md:w-56 md:h-70 object-cover rounded-3xl shadow-2xl border-2 border-white"
+            />
+          </div>
+
+          <img
+            src={rightSide}
+            alt="Right"
+            className="w-40 h-52 md:w-48 md:h-60 object-cover rounded-2xl shadow-xl opacity-90 hover:opacity-100 transition-all duration-300"
+          />
+        </div>
+
+        {/* Bottom Swiper */}
+        <div
+          data-aos="fade-up"
           className="w-full max-w-md rounded-3xl overflow-hidden shadow-2xl relative"
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
         >
           <Swiper
             modules={[Autoplay, Pagination, EffectFade]}
@@ -135,37 +162,24 @@ const LandingPage = () => {
             effect="fade"
             className="h-64"
           >
-            <SwiperSlide>
-              <img
-                src="https://i.ibb.co.com/TMwRrtS3/world-map-page-0001.jpg"
-                alt="Ride Together"
-                className="w-full h-64 object-cover"
-              />
-            </SwiperSlide>
-
-            <SwiperSlide>
-              <img
-                src="https://i.ibb.co.com/TMwRrtS3/world-map-page-0001.jpg"
-                alt="City Carpool"
-                className="w-full h-64 object-cover"
-              />
-            </SwiperSlide>
-
-            <SwiperSlide>
-              <img
-                src="https://i.ibb.co.com/TMwRrtS3/world-map-page-0001.jpg"
-                alt="Eco Travel"
-                className="w-full h-64 object-cover"
-              />
-            </SwiperSlide>
+            {slides.map((slide, index) => (
+              <SwiperSlide key={index}>
+                <div className="relative w-full h-64">
+                  <img
+                    src={slide.src}
+                    alt={slide.title}
+                    className="w-full h-64 object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                  <h2 className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white text-xl md:text-2xl font-semibold tracking-wide bg-black/30 px-4 py-2 rounded-full backdrop-blur-sm">
+                    {slide.title}
+                  </h2>
+                </div>
+              </SwiperSlide>
+            ))}
           </Swiper>
-          <motion.div
-            className="absolute inset-0 rounded-3xl border-4 border-green-400/40"
-            animate={{ opacity: [0.6, 1, 0.6], scale: [1, 1.02, 1] }}
-            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-          />
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
     </div>
   );
 };

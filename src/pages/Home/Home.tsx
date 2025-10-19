@@ -12,14 +12,15 @@ import LatestNews from "./LatestNews";
 import HowItWorks from "./HowItWorks";
 import Partners from "./Partners";
 import Newsletter from "./Newsletter";
-
+import Banner from "./Banner";
 const Home = () => {
 
   return (
     <div className="space-y-5">
       <section>
-        <SwiperPage></SwiperPage>
-      </section>
+        
+        <Banner></Banner>
+     </section>
       <section>
         <OurServices></OurServices>
       </section>
