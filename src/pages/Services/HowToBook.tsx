@@ -115,8 +115,9 @@ const HowToBook: React.FC = () => {
             </h2>
 
             <svg className="absolute left-1/2 transform -translate-x-1/2 w-2 md:w-2 h-[85%]">
-                <line x1="0" y1="0" x2="0" y2="100%" stroke="#71BBB2" strokeWidth="4" strokeDasharray="8 12" />
+                <line x1="0" y1="0" x2="0" y2="100%" stroke="#274450" strokeWidth="40" strokeDasharray="12 12" />
             </svg>
+
 
             <motion.div
                 style={{ position: "absolute", left: "50%", translateX: "-50%", top: 200 }}
