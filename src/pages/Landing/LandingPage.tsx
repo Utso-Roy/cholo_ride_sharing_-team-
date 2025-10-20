@@ -17,9 +17,9 @@ import { AuthContext } from "../../Auth/AuthProvider";
 const LandingPage = () => {
   useEffect(() => {
     AOS.init({
-      duration: 1200, // Animation duration
-      easing: "ease-in-out-sine", // Smooth easing
-      once: true, // Animate only once
+      duration: 1200,
+      easing: "ease-in-out-sine",
+      once: true,
     });
   }, []);
 
@@ -121,32 +121,42 @@ const LandingPage = () => {
       {/* Right Section */}
       <div
         data-aos="fade-left"
-        className="md:w-1/2 mt-12 md:mt-0 flex flex-col items-center gap-5  z-10"
+        className="md:w-1/2 mt-12 md:mt-0 flex flex-col items-center gap-7 z-10"
       >
         {/* 3 Image Group */}
         <div
           data-aos="zoom-in"
-          className="relative w-full max-w-3xl mx-auto flex justify-center items-center "
+          className="relative w-full max-w-3xl mx-auto flex justify-center items-center"
         >
           <img
             src={LeftPicture}
             alt="Left"
-            className="w-40 h-52 md:w-48 md:h-60 object-cover rounded-2xl shadow-xl opacity-90 hover:opacity-100 transition-all duration-300"
+            className="w-36 h-52 md:w-44 md:h-60 object-cover rounded-3xl shadow-2xl 
+            opacity-85 hover:opacity-100 transition-all duration-500 
+            -rotate-6 hover:-rotate-3 brightness-90 hover:brightness-105"
           />
 
-          <div className="relative z-20">
+          <div className="relative z-20 scale-110 hover:scale-115 transition-transform duration-500">
             <img
               src={userPicture}
               alt="Main"
-              className="w-48 h-60 md:w-56 md:h-70 object-cover rounded-3xl shadow-2xl border-2 border-white"
+              className="w-52 h-64 md:w-60 md:h-72 object-cover rounded-[2rem] 
+              shadow-[0_10px_25px_rgba(0,0,0,0.25)] border-2 border-white 
+              hover:shadow-[0_20px_40px_rgba(0,0,0,0.35)] transition-all duration-500"
             />
+            <div className="absolute inset-0 rounded-[2rem] bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
           </div>
 
           <img
             src={rightSide}
             alt="Right"
-            className="w-40 h-52 md:w-48 md:h-60 object-cover rounded-2xl shadow-xl opacity-90 hover:opacity-100 transition-all duration-300"
+            className="w-36 h-52 md:w-44 md:h-60 object-cover rounded-3xl shadow-2xl 
+            opacity-85 hover:opacity-100 transition-all duration-500 
+            rotate-6 hover:rotate-3 brightness-90 hover:brightness-105"
           />
+
+          {/* Background Glow */}
+          <div className="absolute inset-0 blur-3xl bg-gradient-to-r from-purple-500/20 via-pink-500/20 to-orange-500/20 -z-10"></div>
         </div>
 
         {/* Bottom Swiper */}

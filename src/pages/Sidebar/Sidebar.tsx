@@ -39,6 +39,7 @@ const Sidebar: React.FC = () => {
   const { user } = useContext(AuthContext) as { user?: { email?: string } };
 
   useEffect(() => {
+     if (!user?.email) return;
     const fetchUser = async () => {
       try {
         setLoading(true);
@@ -51,7 +52,7 @@ const Sidebar: React.FC = () => {
       }
     };
     fetchUser();
-  }, []);
+  }, [user?.email]);
 
   const currentUser = users.find((u) => u?.email === user?.email);
 

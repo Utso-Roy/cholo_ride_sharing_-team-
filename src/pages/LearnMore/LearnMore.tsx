@@ -1,13 +1,32 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Button } from "primereact/button";
+import { useNavigate } from "react-router";
 
 const LearnMore = () => {
+  const navigate = useNavigate();
+
   return (
-    <div className="bg-gradient-to-r from-[#e6fcf9] via-white to-[#e6fcf9] min-h-screen flex flex-col items-center justify-center px-6 py-12">
+    <div className="relative bg-gradient-to-r from-[#e6fcf9] via-white to-[#e6fcf9] min-h-screen flex flex-col items-center justify-center px-6 py-12">
+      
+      {/* 🔙 Back Button */}
+      <motion.div
+        className="absolute top-6 left-6 z-50"
+        initial={{ opacity: 0, x: -30 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        <Button
+          label="পেছনে যান"
+          icon="pi pi-arrow-left"
+          className="!bg-[#71BBB2] !border-none !text-white font-medium px-5 py-2 rounded-full shadow-md hover:!bg-[#5aa69a] transition-all"
+          onClick={() => navigate(-1)}
+        />
+      </motion.div>
+
       {/* Header Section */}
       <motion.div
-        className="text-center max-w-3xl"
+        className="text-center max-w-3xl mt-10"
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
@@ -20,7 +39,7 @@ const LearnMore = () => {
           আমাদের সেবাগুলি শুধু পরিবহন নয়, এটি একটি নির্ভরযোগ্যতা ও আস্থার প্রতীক।
         </p>
 
-        {/* Button */}
+        {/* যোগাযোগ করুন Button */}
         <motion.div whileHover={{ scale: 1.05 }}>
           <Button
             label="যোগাযোগ করুন"
@@ -68,6 +87,32 @@ const LearnMore = () => {
           আমাদের সাথে থাকুন, প্রতিটি যাত্রাকে আরও সুন্দর করে তুলুন।  
           আমরা আস্থা, নিরাপত্তা ও আরামের প্রতিশ্রুতি দিই।
         </p>
+      </motion.div>
+
+      {/* 🌟 Join Us Section */}
+      <motion.div
+        className="mt-20 text-center max-w-3xl bg-white/80 backdrop-blur-md rounded-3xl shadow-xl p-10 border border-[#71BBB2]/30"
+        initial={{ opacity: 0, y: 60 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.3 }}
+      >
+        <h2 className="text-3xl md:text-5xl font-bold text-[#27445D] mb-4">
+          আমাদের সাথে যোগ দিন 🌍
+        </h2>
+        <p className="text-gray-600 text-lg md:text-xl mb-8 leading-relaxed">
+          চলো পরিবারের অংশ হোন — নতুন সুযোগ, উন্নত সেবা এবং একসাথে পরিবর্তনের পথে হাঁটুন।  
+          একসাথে আমরা গড়ে তুলব একটি নিরাপদ ও পরিবেশবান্ধব যাত্রা অভিজ্ঞতা।
+        </p>
+
+        <motion.div whileHover={{ scale: 1.08 }}>
+          <Button
+            label="এখনই যোগ দিন"
+            icon="pi pi-user-plus"
+            className="!bg-gradient-to-r !from-[#71BBB2] !to-[#56A89E] !text-white !border-none 
+                       font-semibold px-8 py-3 rounded-full shadow-lg hover:shadow-xl 
+                       hover:!from-[#56A89E] hover:!to-[#71BBB2] transition-all duration-300"
+          />
+        </motion.div>
       </motion.div>
     </div>
   );
