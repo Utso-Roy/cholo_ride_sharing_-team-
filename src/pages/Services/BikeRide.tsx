@@ -7,12 +7,10 @@ import { Avatar } from "primereact/avatar";
 import { Rating } from "primereact/rating";
 import HowToBook from "./HowToBook";
 import { NavLink } from "react-router";
-import Lottie from "lottie-react";
-import lottieData from "../../../public/map.json";
-import clock from "../../assets/servicesimg/1.png"
-import car1 from "../../assets/servicesimg/5.png"
-import car2 from "../../assets/servicesimg/4.png"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import clock from "../../assets/servicesimg/1.png";
+import car1 from "../../assets/servicesimg/5.png";
+import car2 from "../../assets/servicesimg/4.png";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCab } from "@fortawesome/free-solid-svg-icons";
 
 
