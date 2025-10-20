@@ -67,7 +67,6 @@ export default function CarRide() {
                 }}
             >
                 {/* Features Section */}
-
                 <motion.section
                     initial={{ opacity: 0, y: 40 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -79,7 +78,7 @@ export default function CarRide() {
                         className="text-2xl md:text-4xl font-bold mb-8 text-center pt-8"
                         style={{ color: "#274450" }}
                     >
-                        কেন বাইক রাইড ব্যবহার করবেন?
+                        কেন কার রাইড ব্যবহার করবেন?
                     </h2>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
@@ -87,24 +86,23 @@ export default function CarRide() {
                         <motion.div
                             whileHover={{ scale: 1.03 }}
                             className="rounded-3xl p-4 flex flex-col items-center text-center 
-                     border border-transparent hover:border-gray-200
-                     shadow-sm hover:shadow-lg transition-all duration-300
-                     backdrop-blur-sm"
+                 border border-transparent hover:border-gray-200
+                 shadow-sm hover:shadow-lg transition-all duration-300
+                 backdrop-blur-sm"
                             style={{
-                                background:
-                                    "linear-gradient(135deg, #ffffff 0%, #F6FBF8 100%)",
+                                background: "linear-gradient(135deg, #ffffff 0%, #F6FBF8 100%)",
                             }}
                         >
                             <img
-                                src={clock}
-                                alt="রিয়েল-টাইম ট্র্যাকিং"
+                                src={car1}
+                                alt="আরামদায়ক যাত্রা"
                                 className="w-full h-[200px] object-cover rounded-lg mb-4"
                             />
                             <h3 className="font-bold text-lg mb-2" style={{ color: "#274450" }}>
-                                রিয়েল-টাইম ট্র্যাকিং
+                                আরামদায়ক যাত্রা
                             </h3>
                             <p className="text-sm font-semibold" style={{ color: "#274450" }}>
-                                আপনার বাইকের অবস্থান এবং অগ্রগতি যেকোনো সময় লাইভ ট্র্যাক করুন।
+                                এয়ার কন্ডিশনড ও প্রশস্ত গাড়িতে আরামদায়ক ভ্রমণের অভিজ্ঞতা নিন।
                             </p>
                         </motion.div>
 
@@ -112,16 +110,15 @@ export default function CarRide() {
                         <motion.div
                             whileHover={{ scale: 1.03 }}
                             className="rounded-3xl p-4 flex flex-col items-center text-center
-                     border border-transparent hover:border-gray-200
-                     shadow-sm hover:shadow-lg transition-all duration-300
-                     backdrop-blur-sm"
+                 border border-transparent hover:border-gray-200
+                 shadow-sm hover:shadow-lg transition-all duration-300
+                 backdrop-blur-sm"
                             style={{
-                                background:
-                                    "linear-gradient(135deg, #ffffff 0%, #EAF7F4 100%)",
+                                background: "linear-gradient(135deg, #ffffff 0%, #EAF7F4 100%)",
                             }}
                         >
                             <img
-                                src={car1}
+                                src={clock}
                                 alt="সঠিক ETA"
                                 className="w-full h-[200px] object-cover rounded-lg mb-4"
                             />
@@ -129,7 +126,7 @@ export default function CarRide() {
                                 সঠিক ETA
                             </h3>
                             <p className="text-sm font-semibold" style={{ color: "#274450" }}>
-                                আপনার রাইড কখন পৌঁছাবে তা নির্ভুলভাবে জানতে পারবেন।
+                                আপনার গাড়ি কখন পৌঁছাবে তা নির্ভুলভাবে জানতে পারবেন।
                             </p>
                         </motion.div>
 
@@ -137,12 +134,11 @@ export default function CarRide() {
                         <motion.div
                             whileHover={{ scale: 1.03 }}
                             className="rounded-3xl p-4 flex flex-col items-center text-center
-                     border border-transparent hover:border-gray-200
-                     shadow-sm hover:shadow-lg transition-all duration-300
-                     backdrop-blur-sm"
+                 border border-transparent hover:border-gray-200
+                 shadow-sm hover:shadow-lg transition-all duration-300
+                 backdrop-blur-sm"
                             style={{
-                                background:
-                                    "linear-gradient(135deg, #ffffff 0%, #F1F7F0 100%)",
+                                background: "linear-gradient(135deg, #ffffff 0%, #F1F7F0 100%)",
                             }}
                         >
                             <img
@@ -154,11 +150,12 @@ export default function CarRide() {
                                 নিরাপদ যাত্রা
                             </h3>
                             <p className="text-sm font-semibold" style={{ color: "#274450" }}>
-                                আপনার যাত্রা হবে নিরাপদ, আরামদায়ক এবং নির্ভরযোগ্য।
+                                অভিজ্ঞ ড্রাইভার এবং নির্ভরযোগ্য সেবার মাধ্যমে নিরাপদ ভ্রমণ নিশ্চিত।
                             </p>
                         </motion.div>
                     </div>
                 </motion.section>
+
 
                 {/* ///HowToBook */}
                 <HowToBook></HowToBook>
