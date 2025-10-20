@@ -13,7 +13,8 @@ import clock from "../../assets/servicesimg/1.png"
 import car1 from "../../assets/servicesimg/5.png"
 import car2 from "../../assets/servicesimg/4.png"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCar } from '@fortawesome/free-solid-svg-icons'
+import { faCab } from "@fortawesome/free-solid-svg-icons";
+
 
 
 const PRIMARY = "#274450";
@@ -50,7 +51,7 @@ export default function BikeRide() {
                        hover:!from-[#56A89E] hover:!to-[#71BBB2] transition-all duration-300"
 
                         >
-                            <FontAwesomeIcon icon={faCar} className="w-6 h-6 mr-2 animate-car" />
+                            <FontAwesomeIcon icon={faCab} className="w-6 h-6 mr-2 animate-car" />
                             এখনই রাইড বুক করুন
                         </Button>
                     </NavLink>

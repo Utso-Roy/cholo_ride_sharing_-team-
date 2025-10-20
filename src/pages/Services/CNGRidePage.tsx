@@ -7,8 +7,12 @@ import { Avatar } from "primereact/avatar";
 import { Rating } from "primereact/rating";
 import { NavLink } from "react-router";
 import HowToBook from "./HowToBook";
-import Lottie from "lottie-react";
-import lottieData from "../../../public/map.json";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import clock from "../../assets/servicesimg/1.png"
+import car1 from "../../assets/servicesimg/7.png"
+import car2 from "../../assets/servicesimg/6.png"
+import { faCab } from "@fortawesome/free-solid-svg-icons";
+
 
 const PRIMARY = "#274450";
 const ACCENT = "#71BBB2";
@@ -16,16 +20,7 @@ const ACCENT = "#71BBB2";
 export default function CNGRidePage() {
 
     return (
-        <div className="relative space-y-12">
-            {/* Lottie Background */}
-            <div className="absolute inset-0 z-0 opacity-30">
-                <Lottie
-                    animationData={lottieData}
-                    loop
-                    autoplay
-                    style={{ width: "100%", height: "100%" }}
-                />
-            </div>
+        <div className="relative ">
 
             {/* Hero Section */}
             <motion.section
@@ -46,18 +41,12 @@ export default function CNGRidePage() {
 
                     <NavLink to="/ridebooking">
                         <Button
-                            className="
-                     relative !bg-gradient-to-r from-[#497D74] to-[#74B49B]
-                     !text-white !border-none !px-4 !py-3 !rounded-xl 
-                     overflow-hidden
-                     before:absolute before:-inset-1 before:rounded-xl
-                     before:bg-gradient-to-r before:from-[#497D74] before:via-[#74B49B] before:to-[#497D74]
-                     before:bg-[length:200%_200%] before:animate-border-slide
-                     before:z-[-1]
-                     hover:scale-105 transition-transform duration-300
-                     "
+                            className="!my-10 !font-extrabold !bg-gradient-to-r !from-[#71BBB2] !to-[#56A89E] !text-white !border-none 
+                        px-8 py-3 rounded-full shadow-lg hover:shadow-xl 
+                       hover:!from-[#56A89E] hover:!to-[#71BBB2] transition-all duration-300"
+
                         >
-                            <span className="mr-2 text-2xl animate-pulse">✨</span>
+                            <FontAwesomeIcon icon={faCab} className="w-6 h-6 mr-2 animate-car" />
                             এখনই রাইড বুক করুন
                         </Button>
                     </NavLink>
@@ -66,66 +55,113 @@ export default function CNGRidePage() {
             </motion.section>
 
             {/* Features Section */}
-            <motion.section
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
-                viewport={{ once: true }}
-                className="bg-[#274450] rounded-2xl shadow-lg p-8 mx-5 md:mx-10"
+
+            <section
+                className="bg-cover bg-center bg-no-repeat bg-fixed"
+                style={{
+                    // backgroundImage: "url('https://i.ibb.co.com/zTQ6z80G/map.jpg')",
+                    backgroundImage: "linear-gradient(to right, rgba(230,252,249,0.8), rgba(249,250,251,0.8)), url('https://i.ibb.co/zTQ6z80G/map.jpg')",
+                    backgroundColor: "rgba(0, 0, 0, 0.1)",
+                    backgroundBlendMode: "overlay",
+                }}
             >
-                <h2 className="text-2xl md:text-3xl font-bold text-white mb-8 text-center">
-                    কেন CNG রাইড বেছে নেবেন?
-                </h2>
-
-                <div className="grid md:grid-cols-3 gap-6">
-                    <motion.div whileHover={{ scale: 1.05 }} className="bg-[#71BBB2] text-white rounded-xl p-6 shadow-md flex flex-col items-center text-center">
-                        <span className="text-3xl mb-3">⚡</span>
-                        <h3 className="font-semibold text-lg mb-2">দ্রুত রাইড</h3>
-                        <p className="text-sm">আমাদের নিকটস্থ CNG চালক থেকে কয়েক মিনিটেই রাইড পেয়ে যান, ঝামেলাহীন সার্ভিস।</p>
-                    </motion.div>
-
-                    <motion.div whileHover={{ scale: 1.05 }} className="bg-[#497D74] text-white rounded-xl p-6 shadow-md flex flex-col items-center text-center">
-                        <span className="text-3xl mb-3">💰</span>
-                        <h3 className="font-semibold text-lg mb-2">সাশ্রয়ী ভাড়া</h3>
-                        <p className="text-sm">প্রতি কিলোমিটারে সেরা ভাড়া, কোনো লুকানো চার্জ নেই। আগেই ভাড়া দেখে নিশ্চিত হোন।</p>
-                    </motion.div>
-
-                    <motion.div whileHover={{ scale: 1.05 }} className="bg-[#71BBB2] text-white rounded-xl p-6 shadow-md flex flex-col items-center text-center">
-                        <span className="text-3xl mb-3">📍</span>
-                        <h3 className="font-semibold text-lg mb-2">লাইভ ট্র্যাকিং</h3>
-                        <p className="text-sm">রাইডের অগ্রগতি এবং চালকের অবস্থান রিয়েল-টাইমে মোবাইল স্ক্রিনে দেখতে পারবেন।</p>
-                    </motion.div>
-                </div>
-            </motion.section>
-
-            {/* HowToBook  */}
-            <HowToBook></HowToBook>
-
-            {/* Booking Form */}
-            {/* <BookingForm googleMapsApiKey="AIzaSyCbbOBVZNUTdhdDoJliYuXz4k1mi2OtWc8" onConfirm={handleBookingConfirm} /> */}
-
-            {/* BTN  */}
-            <div className="flex justify-center items-center my-10 pb-5">
-
-                <NavLink to="/ridebooking">
-                    <Button
-                        className="
-                     relative !bg-gradient-to-r from-[#497D74] to-[#74B49B]
-                     !text-white !border-none !px-4 !py-3 !rounded-xl 
-                     overflow-hidden
-                     before:absolute before:-inset-1 before:rounded-xl
-                     before:bg-gradient-to-r before:from-[#497D74] before:via-[#74B49B] before:to-[#497D74]
-                     before:bg-[length:200%_200%] before:animate-border-slide
-                     before:z-[-1]
-                     hover:scale-105 transition-transform duration-300
-                     "
+                {/* Features Section */}
+                <motion.section
+                    initial={{ opacity: 0, y: 40 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, ease: "easeOut" }}
+                    viewport={{ once: true }}
+                    className="px-5 md:px-10 "
+                >
+                    <h2
+                        className="text-2xl md:text-4xl font-bold mb-8 text-center pt-8"
+                        style={{ color: "#274450" }}
                     >
-                        <span className="mr-2 text-2xl animate-pulse">✨</span>
-                        এখনই রাইড বুক করুন
-                    </Button>
-                </NavLink>
+                        কেন সিএনজি রাইড ব্যবহার করবেন?
+                    </h2>
 
-            </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                        {/* Feature 1 */}
+                        <motion.div
+                            whileHover={{ scale: 1.03 }}
+                            className="rounded-3xl p-4 flex flex-col items-center text-center 
+                 border border-transparent hover:border-gray-200
+                 shadow-sm hover:shadow-lg transition-all duration-300
+                 backdrop-blur-sm"
+                            style={{
+                                background: "linear-gradient(135deg, #ffffff 0%, #F6FBF8 100%)",
+                            }}
+                        >
+                            <img
+                                src={car1}
+                                alt="সহজলভ্য যাত্রা"
+                                className="w-full h-[200px] object-cover rounded-lg mb-4"
+                            />
+                            <h3 className="font-bold text-lg mb-2" style={{ color: "#274450" }}>
+                                সহজলভ্য যাত্রা
+                            </h3>
+                            <p className="text-sm font-semibold" style={{ color: "#274450" }}>
+                                শহরের যেকোনো জায়গায় দ্রুত সিএনজি পাওয়া যায়, তাই যাত্রা শুরু করা সহজ।
+                            </p>
+                        </motion.div>
+
+                        {/* Feature 2 */}
+                        <motion.div
+                            whileHover={{ scale: 1.03 }}
+                            className="rounded-3xl p-4 flex flex-col items-center text-center
+                 border border-transparent hover:border-gray-200
+                 shadow-sm hover:shadow-lg transition-all duration-300
+                 backdrop-blur-sm"
+                            style={{
+                                background: "linear-gradient(135deg, #ffffff 0%, #EAF7F4 100%)",
+                            }}
+                        >
+                            <img
+                                src={clock}
+                                alt="সাশ্রয়ী ভাড়া"
+                                className="w-full h-[200px] object-cover rounded-lg mb-4"
+                            />
+                            <h3 className="font-bold text-lg mb-2" style={{ color: "#274450" }}>
+                                দ্রুত গন্তব্যে পৌঁছানো
+                            </h3>
+                            <p className="text-sm font-semibold" style={{ color: "#274450" }}>
+                                ট্রাফিকের ভিড়েও সিএনজি সহজে চলাচল করতে পারে, তাই দ্রুত গন্তব্যে পৌঁছানো যায়।
+                            </p>
+
+                        </motion.div>
+
+                        {/* Feature 3 */}
+                        <motion.div
+                            whileHover={{ scale: 1.03 }}
+                            className="rounded-3xl p-4 flex flex-col items-center text-center
+                 border border-transparent hover:border-gray-200
+                 shadow-sm hover:shadow-lg transition-all duration-300
+                 backdrop-blur-sm"
+                            style={{
+                                background: "linear-gradient(135deg, #ffffff 0%, #F1F7F0 100%)",
+                            }}
+                        >
+                            <img
+                                src={car2}
+                                alt="দ্রুত গন্তব্যে পৌঁছানো"
+                                className="w-full h-[200px] object-cover rounded-lg mb-4"
+                            />
+                            <h3 className="font-bold text-lg mb-2" style={{ color: "#274450" }}>
+                                সাশ্রয়ী ভাড়া
+                            </h3>
+                            <p className="text-sm font-semibold" style={{ color: "#274450" }}>
+                                অন্যান্য রাইডের তুলনায় সিএনজি ভাড়া অনেকটাই সাশ্রয়ী ও বাজেট-ফ্রেন্ডলি।
+                            </p>
+                        </motion.div>
+                    </div>
+                </motion.section>
+
+
+                {/* ///HowToBook */}
+                <HowToBook></HowToBook>
+
+            </section>
+
 
 
         </div>
