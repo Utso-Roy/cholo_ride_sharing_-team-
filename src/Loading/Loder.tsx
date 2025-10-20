@@ -8,6 +8,7 @@ const Loader: FC = () => {
         <div className="bg-cover bg-center bg-no-repeat bg-fixed flex items-center justify-center h-screen"
             style={{
                 backgroundImage: "url('https://i.ibb.co.com/zTQ6z80G/map.jpg')",
+                backgroundColor: "rgba(0, 0, 0, 0.2)",
                 backgroundBlendMode: "overlay",
             }} >
 
