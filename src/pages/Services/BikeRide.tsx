@@ -46,17 +46,19 @@ export default function BikeRide() {
                     <NavLink to="/ridebooking">
                         <Button
                             className="
-                     relative !bg-gradient-to-r from-[#497D74] to-[#74B49B]
-                     !text-white !border-none !px-4 !py-3 !rounded-xl 
-                     overflow-hidden
-                     before:absolute before:-inset-1 before:rounded-xl
-                     before:bg-gradient-to-r before:from-[#497D74] before:via-[#74B49B] before:to-[#497D74]
-                     before:bg-[length:200%_200%] before:animate-border-slide
-                     before:z-[-1]
-                     hover:scale-105 transition-transform duration-300
-                     "
+      relative  !font-extrabold !my-10 !pl-2 !bg-gradient-to-r from-[#497D74] to-[#74B49B]
+      !text-white !border-none !px-4 !py-3 !rounded-xl 
+      overflow-hidden
+      before:absolute before:-inset-1 before:rounded-xl
+      before:bg-gradient-to-r before:from-[#497D74] before:via-[#74B49B] before:to-[#497D74]
+      before:bg-[length:200%_200%] before:animate-border-slide
+      before:z-[-1]
+      hover:scale-105 transition-transform duration-300 
+      flex items-center gap-2 
+
+    "
                         >
-                            <span className="mr-2 text-2xl animate-pulse">✨</span>
+                            <FontAwesomeIcon icon={faCar} className="w-6 h-6 animate-car" />
                             এখনই রাইড বুক করুন
                         </Button>
                     </NavLink>
@@ -171,65 +173,9 @@ export default function BikeRide() {
                 {/* ///HowToBook */}
                 <HowToBook></HowToBook>
 
-                {/* BTN  */}
-                <div className="flex justify-center items-center ">
-
-                    {/* <NavLink to="/ridebooking">
-                        <Button
-                            className="!bg-[#274450]  !text-white !border-none !px-4 !py-3 !rounded-xl hover:!bg-[#497D74]"
-
-                        >
-                            <span className="mr-2 text-xl animate-pulse">✨</span>
-                            এখনই রাইড বুক করুন
-                        </Button>
-                    </NavLink> */}
-
-                    {/* <NavLink to="/ridebooking">
-                        <Button
-                            className="
-                     relative !my-10 !bg-gradient-to-r from-[#497D74] to-[#74B49B]
-                     !text-white !border-none !px-4 !py-3 !rounded-xl 
-                     overflow-hidden
-                     before:absolute before:-inset-1 before:rounded-xl
-                     before:bg-gradient-to-r before:from-[#497D74] before:via-[#74B49B] before:to-[#497D74]
-                     before:bg-[length:200%_200%] before:animate-border-slide
-                     before:z-[-1]
-                     hover:scale-105 transition-transform duration-300 
-                     "
-                        >
-                            <span className="mr-2 text-2xl animate-pulse">✨</span>
-                            এখনই রাইড বুক করুন
-                        </Button>
-                    </NavLink> */}
-
-
-
-                    <NavLink to="/ridebooking">
-                        <Button
-                            className="
-      relative !my-10 !bg-gradient-to-r from-[#497D74] to-[#74B49B]
-      !text-white !border-none !px-4 !py-3 !rounded-xl 
-      overflow-hidden
-      before:absolute before:-inset-1 before:rounded-xl
-      before:bg-gradient-to-r before:from-[#497D74] before:via-[#74B49B] before:to-[#497D74]
-      before:bg-[length:200%_200%] before:animate-border-slide
-      before:z-[-1]
-      hover:scale-105 transition-transform duration-300 
-      flex items-center gap-2
-    "
-                        >
-                            <FontAwesomeIcon icon={faCar} className="w-6 h-6 animate-car" />
-                            <span className="text-2xl animate-pulse">✨</span>
-                            এখনই রাইড বুক করুন
-                        </Button>
-                    </NavLink>
-
-
-
-
-
-                </div>
             </section>
+
+            
         </div>
 
 
