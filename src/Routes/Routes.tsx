@@ -74,6 +74,7 @@ import EditBlog from "../DashboardPages/EditBlog";
 import RideBooking from "../pages/Services/RideBooking";
 import LandingPage from "../pages/Landing/LandingPage";
 import LearnMore from "../pages/LearnMore/LearnMore";
+import UsersForModerator from "../DashboardPages/Moderator/Users/UsersForModerator";
 
 
 const router = createBrowserRouter([
@@ -192,7 +193,11 @@ const router = createBrowserRouter([
       {
         path: 'mod/verifications',
         element: <VerificationPage/>
-      }
+      },
+      {
+        path: 'mod/users',
+        element: <UsersForModerator/>
+      },
       
     ],
   },
