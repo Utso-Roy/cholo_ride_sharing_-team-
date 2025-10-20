@@ -4,7 +4,13 @@ import Logo from "../assets/Logo.png";
 
 const Loader: FC = () => {
     return (
-        <div className="flex items-center justify-center h-screen bg-gradient-to-br from-red-600 to-white">
+        // <div className="flex items-center justify-center h-screen bg-gradient-to-br from-red-600 to-white">
+        <div className="bg-cover bg-center bg-no-repeat bg-fixed flex items-center justify-center h-screen"
+            style={{
+                backgroundImage: "url('https://i.ibb.co.com/zTQ6z80G/map.jpg')",
+                backgroundBlendMode: "overlay",
+            }} >
+
             <div className="relative w-40 h-40 flex items-center justify-center">
                 {/* Static Border */}
                 <div className="absolute inset-0 rounded-full border-8 border-red-600"></div>
