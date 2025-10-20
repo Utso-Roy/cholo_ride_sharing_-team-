@@ -13,7 +13,7 @@ import {
   FaHeart,
 } from "react-icons/fa";
 
-import { NavLink, Link } from "react-router-dom";
+import { Link, NavLink } from "react-router";
 import api from "../../lib/api";
 import { AuthContext } from "../../Auth/AuthProvider";
 import { moderatorMenuItems } from "../../Utils/ModeratorMenu/moderatorMenu";
