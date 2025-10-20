@@ -54,11 +54,11 @@ const OurServices = () => {
           আমাদের সার্ভিসসমূহ
         </h2>
 
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {services.map((service, idx) => (
             <div 
               key={idx} 
-              className="bg-white p-6 rounded-2xl shadow hover:shadow-xl transition-transform hover:-translate-y-1"
+              className="bg-white p-6 shadow hover:shadow-xl transition-transform hover:-translate-y-1"
             >
               <div className="mb-4 flex justify-center">{service.icon}</div>
               <h3 className="text-lg font-semibold mb-1">{service.title}</h3>

@@ -7,8 +7,8 @@ import BookingForm from "./BookingForm";
 const RideBooking: React.FC = () => {
     return (
         <div>
-            <div className="relative w-screen h-[200px] overflow-hidden -ml-[calc((100vw-100%)/2)]">
-                {/* Lottie Background */}
+            {/* <div className="relative w-screen h-[200px] overflow-hidden -ml-[calc((100vw-100%)/2)]">
+       
                 <div className="absolute inset-0 z-0">
                     <Lottie
                         animationData={lottieData}
@@ -18,13 +18,7 @@ const RideBooking: React.FC = () => {
                     />
                 </div>
 
-                {/* Centered Title */}
-                {/* <div className="absolute inset-0 flex items-center justify-center z-10 px-4">
-                    <h2 className="text-lg md:text-2xl font-bold text-[#71BBB2] text-center drop-shadow-md">
-                        নিচের তথ্য প্রদান করে রাইড বুক করুন !!
-                    </h2>
-                </div> */}
-            </div>
+            </div> */}
             <BookingForm></BookingForm>
         </div>
     );

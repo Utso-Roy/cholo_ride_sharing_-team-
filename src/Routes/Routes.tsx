@@ -53,7 +53,7 @@ import JourneyPackage from "../pages/Services/JourneyPackage";
 import SchoolBus from "../pages/Services/SchoolBus";
 import ShuttleBus from "../pages/Services/ShuttleBus";
 import Shipment from "../pages/Services/Shipment";
-import RideBooking from "../pages/Services/RideBooking";
+// import RideBooking from "../pages/Services/RideBooking";
 import Drivers from "../DashboardPages/Drivers";
 // import Users from "../DashboardPages/Users";
 import ManagePartners from "../DashboardPages/ManagePartners";
@@ -63,13 +63,17 @@ import ManageJobsApplications from "../DashboardPages/ManageJobsApplications";
 import ContentManagement from "../DashboardPages/ContentManagement";
 import AddBlog from "../DashboardPages/AddBlog";
 
-import Dashboard from "../DashboardPages/Dashboard";
 import Users from "../DashboardPages/Users";
 import ReportsList from "../DashboardPages/Moderator/Reports/ReportsList";
 import ReportDetailPage from "../DashboardPages/Moderator/Reports/ReportDetail";
 import VerificationPage from "../DashboardPages/Moderator/Verification/VerificationPage";
 
 import ManageSocialActivities from "../pages/OthersPage/ManageSocialActivities";
+import Dashboard from "../DashboardPages/Dashboard";
+import EditBlog from "../DashboardPages/EditBlog";
+import RideBooking from "../pages/Services/RideBooking";
+import LandingPage from "../pages/Landing/LandingPage";
+import LearnMore from "../pages/LearnMore/LearnMore";
 
 
 const router = createBrowserRouter([
@@ -79,15 +83,21 @@ const router = createBrowserRouter([
     errorElement: <Error />,
     children: [
       // Home
-      { index: true, element: <Home /> },
+      { index: true, element: <LandingPage></LandingPage>},
 
       // Help
+      {
+       path : '/home', element :<Home />
+      },
       { path: "faq", element: <FAQ /> },
       { path: "customercare", element: <CustomerCare /> },
       { path: "userguide", element: <UserGuide /> },
       { path: "driverguide", element: <DriverGuide /> },
       { path: "privacypolicy", element: <PrivacyPolicy /> },
       { path: "feedbackform", element: <FeedbackForm /> },
+      {
+        path : 'learnMore' , element : <LearnMore></LearnMore>
+      },
 
       // Blog
       { path: "blogs", element: <BlogListPage /> },
@@ -157,13 +167,19 @@ const router = createBrowserRouter([
     element: <DashboardLayout />,
     errorElement: <Error />,
     children: [
-      { index: true, element: <Dashboard /> }, 
-      { path: "profile", element: <Profile></Profile>},
+      { index: true, element: <Dashboard /> },
+      { path: "profile", element: <Profile></Profile> },
       { path: "manage-partners", element: <ManagePartners /> },
       { path: "manage-jobs", element: <ManageJobsApplications/> },
       { path: "manage-activities", element: <ManageSocialActivities/> },
       { path: "drivers", element: <Drivers /> },
-      { path: "ContentManagement", element: <ContentManagement /> },
+      { path: "content-Management", element: <ContentManagement /> },
+      { path: "content-Management/add-blog", element: <AddBlog /> },
+      { path: "content-Management/edit/:id", element: <EditBlog /> },
+      {
+        path: "/dashboard/users", element: <Users></Users>
+      },
+      { path: "/dashboard/content-management", element: <ContentManagement /> },
       { path: "ContentManagement/add-blog", element: <AddBlog /> },
       {
         path :"/dashboard/users" , element : <Users/>
@@ -180,6 +196,8 @@ const router = createBrowserRouter([
       
     ],
   },
+
+
 ]);
 
 export default router;

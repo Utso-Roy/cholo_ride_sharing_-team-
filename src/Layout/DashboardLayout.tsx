@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Sidebar from "../pages/Sidebar/Sidebar";
-import { Outlet } from "react-router"; 
+import { NavLink, Outlet } from "react-router";
 import { HiMenu } from "react-icons/hi";
 import MessengerButton from "../components/MessengerButton";
 
@@ -29,7 +29,7 @@ const DashboardLayout = () => {
           w-64
         `}
       >
-        <Sidebar />
+        <Sidebar/>
       </div>
 
       {/* 🔹 Main Content */}

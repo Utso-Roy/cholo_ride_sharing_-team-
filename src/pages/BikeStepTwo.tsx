@@ -124,6 +124,7 @@ const BikeStepTwo = () => {
       fd.set("fitnessNo", vehicle.fitnessNo);
       fd.set("taxTokenNo", vehicle.taxTokenNo);
 
+
       const res = await api.post("/api/bike-applications", fd);
       return res.data;
     },
@@ -292,8 +293,8 @@ const BikeStepTwo = () => {
                       {g === "male"
                         ? "পুরুষ"
                         : g === "female"
-                        ? "নারী"
-                        : "অন্যান্য"}
+                          ? "নারী"
+                          : "অন্যান্য"}
                     </span>
                   </label>
                 ))}

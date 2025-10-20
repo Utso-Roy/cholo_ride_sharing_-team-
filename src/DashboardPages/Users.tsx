@@ -36,7 +36,6 @@ const Users: React.FC = () => {
     }
   };
 
-  console.log(import.meta.env.VITE_API_URL)
   //  Make Moderator
   const makeModerator = async (email: string) => {
     try {
@@ -46,20 +45,19 @@ const Users: React.FC = () => {
         { role: "moderator" }
       );
 
-      //  Response check — backend should send { success: true, role: "moderator" }
-      if (res.data?.success || res.data?.role === "moderator") {
-        toast.success(" User promoted to Moderator!");
-      } else if (res.data?.message === "User not found") {
-        toast.error(" User not found in database!");
-      } else {
-        toast.info("ℹ User is already a Moderator or update not needed.");
-      }
+      // //  Response check — backend should send { success: true, role: "moderator" }
+      // if (res.data?.success || res.data?.role === "moderator") {
+      //   toast.success(" User promoted to Moderator!");
+      // } else if (res.data?.message === "User not found") {
+      //   toast.error(" User not found in database!");
+      // } else {
+      //   toast.info("ℹ User is already a Moderator or update not needed.");
+      // }
 
       // Refetch user list
       await fetchUsers();
     } catch (err: any) {
       console.error("Error updating user:", err);
-      toast.error("⚠️ Failed to update user role!");
     } finally {
       setUpdating(null);
     }

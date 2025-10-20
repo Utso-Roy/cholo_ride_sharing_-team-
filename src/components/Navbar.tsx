@@ -3,7 +3,6 @@ import { HiChevronDown } from "react-icons/hi";
 import { FaMotorcycle, FaCarSide } from "react-icons/fa";
 import { MdDashboard, MdOutlineElectricRickshaw } from "react-icons/md";
 import { Link, NavLink, useLocation, useNavigate } from "react-router";
-import { Button } from "primereact/button";
 import serviceItems from "../Utils/ServiceItems/serviceItems";
 import othersItems from "../Utils/ServiceItems/othersItems";
 import { IconType } from "react-icons";
@@ -45,19 +44,19 @@ const Navbar: React.FC = () => {
     isActive ? "text-[#71BBB2]" : "hover:text-[#71BBB2] transition-colors";
 
   const getDropdownClass = (isOpen: boolean) =>
-    `flex items-center gap-1 cursor-pointer transition-colors duration-300 ${isOpen ? "text-[#71BBB2]" : "text-white hover:text-[#71BBB2]"
+    `flex items-center gap-1 cursor-pointer transition-colors duration-300 ${isOpen ? "text-[#71BBB2]" : "text-black hover:text-[#71BBB2]"
     }`;
 
   const links = (
     <>
       <li>
-        <NavLink to="/" className={navLinkClass}>
+        <NavLink to="/home" className={navLinkClass}>
           হোম
         </NavLink>
       </li>
 
       {/* Services */}
-      <li className="relative">
+      <li className="relative ">
         <button
           onClick={() => setOpenServices(!openServices)}
           className={getDropdownClass(openServices)}
@@ -222,7 +221,7 @@ const Navbar: React.FC = () => {
               </li>
               <li>
                 <NavLink
-                  to="/safety-policy"
+                  to="/PrivacyPolicy"
                   className="hover:text-[#71BBB2] block"
                 >
                   সেফটি ও প্রাইভেসি নীতিমালা
@@ -230,7 +229,7 @@ const Navbar: React.FC = () => {
               </li>
               <li>
                 <NavLink
-                  to="/complaints"
+                  to="/FeedbackForm"
                   className="hover:text-[#71BBB2] block"
                 >
                   অভিযোগ/প্রস্তাব দিন
@@ -262,7 +261,7 @@ const Navbar: React.FC = () => {
   }
 
   return (
-    <div className="navbar bg-[#2c4c68] sticky top-0 text-white shadow-md z-50">
+    <div className="navbar bg-gradient-to-r from-[#e6fcf9] via-gray-50 to-[#e6fcf9] backdrop-blur-lg  text-black ">
       {/* Navbar Start */}
 
       <div className="navbar-start flex items-center gap-4">
@@ -274,7 +273,7 @@ const Navbar: React.FC = () => {
 
         {/* Mobile dropdown */}
         <div className="dropdown lg:hidden">
-          <button tabIndex={0} className="btn btn-ghost text-white">
+          <button tabIndex={0} className="btn btn-ghost text-black">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6"
@@ -292,7 +291,7 @@ const Navbar: React.FC = () => {
           </button>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 z-50 p-2 shadow bg-[#27445D] rounded-box w-60"
+            className="menu menu-sm dropdown-content mt-3 z-50 p-2 shadow bg-[#27445D] text-white rounded-box w-60"
           >
             {links}
           </ul>
@@ -344,15 +343,10 @@ const Navbar: React.FC = () => {
                 </button>
               </li>
             </ul>
-          </div>
-        ) : (
-          <NavLink to="/signup">
-            <Button
-              label="নিবন্ধন করুন"
-              className="!bg-white !text-[#71BBB2] font-bold px-4 py-2 rounded-full shadow-lg hover:scale-105 transition-transform border-none"
-            />
-          </NavLink>
-        )}
+          </div>) : " "          
+         
+
+}
       </div>
     </div>
   );

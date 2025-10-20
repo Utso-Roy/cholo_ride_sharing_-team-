@@ -38,7 +38,7 @@ const Profile: React.FC = () => {
 
         // Response is a single object, not an array
         const data: User = await res.json();
-        setUsers([data]); 
+        setUsers([data]);
         setFormData({
           name: data.name || "",
           email: data.email,
@@ -63,29 +63,25 @@ const Profile: React.FC = () => {
   };
 
   // Submit updated profile 
- const handleSubmit = async (e: FormEvent) => {
-  e.preventDefault();
-  if (!formData.name || !formData.email) return toast.error("Name and email required");
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    if (!formData.name || !formData.email) return toast.error("Name and email required");
 
   try {
-    // const res = await fetch(`${import.meta.env.VITE_API_URL}/users/${user.email}`, {
-    //   method: "PUT",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify(formData),
-    // });
+   
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/users/${encodeURIComponent(user?.email.toLowerCase())}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        }
+      );
 
-//     if (res.status === 404) {
-//       toast.error("User not found!");
-//       return;
-//     }
-    const res = await fetch(
-      `${import.meta.env.VITE_API_URL}/users/${encodeURIComponent(user?.email.toLowerCase())}`,
-      {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+      if (!res.ok) {
+        const errText = await res.text();
+        throw new Error(errText || "Update failed");
       }
-    );
 
 
     const updatedUser = await res.json();
@@ -173,58 +169,58 @@ const Profile: React.FC = () => {
           <div className="bg-white rounded-2xl p-6 w-11/12 sm:w-96 relative">
             <h2 className="text-xl font-semibold mb-4">Update Profile</h2>
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-              <input 
-                type="text" 
-                name="name" 
-                placeholder="Name" 
-                value={formData.name} 
-                onChange={handleChange} 
-                className="border p-2 rounded-md w-full" 
+              <input
+                type="text"
+                name="name"
+                placeholder="Name"
+                value={formData.name}
+                onChange={handleChange}
+                className="border p-2 rounded-md w-full"
                 required
               />
-              <input 
-                type="email" 
-                name="email" 
-                placeholder="Email" 
-                value={formData.email} 
-                onChange={handleChange} 
-                className="border p-2 rounded-md w-full" 
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                value={formData.email}
+                onChange={handleChange}
+                className="border p-2 rounded-md w-full"
                 required
               />
-              <input 
-                type="text" 
-                name="photo" 
-                placeholder="Photo URL" 
-                value={formData.photo} 
-                onChange={handleChange} 
-                className="border p-2 rounded-md w-full" 
+              <input
+                type="text"
+                name="photo"
+                placeholder="Photo URL"
+                value={formData.photo}
+                onChange={handleChange}
+                className="border p-2 rounded-md w-full"
               />
-              <input 
-                type="text" 
-                name="phone" 
-                placeholder="Phone" 
-                value={formData.phone || ""} 
-                onChange={handleChange} 
-                className="border p-2 rounded-md w-full" 
+              <input
+                type="text"
+                name="phone"
+                placeholder="Phone"
+                value={formData.phone || ""}
+                onChange={handleChange}
+                className="border p-2 rounded-md w-full"
               />
-              <input 
-                type="text" 
-                name="address" 
-                placeholder="Address" 
-                value={formData.address || ""} 
-                onChange={handleChange} 
-                className="border p-2 rounded-md w-full" 
+              <input
+                type="text"
+                name="address"
+                placeholder="Address"
+                value={formData.address || ""}
+                onChange={handleChange}
+                className="border p-2 rounded-md w-full"
               />
               <div className="flex justify-end gap-2 mt-2">
-                <button 
-                  type="button" 
-                  onClick={() => setIsModalOpen(false)} 
+                <button
+                  type="button"
+                  onClick={() => setIsModalOpen(false)}
                   className="px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400 transition-colors"
                 >
                   Cancel
                 </button>
-                <button 
-                  type="submit" 
+                <button
+                  type="submit"
                   className="px-4 py-2 bg-[#71BBB2] text-white rounded-md hover:bg-[#5ea49a] transition-colors"
                 >
                   Save Changes
