@@ -36,28 +36,30 @@ const Users: React.FC = () => {
     }
   };
 
+  console.log(import.meta.env.VITE_API_URL)
   //  Make Moderator
   const makeModerator = async (email: string) => {
     try {
       setUpdating(email);
       const res: AxiosResponse<any> = await axios.put(
-        `${import.meta.env.VITE_API_URL}/usersRole/${encodeURIComponent(email)}`,
+        `${import.meta.env.VITE_API_URL}/users/usersRole/${encodeURIComponent(email)}`,
         { role: "moderator" }
       );
 
-      // //  Response check — backend should send { success: true, role: "moderator" }
-      // if (res.data?.success || res.data?.role === "moderator") {
-      //   toast.success(" User promoted to Moderator!");
-      // } else if (res.data?.message === "User not found") {
-      //   toast.error(" User not found in database!");
-      // } else {
-      //   toast.info("ℹ User is already a Moderator or update not needed.");
-      // }
+      //  Response check — backend should send { success: true, role: "moderator" }
+      if (res.data?.success || res.data?.role === "moderator") {
+        toast.success(" User promoted to Moderator!");
+      } else if (res.data?.message === "User not found") {
+        toast.error(" User not found in database!");
+      } else {
+        toast.info("ℹ User is already a Moderator or update not needed.");
+      }
 
       // Refetch user list
       await fetchUsers();
     } catch (err: any) {
       console.error("Error updating user:", err);
+      toast.error(" Failed to update user role!");
     } finally {
       setUpdating(null);
     }
@@ -85,8 +87,8 @@ const Users: React.FC = () => {
         rowData.role === "admin"
           ? "success"
           : rowData.role === "moderator"
-          ? "warning"
-          : "info"
+            ? "warning"
+            : "info"
       }
     />
   );
@@ -118,6 +120,7 @@ const Users: React.FC = () => {
         All Users
       </h1>
 
+     
       <div className="card shadow-2xl rounded-2xl p-4 bg-white">
         <DataTable
           value={users}
@@ -130,20 +133,10 @@ const Users: React.FC = () => {
           emptyMessage="No users found."
           responsiveLayout="scroll"
         >
-          <Column field="name" header="Name" sortable style={{ width: "25%" }} />
-          <Column field="email" header="Email" sortable style={{ width: "35%" }} />
-          <Column
-            field="role"
-            header="Role"
-            body={roleBodyTemplate}
-            sortable
-            style={{ width: "20%" }}
-          />
-          <Column
-            header="Action"
-            body={actionBodyTemplate}
-            style={{ width: "20%" }}
-          />
+          <Column field="name" header="Name" sortable />
+          <Column field="email" header="Email" sortable />
+          <Column field="role" header="Role" body={roleBodyTemplate} sortable />
+          <Column header="Action" body={actionBodyTemplate} />
         </DataTable>
       </div>
     </div>

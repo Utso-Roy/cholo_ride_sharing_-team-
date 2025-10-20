@@ -17,6 +17,7 @@ import api from "../../lib/api";
 import { AuthContext } from "../../Auth/AuthProvider";
 import { moderatorMenuItems } from "../../Utils/ModeratorMenu/moderatorMenu";
 import Loading from "../../Loading/Loading";
+import axios from "axios";
 
 type Role = "admin" | "moderator" | "rider" | "user" | undefined;
 
@@ -37,13 +38,12 @@ const Sidebar: React.FC = () => {
   const [users, setUsers] = useState<AppUser[]>([]);
   const [loading, setLoading] = useState<boolean>(true); 
   const { user } = useContext(AuthContext) as { user?: { email?: string } };
-
   useEffect(() => {
      if (!user?.email) return;
     const fetchUser = async () => {
       try {
         setLoading(true);
-        const res = await api.get<AppUser[]>("/users");
+        const res = await axios.get<AppUser[]>("http://localhost:3000/users");
         setUsers(res.data);
       } catch (err) {
         console.error(err);
@@ -56,7 +56,7 @@ const Sidebar: React.FC = () => {
 
   const currentUser = users.find((u) => u?.email === user?.email);
 
-  // 🔹 Admin menu items
+  // Admin menu items
   const adminItems: MenuItem[] = [
     { icon: <FaHome />, label: "Dashboard", path: "/dashboard" },
     { icon: <FaUser />, label: "My Profile", path: "/dashboard/profile" },
@@ -79,12 +79,12 @@ const Sidebar: React.FC = () => {
     { label: "User Dashboard", path: "/dashboard", icon: <FaHome /> },
   ];
 
-  // 🔹 Role-based menu rendering
+  //  Role-based menu rendering
   let roleToRender: MenuItem[] = [];
 
   if (currentUser?.role === "admin") {
     roleToRender = adminItems;
-  } else if (currentUser?.role === "moderator") {
+  } else if (currentUser?.role === "moderator")  {
     roleToRender = moderatorMenuItems;
   } else if (currentUser?.role === "rider") {
     roleToRender = riderItems;
@@ -92,7 +92,7 @@ const Sidebar: React.FC = () => {
     roleToRender = userItems;
   }
 
-  // 🔹 Loading UI
+  //  Loading UI
   if (loading) {
     return (
      <Loading></Loading>
