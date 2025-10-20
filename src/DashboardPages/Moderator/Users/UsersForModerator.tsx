@@ -7,6 +7,7 @@ import { Button } from "primereact/button";
 
 import { toast } from "react-toastify";
 import Loading from "../../../Loading/Loading";
+import { useNavigate } from "react-router";
 
 interface User {
   _id: string;
@@ -21,6 +22,7 @@ const UsersForModerator: React.FC = () => {
   const [updating, setUpdating] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  const navigate = useNavigate();
   //  Fetch all users
   const fetchUsers = async () => {
     try {
@@ -43,28 +45,20 @@ const UsersForModerator: React.FC = () => {
       setUpdating(email);
       const res: AxiosResponse<any> = await axios.put(
         `${import.meta.env.VITE_API_URL}/users/usersRole/${encodeURIComponent(email)}`,
-        { role: "rider" }
+        { role: "rider", vehicleType: "bike" }
       );
-      
+      toast.success("User promoted to Rider");
 
-      // //  Response check — backend should send { success: true, role: "moderator" }
-      // if (res.data?.success || res.data?.role === "moderator") {
-      //   toast.success(" User promoted to Moderator!");
-      // } else if (res.data?.message === "User not found") {
-      //   toast.error(" User not found in database!");
-      // } else {
-      //   toast.info("ℹ User is already a Moderator or update not needed.");
-      // }
+    // ✅ Navigate to Drivers page to show the new entry
+    navigate('/dashboard/drivers');
 
-      // Refetch user list
-      await fetchUsers();
-      toast.success("User set to Rider");
-    } catch (err: any) {
-      console.error("Failed to update role");
-    } finally {
-      setUpdating(null);
-    }
-  };
+  } catch (error) {
+    console.error(error);
+    toast.error("Failed to promote user");
+  } finally {
+    setUpdating(null);
+  }
+};
 
   //  Fetch users on mount
   useEffect(() => {
