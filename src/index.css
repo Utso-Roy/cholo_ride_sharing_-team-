@@ -1,13 +1,31 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
+@keyframes borderSlide {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.animate-border-slide {
+    animation: borderSlide 3s linear infinite;
+}
+
 @keyframes carMove {
     0% {
         transform: translateX(0);
     }
 
     50% {
-        transform: translateX(10px);
+        transform: translateX(12px);
     }
 
     100% {
@@ -16,5 +34,5 @@
 }
 
 .animate-car {
-    animation: carMove 1.9s infinite linear;
+    animation: carMove 1.5s infinite linear;
 }

@@ -177,22 +177,28 @@ const HowToBook: React.FC = () => {
 
                 <NavLink to="/ridebooking">
                     <Button
-                        className="
-      relative !font-extrabold !my-10 !pl-2 !bg-gradient-to-r from-[#497D74] to-[#74B49B]
-      !text-white !border-none !px-4 !py-3 !rounded-xl 
-      overflow-hidden
-      before:absolute before:-inset-1 before:rounded-xl
-      before:bg-gradient-to-r before:from-[#497D74] before:via-[#74B49B] before:to-[#497D74]
-      before:bg-[length:200%_200%] before:animate-border-slide
-      before:z-[-1]
-      hover:scale-105 transition-transform duration-300 
-      flex items-center gap-2
-    "
+                        // className=" border-2 !border-white !bg-[#274450] !my-10 !rounded-xl !hover:bg-[#497D74] transition-all duration-300 hover:scale-105"
+                        className="!my-10 !font-extrabold !bg-gradient-to-r !from-[#71BBB2] !to-[#56A89E] !text-white !border-none 
+                        px-8 py-3 rounded-full shadow-lg hover:shadow-xl 
+                       hover:!from-[#56A89E] hover:!to-[#71BBB2] transition-all duration-300"
+                    // className="border-2 border-white !bg-[#274450] my-10 rounded-xl !hover:bg-[#497D74] !hover:border-[#497D74] transition-all duration-300 hover:scale-105"
+
                     >
-                        <FontAwesomeIcon icon={faCar} className="w-6 h-6 animate-car" />
+                        <FontAwesomeIcon icon={faCar} className="w-6 h-6 mr-2 animate-car" />
                         এখনই রাইড বুক করুন
                     </Button>
+
+                    {/* <Button
+                        label="এখনই রাইড বুক করুন"
+                        icon="pi pi-user-plus"
+                        className="!bg-gradient-to-r !from-[#71BBB2] !to-[#56A89E] !text-white !border-none 
+                       font-semibold px-8 py-3 rounded-full shadow-lg hover:shadow-xl 
+                       hover:!from-[#56A89E] hover:!to-[#71BBB2] transition-all duration-300"
+                    /> */}
                 </NavLink>
+
+
+
 
             </div>
 
@@ -202,5 +208,15 @@ const HowToBook: React.FC = () => {
 
 export default HowToBook;
 
+
+// relative!font - extrabold!my - 10!pl - 2!bg - gradient - to - r from - [#497D74] to - [#74B49B]
+// !text - white!border - none!px - 4!py - 3!rounded - xl
+// overflow - hidden
+// before:absolute before: -inset - 1 before: rounded - xl
+// before: bg - gradient - to - r before: from - [#497D74] before: via - [#74B49B] before: to - [#497D74]
+// before: bg - [length: 200 % _200 %] before: animate - border - slide
+// before: z - [-1]
+// hover: scale - 105 transition - transform duration - 300
+//       flex items - center gap - 2
 
 
