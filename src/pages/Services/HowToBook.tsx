@@ -146,7 +146,7 @@ const HowToBook: React.FC = () => {
                         >
 
                             {/* Step Icon */}
-                            <div className="bg-gradient-to-r from-[#274450] to-[#497D74] text-white w-16 h-16 flex items-center justify-center rounded-full text-2xl shadow-lg transition-transform duration-300 hover:scale-110">
+                            <div className="!bg-gradient-to-r !from-[#71BBB2] !to-[#56A89E] text-white w-16 h-16 flex items-center justify-center rounded-full text-2xl shadow-lg transition-transform duration-300 hover:scale-110">
                                 {step.icon}
                             </div>
 
@@ -177,11 +177,9 @@ const HowToBook: React.FC = () => {
 
                 <NavLink to="/ridebooking">
                     <Button
-                        // className=" border-2 !border-white !bg-[#274450] !my-10 !rounded-xl !hover:bg-[#497D74] transition-all duration-300 hover:scale-105"
                         className="!my-10 !font-extrabold !bg-gradient-to-r !from-[#71BBB2] !to-[#56A89E] !text-white !border-none 
                         px-8 py-3 rounded-full shadow-lg hover:shadow-xl 
                        hover:!from-[#56A89E] hover:!to-[#71BBB2] transition-all duration-300"
-                    // className="border-2 border-white !bg-[#274450] my-10 rounded-xl !hover:bg-[#497D74] !hover:border-[#497D74] transition-all duration-300 hover:scale-105"
 
                     >
                         <FontAwesomeIcon icon={faCar} className="w-6 h-6 mr-2 animate-car" />

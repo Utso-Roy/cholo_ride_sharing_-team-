@@ -42,7 +42,7 @@ const Users: React.FC = () => {
     try {
       setUpdating(email);
       const res: AxiosResponse<any> = await axios.put(
-        `${import.meta.env.VITE_API_URL}/usersRole/${encodeURIComponent(email)}`,
+        `${import.meta.env.VITE_API_URL}/users/usersRole/${encodeURIComponent(email)}`,
         { role: "moderator" }
       );
 
@@ -87,8 +87,8 @@ const Users: React.FC = () => {
         rowData.role === "admin"
           ? "success"
           : rowData.role === "moderator"
-          ? "warning"
-          : "info"
+            ? "warning"
+            : "info"
       }
     />
   );
