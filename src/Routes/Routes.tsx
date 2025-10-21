@@ -203,6 +203,10 @@ const router = createBrowserRouter([
         path: 'mod/rides/queue',
         element: <RideQueuePage/>
       }, 
+      {
+        path: 'mod/rides/:rideId',
+        element: <RideDetailPage/>
+      }, 
     ],
   },
 
