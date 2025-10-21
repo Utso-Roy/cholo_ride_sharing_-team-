@@ -76,6 +76,7 @@ import LandingPage from "../pages/Landing/LandingPage";
 import LearnMore from "../pages/LearnMore/LearnMore";
 import UsersForModerator from "../DashboardPages/Moderator/Users/UsersForModerator";
 import RideQueuePage from "../DashboardPages/Moderator/Rides/RideQueuePage";
+import RideDetailPage from "../DashboardPages/Moderator/Rides/RideDetailPage";
 
 
 const router = createBrowserRouter([
@@ -204,8 +205,8 @@ const router = createBrowserRouter([
         element: <RideQueuePage/>
       }, 
       {
-        // path: 'mod/rides/:rideId',
-        // element: <RideDetailPage/>
+        path: 'mod/rides/:rideId',
+        element: <RideDetailPage/>
       }, 
     ],
   },

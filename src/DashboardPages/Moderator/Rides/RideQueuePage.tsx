@@ -1,33 +1,40 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { DataTable, DataTablePageEvent, DataTableSortEvent } from "primereact/datatable";
+import {
+  DataTable,
+  DataTablePageEvent,
+  DataTableSortEvent,
+} from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Tag } from "primereact/tag";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { MultiSelect } from "primereact/multiselect";
 import { Toast } from "primereact/toast";
+import { Link } from "react-router";
 
 // ---- Types (query + rows) ----
 export interface RideQueueQuery {
-  page: number;                   // 1-based (PrimeReact DataTable 'first' থেকে কনভার্ট করব)
-  pageSize: number;               // rows per page
+  page: number; // 1-based (PrimeReact DataTable 'first' থেকে কনভার্ট করব)
+  pageSize: number; // rows per page
   status?: ("pending" | "investigating")[];
   sort?: { field: "createdAt" | "riskScore"; dir: "asc" | "desc" };
-  text?: string;                  // rideId / names / free text
+  text?: string; // rideId / names / free text
 }
 
 interface RideRow {
   rideId: string;
-  createdAt: string;              // ISO time
+  createdAt: string; // ISO time
   driver: string;
   rider: string;
   flags: string[];
   status: "pending" | "investigating";
-  riskScore: number;              // 0-100
+  riskScore: number; // 0-100
 }
 
 // ---- Demo server (replace with real API) ----
-async function fetchRideQueue(query: RideQueueQuery): Promise<{ data: RideRow[]; total: number }> {
+async function fetchRideQueue(
+  query: RideQueueQuery
+): Promise<{ data: RideRow[]; total: number }> {
   // 👉 এখানে তুমি আসল API কল করবে (fetch/axios)। নিচে demo ডেটা + server-side filter/sort/page দেখানো হলো।
   const all: RideRow[] = [
     {
@@ -60,7 +67,7 @@ async function fetchRideQueue(query: RideQueueQuery): Promise<{ data: RideRow[];
   ];
 
   // text filter
-  let filtered = all.filter(r => {
+  let filtered = all.filter((r) => {
     if (!query.text) return true;
     const t = query.text.toLowerCase();
     return (
@@ -73,7 +80,7 @@ async function fetchRideQueue(query: RideQueueQuery): Promise<{ data: RideRow[];
 
   // status filter
   if (query.status && query.status.length) {
-    filtered = filtered.filter(r => query.status!.includes(r.status));
+    filtered = filtered.filter((r) => query.status!.includes(r.status));
   }
 
   // priority sort default: high risk first (যদি sort না দেয়া থাকে)
@@ -94,7 +101,7 @@ async function fetchRideQueue(query: RideQueueQuery): Promise<{ data: RideRow[];
   const pageSlice = filtered.slice(start, end);
 
   // ছোট delay যেন loading UI দেখা যায়
-  await new Promise(res => setTimeout(res, 300));
+  await new Promise((res) => setTimeout(res, 300));
 
   return { data: pageSlice, total: filtered.length };
 }
@@ -106,16 +113,20 @@ export default function RideQueuePage() {
   const [loading, setLoading] = useState(false);
 
   // DataTable pagination params
-  const [first, setFirst] = useState(0);       // zero-based index of first row on current page
+  const [first, setFirst] = useState(0); // zero-based index of first row on current page
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
   // sort
-  const [sortField, setSortField] = useState<"createdAt" | "riskScore" | undefined>(undefined);
+  const [sortField, setSortField] = useState<
+    "createdAt" | "riskScore" | undefined
+  >(undefined);
   const [sortOrder, setSortOrder] = useState<1 | -1 | 0>(0); // 1=asc, -1=desc, 0=no sort
 
   // filters
   const [search, setSearch] = useState("");
-  const [statusFilter, setStatusFilter] = useState<("pending" | "investigating")[] | undefined>(undefined);
+  const [statusFilter, setStatusFilter] = useState<
+    ("pending" | "investigating")[] | undefined
+  >(undefined);
 
   // toast
   const toastRef = useRef<Toast>(null);
@@ -123,13 +134,14 @@ export default function RideQueuePage() {
   // ---- Build query for server (derive from UI state) ----
   const query: RideQueueQuery = useMemo(() => {
     return {
-      page: Math.floor(first / rowsPerPage) + 1,                // 1-based
+      page: Math.floor(first / rowsPerPage) + 1, // 1-based
       pageSize: rowsPerPage,
       text: search.trim() || undefined,
       status: statusFilter && statusFilter.length ? statusFilter : undefined,
-      sort: sortField && sortOrder
-        ? { field: sortField, dir: sortOrder === 1 ? "asc" : "desc" }
-        : undefined,
+      sort:
+        sortField && sortOrder
+          ? { field: sortField, dir: sortOrder === 1 ? "asc" : "desc" }
+          : undefined,
     };
   }, [first, rowsPerPage, search, statusFilter, sortField, sortOrder]);
 
@@ -145,13 +157,17 @@ export default function RideQueuePage() {
     let cancelled = false;
     setLoading(true);
     fetchRideQueue(debouncedQuery)
-      .then(res => {
+      .then((res) => {
         if (cancelled) return;
         setRows(res.data);
         setTotal(res.total);
       })
       .catch(() => {
-        toastRef.current?.show({ severity: "error", summary: "Error", detail: "Failed to load rides" });
+        toastRef.current?.show({
+          severity: "error",
+          summary: "Error",
+          detail: "Failed to load rides",
+        });
       })
       .finally(() => {
         if (!cancelled) setLoading(false);
@@ -214,7 +230,10 @@ export default function RideQueuePage() {
           <i className="pi pi-search" />
           <InputText
             value={search}
-            onChange={(e) => { setSearch(e.target.value); setFirst(0); }}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              setFirst(0);
+            }}
             placeholder="Search rideId / driver / rider / flags"
             style={{ width: 320 }}
           />
@@ -222,7 +241,10 @@ export default function RideQueuePage() {
 
         <MultiSelect
           value={statusFilter}
-          onChange={(e) => { setStatusFilter(e.value); setFirst(0); }}
+          onChange={(e) => {
+            setStatusFilter(e.value);
+            setFirst(0);
+          }}
           options={[
             { label: "Pending", value: "pending" },
             { label: "Investigating", value: "investigating" },
@@ -232,7 +254,12 @@ export default function RideQueuePage() {
           className="w-64"
         />
 
-        <Button label="Reset" icon="pi pi-filter-slash" text onClick={resetFilters} />
+        <Button
+          label="Reset"
+          icon="pi pi-filter-slash"
+          text
+          onClick={resetFilters}
+        />
       </div>
 
       {/* DataTable */}
@@ -244,7 +271,7 @@ export default function RideQueuePage() {
         totalRecords={total}
         first={first}
         onPage={onPage}
-        lazy                    // 👉 server-driven paging/sort/filter নির্দেশ করে
+        lazy // 👉 server-driven paging/sort/filter নির্দেশ করে
         sortField={sortField}
         sortOrder={sortOrder}
         onSort={onSort}
@@ -252,7 +279,18 @@ export default function RideQueuePage() {
         tableStyle={{ minWidth: "70rem" }}
         emptyMessage="No rides found"
       >
-        <Column field="rideId" header="Ride ID" sortable />
+        <Column
+          field="rideId"
+          header="Ride ID"
+          body={(r: any) => (
+            <Link
+              to={`/dashboard/mod/rides/${r.rideId}`}
+              className="text-primary underline"
+            >
+              {r.rideId}
+            </Link>
+          )}
+        />
         <Column
           field="createdAt"
           header="Time"
