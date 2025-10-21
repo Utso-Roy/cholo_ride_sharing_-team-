@@ -74,6 +74,9 @@ import EditBlog from "../DashboardPages/EditBlog";
 import RideBooking from "../pages/Services/RideBooking";
 import LandingPage from "../pages/Landing/LandingPage";
 import LearnMore from "../pages/LearnMore/LearnMore";
+import UsersForModerator from "../DashboardPages/Moderator/Users/UsersForModerator";
+import RideQueuePage from "../DashboardPages/Moderator/Rides/RideQueuePage";
+import RideDetailPage from "../DashboardPages/Moderator/Rides/RideDetailPage";
 
 
 const router = createBrowserRouter([
@@ -192,8 +195,19 @@ const router = createBrowserRouter([
       {
         path: 'mod/verifications',
         element: <VerificationPage/>
-      }
-      
+      },
+      {
+        path: 'mod/users',
+        element: <UsersForModerator/>
+      },
+      {
+        path: 'mod/rides/queue',
+        element: <RideQueuePage/>
+      }, 
+      {
+        path: 'mod/rides/:rideId',
+        element: <RideDetailPage/>
+      }, 
     ],
   },
 

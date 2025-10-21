@@ -25,7 +25,7 @@ export const moderatorMenuItems: MenuItem[] = [
   { icon: <FaFileAlt />, label: "Reports", path: "/dashboard/mod/reports" },
   { icon: <FaCheckCircle />, label: "Verifications", path: "/dashboard/mod/verifications" },
   { icon: <FaUsers />, label: "Drivers", path: "/dashboard/drivers" },
-  { icon: <FaUserShield />, label: "Users", path: "/dashboard/users" },
+  { icon: <FaUserShield />, label: "Users", path: "/dashboard/mod/users" },
   { icon: <FaExclamationTriangle />, label: "Rides Queue", path: "/dashboard/mod/rides/queue" },
   { icon: <FaCarSide />, label: "Ride Detail", path: "/dashboard/mod/rides/:rideId" },
   { icon: <FaUserShield />, label: "Disputes", path: "/dashboard/mod/disputes" },

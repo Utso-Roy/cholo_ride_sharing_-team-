@@ -57,8 +57,10 @@ const toAbsolute = (url?: string) => {
 export default function Drivers() {
   const [rows, setRows] = useState<DriverDoc[]>([]);
   const [total, setTotal] = useState(0);
-  const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
+  const [first, setFirst] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  // const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(5);
   const [q, setQ] = useState("");
   const [status, setStatus] = useState<"all" | "pending" | "approved" | "rejected">("all");
   const [loading, setLoading] = useState(false);
@@ -68,7 +70,7 @@ export default function Drivers() {
   const [loadingDetail, setLoadingDetail] = useState(false);
 
   const toast = useRef<Toast>(null);
-  const totalPages = useMemo(() => Math.max(1, Math.ceil(total / limit)), [total, limit]);
+  const page = Math.floor(first / rowsPerPage) + 1;
 
   const load = async () => {
     try {
@@ -76,7 +78,7 @@ export default function Drivers() {
       const { data } = await api.get<ApiResponse>("/api/drivers", {
         params: {
           page,
-          limit,
+          limit : rowsPerPage,
           q: q.trim() || undefined,
           status: status !== "all" ? status : undefined,
         },
@@ -93,13 +95,22 @@ export default function Drivers() {
   useEffect(() => {
     load();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, limit, status]);
+  }, [first, rowsPerPage, status]);
+
+  useEffect(() => {
+  const t = setTimeout(() => {
+    setFirst(0);
+    load();
+  }, 300);
+  return () => clearTimeout(t);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [q]);
 
   const onPage = (e: DataTablePageEvent) => {
     const nextLimit = e.rows ?? limit;
     const first = e.first ?? (page - 1) * nextLimit;
     setLimit(nextLimit);
-    setPage(Math.floor(first / nextLimit) + 1);
+
   };
 
   const openDetail = async (id: string) => {
@@ -194,7 +205,7 @@ export default function Drivers() {
               value={status}
               onChange={(e) => {
                 setStatus(e.value);
-                setPage(1);
+                setFirst(0);
               }}
               options={[
                 { label: "All", value: "all" },
@@ -204,21 +215,26 @@ export default function Drivers() {
               ]}
               style={{ width: 160 }}
             />
-            <Dropdown value={limit} onChange={(e) => setLimit(e.value)} options={[10, 20, 50].map((n) => ({ label: `${n}/page`, value: n }))} style={{ width: 120 }} />
-            <Button icon="pi pi-refresh" label="Refresh" onClick={() => { setPage(1); load(); }} />
+            <Dropdown value={limit} onChange={(e) => setLimit(e.value)} options={[5, 10, 20, 50].map((n) => ({ label: `${n}/page`, value: n }))} style={{ width: 120 }} />
+            <Button icon="pi pi-refresh" label="Refresh" onClick={() => { setFirst(0); load(); }} />
           </div>
         }
       />
 
       <DataTable
-        value={rows}
+        value={items}
         loading={loading}
         dataKey="_id"
         paginator
-        rows={limit}
+        lazy
+        first={first}
+        rows={rowsPerPage}
         totalRecords={total}
-        first={(page - 1) * limit}
-        onPage={onPage}
+        onPage={(e) =>{
+          setFirst(e.first ?? 0);
+          setRowsPerPage(e.rows ?? rowsPerPage);
+        }}
+        rowsPerPageOptions={[5, 10, 20, 50]}
         responsiveLayout="scroll"
         emptyMessage="No drivers found."
       >
@@ -233,7 +249,7 @@ export default function Drivers() {
       </DataTable>
 
       <div className="mt-2 text-sm text-text-dark/70 dark:text-text-light/70">
-        Showing {(page - 1) * limit + (rows.length ? 1 : 0)}–{Math.min(page * limit, total)} of {total}
+        Showing {total ? first + 1 : 0}–{Math.min(first + items.length, total)} of {total}
       </div>
 
       {/* Detail Drawer — updated to your new theme */}
