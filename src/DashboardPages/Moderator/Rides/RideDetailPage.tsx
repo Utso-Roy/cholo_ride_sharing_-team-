@@ -15,14 +15,21 @@ import { Dialog } from "primereact/dialog";
 import { InputTextarea } from "primereact/inputtextarea";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 
-import { MapContainer, TileLayer, Polyline, Marker, Popup, useMap } from "react-leaflet";
+import {
+  MapContainer,
+  TileLayer,
+  Polyline,
+  Marker,
+  Popup,
+  useMap,
+} from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 // import L from "leaflet";
-
 
 import { logAudit } from "./audit";
 import { useRideSocket } from "./useRideSocket";
 import type { ModSocketEvent } from "./realtime";
+import { Skeleton } from "primereact/skeleton";
 
 // ----- leaflet marker fix -----
 // L.Icon.Default.mergeOptions({
@@ -67,7 +74,7 @@ interface RideDetail {
 }
 
 async function fetchRideDetail(rideId: string): Promise<RideDetail> {
-  await new Promise(r => setTimeout(r, 300));
+  await new Promise((r) => setTimeout(r, 300));
   return {
     rideId,
     startedAt: "2025-10-22T10:30:00Z",
@@ -86,22 +93,60 @@ async function fetchRideDetail(rideId: string): Promise<RideDetail> {
     ],
     suspicious: ["Unusual stop near midpoint", "Detour > 5% threshold"],
     events: [
-      { id: "e1", at: "2025-10-22T10:30:14Z", type: "pickup", detail: "Pickup confirmed" },
-      { id: "e2", at: "2025-10-22T10:48:00Z", type: "detour", detail: "Route deviation ~8%" },
-      { id: "e3", at: "2025-10-22T10:52:10Z", type: "stop", detail: "2-min stop at fuel station" },
-      { id: "e4", at: "2025-10-22T11:05:41Z", type: "dropoff", detail: "Ride ended" },
+      {
+        id: "e1",
+        at: "2025-10-22T10:30:14Z",
+        type: "pickup",
+        detail: "Pickup confirmed",
+      },
+      {
+        id: "e2",
+        at: "2025-10-22T10:48:00Z",
+        type: "detour",
+        detail: "Route deviation ~8%",
+      },
+      {
+        id: "e3",
+        at: "2025-10-22T10:52:10Z",
+        type: "stop",
+        detail: "2-min stop at fuel station",
+      },
+      {
+        id: "e4",
+        at: "2025-10-22T11:05:41Z",
+        type: "dropoff",
+        detail: "Ride ended",
+      },
     ],
     chat: [
-      { id: "m1", at: "2025-10-22T10:31:00Z", from: "rider", text: "Sir, please take the main road." },
-      { id: "m2", at: "2025-10-22T10:31:20Z", from: "driver", text: "Main road jam, taking alternate." },
-      { id: "m3", at: "2025-10-22T10:48:05Z", from: "system", text: "Detour detected (8%)" },
+      {
+        id: "m1",
+        at: "2025-10-22T10:31:00Z",
+        from: "rider",
+        text: "Sir, please take the main road.",
+      },
+      {
+        id: "m2",
+        at: "2025-10-22T10:31:20Z",
+        from: "driver",
+        text: "Main road jam, taking alternate.",
+      },
+      {
+        id: "m3",
+        at: "2025-10-22T10:48:05Z",
+        from: "system",
+        text: "Detour detected (8%)",
+      },
     ],
   };
 }
 
 // ----- small helper -----
 function StatusTag({ s }: { s: RideStatus }) {
-  const map: Record<RideStatus, "info" | "success" | "secondary" | "danger" | "warning"> = {
+  const map: Record<
+    RideStatus,
+    "info" | "success" | "secondary" | "danger" | "warning"
+  > = {
     ongoing: "info",
     completed: "success",
     cancelled: "secondary",
@@ -110,7 +155,9 @@ function StatusTag({ s }: { s: RideStatus }) {
   return <Tag value={s} severity={map[s]} rounded />;
 }
 
-function eventSeverity(t: string): "info" | "warning" | "danger" | "success" | undefined {
+function eventSeverity(
+  t: string
+): "info" | "warning" | "danger" | "success" | undefined {
   if (t === "detour") return "warning";
   if (t === "fare_adjust") return "info";
   if (t === "dropoff") return "success";
@@ -154,13 +201,15 @@ export default function RideDetailPage() {
         setLocalStatus(d.status);
       })
       .finally(() => !cancel && setLoading(false));
-    return () => { cancel = true; };
+    return () => {
+      cancel = true;
+    };
   }, [rideId]);
 
   // ---------- websocket live updates ----------
   const handleSocketEvent = (ev: ModSocketEvent) => {
     if (ev.type === "ride-update" && ev.rideId === rideId) {
-      setData(prev => (prev ? { ...prev, ...ev.payload } : prev));
+      setData((prev) => (prev ? { ...prev, ...ev.payload } : prev));
       if (ev.payload.status) setLocalStatus(ev.payload.status as RideStatus);
       toastRef.current?.show({
         severity: "info",
@@ -178,14 +227,14 @@ export default function RideDetailPage() {
   });
 
   useEffect(() => {
-  if (!userToken) {
-    toastRef.current?.show({
-      severity: "warn",
-      summary: "Not connected",
-      detail: "No auth token found. Live updates are disabled.",
-    });
-  }
-}, [userToken]);
+    if (!userToken) {
+      toastRef.current?.show({
+        severity: "warn",
+        summary: "Not connected",
+        detail: "No auth token found. Live updates are disabled.",
+      });
+    }
+  }, [userToken]);
 
   // ---------- temp-lock ----------
   const doTempLock = (rid: string) => {
@@ -216,8 +265,27 @@ export default function RideDetailPage() {
     { coords: [trace[3], trace[4]], type: "normal" },
   ];
 
-  if (loading) return <div className="p-4">Loading ride...</div>;
-  if (!data) return <div className="p-4">Ride not found</div>;
+  if (loading) {
+    return (
+      <div className="p-4 space-y-3">
+        <Skeleton height="2rem" width="30%" />
+        <Skeleton height="16rem" />
+        <div className="grid md:grid-cols-3 gap-3">
+          <Skeleton height="12rem" className="md:col-span-2" />
+          <Skeleton height="12rem" />
+        </div>
+      </div>
+    );
+  }
+
+  if (!data) {
+    return (
+      <div className="p-4">
+        <Toast ref={toastRef} />
+        <Card title="Ride not found">No data available for ride: {rideId}</Card>
+      </div>
+    );
+  }
 
   return (
     <div className="p-4 space-y-3">
@@ -228,15 +296,20 @@ export default function RideDetailPage() {
       <Card>
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div>
-            <div className="text-lg font-semibold">Ride {data.rideId}</div>
+            <div className="text-lg font-semibold">Ride {rideId}</div>
             <div className="text-sm text-muted-color">
               {new Date(data.startedAt).toLocaleString()} —{" "}
-              {data.endedAt ? new Date(data.endedAt).toLocaleString() : "(ongoing)"}
+              {data.endedAt
+                ? new Date(data.endedAt).toLocaleString()
+                : "(ongoing)"}
             </div>
           </div>
           <div className="flex items-center gap-2">
             <StatusTag s={localStatus ?? data.status} />
-            <Tag value={`Risk ${data.riskScore}`} severity={data.riskScore >= 80 ? "danger" : "warning"} />
+            <Tag
+              value={`Risk ${data.riskScore}`}
+              severity={data.riskScore >= 80 ? "danger" : "warning"}
+            />
             <Badge value={data.flags.length} severity="warning" />
           </div>
         </div>
@@ -244,17 +317,42 @@ export default function RideDetailPage() {
         <Divider />
 
         <div className="flex flex-wrap gap-2">
-          {data.flags.map((f, i) => <Tag key={i} value={f} className="mr-1" />)}
+          {data.flags.map((f, i) => (
+            <Tag key={i} value={f} className="mr-1" />
+          ))}
         </div>
 
         <div className="flex flex-wrap gap-2 mt-3">
-          <Button icon="pi pi-envelope" label="Nudge both" text onClick={async ()=>{
-            await logAudit(data.rideId, "nudge-both");
-            toastRef.current?.show({ severity:"success", summary:"Nudge sent"});
-          }}/>
-          <Button icon="pi pi-send" label="Message" text onClick={() => navigate(`#chat`)} />
-          <Button icon="pi pi-pencil" label="Caution note" text onClick={() => setNoteOpen(true)} />
-          <Button icon="pi pi-lock" label="Temp-lock" text onClick={() => doTempLock(data.rideId)} />
+          <Button
+            icon="pi pi-envelope"
+            label="Nudge both"
+            text
+            onClick={async () => {
+              await logAudit(rideId, "nudge-both");
+              toastRef.current?.show({
+                severity: "success",
+                summary: "Nudge sent",
+              });
+            }}
+          />
+          <Button
+            icon="pi pi-send"
+            label="Message"
+            text
+            onClick={() => navigate(`#chat`)}
+          />
+          <Button
+            icon="pi pi-pencil"
+            label="Caution note"
+            text
+            onClick={() => setNoteOpen(true)}
+          />
+          <Button
+            icon="pi pi-lock"
+            label="Temp-lock"
+            text
+            onClick={() => doTempLock(rideId)}
+          />
         </div>
       </Card>
 
@@ -265,9 +363,13 @@ export default function RideDetailPage() {
             {/* Map trace */}
             <Panel header="Map trace" className="md:col-span-2">
               <div style={{ height: 320, borderRadius: 8, overflow: "hidden" }}>
-                <MapContainer center={trace[0]} zoom={13} style={{ height: "100%", width: "100%" }}>
+                <MapContainer
+                  center={trace[0]}
+                  zoom={13}
+                  style={{ height: "100%", width: "100%" }}
+                >
                   <TileLayer
-                    attribution='&copy; OpenStreetMap'
+                    attribution="&copy; OpenStreetMap"
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                   />
                   <FitBounds coords={trace} />
@@ -275,18 +377,58 @@ export default function RideDetailPage() {
                     <Polyline
                       key={i}
                       positions={seg.coords}
-                      color={seg.type === "detour" ? "red" : seg.type === "stop" ? "orange" : "blue"}
+                      color={
+                        seg.type === "detour"
+                          ? "red"
+                          : seg.type === "stop"
+                          ? "orange"
+                          : "blue"
+                      }
                       weight={5}
                     />
                   ))}
-                  <Marker position={trace[0]}><Popup>Pickup</Popup></Marker>
-                  <Marker position={trace[trace.length - 1]}><Popup>Dropoff</Popup></Marker>
+                  <Marker position={trace[0]}>
+                    <Popup>Pickup</Popup>
+                  </Marker>
+                  <Marker position={trace[trace.length - 1]}>
+                    <Popup>Dropoff</Popup>
+                  </Marker>
                 </MapContainer>
               </div>
               <div className="flex gap-4 text-sm mt-2">
-                <div className="flex items-center gap-2"><span style={{width:24,height:4,background:"blue",display:"inline-block"}}/>Normal</div>
-                <div className="flex items-center gap-2"><span style={{width:24,height:4,background:"red",display:"inline-block"}}/>Detour</div>
-                <div className="flex items-center gap-2"><span style={{width:24,height:4,background:"orange",display:"inline-block"}}/>Stop</div>
+                <div className="flex items-center gap-2">
+                  <span
+                    style={{
+                      width: 24,
+                      height: 4,
+                      background: "blue",
+                      display: "inline-block",
+                    }}
+                  />
+                  Normal
+                </div>
+                <div className="flex items-center gap-2">
+                  <span
+                    style={{
+                      width: 24,
+                      height: 4,
+                      background: "red",
+                      display: "inline-block",
+                    }}
+                  />
+                  Detour
+                </div>
+                <div className="flex items-center gap-2">
+                  <span
+                    style={{
+                      width: 24,
+                      height: 4,
+                      background: "orange",
+                      display: "inline-block",
+                    }}
+                  />
+                  Stop
+                </div>
               </div>
             </Panel>
 
@@ -294,7 +436,11 @@ export default function RideDetailPage() {
             <Panel header="Fare breakdown">
               <DataTable value={data.fareItems} size="small">
                 <Column field="label" header="Item" />
-                <Column field="amount" header="Amount" body={(r: any) => <span>{r.amount} BDT</span>} />
+                <Column
+                  field="amount"
+                  header="Amount"
+                  body={(r: any) => <span>{r.amount} BDT</span>}
+                />
               </DataTable>
               <div className="flex justify-between mt-2 font-medium">
                 <span>Total</span>
@@ -305,7 +451,9 @@ export default function RideDetailPage() {
             {/* Suspicious patterns */}
             <Panel header="Suspicious patterns" className="md:col-span-3">
               <ul className="list-disc ml-5 space-y-1">
-                {data.suspicious.map((s, i) => <li key={i}>{s}</li>)}
+                {data.suspicious.map((s, i) => (
+                  <li key={i}>{s}</li>
+                ))}
               </ul>
             </Panel>
 
@@ -334,7 +482,9 @@ export default function RideDetailPage() {
               <div className="p-2 border rounded">
                 <div className="flex items-center gap-2">
                   <Tag value={e.type} severity={eventSeverity(e.type)} />
-                  <span className="text-sm text-muted-color">{new Date(e.at).toLocaleString()}</span>
+                  <span className="text-sm text-muted-color">
+                    {new Date(e.at).toLocaleString()}
+                  </span>
                 </div>
                 <div className="mt-1">{e.detail}</div>
               </div>
@@ -344,11 +494,17 @@ export default function RideDetailPage() {
 
         <TabPanel header="Chat">
           <div className="space-y-2">
-            {data.chat.map(m => (
-              <div key={m.id} className={`max-w-xl p-2 rounded ${
-                m.from === "driver" ? "bg-blue-50 ml-auto" :
-                m.from === "rider" ? "bg-green-50" : "bg-gray-50 mx-auto"
-              }`}>
+            {data.chat.map((m) => (
+              <div
+                key={m.id}
+                className={`max-w-xl p-2 rounded ${
+                  m.from === "driver"
+                    ? "bg-blue-50 ml-auto"
+                    : m.from === "rider"
+                    ? "bg-green-50"
+                    : "bg-gray-50 mx-auto"
+                }`}
+              >
                 <div className="text-xs text-muted-color mb-1">
                   {m.from.toUpperCase()} • {new Date(m.at).toLocaleString()}
                 </div>
@@ -360,16 +516,31 @@ export default function RideDetailPage() {
       </TabView>
 
       {/* caution note dialog */}
-      <Dialog header="Add caution note" visible={noteOpen} onHide={()=>setNoteOpen(false)} style={{ width: 500 }}>
+      <Dialog
+        header="Add caution note"
+        visible={noteOpen}
+        onHide={() => setNoteOpen(false)}
+        style={{ width: 500 }}
+      >
         <div className="flex flex-col gap-2">
-          <InputTextarea value={note} onChange={e=> setNote(e.target.value)} autoResize/>
+          <InputTextarea
+            value={note}
+            onChange={(e) => setNote(e.target.value)}
+            autoResize
+          />
           <div className="flex justify-end gap-2">
-            <Button label="Cancel" text onClick={()=> setNoteOpen(false)} />
-            <Button label="Save" onClick={async ()=>{
-              await logAudit(data.rideId, "caution-note", note);
-              setNoteOpen(false);
-              toastRef.current?.show({ severity:"success", summary:"Note added"});
-            }}/>
+            <Button label="Cancel" text onClick={() => setNoteOpen(false)} />
+            <Button
+              label="Save"
+              onClick={async () => {
+                await logAudit(data.rideId, "caution-note", note);
+                setNoteOpen(false);
+                toastRef.current?.show({
+                  severity: "success",
+                  summary: "Note added",
+                });
+              }}
+            />
           </div>
         </div>
       </Dialog>
