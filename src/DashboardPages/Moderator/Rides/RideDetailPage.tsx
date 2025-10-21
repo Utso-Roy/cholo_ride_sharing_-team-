@@ -24,16 +24,18 @@ import {
   Popup,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import L from "leaflet";
-import marker2x from "leaflet/dist/images/marker-icon-2x.png";
-import marker1x from "leaflet/dist/images/marker-icon.png";
-import markerShadow from "leaflet/dist/images/marker-shadow.png";
+import { logAudit } from "./audit";
 
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: marker2x,
-  iconUrl: marker1x,
-  shadowUrl: markerShadow,
-});
+// import L from "leaflet";
+// // import marker2x from "leaflet/dist/images/marker-icon-2x.png";
+// // import marker1x from "leaflet/dist/images/marker-icon.png";
+// // import markerShadow from "leaflet/dist/images/marker-shadow.png";
+
+// L.Icon.Default.mergeOptions({
+//   iconRetinaUrl: marker2x,
+//   iconUrl: marker1x,
+//   shadowUrl: markerShadow,
+// });
 
 type RideStatus = "ongoing" | "completed" | "cancelled" | "investigating";
 
@@ -311,7 +313,10 @@ export default function RideDetailPage() {
           label="Temp-lock"
           text
           severity="danger"
-          onClick={doTempLock}
+          onClick={() => {
+            doTempLock();
+            logAudit("temp-lock", data.rideId, "Moderator applied temp-lock");
+          }}
         />
         <Button
           icon="pi pi-link"
@@ -396,7 +401,6 @@ export default function RideDetailPage() {
                 </MapContainer>
               </div>
             </Panel>
-           
 
             {/* Fare */}
             <Panel header="Fare breakdown">
