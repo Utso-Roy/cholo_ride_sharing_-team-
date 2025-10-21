@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { useParams } from "react-router";
+import { useParams, useNavigate } from "react-router";
 import { Card } from "primereact/card";
 import { Toast } from "primereact/toast";
 import { ProgressBar } from "primereact/progressbar";
@@ -15,7 +15,25 @@ import { Button } from "primereact/button";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Dialog } from "primereact/dialog";
-import { useNavigate } from "react-router";
+
+import {
+  MapContainer,
+  TileLayer,
+  Polyline,
+  Marker,
+  Popup,
+} from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import L from "leaflet";
+import marker2x from "leaflet/dist/images/marker-icon-2x.png";
+import marker1x from "leaflet/dist/images/marker-icon.png";
+import markerShadow from "leaflet/dist/images/marker-shadow.png";
+
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: marker2x,
+  iconUrl: marker1x,
+  shadowUrl: markerShadow,
+});
 
 type RideStatus = "ongoing" | "completed" | "cancelled" | "investigating";
 
@@ -74,6 +92,20 @@ function StatusTag({ s }: { s: RideStatus }) {
 function Currency({ value }: { value: number }) {
   return <span>{value.toFixed(0)} BDT</span>;
 }
+
+const trace: [number, number][] = [
+  [23.7808, 90.4085], // pickup
+  [23.7815, 90.4142],
+  [23.785, 90.419],
+  [23.789, 90.421],
+  [23.794, 90.425], // dropoff
+];
+
+const segments: TraceSegment[] = [
+  { coords: [trace[0], trace[1], trace[2]], type: "normal" },
+  { coords: [trace[2], trace[3]], type: "detour" },
+  { coords: [trace[3], trace[4]], type: "normal" },
+];
 
 // 🔧 demo fetch (পরে আসল API কল দেবে)
 async function fetchRideDetail(rideId: string): Promise<RideDetail> {
@@ -330,18 +362,41 @@ export default function RideDetailPage() {
       <TabView>
         <TabPanel header="Overview">
           <div className="grid md:grid-cols-3 gap-3">
-            {/* Map placeholder */}
             <Panel header="Map trace" className="md:col-span-2">
-              <div
-                style={{ height: 320, borderRadius: 8, background: "#f3f4f6" }}
-                className="flex items-center justify-center"
-              >
-                {/* TODO: এখানে React-Leaflet/Mapbox বসাও */}
-                <span className="text-sm text-muted-color">
-                  Map preview (coming soon)
-                </span>
+              <div style={{ height: 320, borderRadius: 8, overflow: "hidden" }}>
+                <MapContainer
+                  center={[23.785, 90.419]}
+                  zoom={13}
+                  style={{ height: "100%", width: "100%" }}
+                >
+                  <TileLayer
+                    attribution="&copy; OpenStreetMap"
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                  />
+                  {segments.map((seg, idx) => (
+                    <Polyline
+                      key={idx}
+                      positions={seg.coords}
+                      color={
+                        seg.type === "detour"
+                          ? "red"
+                          : seg.type === "stop"
+                          ? "orange"
+                          : "blue"
+                      }
+                      weight={5}
+                    />
+                  ))}
+                  <Marker position={trace[0]}>
+                    <Popup>Pickup</Popup>
+                  </Marker>
+                  <Marker position={trace[trace.length - 1]}>
+                    <Popup>Dropoff</Popup>
+                  </Marker>
+                </MapContainer>
               </div>
             </Panel>
+           
 
             {/* Fare */}
             <Panel header="Fare breakdown">
