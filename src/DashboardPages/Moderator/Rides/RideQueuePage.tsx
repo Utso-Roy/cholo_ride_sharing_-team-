@@ -5,25 +5,45 @@ import { Toast } from "primereact/toast";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { RideQueueFilters } from "./RideQueueFilters";
 import { RideQueueTable } from "./RideQueueTable";
-import { assignRides, bulkStatus } from "./api";
+import { assignRides, bulkStatus, RideQueueQuery } from "./api";
+import { useSearchParams } from "react-router";
 
 export default function RideQueuePage() {
   const toast = useRef<Toast>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  // central query state -> filters + table
-  const [query, setQuery] = useState({
-    page: 1,
-    pageSize: 25,
-    status: ["pending", "investigating"] as ("pending" | "investigating")[],
-    assignee: "unassigned" as "me" | "unassigned" | string,
-    minRisk: 0,
-    hasEvidence: undefined as boolean | undefined,
-    sort: { field: "slaSecondsRemaining" as const, dir: "asc" as const },
-    text: "",
-  });
+  const defaultQuery: RideQueueQuery = {
+    page: Number(searchParams.get("page")) || 1,
+    pageSize: Number(searchParams.get("pageSize")) || 25,
+    status: searchParams.get("status")?.split(",") as ("pending" | "investigating")[] || ["pending", "investigating"],
+    assignee: (searchParams.get("assignee") as "me" | "unassigned" | string) || "unassigned",
+    minRisk: Number(searchParams.get("minRisk")) || 0,
+    hasEvidence: searchParams.get("hasEvidence") === "true" ? true : undefined,
+    sort: searchParams.get("sort")
+      ? (() => {
+          const [field, dir] = searchParams.get("sort")!.split(":");
+          return { field, dir } as RideQueueQuery["sort"];
+        })()
+      : { field: "slaSecondsRemaining", dir: "asc" },
+    text: searchParams.get("text") || "",
+  };
 
-  // selection comes back from table
+  const [query, setQuery] = useState<RideQueueQuery>(defaultQuery);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
+
+  useEffect(() => {
+    const params: Record<string, string> = {
+      page: String(query.page),
+      pageSize: String(query.pageSize),
+      status: query.status?.join(",") ?? "",
+      assignee: query.assignee ?? "",
+      minRisk: String(query.minRisk ?? 0),
+      ...(query.hasEvidence !== undefined && { hasEvidence: String(query.hasEvidence) }),
+      ...(query.sort && { sort: `${query.sort.field}:${query.sort.dir}` }),
+      ...(query.text && { text: query.text }),
+    };
+    setSearchParams(params, { replace: true });
+  }, [query, setSearchParams]);
 
   const left = (
     <div className="flex items-center gap-2">
@@ -38,7 +58,11 @@ export default function RideQueuePage() {
               await assignRides(selectedIds, "me");
               setSelectedIds([]);
               setQuery({ ...query }); // refetch via table
-              toast.current?.show({ severity: "success", summary: "Assigned", detail: "Rides assigned to you" });
+              toast.current?.show({
+                severity: "success",
+                summary: "Assigned",
+                detail: "Rides assigned to you",
+              });
             },
           });
         }}
@@ -56,7 +80,11 @@ export default function RideQueuePage() {
               await bulkStatus(selectedIds, "resolved");
               setSelectedIds([]);
               setQuery({ ...query });
-              toast.current?.show({ severity: "success", summary: "Resolved", detail: "Rides updated" });
+              toast.current?.show({
+                severity: "success",
+                summary: "Resolved",
+                detail: "Rides updated",
+              });
             },
           });
         }}
@@ -79,7 +107,6 @@ export default function RideQueuePage() {
       </div>
 
       <RideQueueFilters value={query} onChange={setQuery} />
-
       <RideQueueTable
         query={query}
         onQueryChange={setQuery}
