@@ -77,6 +77,8 @@ import LearnMore from "../pages/LearnMore/LearnMore";
 import UsersForModerator from "../DashboardPages/Moderator/Users/UsersForModerator";
 import RideQueuePage from "../DashboardPages/Moderator/Rides/RideQueuePage";
 import RideDetailPage from "../DashboardPages/Moderator/Rides/RideDetailPage";
+import DisputeListPage from "../DashboardPages/Moderator/Dispute/DisputeLestPage";
+import DisputeDetailPage from "../DashboardPages/Moderator/Dispute/DisputeDetailPage";
 
 
 const router = createBrowserRouter([
@@ -207,6 +209,14 @@ const router = createBrowserRouter([
       {
         path: 'mod/rides/:rideId',
         element: <RideDetailPage/>
+      }, 
+      {
+        path: 'mod/disputes',
+        element: <DisputeListPage/>
+      }, 
+      {
+        path: 'mod/disputes/:disputeId',
+        element: <DisputeDetailPage/>
       }, 
     ],
   },
