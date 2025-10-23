@@ -44,13 +44,14 @@ export default function DisputeListPage() {
 
   useEffect(() => {
     const q: DisputeListQuery = {
-      page, pageSize,
+      page,
+      pageSize,
       status: (filters.status as any) || "all",
       minAmount: filters.minAmount ? Number(filters.minAmount) : undefined,
       maxAmount: filters.maxAmount ? Number(filters.maxAmount) : undefined,
       maxAgeHours: filters.age ? Number(filters.age) : undefined,
-      search: debouncedSearch || undefined,
-      sort: { field: "createdAt", dir: "desc" }
+      q: debouncedSearch || undefined,
+      sort: { field: "createdAt", dir: "desc" },
     };
 
     const nextSP: Record<string, string> = {
@@ -66,9 +67,20 @@ export default function DisputeListPage() {
 
     setLoading(true);
     listDisputes(q)
-      .then((res) => { setRows(res.data); setTotal(res.total); })
+      .then((res) => {
+        setRows(res.data);
+        setTotal(res.total);
+      })
       .finally(() => setLoading(false));
-  }, [page, pageSize, filters.status, filters.minAmount, filters.maxAmount, filters.age, debouncedSearch]);
+  }, [
+    page,
+    pageSize,
+    filters.status,
+    filters.minAmount,
+    filters.maxAmount,
+    filters.age,
+    debouncedSearch,
+  ]);
 
   const slaBadge = (r: DisputeListItem) => {
     const secs = r.slaSecondsRemaining;
@@ -76,14 +88,40 @@ export default function DisputeListPage() {
     const abs = Math.abs(secs);
     const h = Math.floor(abs / 3600);
     const m = Math.floor((abs % 3600) / 60);
-    return <Tag value={breached ? `SLA -${h}h ${m}m` : `SLA ${h}h ${m}m`} severity={breached ? "danger" : "info"} rounded />;
+    return (
+      <Tag
+        value={breached ? `SLA -${h}h ${m}m` : `SLA ${h}h ${m}m`}
+        severity={breached ? "danger" : "info"}
+        rounded
+      />
+    );
   };
 
   const actionsTemplate = (row: DisputeListItem) => (
     <div className="flex gap-2">
-      <Button label="Open" text size="small" onClick={() => navigate(`/dashboard/mod/disputes/${row.id}`)} />
-      <Button label="Partial" text size="small" onClick={() => navigate(`/dashboard/mod/disputes/${row.id}?action=partial`)} />
-      <Button label="Escalate" text size="small" severity="danger" onClick={() => navigate(`/dashboard/mod/disputes/${row.id}?action=escalate`)} />
+      <Button
+        label="Open"
+        text
+        size="small"
+        onClick={() => navigate(`/dashboard/mod/disputes/${row.id}`)}
+      />
+      <Button
+        label="Partial"
+        text
+        size="small"
+        onClick={() =>
+          navigate(`/dashboard/mod/disputes/${row.id}?action=partial`)
+        }
+      />
+      <Button
+        label="Escalate"
+        text
+        size="small"
+        severity="danger"
+        onClick={() =>
+          navigate(`/dashboard/mod/disputes/${row.id}?action=escalate`)
+        }
+      />
     </div>
   );
 
@@ -92,7 +130,7 @@ export default function DisputeListPage() {
       <Dropdown
         value={filters.status}
         onChange={(e) => setFilters({ ...filters, status: e.value })}
-        options={["open", "investigating", "resolved"]}
+        options={["all", "open", "investigating", "resolved", "escalated"]}
         placeholder="Status"
       />
       <InputText
@@ -122,17 +160,100 @@ export default function DisputeListPage() {
 
       <Toolbar left={leftToolbar} />
 
-      <DataTable value={rows} loading={loading} paginator rows={pageSize} totalRecords={total}
-        onPage={(e) => { setPage(e.page + 1); setPageSize(e.rows); }}
+      <DataTable
+        value={rows}
+        loading={loading}
+        paginator
+        rows={pageSize}
+        totalRecords={total}
+        onPage={(e) => {
+          const newPage =
+            e.page !== undefined ? e.page + 1 : e.first / e.rows + 1;
+          setPage(newPage);
+          setPageSize(e.rows);
+        }}
         emptyMessage="No disputes found. 🎉 Check trends or summary below."
       >
         <Column field="id" header="ID" sortable />
         <Column field="amount" header="Amount (৳)" sortable />
-        <Column header="Age" body={(r) => new Date(r.createdAt).toLocaleString()} />
+        <Column
+          header="Age"
+          body={(r) =>
+            new Date(r.createdAt).toLocaleString("en-US", {
+              timeZone: "Asia/Dhaka",
+            })
+          }
+          sortable
+        />
         <Column field="opener" header="Opener" />
-        <Column field="status" header="Status" body={(r) => <Tag value={r.status} />} />
-        <Column header="SLA" body={slaBadge} />
-        <Column header="Actions" body={actionsTemplate} />
+        <Column
+          field="status"
+          header="Status"
+          body={(r) => (
+            <Tag
+              value={r.status}
+              severity={
+                r.status === "open"
+                  ? "warning"
+                  : r.status === "investigating"
+                  ? "info"
+                  : r.status === "escalated"
+                  ? "danger"
+                  : "success"
+              }
+            />
+          )}
+        />
+        <Column
+          header="SLA"
+          body={(r) => {
+            const s = r.slaSecondsRemaining;
+            const breached = s < 0;
+            const h = Math.floor(Math.abs(s) / 3600);
+            const m = Math.floor((Math.abs(s) % 3600) / 60);
+            return (
+              <span
+                className={`px-2 py-1 rounded ${
+                  breached
+                    ? "bg-red-100 text-red-700"
+                    : "bg-blue-100 text-blue-700"
+                }`}
+              >
+                {breached ? `-${h}h ${m}m` : `${h}h ${m}m`}
+              </span>
+            );
+          }}
+        />
+        <Column
+          header="Actions"
+          body={(row) => (
+            <div className="flex gap-2">
+              <Button
+                label="Open"
+                text
+                size="small"
+                onClick={() => navigate(`/dashboard/mod/disputes/${row.id}`)}
+              />
+              <Button
+                label="Partial"
+                text
+                size="small"
+                onClick={() =>
+                  navigate(`/dashboard/mod/disputes/${row.id}?action=partial`)
+                }
+              />
+              <Button
+                label="Escalate"
+                text
+                size="small"
+                severity="danger"
+                onClick={() =>
+                  navigate(`/dashboard/mod/disputes/${row.id}?action=escalate`)
+                }
+              />
+            </div>
+          )}
+        />
       </DataTable>
     </div>
   );
