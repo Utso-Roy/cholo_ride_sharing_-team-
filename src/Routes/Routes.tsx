@@ -77,7 +77,7 @@ import LearnMore from "../pages/LearnMore/LearnMore";
 import UsersForModerator from "../DashboardPages/Moderator/Users/UsersForModerator";
 import RideQueuePage from "../DashboardPages/Moderator/Rides/RideQueuePage";
 import RideDetailPage from "../DashboardPages/Moderator/Rides/RideDetailPage";
-import DisputeListPage from "../DashboardPages/Moderator/Dispute/DisputeLestPage";
+import DisputeListPage from "../DashboardPages/Moderator/Dispute/DisputeListPage";
 import DisputeDetailPage from "../DashboardPages/Moderator/Dispute/DisputeDetailPage";
 
 
