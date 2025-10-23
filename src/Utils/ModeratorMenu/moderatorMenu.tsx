@@ -8,9 +8,9 @@ import {
   FaCarSide,
   FaExclamationTriangle,
   FaUserShield,
-  FaBell,
+  // FaBell,
   FaEnvelopeOpenText,
-  FaChartLine,
+  // FaChartLine,
   FaCogs,
 } from "react-icons/fa";
 
@@ -30,11 +30,11 @@ export const moderatorMenuItems: MenuItem[] = [
   { icon: <FaCarSide />, label: "Ride Detail", path: "/dashboard/mod/rides/:rideId" },
   { icon: <FaUserShield />, label: "Disputes", path: "/dashboard/mod/disputes" },
   { icon: <FaClipboardList />, label: "Dispute Detail", path: "/dashboard/mod/disputes/:disputeId" },
-  { icon: <FaExclamationTriangle />, label: "Incidents", path: "/dashboard/mod/safety/incidents" },
-  { icon: <FaBell />, label: "Watchlist", path: "/dashboard/mod/safety/watchlist" },
+  // { icon: <FaExclamationTriangle />, label: "Incidents", path: "/dashboard/mod/safety/incidents" },
+  // { icon: <FaBell />, label: "Watchlist", path: "/dashboard/mod/safety/watchlist" },
   { icon: <FaEnvelopeOpenText />, label: "Message Templates", path: "/dashboard/mod/comms/templates" },
-  { icon: <FaEnvelopeOpenText />, label: "Broadcasts", path: "/dashboard/mod/comms/broadcasts" },
-  { icon: <FaChartLine />, label: "Audit Actions", path: "/dashboard/mod/audit/actions" },
-  { icon: <FaChartLine />, label: "Audit Metrics", path: "/dashboard/mod/audit/metrics" },
+  // { icon: <FaEnvelopeOpenText />, label: "Broadcasts", path: "/dashboard/mod/comms/broadcasts" },
+  // { icon: <FaChartLine />, label: "Audit Actions", path: "/dashboard/mod/audit/actions" },
+  // { icon: <FaChartLine />, label: "Audit Metrics", path: "/dashboard/mod/audit/metrics" },
   { icon: <FaCogs />, label: "Profile", path: "/dashboard/profile" },
 ];
