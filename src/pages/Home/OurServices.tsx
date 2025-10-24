@@ -1,69 +1,78 @@
-import { 
-  FaMotorcycle, FaCar, FaTruck, FaShuttleVan, 
-  FaAmbulance, FaBoxOpen, FaMapMarkedAlt, FaTaxi 
+import React from "react";
+import { motion } from "framer-motion";
+import {
+  FaMotorcycle,
+  FaCar,
+  FaTruck,
+  FaShuttleVan,
+  FaAmbulance,
+  FaBoxOpen,
+  FaMapMarkedAlt,
+  FaTaxi,
 } from "react-icons/fa";
 
 const services = [
-  {
-    icon: <FaMotorcycle className="text-4xl text-[#71BBB2]" />,
-    title: "বাইক রাইড",
-    desc: "দ্রুত ও সাশ্রয়ী একক যাত্রার জন্য।"
-  },
-  {
-    icon: <FaTaxi className="text-4xl text-[#71BBB2]" />,
-    title: "CNG / অটো রাইড",
-    desc: "স্বল্প দূরত্বে আরামদায়ক ভ্রমণ।"
-  },
-  {
-    icon: <FaCar className="text-4xl text-[#71BBB2]" />,
-    title: "কার রাইড",
-    desc: "পরিবার বা গ্রুপের জন্য স্বাচ্ছন্দ্যময় যাত্রা।"
-  },
-  {
-    icon: <FaTruck className="text-4xl text-[#71BBB2]" />,
-    title: "ট্র্যাক সার্ভিস",
-    desc: "পণ্য পরিবহন ও বড় লোড বহন সেবা।"
-  },
-  {
-    icon: <FaShuttleVan className="text-4xl text-[#71BBB2]" />,
-    title: "শাটল সার্ভিস",
-    desc: "নির্দিষ্ট রুটে নিয়মিত যাতায়াতের সুবিধা।"
-  },
-  {
-    icon: <FaMapMarkedAlt className="text-4xl text-[#71BBB2]" />,
-    title: "ভ্রমণ প্যাকেজ সিস্টেম",
-    desc: "দিন/ঘণ্টা ভিত্তিক প্যাকেজ রাইড সুবিধা।"
-  },
-  {
-    icon: <FaAmbulance className="text-4xl text-[#71BBB2]" />,
-    title: "মেডিকেল সার্ভিস / অ্যাম্বুলেন্স",
-    desc: "জরুরি অবস্থায় দ্রুত চিকিৎসা পরিবহন।"
-  },
-  {
-    icon: <FaBoxOpen className="text-4xl text-[#71BBB2]" />,
-    title: "প্যাকেজ / পণ্য প্রেরণ",
-    desc: "নিরাপদ ও দ্রুত পার্সেল ডেলিভারি সেবা।"
-  },
+  { icon: <FaMotorcycle />, title: "বাইক" },
+  { icon: <FaTaxi />, title: "অটো" },
+  { icon: <FaCar />, title: "কার" },
+  { icon: <FaTruck />, title: "ট্রাক" },
+  { icon: <FaShuttleVan />, title: "শাটল" },
+  { icon: <FaMapMarkedAlt />, title: "ভ্রমণ প্যাকেজ" },
+  { icon: <FaAmbulance />, title: "অ্যাম্বুলেন্স" },
+  { icon: <FaBoxOpen />, title: "প্যাকেজ" },
 ];
 
-const OurServices = () => {
-  return (
-    <section className="py-16  bg-gradient-to-r from-[#e6fcf9] to-gray-50">
-      <div className=" px-6 text-center">
-        <h2 className="text-4xl font-bold text-[#27445D] mb-10">
-          আমাদের সার্ভিসসমূহ
-        </h2>
+const fadeUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.1, duration: 0.5 },
+  }),
+};
 
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+const OurServices: React.FC = () => {
+  return (
+    <section className="bg-white border-t border-gray-100  py-16 md:py-20 px-6">
+      <div className="w-full text-center">
+        {/* Section Title */}
+        <motion.h2
+          className="text-3xl md:text-5xl font-extrabold text-[#27445D] leading-snug md:leading-tight mb-12"
+          initial={{ opacity: 0, y: -30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+        >
+          <span className="text-[#71BBB2]">চলো</span> প্ল্যাটফর্ম <br />
+          আপনার যাত্রার জন্য{" "}
+          <span className="decoration-[#71BBB2] decoration-4">
+            সম্পূর্ণ সমাধান
+          </span>
+        </motion.h2>
+
+        {/* Services Grid */}
+        <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-8 gap-4 justify-center items-center">
           {services.map((service, idx) => (
-            <div 
-              key={idx} 
-              className="bg-white p-6 rounded-2xl shadow hover:shadow-xl transition-transform hover:-translate-y-1"
+            <motion.div
+              key={idx}
+              custom={idx}
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              whileHover={{
+                scale: 1.08,
+                y: -3,
+                boxShadow:
+                  "0 6px 12px rgba(113, 187, 178, 0.25), 0 0 8px rgba(113, 187, 178, 0.2)",
+              }}
+              className="flex flex-col items-center justify-center gap-2 bg-white rounded-xl border border-[#E6F4F1] shadow-sm hover:shadow-md p-4 cursor-target cursor-pointer transition-all duration-300"
             >
-              <div className="mb-4 flex justify-center">{service.icon}</div>
-              <h3 className="text-lg font-semibold mb-1">{service.title}</h3>
-              <p className="text-gray-600 text-sm">{service.desc}</p>
-            </div>
+              <div className="text-3xl text-[#71BBB2]">{service.icon}</div>
+              <h3 className="text-sm font-semibold text-[#27445D]">
+                {service.title}
+              </h3>
+            </motion.div>
           ))}
         </div>
       </div>

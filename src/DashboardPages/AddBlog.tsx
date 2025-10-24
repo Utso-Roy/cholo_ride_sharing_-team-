@@ -5,7 +5,7 @@ import { Button } from "primereact/button";
 import { Calendar } from "primereact/calendar";
 import { Card } from "primereact/card";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
 
 const categories = [
@@ -66,14 +66,11 @@ export default function AddBlog() {
   const createBlog = async () => {
     setSubmitting(true);
     try {
-      const res = await fetch(
-        "https://cholo-ride-sharing-website-server-side.onrender.com/api/blogs",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
-        }
-      );
+      const res = await fetch("http://localhost:3000/api/blogs", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
       if (!res.ok) throw new Error("Failed to create blog");
 
       await Swal.fire({

@@ -1,7 +1,6 @@
 import React from "react";
 import SwiperPage from "./SwiperPage";
 import OurServices from "./OurServices";
-import PopularDestinations from "./PopularDestinations";
 import FeaturedDrivers from "./FeaturedDrivers";
 import FareEstimator from "./FareEstimator";
 import Testimonials from "./Testimonials";
@@ -12,13 +11,17 @@ import LatestNews from "./LatestNews";
 import HowItWorks from "./HowItWorks";
 import Partners from "./Partners";
 import Newsletter from "./Newsletter";
-
+import Banner from "./AboutCholoVideo";
+import LandingPage from "../Landing/LandingPage";
+import AboutCholoVideo from "./AboutCholoVideo";
 const Home = () => {
-
   return (
-    <div className="space-y-5">
+    <div className="space-y-5 ">
       <section>
-        <SwiperPage></SwiperPage>
+        <LandingPage></LandingPage>
+      </section>
+      <section>
+        <AboutCholoVideo></AboutCholoVideo>
       </section>
       <section>
         <OurServices></OurServices>
@@ -26,14 +29,9 @@ const Home = () => {
       <section>
         <WhyChooseUs></WhyChooseUs>
       </section>
-
       <section>
         <LatestNews></LatestNews>
       </section>
-      <section>
-        <PopularDestinations></PopularDestinations>
-      </section>
-
       <section>
         <FeaturedDrivers></FeaturedDrivers>
       </section>
@@ -41,7 +39,6 @@ const Home = () => {
       <section>
         <Testimonials></Testimonials>
       </section>
-
       <section>
         <CallToAction></CallToAction>
       </section>
@@ -60,8 +57,6 @@ const Home = () => {
       <section>
         <Newsletter></Newsletter>
       </section>
-
-      
     </div>
   );
 };

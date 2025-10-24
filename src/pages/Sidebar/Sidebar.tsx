@@ -11,12 +11,15 @@ import {
   FaBriefcase,
   FaUser,
   FaHeart,
+  FaQuestionCircle,
+  FaCommentDots,
+  FaCalendarAlt,
 } from "react-icons/fa";
 import { Link, NavLink } from "react-router";
-import api from "../../lib/api";
 import { AuthContext } from "../../Auth/AuthProvider";
 import { moderatorMenuItems } from "../../Utils/ModeratorMenu/moderatorMenu";
 import Loading from "../../Loading/Loading";
+import axios from "axios";
 
 type Role = "admin" | "moderator" | "rider" | "user" | undefined;
 
@@ -35,14 +38,14 @@ interface MenuItem {
 
 const Sidebar: React.FC = () => {
   const [users, setUsers] = useState<AppUser[]>([]);
-  const [loading, setLoading] = useState<boolean>(true); // ✅ loading state
+  const [loading, setLoading] = useState<boolean>(true);
   const { user } = useContext(AuthContext) as { user?: { email?: string } };
-
   useEffect(() => {
+    if (!user?.email) return;
     const fetchUser = async () => {
       try {
         setLoading(true);
-        const res = await api.get<AppUser[]>("/users");
+        const res = await axios.get<AppUser[]>("http://localhost:3000/users");
         setUsers(res.data);
       } catch (err) {
         console.error(err);
@@ -51,11 +54,11 @@ const Sidebar: React.FC = () => {
       }
     };
     fetchUser();
-  }, []);
+  }, [user?.email]);
 
   const currentUser = users.find((u) => u?.email === user?.email);
 
-  // 🔹 Admin menu items
+  // Admin menu items
   const adminItems: MenuItem[] = [
     { icon: <FaHome />, label: "Dashboard", path: "/dashboard" },
     { icon: <FaUser />, label: "My Profile", path: "/dashboard/profile" },
@@ -74,11 +77,19 @@ const Sidebar: React.FC = () => {
     { label: "Rider Dashboard", path: "/dashboard", icon: <FaHome /> },
   ];
 
-  const userItems: MenuItem[] = [
-    { label: "User Dashboard", path: "/dashboard", icon: <FaHome /> },
-  ];
+const userItems: MenuItem[] = [
+  { icon: <FaHome />, label: "Overview", path: "/dashboard" },
+  { icon: <FaUser />, label: "My Profile", path: "/dashboard/profile" },
+  { icon: <FaCarSide />, label: "My Rides", path: "/dashboard/my-rides" },
+  { icon: <FaCalendarAlt />, label: "Upcoming Rides", path: "/dashboard/upcoming-rides" }, 
+  { icon: <FaUsers />, label: "Favourite Drivers", path: "/dashboard/favourite-drivers" },
+  { icon: <FaQuestionCircle />, label: "Help Center", path: "/dashboard/help" },
+  { icon: <FaCommentDots />, label: "Feedback", path: "/dashboard/feedback" },
+];
 
-  // 🔹 Role-based menu rendering
+
+
+  //  Role-based menu rendering
   let roleToRender: MenuItem[] = [];
 
   if (currentUser?.role === "admin") {
@@ -91,10 +102,10 @@ const Sidebar: React.FC = () => {
     roleToRender = userItems;
   }
 
-  // 🔹 Loading UI
+  //  Loading UI
   if (loading) {
     return (
-     <Loading></Loading>
+      <Loading></Loading>
     );
   }
 
@@ -115,10 +126,9 @@ const Sidebar: React.FC = () => {
             to={item.path ?? "#"}
             end
             className={({ isActive }) =>
-              `flex items-center gap-3 p-3 rounded-lg transition-all duration-300 cursor-pointer group ${
-                isActive
-                  ? "bg-[#2e736d] text-white"
-                  : "hover:bg-[#5aa49c] hover:text-white"
+              `flex items-center gap-3 p-3 rounded-lg transition-all duration-300 cursor-pointer group ${isActive
+                ? "bg-[#2e736d] text-white"
+                : "hover:bg-[#5aa49c] hover:text-white"
               }`
             }
           >

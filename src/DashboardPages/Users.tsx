@@ -59,7 +59,7 @@ const Users: React.FC = () => {
       await fetchUsers();
     } catch (err: any) {
       console.error("Error updating user:", err);
-      toast.error("⚠️ Failed to update user role!");
+      toast.error(" Failed to update user role!");
     } finally {
       setUpdating(null);
     }
@@ -120,6 +120,7 @@ const Users: React.FC = () => {
         All Users
       </h1>
 
+     
       <div className="card shadow-2xl rounded-2xl p-4 bg-white">
         <DataTable
           value={users}
@@ -132,20 +133,10 @@ const Users: React.FC = () => {
           emptyMessage="No users found."
           responsiveLayout="scroll"
         >
-          <Column field="name" header="Name" sortable style={{ width: "25%" }} />
-          <Column field="email" header="Email" sortable style={{ width: "35%" }} />
-          <Column
-            field="role"
-            header="Role"
-            body={roleBodyTemplate}
-            sortable
-            style={{ width: "20%" }}
-          />
-          <Column
-            header="Action"
-            body={actionBodyTemplate}
-            style={{ width: "20%" }}
-          />
+          <Column field="name" header="Name" sortable />
+          <Column field="email" header="Email" sortable />
+          <Column field="role" header="Role" body={roleBodyTemplate} sortable />
+          <Column header="Action" body={actionBodyTemplate} />
         </DataTable>
       </div>
     </div>

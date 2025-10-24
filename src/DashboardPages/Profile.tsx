@@ -117,7 +117,7 @@ const Profile: React.FC = () => {
 
  
   return (
-    <div className="min-h-screen bg-gray-50 p-6 flex flex-col items-center">
+    <div className="min-h-screen bg-gray-50 p-6 my-16 flex flex-col items-center">
       {/* Profile Card */}
       <div className="w-full max-w-6xl bg-white rounded-3xl shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl">
         <div className="px-8 py-6 bg-gradient-to-r from-[#71BBB2] to-[#4ca89d] text-white rounded-t-3xl">
