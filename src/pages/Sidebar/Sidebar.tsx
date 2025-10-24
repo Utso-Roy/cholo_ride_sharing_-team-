@@ -11,12 +11,15 @@ import {
   FaBriefcase,
   FaUser,
   FaHeart,
+  FaQuestionCircle,
+  FaCommentDots,
+  FaCalendarAlt,
 } from "react-icons/fa";
 import { Link, NavLink } from "react-router";
-import api from "../../lib/api";
 import { AuthContext } from "../../Auth/AuthProvider";
 import { moderatorMenuItems } from "../../Utils/ModeratorMenu/moderatorMenu";
 import Loading from "../../Loading/Loading";
+import axios from "axios";
 
 type Role = "admin" | "moderator" | "rider" | "user" | undefined;
 
@@ -35,14 +38,16 @@ interface MenuItem {
 
 const Sidebar: React.FC = () => {
   const [users, setUsers] = useState<AppUser[]>([]);
-  const [loading, setLoading] = useState<boolean>(true); 
+  const [loading, setLoading] = useState<boolean>(true);
   const { user } = useContext(AuthContext) as { user?: { email?: string } };
-
   useEffect(() => {
+    if (!user?.email) return;
     const fetchUser = async () => {
       try {
         setLoading(true);
-        const res = await api.get<AppUser[]>("/users");
+        const res = await axios.get<AppUser[]>(
+          "https://cholo-ride-sharing-website-server-side.onrender.com/users"
+        );
         setUsers(res.data);
       } catch (err) {
         console.error(err);
@@ -51,11 +56,15 @@ const Sidebar: React.FC = () => {
       }
     };
     fetchUser();
-  }, []);
+  }, [user?.email]);
+  
+  if (loading || !user?.email) {
+    return <Loading />;
+  }
 
   const currentUser = users.find((u) => u?.email === user?.email);
 
-  // 🔹 Admin menu items
+  // Admin menu items
   const adminItems: MenuItem[] = [
     { icon: <FaHome />, label: "Dashboard", path: "/dashboard" },
     { icon: <FaUser />, label: "My Profile", path: "/dashboard/profile" },
@@ -64,10 +73,26 @@ const Sidebar: React.FC = () => {
     { icon: <FaUserShield />, label: "Users", path: "/dashboard/users" },
     { icon: <FaMoneyBill />, label: "Payments", path: "/dashboard/payments" },
     { icon: <FaChartPie />, label: "Reports", path: "/dashboard/reports" },
-    { icon: <FaHandshake />, label: "Manage Partners", path: "/dashboard/manage-partners" },
-    { icon: <FaBriefcase />, label: "Manage Jobs", path: "/dashboard/manage-jobs" },
-    { icon: <FaHeart />, label: "Manage Activities", path: "/dashboard/manage-activities" },
-    { icon: <FaBriefcase />, label: "Content Management", path: "/dashboard/content-management" },
+    {
+      icon: <FaHandshake />,
+      label: "Manage Partners",
+      path: "/dashboard/manage-partners",
+    },
+    {
+      icon: <FaBriefcase />,
+      label: "Manage Jobs",
+      path: "/dashboard/manage-jobs",
+    },
+    {
+      icon: <FaHeart />,
+      label: "Manage Activities",
+      path: "/dashboard/manage-activities",
+    },
+    {
+      icon: <FaBriefcase />,
+      label: "Content Management",
+      path: "/dashboard/content-management",
+    },
   ];
 
   const riderItems: MenuItem[] = [
@@ -75,10 +100,28 @@ const Sidebar: React.FC = () => {
   ];
 
   const userItems: MenuItem[] = [
-    { label: "User Dashboard", path: "/dashboard", icon: <FaHome /> },
+    { icon: <FaHome />, label: "Overview", path: "/dashboard" },
+    { icon: <FaUser />, label: "My Profile", path: "/dashboard/profile" },
+    { icon: <FaCarSide />, label: "My Rides", path: "/dashboard/my-rides" },
+    {
+      icon: <FaCalendarAlt />,
+      label: "Upcoming Rides",
+      path: "/dashboard/upcoming-rides",
+    },
+    {
+      icon: <FaUsers />,
+      label: "Favourite Drivers",
+      path: "/dashboard/favourite-drivers",
+    },
+    {
+      icon: <FaQuestionCircle />,
+      label: "Help Center",
+      path: "/dashboard/help",
+    },
+    { icon: <FaCommentDots />, label: "Feedback", path: "/dashboard/feedback" },
   ];
 
-  // 🔹 Role-based menu rendering
+  //  Role-based menu rendering
   let roleToRender: MenuItem[] = [];
 
   if (currentUser?.role === "admin") {
@@ -91,12 +134,6 @@ const Sidebar: React.FC = () => {
     roleToRender = userItems;
   }
 
-  // 🔹 Loading UI
-  if (loading) {
-    return (
-     <Loading></Loading>
-    );
-  }
 
   return (
     <div className="h-screen w-64 bg-[#71BBB2] text-[#083c3a] flex flex-col shadow-xl border-r border-[#9ad2cb] fixed md:static z-40">

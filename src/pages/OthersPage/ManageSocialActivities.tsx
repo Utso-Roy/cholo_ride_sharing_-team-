@@ -5,6 +5,9 @@ import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
+import { DataTable } from "primereact/datatable";
+import { Column } from "primereact/column";
+import { Tag } from "primereact/tag";
 import { toast } from "react-toastify";
 
 interface ActivityForm {
@@ -31,7 +34,7 @@ export default function ManageSocialActivities() {
     badge: "",
   });
 
-  // ✅ Fetch all activities
+  // Fetch all activities
   const { data: activities = [] } = useQuery({
     queryKey: ["socialActivities"],
     queryFn: async () => {
@@ -40,7 +43,7 @@ export default function ManageSocialActivities() {
     },
   });
 
-  // ✅ Add new activity
+  // Add new activity
   const addActivity = useMutation({
     mutationFn: (newActivity: ActivityForm) =>
       axios.post(`${import.meta.env.VITE_API_URL}/activities`, newActivity),
@@ -61,7 +64,7 @@ export default function ManageSocialActivities() {
     onError: () => toast.error("কার্যক্রম যুক্ত করতে সমস্যা হয়েছে ❌"),
   });
 
-  // ✅ Delete activity
+  // Delete activity
   const deleteActivity = useMutation({
     mutationFn: (id: string) =>
       axios.delete(`${import.meta.env.VITE_API_URL}/activities/${id}`),
@@ -72,7 +75,6 @@ export default function ManageSocialActivities() {
     onError: () => toast.error("মুছতে সমস্যা হয়েছে ❌"),
   });
 
-  // ✅ Handle Add Form Submit
   const handleAddActivity = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.title || !formData.description) {
@@ -82,9 +84,17 @@ export default function ManageSocialActivities() {
     addActivity.mutate(formData);
   };
 
+  // Badge/volunteer/status template
+  const badgeBody = (rowData: any) => (
+    <Tag value={rowData.badge} severity="info" />
+  );
+
+  const volunteersBody = (rowData: any) => (
+    <span className="text-gray-700">{rowData.volunteers}</span>
+  );
+
   return (
     <div className="p-6 bg-[#e6fcf9] min-h-screen">
-   
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl md:text-4xl font-bold text-[#27445D]">
           সামাজিক কার্যক্রম পরিচালনা
@@ -92,48 +102,48 @@ export default function ManageSocialActivities() {
         <Button
           label="কার্যক্রম যোগ করুন"
           icon="pi pi-plus"
-          className="bg-[#71BBB2] border-none  text-white"
+          className="bg-[#71BBB2] border-none text-white"
           onClick={() => setShowAddModal(true)}
         />
       </div>
 
-      {/* Activities List */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {activities.map((activity: any) => (
-          <div
-            key={activity._id}
-            className="bg-white rounded-xl shadow-md p-4 border border-[#71BBB2]/30 hover:shadow-lg transition"
-          >
-            <img
-              src={activity.image}
-              alt={activity.title}
-              className="w-full h-40 object-cover rounded-lg mb-3"
-            />
-            <h3 className="text-lg font-semibold text-[#27445D] mb-1">
-              {activity.title}
-            </h3>
-            <p className="text-gray-600 text-sm mb-1">
-              📍 {activity.location} | 🗓️ {activity.date}
-            </p>
-            <p className="text-gray-600 text-sm mb-2">
-              👥 স্বেচ্ছাসেবক: {activity.volunteers}
-            </p>
-            <span className="inline-block bg-[#71BBB2] text-white text-xs px-3 py-1 rounded-full mb-3">
-              {activity.badge}
-            </span>
-            <p className="text-gray-700 text-sm line-clamp-3 mb-3">
-              {activity.description}
-            </p>
-
-            <div className="flex gap-2">
+      {/* DataTable */}
+      <div className="overflow-x-auto rounded-xl shadow-lg bg-white p-4">
+        <DataTable
+          value={activities}
+          paginator
+          rows={5}
+          responsiveLayout="scroll"
+          stripedRows
+          className="p-datatable-sm w-full"
+          rowHover
+          emptyMessage="কোনো কার্যক্রম পাওয়া যায়নি।"
+          tableStyle={{ minWidth: "900px", backgroundColor: "transparent" }}
+          rowClassName={() => "hover:bg-gray-100 transition-colors rounded-lg"}
+        >
+          <Column field="title" header="Title" style={{ minWidth: "180px", color: "#4B5563" }} />
+          <Column field="date" header="Date" style={{ minWidth: "140px", color: "#4B5563" }} />
+          <Column field="location" header="Location" style={{ minWidth: "160px", color: "#4B5563" }} />
+          <Column field="volunteers" header="Volunteers" body={volunteersBody} style={{ minWidth: "120px" }} />
+          <Column field="badge" header="Badge" body={badgeBody} style={{ minWidth: "140px" }} />
+          <Column
+            field="description"
+            header="Description"
+            style={{ minWidth: "250px", color: "#4B5563" }}
+            body={(rowData) => <span className="line-clamp-3">{rowData.description}</span>}
+          />
+          <Column
+            header="Actions"
+            body={(rowData) => (
               <Button
                 label="মুছুন"
                 className="p-button-danger text-white"
-                onClick={() => deleteActivity.mutate(activity._id)}
+                onClick={() => deleteActivity.mutate(rowData._id)}
               />
-            </div>
-          </div>
-        ))}
+            )}
+            style={{ minWidth: "120px" }}
+          />
+        </DataTable>
       </div>
 
       {/* Add Activity Modal */}
@@ -162,17 +172,13 @@ export default function ManageSocialActivities() {
           <InputText
             placeholder="Location"
             value={formData.location}
-            onChange={(e) =>
-              setFormData({ ...formData, location: e.target.value })
-            }
+            onChange={(e) => setFormData({ ...formData, location: e.target.value })}
           />
           <InputText
             placeholder="Volunteers"
             type="number"
             value={formData.volunteers}
-            onChange={(e) =>
-              setFormData({ ...formData, volunteers: Number(e.target.value) })
-            }
+            onChange={(e) => setFormData({ ...formData, volunteers: Number(e.target.value) })}
           />
           <InputText
             placeholder="Badge (e.g. পরিবেশ সচেতনতা)"
@@ -183,9 +189,7 @@ export default function ManageSocialActivities() {
             placeholder="Description"
             rows={3}
             value={formData.description}
-            onChange={(e) =>
-              setFormData({ ...formData, description: e.target.value })
-            }
+            onChange={(e) => setFormData({ ...formData, description: e.target.value })}
           />
 
           <Button

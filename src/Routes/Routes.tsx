@@ -72,7 +72,18 @@ import ManageSocialActivities from "../pages/OthersPage/ManageSocialActivities";
 import Dashboard from "../DashboardPages/Dashboard";
 import EditBlog from "../DashboardPages/EditBlog";
 import RideBooking from "../pages/Services/RideBooking";
-import LandingPage from "../pages/Landing/LandingPage";
+import LearnMore from "../pages/LearnMore/LearnMore";
+import MyRides from "../DashboardPages/UsersDashboard/MyRides";
+import FavouriteDrivers from "../DashboardPages/UsersDashboard/FavouriteDrivers";
+import HelpCenter from "../DashboardPages/UsersDashboard/HelpCenter";
+import FeedbackSection from "../DashboardPages/UsersDashboard/FeedbackSection";
+import UpcomingRides from "../DashboardPages/UsersDashboard/UpcomingRides";
+import UsersForModerator from "../DashboardPages/Moderator/Users/UsersForModerator";
+import RideQueuePage from "../DashboardPages/Moderator/Rides/RideQueuePage";
+import RideDetailPage from "../DashboardPages/Moderator/Rides/RideDetailPage";
+import DisputeListPage from "../DashboardPages/Moderator/Dispute/DisputeListPage";
+import DisputeDetailPage from "../DashboardPages/Moderator/Dispute/DisputeDetailPage";
+import { TemplateListPage } from "../DashboardPages/Moderator/MessageTemplate/TemplateListPage";
 
 
 const router = createBrowserRouter([
@@ -82,18 +93,19 @@ const router = createBrowserRouter([
     errorElement: <Error />,
     children: [
       // Home
-      { index: true, element: <LandingPage></LandingPage>},
+      { index: true, element: <Home />},
 
       // Help
-      {
-       path : '/home', element :<Home />
-      },
+    
       { path: "faq", element: <FAQ /> },
       { path: "customercare", element: <CustomerCare /> },
       { path: "userguide", element: <UserGuide /> },
       { path: "driverguide", element: <DriverGuide /> },
       { path: "privacypolicy", element: <PrivacyPolicy /> },
       { path: "feedbackform", element: <FeedbackForm /> },
+      {
+        path : 'learnMore' , element : <LearnMore></LearnMore>
+      },
 
       // Blog
       { path: "blogs", element: <BlogListPage /> },
@@ -166,8 +178,8 @@ const router = createBrowserRouter([
       { index: true, element: <Dashboard /> },
       { path: "profile", element: <Profile></Profile> },
       { path: "manage-partners", element: <ManagePartners /> },
-      { path: "manage-jobs", element: <ManageJobsApplications/> },
-      { path: "manage-activities", element: <ManageSocialActivities/> },
+      { path: "manage-jobs", element: <ManageJobsApplications /> },
+      { path: "manage-activities", element: <ManageSocialActivities /> },
       { path: "drivers", element: <Drivers /> },
       { path: "content-Management", element: <ContentManagement /> },
       { path: "content-Management/add-blog", element: <AddBlog /> },
@@ -178,18 +190,61 @@ const router = createBrowserRouter([
       { path: "/dashboard/content-management", element: <ContentManagement /> },
       { path: "ContentManagement/add-blog", element: <AddBlog /> },
       {
-        path :"/dashboard/users" , element : <Users/>
+        path: "/dashboard/users", element: <Users />
       },
-      { path: 'mod/reports', element: <ReportsList/>},
+      { path: 'mod/reports', element: <ReportsList /> },
       {
         path: 'mod/reports/:reportId',
-        element: <ReportDetailPage/>
+        element: <ReportDetailPage />
       },
       {
         path: 'mod/verifications',
         element: <VerificationPage/>
-      }
-      
+      },
+      {
+        path: 'my-rides',
+        element: <MyRides/>
+      },
+      {
+        path: 'favourite-drivers',
+        element: <FavouriteDrivers/>
+      },
+      {
+        path: 'help',
+        element: <HelpCenter/>
+      },
+      {
+        path: 'feedback',
+        element: <FeedbackSection/>
+      },
+      {
+        path: 'upcoming-rides',
+        element: <UpcomingRides/>
+      },
+      {
+        path: 'mod/users',
+        element: <UsersForModerator/>
+      },
+      {
+        path: 'mod/rides/queue',
+        element: <RideQueuePage/>
+      }, 
+      {
+        path: 'mod/rides/:rideId',
+        element: <RideDetailPage/>
+      }, 
+      {
+        path: 'mod/disputes',
+        element: <DisputeListPage/>
+      }, 
+      {
+        path: 'mod/disputes/:disputeId',
+        element: <DisputeDetailPage/>
+      }, 
+      {
+        path: 'mod/comms/templates',
+        element: <TemplateListPage/>
+      }, 
     ],
   },
 

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { InputNumber } from "primereact/inputnumber";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
+import { Chart } from "primereact/chart";
 import {
   FaMotorcycle,
   FaCar,
@@ -28,28 +29,72 @@ const services: ServiceFare[] = [
   { name: "কার রাইড", ratePerKm: 25, icon: <FaCar className="text-4xl text-[#71BBB2]" /> },
   { name: "ট্র্যাক সার্ভিস", ratePerKm: 30, icon: <FaBus className="text-4xl text-[#71BBB2]" /> },
   { name: "শাটল সার্ভিস", ratePerKm: 18, icon: <FaShuttleVan className="text-4xl text-[#71BBB2]" /> },
-  { name: "জার্নি প্যাকেজ সিস্টেম", ratePerKm: 22, icon: <FaMapMarkedAlt className="text-4xl text-[#71BBB2]" /> },
-  { name: "মেডিকেল সার্ভিস / অ্যাম্বুলেন্স", ratePerKm: 35, icon: <FaAmbulance className="text-4xl text-[#71BBB2]" /> },
-  { name: "প্যাকেজ / পণ্য প্রেরণ", ratePerKm: 12, icon: <FaShippingFast className="text-4xl text-[#71BBB2]" /> },
+  { name: "জার্নি প্যাকেজ", ratePerKm: 22, icon: <FaMapMarkedAlt className="text-4xl text-[#71BBB2]" /> },
+  { name: "অ্যাম্বুলেন্স সার্ভিস", ratePerKm: 35, icon: <FaAmbulance className="text-4xl text-[#71BBB2]" /> },
+  { name: "পণ্য প্রেরণ", ratePerKm: 12, icon: <FaShippingFast className="text-4xl text-[#71BBB2]" /> },
 ];
 
 const FareEstimator: React.FC = () => {
   const [distance, setDistance] = useState<number>(0);
 
-  const handleReset = () => setDistance(0); 
+  const handleReset = () => setDistance(0);
+
+  // Generate chart data dynamically
+  const chartData = {
+    labels: services.map((s) => s.name),
+    datasets: [
+      {
+        label: "আনুমানিক ভাড়া (টাকা)",
+        backgroundColor: [
+          "#71BBB2",
+          "#6DD3B3",
+          "#4CB8A0",
+          "#92E3A9",
+          "#71BBB2",
+          "#4CB8A0",
+          "#6DD3B3",
+          "#92E3A9",
+        ],
+        borderColor: "#27445D",
+        borderWidth: 1,
+        data: services.map((s) => distance * s.ratePerKm),
+      },
+    ],
+  };
+
+  const chartOptions = {
+    plugins: {
+      legend: {
+        labels: {
+          color: "#27445D",
+          font: { size: 14 },
+        },
+      },
+    },
+    scales: {
+      x: {
+        ticks: { color: "#27445D" },
+        grid: { display: false },
+      },
+      y: {
+        ticks: { color: "#27445D" },
+        grid: { color: "#E5E7EB" },
+      },
+    },
+  };
 
   return (
-    <section className="py-16  bg-gradient-to-r from-[#e6fcf9] to-gray-50">
-      <div className="w-full  px-6 text-center">
-        <h2 className="text-4xl text-[#27445D] font-bold ">
+    <section className="py-20 bg-gradient-to-b from-[#F7FAFC] to-white">
+      <div className="w-full px-6 text-center">
+        <h2 className="text-4xl text-[#27445D] font-bold mb-4">
           ভাড়া পরিকল্পনা
         </h2>
-        <p className="text-gray-600 mb-12 max-w-3xl mx-auto">
-          দূরত্ব দিয়ে আনুমানিক ভাড়া দেখুন। সার্ভিস অনুযায়ী সহজে তুলনা করুন।
+        <p className="text-gray-600 mb-12 max-w-4xl mx-auto">
+          দূরত্ব (কি.মি.) দিয়ে আনুমানিক ভাড়া দেখুন এবং গ্রাফ আকারে তুলনা করুন।
         </p>
 
-        {/* Distance Input */}
-        <div className="mb-8 flex justify-center gap-4 flex-wrap items-center">
+        {/* Input Section */}
+        <div className="mb-10 flex justify-center gap-4 flex-wrap items-center">
           <InputNumber
             value={distance}
             onValueChange={(e) => setDistance(e.value || 0)}
@@ -59,36 +104,22 @@ const FareEstimator: React.FC = () => {
             buttonLayout="horizontal"
             decrementButtonClassName="!bg-[#71BBB2] !text-white"
             incrementButtonClassName="!bg-[#71BBB2] !text-white"
-            inputClassName="border !shadow-none border-gray-300 rounded-lg px-4 py-2 w-48 focus:outline-none focus:ring-2 focus:ring-[#71BBB2]"
+            inputClassName="border  !shadow-none border-gray-300 rounded-lg px-4 py-2 w-48 focus:outline-none focus:ring-2 focus:ring-[#71BBB2]"
           />
 
-          {/* Reset Button */}
           <Button
             label="রিসেট"
-            className="!bg-[#71BBB2] !hover:bg-red-600 !border-none !shadow-none !text-white"
+            className="!bg-[#71BBB2] !hover:bg-[#58a59a] !shadow-none !border-none !text-white"
             onClick={handleReset}
           />
         </div>
 
-        {/* Fare Cards */}
-        <div className="grid gap-6 md:grid-cols-4 sm:grid-cols-2">
-          {services.map((service, idx) => {
-            const fare = distance > 0 ? distance * service.ratePerKm : 0;
-            return (
-              <Card
-                key={idx}
-                className="bg-white p-3 space-y-2 rounded-2xl shadow hover:shadow-xl transition cursor-pointer flex flex-col items-center gap-4"
-              >
-                <div className="text-5xl flex items-center justify-center text-[#71BBB2]">{service.icon}</div>
-                <h3 className="text-xl font-semibold mb-1">{service.name}</h3>
-                <p className="text-gray-600 mb-1">রেট প্রতি কিমি: {service.ratePerKm} টাকা</p>
-                <p className="text-md font-bold text-[#27445D]">
-                  আনুমানিক ভাড়া: {fare.toLocaleString()} টাকা
-                </p>
-              </Card>
-            );
-          })}
+        {/* Chart Section */}
+        <div className="w-full mb-16 bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition">
+          <Chart type="bar" data={chartData} options={chartOptions} />
         </div>
+
+     
       </div>
     </section>
   );

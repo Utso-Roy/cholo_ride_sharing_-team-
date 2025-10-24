@@ -28,7 +28,7 @@ const Newsletter: React.FC = () => {
   };
 
   return (
-    <section className="py-16 bg-gradient-to-r from-[#e6fcf9] to-gray-50">
+    <section className="py-16 bg-gray-50">
       <Toast ref={toast} />
       <div className="container mx-auto px-4 text-center">
         <h2 className="text-3xl font-bold text-[#27445D] ">

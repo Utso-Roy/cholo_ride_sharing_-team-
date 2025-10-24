@@ -3,7 +3,6 @@ import { HiChevronDown } from "react-icons/hi";
 import { FaMotorcycle, FaCarSide } from "react-icons/fa";
 import { MdDashboard, MdOutlineElectricRickshaw } from "react-icons/md";
 import { Link, NavLink, useLocation, useNavigate } from "react-router";
-import { Button } from "primereact/button";
 import serviceItems from "../Utils/ServiceItems/serviceItems";
 import othersItems from "../Utils/ServiceItems/othersItems";
 import { IconType } from "react-icons";
@@ -50,11 +49,7 @@ const Navbar: React.FC = () => {
 
   const links = (
     <>
-      <li>
-        <NavLink to="/home" className={navLinkClass}>
-          হোম
-        </NavLink>
-      </li>
+    
 
       {/* Services */}
       <li className="relative ">
@@ -262,7 +257,7 @@ const Navbar: React.FC = () => {
   }
 
   return (
-    <div className="navbar bg-gradient-to-r from-[#e6fcf9] via-gray-50 to-[#e6fcf9] sticky top-0 text-black z-50">
+    <div className="navbar bg-gradient-to-r from-[#e6fcf9] via-gray-50 to-[#e6fcf9] backdrop-blur-lg  text-black ">
       {/* Navbar Start */}
 
       <div className="navbar-start flex items-center gap-4">

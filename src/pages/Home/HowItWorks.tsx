@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 const steps = [
   {
     id: 1,
-    icon: <FaMotorcycle className="text-4xl text-[#71BBB2]" />,
+    icon: <FaMotorcycle className="text-4xl  text-[#71BBB2]" />,
     title: "Ride নির্বাচন করুন",
     description: "আপনার যাত্রার জন্য বাইক, কার বা সিএনজি নির্বাচন করুন।",
   },
@@ -31,7 +31,7 @@ const steps = [
 
 const HowItWorks: React.FC = () => {
   return (
-    <section className="py-16 bg-gradient-to-r from-[#e6fcf9] to-gray-50">
+    <section className="py-16 border-t border-gray-300 bg-gray-50">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center text-[#27445D]">
           কিভাবে কাজ করে
