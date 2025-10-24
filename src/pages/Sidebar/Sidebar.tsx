@@ -11,6 +11,9 @@ import {
   FaBriefcase,
   FaUser,
   FaHeart,
+  FaQuestionCircle,
+  FaCommentDots,
+  FaCalendarAlt,
 } from "react-icons/fa";
 import { Link, NavLink } from "react-router";
 import { AuthContext } from "../../Auth/AuthProvider";
@@ -35,10 +38,10 @@ interface MenuItem {
 
 const Sidebar: React.FC = () => {
   const [users, setUsers] = useState<AppUser[]>([]);
-  const [loading, setLoading] = useState<boolean>(true); 
+  const [loading, setLoading] = useState<boolean>(true);
   const { user } = useContext(AuthContext) as { user?: { email?: string } };
   useEffect(() => {
-     if (!user?.email) return;
+    if (!user?.email) return;
     const fetchUser = async () => {
       try {
         setLoading(true);
@@ -74,16 +77,24 @@ const Sidebar: React.FC = () => {
     { label: "Rider Dashboard", path: "/dashboard", icon: <FaHome /> },
   ];
 
-  const userItems: MenuItem[] = [
-    { label: "User Dashboard", path: "/dashboard", icon: <FaHome /> },
-  ];
+const userItems: MenuItem[] = [
+  { icon: <FaHome />, label: "Overview", path: "/dashboard" },
+  { icon: <FaUser />, label: "My Profile", path: "/dashboard/profile" },
+  { icon: <FaCarSide />, label: "My Rides", path: "/dashboard/my-rides" },
+  { icon: <FaCalendarAlt />, label: "Upcoming Rides", path: "/dashboard/upcoming-rides" }, 
+  { icon: <FaUsers />, label: "Favourite Drivers", path: "/dashboard/favourite-drivers" },
+  { icon: <FaQuestionCircle />, label: "Help Center", path: "/dashboard/help" },
+  { icon: <FaCommentDots />, label: "Feedback", path: "/dashboard/feedback" },
+];
+
+
 
   //  Role-based menu rendering
   let roleToRender: MenuItem[] = [];
 
   if (currentUser?.role === "admin") {
     roleToRender = adminItems;
-  } else if (currentUser?.role === "moderator")  {
+  } else if (currentUser?.role === "moderator") {
     roleToRender = moderatorMenuItems;
   } else if (currentUser?.role === "rider") {
     roleToRender = riderItems;
@@ -94,7 +105,7 @@ const Sidebar: React.FC = () => {
   //  Loading UI
   if (loading) {
     return (
-     <Loading></Loading>
+      <Loading></Loading>
     );
   }
 
@@ -115,10 +126,9 @@ const Sidebar: React.FC = () => {
             to={item.path ?? "#"}
             end
             className={({ isActive }) =>
-              `flex items-center gap-3 p-3 rounded-lg transition-all duration-300 cursor-pointer group ${
-                isActive
-                  ? "bg-[#2e736d] text-white"
-                  : "hover:bg-[#5aa49c] hover:text-white"
+              `flex items-center gap-3 p-3 rounded-lg transition-all duration-300 cursor-pointer group ${isActive
+                ? "bg-[#2e736d] text-white"
+                : "hover:bg-[#5aa49c] hover:text-white"
               }`
             }
           >
