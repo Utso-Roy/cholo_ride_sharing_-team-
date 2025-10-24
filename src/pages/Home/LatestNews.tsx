@@ -1,81 +1,128 @@
 // LatestNews.tsx
 import React from "react";
-import { FaArrowRight } from "react-icons/fa";
+import { motion } from "framer-motion";
+import { FaRegNewspaper, FaBolt, FaBell } from "react-icons/fa";
 
-interface Blog {
+interface NewsItem {
   id: number;
+  date: string;
   title: string;
-  description: string;
-  image: string;
-  link: string;
+  category: "নতুন" | "গুরুত্বপূর্ণ" | "সাধারণ";
 }
 
-const blogs: Blog[] = [
+const newsItems: NewsItem[] = [
   {
     id: 1,
-    title: "কিভাবে নিরাপদে রাইড বুক করবেন",
-    description: "আমাদের নিরাপত্তা নীতিমালা মেনে সহজে এবং নিরাপদে রাইড বুক করার টিপস।",
-    image: "https://i.ibb.co.com/0pyfrFSN/passenger.jpg",
-    link: "/blog/1",
+    date: "24 অক্টোবর 2025",
+    title: "নতুন রাইড বুকিং ফিচার চালু",
+    category: "নতুন",
   },
   {
     id: 2,
-    title: "কম খরচে যাত্রার উপায়",
-    description: "কম খরচে রাইডের জন্য আমাদের বিভিন্ন অফার এবং প্যাকেজ।",
-    image: "https://i.ibb.co.com/vxmxzcr4/How-to-Travel-Cheaply-6bb398b2bd.jpg",
-    link: "/blog/2",
+    date: "23 অক্টোবর 2025",
+    title: "নিরাপত্তা আপডেট করা হয়েছে",
+    category: "গুরুত্বপূর্ণ",
   },
   {
     id: 3,
-    title: "Verified ড্রাইভারদের সাথে যাত্রা",
-    description: "নিশ্চিন্তে যাত্রা করতে Verified ড্রাইভারদের নির্বাচন করুন।",
-    image: "https://i.ibb.co.com/Kz2xfFPM/Gemini-Generated-Image-y93h70y93h70y93h.png",
-    link: "/blog/3",
+    date: "22 অক্টোবর 2025",
+    title: "নতুন ড্রাইভার যোগ করা হয়েছে",
+    category: "সাধারণ",
   },
   {
     id: 4,
-    title: "নতুন রুট ও সার্ভিস আপডেট",
-    description: "আপনার যাত্রার সুবিধার জন্য নতুন রুট এবং সার্ভিস সমূহ।",
-    image: "https://i.ibb.co.com/0jtcYcD6/Gemini-Generated-Image-c50jcoc50jcoc50j.png",
-    link: "/blog/4",
+    date: "21 অক্টোবর 2025",
+    title: "অ্যাপের পারফরম্যান্স উন্নত করা হয়েছে",
+    category: "নতুন",
   },
 ];
 
+const categoryColors: { [key in NewsItem["category"]]: string } = {
+  নতুন: "bg-green-100 text-green-700",
+  গুরুত্বপূর্ণ: "bg-red-100 text-red-700",
+  সাধারণ: "bg-blue-100 text-blue-700",
+};
+
 const LatestNews: React.FC = () => {
   return (
-    <section className="py-16 bg-gradient-to-r from-[#e6fcf9] to-gray-50">
-      <div className=" mx-auto px-6">
-        <h2 className="text-3xl font-bold text-center text-[#27445D] mb-2">
-  সর্বশেষ খবর
-</h2>
-<p className="text-center text-gray-600 mb-8">
-  নতুন অফার, নিরাপত্তা নির্দেশিকা এবং ভেরিফায়েড ড্রাইভারদের তথ্য পেতে পড়ুন।
-</p>
+    <section className="py-16 px-6 md:px-16 bg-gradient-to-b from-[#F7FAFC] to-white border-t border-gray-200">
+      {/* Heading */}
+      <div className="text-center mb-12">
+        <motion.h2
+          className="text-4xl md:text-5xl font-extrabold text-[#27445D]"
+          initial={{ opacity: 0, y: -30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+        >
+          সর্বশেষ খবর
+        </motion.h2>
+        <motion.p
+          className="text-gray-600 mt-3 text-lg md:text-xl"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          viewport={{ once: true }}
+        >
+          আমাদের সেবার সাথে সম্পর্কিত সর্বশেষ আপডেট এবং গুরুত্বপূর্ণ সংবাদ।
+        </motion.p>
+      </div>
 
-        <div className="grid sm:grid-cols-2  md:grid-cols-4 gap-6">
-          {blogs.map((blog) => (
-            <div
-              key={blog.id}
-              className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
+      {/* Timeline / Split Layout */}
+      <div className="relative max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
+        {/* Left timeline */}
+        <div className="relative">
+          {newsItems.map((item, index) => (
+            <motion.div
+              key={item.id}
+              className="flex items-start gap-4 mb-12 relative"
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.2 }}
+              viewport={{ once: true }}
             >
-              <img
-                src={blog.image}
-                alt={blog.title}
-                className="w-full h-48 object-cover"
-              />
-              <div className="p-4">
-                <h3 className="text-lg font-semibold text-[#27445D] mb-2">
-                  {blog.title}
-                </h3>
-                <p className="text-gray-600 mb-4 text-sm">{blog.description}</p>
-                <a
-                  href={blog.link}
-                  className="flex items-center text-[#71BBB2] hover:text-[#5AA29F] font-medium"
-                >
-                  আরও পড়ুন <FaArrowRight className="ml-2" />
-                </a>
+              {/* Icon */}
+              <div className="mt-1">
+                {item.category === "নতুন" && <FaRegNewspaper className="text-green-500 text-2xl" />}
+                {item.category === "গুরুত্বপূর্ণ" && <FaBolt className="text-red-500 text-2xl" />}
+                {item.category === "সাধারণ" && <FaBell className="text-blue-500 text-2xl" />}
               </div>
-            </div>
+
+              {/* Dot/Line */}
+              <div className="absolute top-0 left-5 w-1 h-full bg-gray-300 rounded-full hidden md:block"></div>
+
+              {/* Content */}
+              <div className="ml-8">
+                <span className={`px-2 py-1 rounded-full text-sm font-semibold ${categoryColors[item.category]}`}>
+                  {item.category}
+                </span>
+                <h3 className="text-[#27445D] font-bold text-lg md:text-xl mt-1">{item.title}</h3>
+                <p className="text-gray-500 text-sm">{item.date}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Right highlights / mini cards */}
+        <div className="flex flex-col gap-6">
+          {newsItems.map((item, index) => (
+            <motion.div
+              key={item.id}
+              className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all cursor-pointer"
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.2 }}
+              viewport={{ once: true }}
+            >
+              <div className="flex justify-between items-center mb-2">
+                <span className={`px-3 py-1 rounded-full text-sm font-semibold ${categoryColors[item.category]}`}>
+                  {item.category}
+                </span>
+                <p className="text-gray-400 text-xs">{item.date}</p>
+              </div>
+              <h4 className="text-[#27445D] font-semibold text-lg">{item.title}</h4>
+              <p className="text-gray-500 text-sm mt-2">বিস্তারিত পড়তে এখানে ক্লিক করুন...</p>
+            </motion.div>
           ))}
         </div>
       </div>

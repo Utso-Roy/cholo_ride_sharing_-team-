@@ -42,7 +42,7 @@ const itemVariants = {
 
 const WhyChooseUs = () => {
   return (
-    <section className="bg-white py-20 px-6 md:px-16 border-t border-gray-100">
+    <section className="bg-gray-50 py-20 px-6 md:px-16 border-t border-gray-100">
       {/* Heading */}
       <motion.div
         className="text-center mb-12"

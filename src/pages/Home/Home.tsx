@@ -3,7 +3,6 @@ import SwiperPage from "./SwiperPage";
 import OurServices from "./OurServices";
 import FeaturedDrivers from "./FeaturedDrivers";
 import FareEstimator from "./FareEstimator";
-import Testimonials from "./Testimonials";
 import CallToAction from "./CallToAction";
 import Statistics from "./Statistics";
 import WhyChooseUs from "./WhyChooseUs";
@@ -14,9 +13,10 @@ import Newsletter from "./Newsletter";
 import Banner from "./AboutCholoVideo";
 import LandingPage from "../Landing/LandingPage";
 import AboutCholoVideo from "./AboutCholoVideo";
+import CenteredTestimonialSlider from "./CenteredTestimonialSlider";
 const Home = () => {
   return (
-    <div className="space-y-5 ">
+    <div>
       <section>
         <LandingPage></LandingPage>
       </section>
@@ -37,7 +37,7 @@ const Home = () => {
       </section>
       <FareEstimator></FareEstimator>
       <section>
-        <Testimonials></Testimonials>
+        <CenteredTestimonialSlider></CenteredTestimonialSlider>
       </section>
       <section>
         <CallToAction></CallToAction>
