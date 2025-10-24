@@ -45,7 +45,9 @@ const Sidebar: React.FC = () => {
     const fetchUser = async () => {
       try {
         setLoading(true);
-        const res = await axios.get<AppUser[]>("http://localhost:3000/users");
+        const res = await axios.get<AppUser[]>(
+          "https://cholo-ride-sharing-website-server-side.onrender.com/users"
+        );
         setUsers(res.data);
       } catch (err) {
         console.error(err);
@@ -55,6 +57,10 @@ const Sidebar: React.FC = () => {
     };
     fetchUser();
   }, [user?.email]);
+  
+  if (loading || !user?.email) {
+    return <Loading />;
+  }
 
   const currentUser = users.find((u) => u?.email === user?.email);
 
@@ -67,27 +73,53 @@ const Sidebar: React.FC = () => {
     { icon: <FaUserShield />, label: "Users", path: "/dashboard/users" },
     { icon: <FaMoneyBill />, label: "Payments", path: "/dashboard/payments" },
     { icon: <FaChartPie />, label: "Reports", path: "/dashboard/reports" },
-    { icon: <FaHandshake />, label: "Manage Partners", path: "/dashboard/manage-partners" },
-    { icon: <FaBriefcase />, label: "Manage Jobs", path: "/dashboard/manage-jobs" },
-    { icon: <FaHeart />, label: "Manage Activities", path: "/dashboard/manage-activities" },
-    { icon: <FaBriefcase />, label: "Content Management", path: "/dashboard/content-management" },
+    {
+      icon: <FaHandshake />,
+      label: "Manage Partners",
+      path: "/dashboard/manage-partners",
+    },
+    {
+      icon: <FaBriefcase />,
+      label: "Manage Jobs",
+      path: "/dashboard/manage-jobs",
+    },
+    {
+      icon: <FaHeart />,
+      label: "Manage Activities",
+      path: "/dashboard/manage-activities",
+    },
+    {
+      icon: <FaBriefcase />,
+      label: "Content Management",
+      path: "/dashboard/content-management",
+    },
   ];
 
   const riderItems: MenuItem[] = [
     { label: "Rider Dashboard", path: "/dashboard", icon: <FaHome /> },
   ];
 
-const userItems: MenuItem[] = [
-  { icon: <FaHome />, label: "Overview", path: "/dashboard" },
-  { icon: <FaUser />, label: "My Profile", path: "/dashboard/profile" },
-  { icon: <FaCarSide />, label: "My Rides", path: "/dashboard/my-rides" },
-  { icon: <FaCalendarAlt />, label: "Upcoming Rides", path: "/dashboard/upcoming-rides" }, 
-  { icon: <FaUsers />, label: "Favourite Drivers", path: "/dashboard/favourite-drivers" },
-  { icon: <FaQuestionCircle />, label: "Help Center", path: "/dashboard/help" },
-  { icon: <FaCommentDots />, label: "Feedback", path: "/dashboard/feedback" },
-];
-
-
+  const userItems: MenuItem[] = [
+    { icon: <FaHome />, label: "Overview", path: "/dashboard" },
+    { icon: <FaUser />, label: "My Profile", path: "/dashboard/profile" },
+    { icon: <FaCarSide />, label: "My Rides", path: "/dashboard/my-rides" },
+    {
+      icon: <FaCalendarAlt />,
+      label: "Upcoming Rides",
+      path: "/dashboard/upcoming-rides",
+    },
+    {
+      icon: <FaUsers />,
+      label: "Favourite Drivers",
+      path: "/dashboard/favourite-drivers",
+    },
+    {
+      icon: <FaQuestionCircle />,
+      label: "Help Center",
+      path: "/dashboard/help",
+    },
+    { icon: <FaCommentDots />, label: "Feedback", path: "/dashboard/feedback" },
+  ];
 
   //  Role-based menu rendering
   let roleToRender: MenuItem[] = [];
@@ -102,12 +134,6 @@ const userItems: MenuItem[] = [
     roleToRender = userItems;
   }
 
-  //  Loading UI
-  if (loading) {
-    return (
-      <Loading></Loading>
-    );
-  }
 
   return (
     <div className="h-screen w-64 bg-[#71BBB2] text-[#083c3a] flex flex-col shadow-xl border-r border-[#9ad2cb] fixed md:static z-40">
@@ -126,9 +152,10 @@ const userItems: MenuItem[] = [
             to={item.path ?? "#"}
             end
             className={({ isActive }) =>
-              `flex items-center gap-3 p-3 rounded-lg transition-all duration-300 cursor-pointer group ${isActive
-                ? "bg-[#2e736d] text-white"
-                : "hover:bg-[#5aa49c] hover:text-white"
+              `flex items-center gap-3 p-3 rounded-lg transition-all duration-300 cursor-pointer group ${
+                isActive
+                  ? "bg-[#2e736d] text-white"
+                  : "hover:bg-[#5aa49c] hover:text-white"
               }`
             }
           >

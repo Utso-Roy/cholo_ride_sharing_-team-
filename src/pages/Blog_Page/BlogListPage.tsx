@@ -32,7 +32,9 @@ export const BlogListPage: React.FC = () => {
     queryKey: ["blogs"],
     queryFn: async () => {
       // const res = await fetch("/blogs.json");
-      const res = await fetch("http://localhost:3000/api/blogs");
+      const res = await fetch(
+        "https://cholo-ride-sharing-website-server-side.onrender.com/api/blogs"
+      );
       return res.json();
     },
   });
