@@ -74,6 +74,11 @@ import EditBlog from "../DashboardPages/EditBlog";
 import RideBooking from "../pages/Services/RideBooking";
 import LandingPage from "../pages/Landing/LandingPage";
 import LearnMore from "../pages/LearnMore/LearnMore";
+import MyRides from "../DashboardPages/UsersDashboard/MyRides";
+import FavouriteDrivers from "../DashboardPages/UsersDashboard/FavouriteDrivers";
+import HelpCenter from "../DashboardPages/UsersDashboard/HelpCenter";
+import FeedbackSection from "../DashboardPages/UsersDashboard/FeedbackSection";
+import UpcomingRides from "../DashboardPages/UsersDashboard/UpcomingRides";
 
 
 const router = createBrowserRouter([
@@ -192,7 +197,27 @@ const router = createBrowserRouter([
       {
         path: 'mod/verifications',
         element: <VerificationPage/>
-      }
+      },
+      {
+        path: 'my-rides',
+        element: <MyRides/>
+      },
+      {
+        path: 'favourite-drivers',
+        element: <FavouriteDrivers/>
+      },
+      {
+        path: 'help',
+        element: <HelpCenter/>
+      },
+      {
+        path: 'feedback',
+        element: <FeedbackSection/>
+      },
+      {
+        path: 'upcoming-rides',
+        element: <UpcomingRides/>
+      },
       
     ],
   },
