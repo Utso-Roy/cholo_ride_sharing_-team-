@@ -6,8 +6,7 @@ const Loader: FC = () => {
     return (
         <div className="bg-cover bg-center bg-no-repeat bg-fixed flex items-center justify-center h-screen"
             style={{
-                // backgroundImage: "url('https://i.ibb.co.com/zTQ6z80G/map.jpg')",
-                // backgroundColor: "rgba(0, 0, 0, 0.2)",
+                /// backgroundImage: "url('https://i.ibb.co.com/zTQ6z80G/map.jpg')",
                 backgroundImage: "linear-gradient(to right, rgba(230,252,249,0.8), rgba(249,250,251,0.8)), url('https://i.ibb.co/zTQ6z80G/map.jpg')",
                 backgroundColor: "rgba(0, 0, 0, 0.1)",
                 backgroundBlendMode: "overlay",
