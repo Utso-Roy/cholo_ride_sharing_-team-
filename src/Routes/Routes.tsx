@@ -79,6 +79,12 @@ import FavouriteDrivers from "../DashboardPages/UsersDashboard/FavouriteDrivers"
 import HelpCenter from "../DashboardPages/UsersDashboard/HelpCenter";
 import FeedbackSection from "../DashboardPages/UsersDashboard/FeedbackSection";
 import UpcomingRides from "../DashboardPages/UsersDashboard/UpcomingRides";
+import UsersForModerator from "../DashboardPages/Moderator/Users/UsersForModerator";
+import RideQueuePage from "../DashboardPages/Moderator/Rides/RideQueuePage";
+import RideDetailPage from "../DashboardPages/Moderator/Rides/RideDetailPage";
+import DisputeListPage from "../DashboardPages/Moderator/Dispute/DisputeListPage";
+import DisputeDetailPage from "../DashboardPages/Moderator/Dispute/DisputeDetailPage";
+import { TemplateListPage } from "../DashboardPages/Moderator/MessageTemplate/TemplateListPage";
 
 
 const router = createBrowserRouter([
@@ -219,6 +225,29 @@ const router = createBrowserRouter([
         element: <UpcomingRides/>
       },
       
+        path: 'mod/users',
+        element: <UsersForModerator/>
+      },
+      {
+        path: 'mod/rides/queue',
+        element: <RideQueuePage/>
+      }, 
+      {
+        path: 'mod/rides/:rideId',
+        element: <RideDetailPage/>
+      }, 
+      {
+        path: 'mod/disputes',
+        element: <DisputeListPage/>
+      }, 
+      {
+        path: 'mod/disputes/:disputeId',
+        element: <DisputeDetailPage/>
+      }, 
+      {
+        path: 'mod/comms/templates',
+        element: <TemplateListPage/>
+      }, 
     ],
   },
 

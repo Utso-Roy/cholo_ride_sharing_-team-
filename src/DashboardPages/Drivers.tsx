@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { DataTable, DataTablePageEvent } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Toolbar } from "primereact/toolbar";
@@ -8,8 +8,9 @@ import { Tag } from "primereact/tag";
 import { Button } from "primereact/button";
 import { Sidebar } from "primereact/sidebar";
 import { Toast } from "primereact/toast";
-import api from "../lib/api";
+import api from "../lib/api"; // <-- default export (match your api.ts)
 
+/** Types */
 type DriverDoc = {
   _id: string;
   vehicleType: "bike" | "car" | "cng";
@@ -45,6 +46,7 @@ type ApiResponse = {
   items: DriverDoc[];
 };
 
+/** Helpers */
 const fmtDate = (iso?: string) => (iso ? new Date(iso).toLocaleDateString() : "—");
 const toAbsolute = (url?: string) => {
   if (!url) return "";
@@ -55,28 +57,34 @@ const toAbsolute = (url?: string) => {
 };
 
 export default function Drivers() {
+  /** table state */
   const [rows, setRows] = useState<DriverDoc[]>([]);
   const [total, setTotal] = useState(0);
-  const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
+  const [first, setFirst] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  /** filters */
   const [q, setQ] = useState("");
   const [status, setStatus] = useState<"all" | "pending" | "approved" | "rejected">("all");
-  const [loading, setLoading] = useState(false);
 
+  /** ui state */
+  const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState<DriverDoc | null>(null);
   const [drawer, setDrawer] = useState(false);
   const [loadingDetail, setLoadingDetail] = useState(false);
-
   const toast = useRef<Toast>(null);
-  const totalPages = useMemo(() => Math.max(1, Math.ceil(total / limit)), [total, limit]);
 
+  /** derived */
+  const page = Math.floor(first / rowsPerPage) + 1;
+
+  /** data loader */
   const load = async () => {
     try {
       setLoading(true);
       const { data } = await api.get<ApiResponse>("/api/drivers", {
         params: {
           page,
-          limit,
+          limit: rowsPerPage,
           q: q.trim() || undefined,
           status: status !== "all" ? status : undefined,
         },
@@ -90,18 +98,29 @@ export default function Drivers() {
     }
   };
 
+  /** load on paging/filter change */
   useEffect(() => {
     load();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, limit, status]);
+  }, [first, rowsPerPage, status]);
 
+  /** debounce search */
+  useEffect(() => {
+    const t = setTimeout(() => {
+      setFirst(0);
+      load();
+    }, 300);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [q]);
+
+  /** pagination event */
   const onPage = (e: DataTablePageEvent) => {
-    const nextLimit = e.rows ?? limit;
-    const first = e.first ?? (page - 1) * nextLimit;
-    setLimit(nextLimit);
-    setPage(Math.floor(first / nextLimit) + 1);
+    setFirst(e.first ?? 0);
+    setRowsPerPage(e.rows ?? rowsPerPage);
   };
 
+  /** open detail drawer */
   const openDetail = async (id: string) => {
     try {
       setLoadingDetail(true);
@@ -115,7 +134,7 @@ export default function Drivers() {
     }
   };
 
-  // table cells
+  /** table cells */
   const nameBody = (d: DriverDoc) => (
     <div className="flex items-center gap-2">
       <div className="font-medium">
@@ -144,22 +163,22 @@ export default function Drivers() {
     <Button size="small" label="View" icon="pi pi-eye" onClick={() => openDetail(d._id)} />
   );
 
-  // Sidebar chip styles per new palette
+  /** detail drawer chips */
   const statusChip = (s: DriverDoc["status"]) => {
     if (s === "approved")
       return (
-        <div className="mt-2 inline-flex items-center rounded-full bg-primary/20 dark:bg-primary/30 px-3 py-1 text-xs font-medium text-primary dark:text-primary-accent">
+        <div className="mt-2 inline-flex items-center rounded-full bg-green-500/20 px-3 py-1 text-xs font-medium text-green-700">
           Active
         </div>
       );
     if (s === "pending")
       return (
-        <div className="mt-2 inline-flex items-center rounded-full bg-yellow-500/20 dark:bg-yellow-500/30 px-3 py-1 text-xs font-medium text-white dark:text-black">
+        <div className="mt-2 inline-flex items-center rounded-full bg-yellow-500/20 px-3 py-1 text-xs font-medium text-yellow-700">
           Pending
         </div>
       );
     return (
-      <div className="mt-2 inline-flex items-center rounded-full bg-rose-500/20 dark:bg-rose-500/30 px-3 py-1 text-xs font-medium text-rose-700 dark:text-rose-300">
+      <div className="mt-2 inline-flex items-center rounded-full bg-rose-500/20 px-3 py-1 text-xs font-medium text-rose-700">
         Rejected
       </div>
     );
@@ -168,11 +187,11 @@ export default function Drivers() {
   const showOnlinePing = selected?.status === "approved";
 
   return (
-    <div className="p-4 bg-gray-100 dark:bg-background-dark min-h-screen">
+    <div className="p-4">
       <Toast ref={toast} />
 
       <Toolbar
-        start={<h2 className="m-0 text-text-dark dark:text-text-light">Drivers</h2>}
+        start={<h2 className="m-0">Drivers</h2>}
         end={
           <div className="flex gap-2 items-center">
             <span className="p-input-icon-left">
@@ -182,7 +201,7 @@ export default function Drivers() {
                 onChange={(e) => setQ(e.target.value)}
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
-                    setPage(1);
+                    setFirst(0);
                     load();
                   }
                 }}
@@ -194,7 +213,7 @@ export default function Drivers() {
               value={status}
               onChange={(e) => {
                 setStatus(e.value);
-                setPage(1);
+                setFirst(0);
               }}
               options={[
                 { label: "All", value: "all" },
@@ -204,8 +223,15 @@ export default function Drivers() {
               ]}
               style={{ width: 160 }}
             />
-            <Dropdown value={limit} onChange={(e) => setLimit(e.value)} options={[10, 20, 50].map((n) => ({ label: `${n}/page`, value: n }))} style={{ width: 120 }} />
-            <Button icon="pi pi-refresh" label="Refresh" onClick={() => { setPage(1); load(); }} />
+            <Dropdown
+              value={rowsPerPage}
+              onChange={(e) => {
+                setRowsPerPage(e.value);
+                setFirst(0);
+              }}
+              options={[5, 10, 20, 50].map((n) => ({ label: `${n}/page`, value: n }))}
+              style={{ width: 120 }}
+            />
           </div>
         }
       />
@@ -213,12 +239,12 @@ export default function Drivers() {
       <DataTable
         value={rows}
         loading={loading}
-        dataKey="_id"
         paginator
-        rows={limit}
+        first={first}
+        rows={rowsPerPage}
         totalRecords={total}
-        first={(page - 1) * limit}
         onPage={onPage}
+        rowsPerPageOptions={[5, 10, 20, 50]}
         responsiveLayout="scroll"
         emptyMessage="No drivers found."
       >
@@ -232,13 +258,8 @@ export default function Drivers() {
         <Column header="Actions" body={actionsBody} style={{ width: 140 }} />
       </DataTable>
 
-      <div className="mt-2 text-sm text-text-dark/70 dark:text-text-light/70">
-        Showing {(page - 1) * limit + (rows.length ? 1 : 0)}–{Math.min(page * limit, total)} of {total}
-      </div>
-
-      {/* Detail Drawer — updated to your new theme */}
+      {/* Detail Drawer */}
       <Sidebar
-      className="bg-[#efe9d5]"
         visible={drawer}
         onHide={() => setDrawer(false)}
         position="right"
@@ -246,128 +267,57 @@ export default function Drivers() {
         blockScroll
         showCloseIcon
         style={{ width: "420px", maxWidth: "100%" }}
-        pt={{
-          root: { style: { borderLeft: "1px solid rgba(0,0,0,0.06)" } },
-          content: { style: { padding: 0 } },
-        }}
       >
-        {loadingDetail && <div className="p-4 text-text-dark dark:text-text-light">Loading…</div>}
+        {loadingDetail && <div className="p-4">Loading…</div>}
         {!loadingDetail && selected && (
-          <div className="bg-[#efe9d5]">
+          <div>
             <div className="p-6 flex flex-col gap-8">
               {/* Profile */}
               <div className="flex flex-col items-center gap-4">
                 <div className="relative">
                   <div
-                    className="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-24"
+                    className="bg-center bg-no-repeat aspect-square bg-cover rounded-full"
                     style={{
+                      width: 96,
+                      height: 96,
                       backgroundImage: `url("${toAbsolute(selected.driver.photoUrl) || "https://placehold.co/192x192?text=Driver"}")`,
                     }}
                     data-alt={`${selected.driver.firstName} ${selected.driver.lastName}`}
                   />
                   {showOnlinePing && (
                     <span className="absolute bottom-1 right-1 flex h-4 w-4">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-accent opacity-75" />
-                      <span className="relative inline-flex rounded-full h-4 w-4 bg-primary border-2 border-white dark:border-background-light" />
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+                      <span className="relative inline-flex rounded-full h-4 w-4 bg-green-600 border-2 border-white" />
                     </span>
                   )}
                 </div>
+
                 <div className="text-center">
-                  <h1 className="text-xl font-bold text-text-dark dark:text-text-light">
+                  <h1 className="text-xl font-bold">
                     {selected.driver.firstName} {selected.driver.lastName}
                   </h1>
-                  <p className="text-sm text-text-dark/70 dark:text-text-light/70">
-                    Driver ID: {selected._id}
-                  </p>
+                  <p className="text-sm text-gray-500">Driver ID: {selected._id}</p>
                   {statusChip(selected.status)}
                 </div>
               </div>
 
-
-              {/* Driver Details */}
-              <div className="flex flex-col gap-4 rounded-xl dark:bg-black/20 p-4">
-                <div>
-                  <h2 className="text-lg font-bold text-text-dark dark:text-text-light text-center">Driver Details</h2>
-                </div>
-                <div className="grid grid-cols-1">
-                  <div className="flex items-center justify-between border-t border-black/10 dark:border-white/10 py-4">
-                    <p className="text-sm text-text-dark/70 dark:text-text-light/70">Contact Number</p>
-                    <p className="text-sm font-medium text-text-dark dark:text-text-light">{selected.driver.phone}</p>
-                  </div>
-
-                  {selected.driver.email && (
-                    <div className="flex items-center justify-between border-t border-black/10 dark:border-white/10 py-4">
-                      <p className="text-sm text-text-dark/70 dark:text-text-light/70">Email Address</p>
-                      <p className="text-sm font-medium text-text-dark dark:text-text-light">{selected.driver.email}</p>
-                    </div>
-                  )}
-
-                  <div className="flex items-center justify-between border-t border-black/10 dark:border-white/10 py-4">
-                    <p className="text-sm text-text-dark/70 dark:text-text-light/70">License Number</p>
-                    <p className="text-sm font-medium text-text-dark dark:text-text-light">{selected.driver.license}</p>
-                  </div>
-
-                  <div className="flex items-center justify-between border-t border-black/10 dark:border-white/10 py-4">
-                    <p className="text-sm text-text-dark/70 dark:text-text-light/70">NID</p>
-                    <p className="text-sm font-medium text-text-dark dark:text-text-light">{selected.driver.nid}</p>
-                  </div>
-
-                  <div className="flex items-center justify-between border-t border-black/10 dark:border-white/10 py-4">
-                    <p className="text-sm text-text-dark/70 dark:text-text-light/70">Date of Birth</p>
-                    <p className="text-sm font-medium text-text-dark dark:text-text-light">{fmtDate(selected.driver.dob)}</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Vehicle Information */}
-              <div className="flex flex-col gap-4 rounded-xl bg-white/50 dark:bg-black/20 p-4">
-                <div>
-                  <h2 className="text-lg font-bold text-text-dark dark:text-text-light text-center">Vehicle Information</h2>
-                </div>
-                <div className="grid grid-cols-1">
-                  <div className="flex items-center justify-between border-t border-black/10 dark:border-white/10 py-4">
-                    <p className="text-sm text-text-dark/70 dark:text-text-light/70">Make &amp; Model</p>
-                    <p className="text-sm font-medium text-text-dark dark:text-text-light">
-                      {selected.vehicle.brand} {selected.vehicle.model}
-                    </p>
-                  </div>
-
-                  <div className="flex items-center justify-between border-t border-black/10 dark:border-white/10 py-4">
-                    <p className="text-sm text-text-dark/70 dark:text-text-light/70">License Plate</p>
-                    <p className="text-sm font-medium text-text-dark dark:text-text-light">{selected.vehicle.regNo}</p>
-                  </div>
-
-                  <div className="flex items-center justify-between border-t border-black/10 dark:border-white/10 py-4">
-                    <p className="text-sm text-text-dark/70 dark:text-text-light/70">Year</p>
-                    <p className="text-sm font-medium text-text-dark dark:text-text-light">{selected.vehicle.year || "—"}</p>
-                  </div>
-
-                  <div className="flex items-center justify-between border-t border-black/10 dark:border-white/10 py-4">
-                    <p className="text-sm text-text-dark/70 dark:text-text-light/70">Fitness No</p>
-                    <p className="text-sm font-medium text-text-dark dark:text-text-light">{selected.vehicle.fitnessNo}</p>
-                  </div>
-
-                  <div className="flex items-center justify-between border-t border-black/10 dark:border-white/10 py-4">
-                    <p className="text-sm text-text-dark/70 dark:text-text-light/70">Tax Token No</p>
-                    <p className="text-sm font-medium text-text-dark dark:text-text-light">{selected.vehicle.taxTokenNo}</p>
-                  </div>
-
-                  {selected.vehicle.routePermitNo && (
-                    <div className="flex items-center justify-between border-t border-black/10 dark:border-white/10 py-4">
-                      <p className="text-sm text-text-dark/70 dark:text-text-light/70">Route Permit No</p>
-                      <p className="text-sm font-medium text-text-dark dark:text-text-light">{selected.vehicle.routePermitNo}</p>
-                    </div>
-                  )}
-
-                  {selected.vehicle.insuranceExpiry && (
-                    <div className="flex items-center justify-between border-t border-black/10 dark:border-white/10 py-4">
-                      <p className="text-sm text-text-dark/70 dark:text-text-light/70">Insurance Expiry</p>
-                      <p className="text-sm font-medium text-text-dark dark:text-text-light">
-                        {fmtDate(selected.vehicle.insuranceExpiry)}
-                      </p>
-                    </div>
-                  )}
-                </div>
+              {/* Details */}
+              <div className="px-1 grid grid-cols-2 gap-3 text-sm">
+                <p><strong>Phone:</strong> {selected.driver.phone}</p>
+                <p><strong>City:</strong> {selected.driver.city}</p>
+                <p><strong>License:</strong> {selected.driver.license}</p>
+                <p><strong>NID:</strong> {selected.driver.nid}</p>
+                <p><strong>DOB:</strong> {fmtDate(selected.driver.dob)}</p>
+                <p><strong>Status:</strong> {selected.status}</p>
+                <p><strong>Brand:</strong> {selected.vehicle.brand}</p>
+                <p><strong>Model:</strong> {selected.vehicle.model}</p>
+                <p><strong>Reg No:</strong> {selected.vehicle.regNo}</p>
+                <p><strong>Year:</strong> {selected.vehicle.year}</p>
+                <p><strong>Fitness No:</strong> {selected.vehicle.fitnessNo}</p>
+                <p><strong>Tax Token:</strong> {selected.vehicle.taxTokenNo}</p>
+                {selected.vehicle.routePermitNo && (
+                  <p><strong>Route Permit:</strong> {selected.vehicle.routePermitNo}</p>
+                )}
               </div>
             </div>
           </div>
