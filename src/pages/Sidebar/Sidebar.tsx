@@ -57,10 +57,8 @@ const Sidebar: React.FC = () => {
     };
     fetchUser();
   }, [user?.email]);
-  
-  if (loading || !user?.email) {
-    return <Loading />;
-  }
+
+
 
   const currentUser = users.find((u) => u?.email === user?.email);
 
@@ -133,8 +131,9 @@ const Sidebar: React.FC = () => {
   } else {
     roleToRender = userItems;
   }
-
-
+  if (loading || !user?.email) {
+    return <Loading />;
+  }
   return (
     <div className="h-screen w-64 bg-[#71BBB2] text-[#083c3a] flex flex-col shadow-xl border-r border-[#9ad2cb] fixed md:static z-40">
       {/* Logo */}
