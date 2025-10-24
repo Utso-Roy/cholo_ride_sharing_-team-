@@ -221,7 +221,7 @@ const router = createBrowserRouter([
         path: 'upcoming-rides',
         element: <UpcomingRides/>
       },
-      
+      {
         path: 'mod/users',
         element: <UsersForModerator/>
       },
