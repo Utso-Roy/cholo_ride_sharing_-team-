@@ -77,7 +77,7 @@ const MessengerChat: React.FC = () => {
       <button
         onClick={() => setOpen((o) => !o)}
         aria-label="Open chat"
-        className="fixed bottom-6 right-6 bg-[#27445D] text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-200 z-50"
+        className="fixed bottom-6 right-6 bg-[#71BBB2] text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-200 z-50"
       >
         <FaFacebookMessenger size={28} />
       </button>
@@ -86,7 +86,7 @@ const MessengerChat: React.FC = () => {
       {open && (
         <div className="fixed bottom-20 right-4 w-72 md:w-96 max-h-[65vh] md:max-h-[80vh] bg-white shadow-2xl rounded-2xl border border-gray-200 flex flex-col z-50">
           {/* Header */}
-          <div className="flex items-center justify-between px-4 py-3 bg-[#27445D] text-white rounded-t-2xl">
+          <div className="flex items-center justify-between px-4 py-3 bg-[#71BBB2] text-white rounded-t-2xl">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center">🚗</div>
               <div>
@@ -126,7 +126,7 @@ const MessengerChat: React.FC = () => {
               <button
                 onClick={sendMessage}
                 disabled={loading || !input.trim()}
-                className="bg-[#27445D] text-white rounded-xl px-3 py-2 text-sm disabled:opacity-50"
+                className="bg-[#71BBB2] text-white rounded-xl px-3 py-2 text-sm disabled:opacity-50"
               >
                 Send
               </button>

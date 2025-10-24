@@ -131,14 +131,15 @@ export default function Drivers() {
     </div>
   );
 
-  const statusBody = (d: DriverDoc) => {
+ const statusBody = (d: DriverDoc) => {
     const map = {
       approved: { label: "Approved", severity: "success" as const },
       rejected: { label: "Rejected", severity: "danger" as const },
       pending: { label: "Pending", severity: "warning" as const },
-    }[d.status];
+    }[d.status] || { label: "Unknown", severity: "info" as const }; // fallback
     return <Tag value={map.label} severity={map.severity} />;
-  };
+};
+
 
   const actionsBody = (d: DriverDoc) => (
     <Button size="small" label="View" icon="pi pi-eye" onClick={() => openDetail(d._id)} />

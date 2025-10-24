@@ -72,7 +72,6 @@ import ManageSocialActivities from "../pages/OthersPage/ManageSocialActivities";
 import Dashboard from "../DashboardPages/Dashboard";
 import EditBlog from "../DashboardPages/EditBlog";
 import RideBooking from "../pages/Services/RideBooking";
-import LandingPage from "../pages/Landing/LandingPage";
 import LearnMore from "../pages/LearnMore/LearnMore";
 
 
@@ -83,12 +82,10 @@ const router = createBrowserRouter([
     errorElement: <Error />,
     children: [
       // Home
-      { index: true, element: <LandingPage></LandingPage>},
+      { index: true, element: <Home />},
 
       // Help
-      {
-       path : '/home', element :<Home />
-      },
+    
       { path: "faq", element: <FAQ /> },
       { path: "customercare", element: <CustomerCare /> },
       { path: "userguide", element: <UserGuide /> },

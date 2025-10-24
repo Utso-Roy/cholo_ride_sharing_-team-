@@ -49,11 +49,7 @@ const Navbar: React.FC = () => {
 
   const links = (
     <>
-      <li>
-        <NavLink to="/home" className={navLinkClass}>
-          হোম
-        </NavLink>
-      </li>
+    
 
       {/* Services */}
       <li className="relative ">

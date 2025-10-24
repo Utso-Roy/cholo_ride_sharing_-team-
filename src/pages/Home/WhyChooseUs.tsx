@@ -1,74 +1,88 @@
 import React from "react";
+import { FaCarSide, FaUserCheck, FaClock, FaLock } from "react-icons/fa";
 import { motion } from "framer-motion";
-import { FaShieldAlt, FaMoneyBillWave, FaHeadset, FaUserCheck } from "react-icons/fa";
 
 const features = [
   {
-    icon: <FaShieldAlt className="text-4xl text-[#71BBB2]" />,
+    icon: <FaCarSide />,
+    title: "আরামদায়ক রাইড",
+    desc: "সকল যাত্রা হবে smooth এবং stress-free।",
+  },
+  {
+    icon: <FaUserCheck />,
+    title: "বিশ্বস্ত ড্রাইভার",
+    desc: "যাচাই করা এবং trusted ড্রাইভাররা আপনার পাশে।",
+  },
+  {
+    icon: <FaClock />,
+    title: "দ্রুত বুকিং",
+    desc: "মুহূর্তের মধ্যে রাইড নিশ্চিত।",
+  },
+  {
+    icon: <FaLock />,
     title: "নিরাপদ যাত্রা",
-    description: "আমাদের সেফটি নীতিমালা আপনার প্রতিটি যাত্রাকে নিরাপদ রাখে।",
-  },
-  {
-    icon: <FaMoneyBillWave className="text-4xl text-[#71BBB2]" />,
-    title: "কম খরচে রাইড",
-    description: "সাশ্রয়ী মূল্যে বাইক, কার ও সিএনজি রাইড বুকিং সুবিধা।",
-  },
-  {
-    icon: <FaHeadset className="text-4xl text-[#71BBB2]" />,
-    title: "২৪/৭ কাস্টমার কেয়ার",
-    description: "যেকোনো সময়ে সহায়তার জন্য আমাদের টিম আপনার পাশে।",
-  },
-  {
-    icon: <FaUserCheck className="text-4xl text-[#71BBB2]" />,
-    title: "ভেরিফায়েড ড্রাইভার",
-    description: "প্রত্যেক ড্রাইভারকে যাচাই-বাছাই করা হয়েছে আপনার নিরাপত্তার জন্য।",
+    desc: "আপনার সেফটি আমাদের প্রথম প্রাধান্য।",
   },
 ];
 
-const WhyChooseUs: React.FC = () => {
-  return (
-    <section className="py-16 bg-gray-50">
-      <div className="w-full px-6 text-center">
-        {/* Section Title */}
-        <motion.h2
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-3xl md:text-4xl font-bold text-[#27445D] "
-        >
-          কেন আমাদের বেছে নেবেন?
-        </motion.h2>
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          viewport={{ once: true }}
-          className="text-gray-600 mb-12"
-        >
-          আমরা দিচ্ছি নিরাপদ, সাশ্রয়ী এবং বিশ্বস্ত রাইড শেয়ারিং সেবা।
-        </motion.p>
+// Motion Variants
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.2, // Each child animates after 0.2s
+    },
+  },
+};
 
-        {/* Features Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-          {features.map((feature, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.2 }}
-              viewport={{ once: true }}
-              className="bg-white shadow-md  p-6 flex flex-col items-center hover:shadow-xl transition-shadow duration-300"
-            >
+const itemVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+};
+
+const WhyChooseUs = () => {
+  return (
+    <section className="bg-white py-20 px-6 md:px-16 border-t border-gray-100">
+      {/* Heading */}
+      <motion.div
+        className="text-center mb-12"
+        initial={{ opacity: 0, y: -30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        viewport={{ once: true }}
+      >
+        <h2 className="text-4xl md:text-5xl font-extrabold text-[#27445D]">
+          কেন চলো ব্যবহার করবেন?
+        </h2>
+        <p className="text-gray-600 mt-3 text-lg md:text-xl">
+          মাত্র কয়েক ধাপে বুক করুন আপনার রাইড — দ্রুত, নিরাপদ ও সুবিধাজনক।
+        </p>
+      </motion.div>
+
+      {/* Features Grid with smooth stagger animation */}
+      <motion.div
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+      >
+        {features.map((feature, index) => (
+          <motion.div
+            key={index}
+            className="bg-white rounded-xl p-6 text-center shadow-md hover:shadow-xl transition cursor-pointer"
+            variants={itemVariants}
+          >
+            <div className="text-[#71BBB2] text-4xl mb-4 flex justify-center">
               {feature.icon}
-              <h3 className="mt-4 text-lg font-semibold text-[#27445D]">{feature.title}</h3>
-              <p className="text-gray-500 mt-2 text-sm text-center">
-                {feature.description}
-              </p>
-            </motion.div>
-          ))}
-        </div>
-      </div>
+            </div>
+            <h3 className="text-xl font-bold text-[#27445D] mb-2">
+              {feature.title}
+            </h3>
+            <p className="text-gray-600">{feature.desc}</p>
+          </motion.div>
+        ))}
+      </motion.div>
     </section>
   );
 };

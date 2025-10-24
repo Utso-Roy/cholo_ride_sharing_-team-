@@ -1,3 +1,4 @@
+
 import React from "react";
 import { FaStar } from "react-icons/fa";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -46,12 +47,13 @@ const testimonials: Testimonial[] = [
 
 const Testimonials: React.FC = () => {
   return (
-    <section className="py-16  bg-gradient-to-r from-[#e6fcf9] to-gray-50">
+    <section className="py-16 bg-gradient-to-r from-[#e6fcf9] to-gray-50">
       <div className="w-full px-6 text-center">
-        <h2 className="text-4xl font-bold text-[#27445D] ">
+        {/* Heading */}
+        <h2 className="text-4xl md:text-5xl font-extrabold text-[#27445D] mb-3">
           ব্যবহারকারীদের মতামত
         </h2>
-        <p className="text-gray-600 mb-12 max-w-3xl mx-auto">
+        <p className="text-gray-600 mb-12 max-w-3xl mx-auto text-lg md:text-xl">
           আমাদের সেবার উপর গ্রাহকদের বিশ্বাসযোগ্য মতামত।
         </p>
 
@@ -61,26 +63,35 @@ const Testimonials: React.FC = () => {
           spaceBetween={30}
           slidesPerView={1}
           pagination={{ clickable: true }}
-          autoplay={{ delay: 5000 }}
+          autoplay={{ delay: 5000, disableOnInteraction: false }}
           loop
         >
           {testimonials.map((t) => (
             <SwiperSlide key={t.id}>
-              <div className="flex flex-col items-center justify-center gap-4">
-                <div className="w-28 h-28 rounded-full overflow-hidden border-4 border-[#71BBB2] mb-2">
+              <div className="flex flex-col items-center justify-center gap-6 md:gap-4 px-6 md:px-0">
+                {/* Circular profile image */}
+                <div className="w-28 h-28 rounded-full overflow-hidden border-4 border-[#71BBB2] shadow-lg">
                   <img
                     src={t.photo}
                     alt={t.name}
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <h3 className="text-xl text-[#27445D] font-semibold">{t.name}</h3>
-                <div className="flex items-center gap-1 text-yellow-400 mb-2">
+
+                {/* Name */}
+                <h3 className="text-xl md:text-2xl font-semibold text-[#27445D]">
+                  {t.name}
+                </h3>
+
+                {/* Rating */}
+                <div className="flex items-center gap-1 text-yellow-400">
                   {Array.from({ length: t.rating }, (_, i) => (
                     <FaStar key={i} />
                   ))}
                 </div>
-                <p className="text-[#27445D] max-w-xl mx-auto italic">
+
+                {/* Comment */}
+                <p className="text-[#27445D] max-w-xl mx-auto italic text-center text-base md:text-lg">
                   "{t.comment}"
                 </p>
               </div>
