@@ -41,7 +41,7 @@ const OurServices: React.FC = () => {
       }}
     >
       {/* Overlay */}
-      <div className="absolute inset-0 bg-white/80 backdrop-blur-[1px]"></div>
+      <div className="absolute inset-0 bg-white/60 backdrop-blur-[1px]"></div>
 
       <div className="relative z-10 w-full text-center">
         {/* Section Title */}

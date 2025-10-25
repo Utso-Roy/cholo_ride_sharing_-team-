@@ -15,7 +15,7 @@ const PartnersSlider: React.FC = () => {
       <div className="w-full px-6">
         {/* Heading */}
         <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#71BBB2] to-[#0D5EA6]">
+          <h2 className="text-4xl md:text-5xl font-extrabold  bg-clip-text text-[#27445D]">
             আমাদের পার্টনার
           </h2>
           <p className="mt-3 text-gray-700 text-lg md:text-xl">

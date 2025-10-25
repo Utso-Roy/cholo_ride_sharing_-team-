@@ -24,7 +24,7 @@ const FeedbackForm: React.FC = () => {
 
     try {
       const response = await axios.post(
-        "https://cholo-ride-sharing-website-server-side.onrender.com/api/feedbacks",
+        "http://localhost:3000/api/feedbacks",
         formData
       );
       if (response.status === 201) {
