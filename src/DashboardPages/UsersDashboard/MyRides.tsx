@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Tag } from "primereact/tag";
-import { Divider } from "primereact/divider";
 import { FaCarSide } from "react-icons/fa";
+import axios from "axios";
+import { AuthContext } from "../../Auth/AuthProvider";
+import { useQuery } from "@tanstack/react-query";
+import Loading from "../../Loading/Loading";
 
 interface Ride {
   id: string;
@@ -15,20 +18,18 @@ interface Ride {
 }
 
 const MyRides: React.FC = () => {
-  const rides: Ride[] = [
-    { id: "RIDE-2025-001", date: "2025-10-21 10:30 AM", pickup: "বনানী, ঢাকা", dropoff: "ধানমন্ডি, ঢাকা", fare: 320, status: "Completed" },
-    { id: "RIDE-2025-002", date: "2025-10-22 8:15 PM", pickup: "উত্তরা, ঢাকা", dropoff: "মিরপুর, ঢাকা", fare: 270, status: "Ongoing" },
-    { id: "RIDE-2025-003", date: "2025-10-18 4:45 PM", pickup: "মোহাখালি, ঢাকা", dropoff: "বশুন্ধরা, ঢাকা", fare: 300, status: "Cancelled" },
-    { id: "RIDE-2025-004", date: "2025-10-20 9:00 AM", pickup: "গুলশান, ঢাকা", dropoff: "আগারগাঁও, ঢাকা", fare: 350, status: "Completed" },
-    { id: "RIDE-2025-005", date: "2025-10-19 2:30 PM", pickup: "চট্টগ্রাম রোড, ঢাকা", dropoff: "নিউ মার্কেট, ঢাকা", fare: 280, status: "Ongoing" },
-    { id: "RIDE-2025-006", date: "2025-10-17 11:15 AM", pickup: "সাভার, ঢাকা", dropoff: "বাড্ডা, ঢাকা", fare: 400, status: "Completed" },
-    { id: "RIDE-2025-007", date: "2025-10-16 5:45 PM", pickup: "কলাবাগান, ঢাকা", dropoff: "মোহামেডান, ঢাকা", fare: 310, status: "Cancelled" },
-    { id: "RIDE-2025-008", date: "2025-10-15 7:00 AM", pickup: "বনশ্রী, ঢাকা", dropoff: "ধানমন্ডি, ঢাকা", fare: 260, status: "Completed" },
-    { id: "RIDE-2025-009", date: "2025-10-14 3:30 PM", pickup: "নিউমার্কেট, ঢাকা", dropoff: "উত্তরা, ঢাকা", fare: 290, status: "Ongoing" },
-    { id: "RIDE-2025-010", date: "2025-10-13 1:00 PM", pickup: "মতিঝিল, ঢাকা", dropoff: "গুলশান, ঢাকা", fare: 360, status: "Completed" },
-  ];
+  const { user } = useContext(AuthContext);
 
-  const getStatusSeverity = (status: Ride["status"]) => {
+  const { data: rides = [], isLoading } = useQuery({
+    queryKey: ["myRides", user?.email],
+    queryFn: async () => {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/rides?email=${user?.email}`);
+      return res.data;
+    },
+    enabled: !!user?.email,
+  });
+
+  const getStatusSeverity = (status: string) => {
     switch (status) {
       case "Completed": return "success";
       case "Ongoing": return "info";
@@ -36,6 +37,8 @@ const MyRides: React.FC = () => {
       default: return "secondary";
     }
   };
+
+  if (isLoading) return <Loading/>;
 
   const statusBody = (rowData: Ride) => (
     <Tag value={rowData.status} severity={getStatusSeverity(rowData.status)} />
@@ -58,7 +61,7 @@ const MyRides: React.FC = () => {
 
       {/* DataTable */}
       <div className="overflow-x-auto rounded-xl shadow-sm bg-white">
-       <DataTable
+    <DataTable
   value={rides}
   paginator
   rows={5}
@@ -68,15 +71,19 @@ const MyRides: React.FC = () => {
   rowHover
   tableStyle={{ minWidth: "900px", backgroundColor: "white" }}
   emptyMessage="রাইড পাওয়া যায়নি।"
-  rowClassName={() => "hover:bg-gray-100 transition-colors text-gray-600 text-sm"} // text color & size
+  rowClassName={() => "hover:bg-gray-100 transition-colors text-gray-600 text-sm"}
 >
+  {/* ✅ Ride ID */}
+  
+
   <Column
-    field="id"
+    field="rideId"
     header="রাইড আইডি"
     sortable
     style={{ minWidth: "140px" }}
     headerStyle={{ backgroundColor: "#71BBB2", color: "#fff", fontWeight: 600 }}
   />
+
   <Column
     field="date"
     header="তারিখ ও সময়"
@@ -113,6 +120,7 @@ const MyRides: React.FC = () => {
     headerStyle={{ backgroundColor: "#71BBB2", color: "#fff", fontWeight: 600 }}
   />
 </DataTable>
+
 
       </div>
     </div>
