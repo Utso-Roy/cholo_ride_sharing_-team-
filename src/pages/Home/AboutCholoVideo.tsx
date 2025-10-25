@@ -33,19 +33,20 @@ const VideoSection = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
         {/* Left Side - Video */}
         <motion.div
-          className="relative rounded-2xl overflow-hidden shadow-2xl"
+          className="relative rounded-2xl border-3 border-[#71BBB2] overflow-hidden shadow-2xl"
           initial={{ opacity: 0, x: -40 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
           <iframe
-            className="w-full h-64 md:h-80 border-2 border-[#71BBB2] rounded-2xl"
-            src="https://www.youtube.com/embed/MYhkO-6cft0?autoplay=1&mute=1&loop=1&playlist=MYhkO-6cft0&controls=0&modestbranding=1"
-            title="চলো ভিডিও"
-            frameBorder="0"
-            allow="autoplay; fullscreen"
-            allowFullScreen
+            src="https://drive.google.com/file/d/1hnB0B-gaKWKeZdUbcPXd6pKREYs7a8js/preview"
+            width="580"
+            height="328"
+            allow="autoplay"
+              allowFullScreen
+              loading="lazy"
+              title="চলো রাইড বুকিং প্রক্রিয়া"
           ></iframe>
         </motion.div>
 
@@ -62,7 +63,8 @@ const VideoSection = () => {
               <FaCar />
             </div>
             <p className="text-gray-700 text-lg">
-              রাইড বুক করুন মুহূর্তেই — মাত্র কয়েকটি ক্লিকেই প্রস্তুত আপনার যাত্রা।
+              রাইড বুক করুন মুহূর্তেই — মাত্র কয়েকটি ক্লিকেই প্রস্তুত আপনার
+              যাত্রা।
             </p>
           </div>
 
@@ -94,13 +96,13 @@ const VideoSection = () => {
         transition={{ duration: 0.8 }}
         viewport={{ once: true }}
       >
-       <Button
-            label=" রাইড বুক করুন"
-            icon="pi pi-user-plus"
-            className="!bg-gradient-to-r !from-[#71BBB2] !to-[#56A89E] !text-white !border-none 
+        <Button
+          label=" রাইড বুক করুন"
+          icon="pi pi-user-plus"
+          className="!bg-gradient-to-r !from-[#71BBB2] !to-[#56A89E] !text-white !border-none 
                        font-semibold px-8 py-3 rounded-full shadow-lg hover:shadow-xl 
                        hover:!from-[#56A89E] hover:!to-[#71BBB2] transition-all duration-300"
-          />
+        />
       </motion.div>
     </section>
   );

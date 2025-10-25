@@ -86,7 +86,7 @@ const LandingPage = () => {
   return (
     <>
       {/* Hero Section */}
-      <div className="relative min-h-screen flex flex-col lg:flex-row items-center justify-between px-4 sm:px-6 lg:px-12 xl:px-16 py-8 sm:py-12 lg:py-16 overflow-hidden">
+      <div className="relative min-h-screen flex flex-col lg:flex-row items-center justify-between px-4 sm:px-6 lg:px-12 xl:px-16 py-6 sm:py-8 lg:py-12 overflow-hidden">
         {/* Background */}
         <div className="absolute inset-0">
           <img
