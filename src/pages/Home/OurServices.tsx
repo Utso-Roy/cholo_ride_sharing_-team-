@@ -33,8 +33,17 @@ const fadeUp = {
 
 const OurServices: React.FC = () => {
   return (
-    <section className="bg-white border-t border-gray-100  py-16 md:py-20 px-6">
-      <div className="w-full text-center">
+    <section
+      className="relative bg-cover bg-center bg-no-repeat border-t border-gray-100 py-16 md:py-20 px-6"
+      style={{
+        backgroundImage:
+          "url('https://i.ibb.co.com/MkSgJWYZ/service-2.jpg')",
+      }}
+    >
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-white/80 backdrop-blur-[1px]"></div>
+
+      <div className="relative z-10 w-full text-center">
         {/* Section Title */}
         <motion.h2
           className="text-3xl md:text-5xl font-extrabold text-[#27445D] leading-snug md:leading-tight mb-12"
