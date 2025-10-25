@@ -113,7 +113,6 @@ const SignUp: React.FC = () => {
       };
 
       await axios.post("http://localhost:3000/users", saveUser);
-      console.log('data sucessfully mongodb',saveUser)
 
       toast.success("নিবন্ধন সফল!");
       navigate(from);
