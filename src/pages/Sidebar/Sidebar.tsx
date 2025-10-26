@@ -14,12 +14,21 @@ import {
   FaQuestionCircle,
   FaCommentDots,
   FaCalendarAlt,
+  FaCogs,
+  FaChartLine,
+  FaHistory,
+  FaStar,
+  FaWallet,
+  FaBell,
+  FaRoute,
 } from "react-icons/fa";
-import { Link, NavLink } from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
 import { AuthContext } from "../../Auth/AuthProvider";
 import { moderatorMenuItems } from "../../Utils/ModeratorMenu/moderatorMenu";
 import Loading from "../../Loading/Loading";
 import axios from "axios";
+import { IoMdLogOut } from "react-icons/io";
+import { toast } from "react-toastify";
 
 type Role = "admin" | "moderator" | "rider" | "user" | undefined;
 
@@ -39,7 +48,8 @@ interface MenuItem {
 const Sidebar: React.FC = () => {
   const [users, setUsers] = useState<AppUser[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const { user } = useContext(AuthContext) as { user?: { email?: string } };
+  const { user, logOut ,setUser} = useContext(AuthContext) as { user?: { email?: string } };
+  const navigate = useNavigate()
   useEffect(() => {
     if (!user?.email) return;
     const fetchUser = async () => {
@@ -89,9 +99,17 @@ const Sidebar: React.FC = () => {
     },
   ];
 
-  const riderItems: MenuItem[] = [
-    { label: "Rider Dashboard", path: "/dashboard", icon: <FaHome /> },
-  ];
+
+ const riderItems: MenuItem[] = [
+  { label: "Dashboard", path: "/dashboard", icon: <FaHome /> },
+  { label: "Profile", path: "/dashboard/profile", icon: <FaUser /> },
+  { label: "My Rides", path: "/dashboard/my-rides", icon: <FaRoute /> },
+  { label: "Ride Requests", path: "/dashboard/ride-requests", icon: <FaBell /> },
+  { label: "Earnings Report", path: "/dashboard/earnings", icon: <FaWallet /> },
+  { label: "Ratings & Reviews", path: "/dashboard/reviews", icon: <FaStar /> },
+  { label: "Ride History", path: "/dashboard/history", icon: <FaHistory /> },
+  { label: "Performance Report", path: "/dashboard/performance", icon: <FaChartLine /> },
+];
 
   const userItems: MenuItem[] = [
     { icon: <FaHome />, label: "Overview", path: "/dashboard" },
@@ -130,6 +148,23 @@ const Sidebar: React.FC = () => {
   if (loading || !user?.email) {
     return <Loading />;
   }
+
+
+    const logoutBtn = () => {
+
+    logOut()
+      .then(() => {
+        setUser(null);
+        navigate('/login')
+        toast.success("Logged out successfully!");
+      })
+      .catch((error) => {
+        console.log(error.message);
+        toast.error("Logout failed!");
+      });
+
+  }
+
   return (
     <div className="h-screen w-64 bg-[#71BBB2] text-[#083c3a] flex flex-col shadow-xl border-r border-[#9ad2cb] fixed md:static z-40">
       {/* Logo */}
@@ -163,13 +198,14 @@ const Sidebar: React.FC = () => {
       </nav>
 
       {/* Footer */}
-      <div className="border-t border-[#9ad2cb] bg-[#e6f6f5] p-4 flex items-center justify-between hover:bg-[#d9efed] transition-all duration-300">
-        <div className="flex items-center gap-3">
-          <FaCog className="text-[#2e736d]" />
-          <span className="font-medium">Settings</span>
+      
+      
+       <div className="border-t cursor-pointer border-[#9ad2cb] bg-[#e6f6f5] p-4 flex items-center justify-between hover:bg-[#d9efed] transition-all duration-300">
+        <button onClick={logoutBtn} className="w-full text-left flex items-center gap-2 cursor-pointer  font-semibold transition-colors duration-200 rounded-md px-2 py-1">
+                  <IoMdLogOut className="text-lg" /> Logout
+        </button>
+        
         </div>
-        <span className="text-sm text-gray-500">v1.0</span>
-      </div>
     </div>
   );
 };
