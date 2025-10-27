@@ -91,6 +91,7 @@ import EarningRide from "../DashboardPages/RiderDashboard/EarningRide";
 import RatingsReviews from "../DashboardPages/RiderDashboard/RatingsReviews";
 import RideHistory from "../DashboardPages/RiderDashboard/RideHistory";
 import PerformanceReport from "../DashboardPages/RiderDashboard/PerformanceReport";
+import RideReject from "../DashboardPages/RiderDashboard/RideReject";
 
 
 const router = createBrowserRouter([
@@ -282,6 +283,10 @@ const router = createBrowserRouter([
       {
         path: '/dashboard/performance',
         element : <PerformanceReport></PerformanceReport>
+      },
+      {
+        path: '/dashboard/ride-reject',
+        element : <RideReject></RideReject>
       }
     ],
   },

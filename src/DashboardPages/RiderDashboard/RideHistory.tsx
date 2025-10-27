@@ -60,7 +60,7 @@ const dummyRideHistory: RideHistoryType[] = [
   },
 ];
 
-// ✅ Status badge template
+//  Status badge template
 const statusTemplate = (rowData: RideHistoryType) => {
   let colorClass = "";
   if (rowData.status === "Successful") colorClass = "bg-green-500";
@@ -80,7 +80,7 @@ const RideHistory: React.FC = () => {
   return (
     <div className="w-full p-4 sm:p-6 bg-gray-50 min-h-screen">
       <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-6">
-        Ride History
+      Total Ride History
       </h1>
 
       <div className="bg-white shadow-md rounded-xl overflow-hidden">
