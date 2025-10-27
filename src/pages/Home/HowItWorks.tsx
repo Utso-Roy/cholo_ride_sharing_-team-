@@ -33,7 +33,7 @@ const HowItWorks: React.FC = () => {
   return (
     <section className="py-16 border-t border-gray-300 bg-gray-50">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center text-[#27445D]">
+        <h2 className="text-4xl md:text-5xl  font-bold text-center text-[#27445D]">
           কিভাবে কাজ করে
         </h2>
         <p className="text-center text-gray-600 mb-12">

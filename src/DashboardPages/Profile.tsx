@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState, ChangeEvent, FormEvent } from "react";
-import { FaUserEdit, FaEnvelope, FaMapMarkerAlt, FaPhoneAlt, FaCrown, FaUsers, FaCarSide, FaChartPie } from "react-icons/fa";
+import { FaUserEdit, FaEnvelope, FaMapMarkerAlt, FaPhoneAlt, FaCrown } from "react-icons/fa";
 import Loading from "../Loading/Loading";
 import { AuthContext } from "../Auth/AuthProvider";
 import { toast } from "react-toastify";
@@ -17,7 +17,7 @@ interface User {
 const Profile: React.FC = () => {
   const { user } = useContext(AuthContext) as { user: { email: string } };
 
-  const [users, setUsers] = useState<User[]>([]);
+  const [userData, setUserData] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
 
@@ -25,34 +25,30 @@ const Profile: React.FC = () => {
   const [formData, setFormData] = useState<User>({ name: "", email: "", photo: "" });
 
   // Fetch user data
-  useEffect(() => {
+  const fetchUser = async () => {
     if (!user?.email) return;
+    try {
+      setLoading(true);
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/users/${encodeURIComponent(user.email)}`);
+      if (!res.ok) throw new Error("Failed to fetch user");
 
-    const fetchUser = async () => {
-      try {
-        setLoading(true);
-        const res = await fetch(
-          `${import.meta.env.VITE_API_URL}/users/${encodeURIComponent(user.email)}`
-        );
-        if (!res.ok) throw new Error("Failed to fetch user");
+      const data: User = await res.json();
+      setUserData(data);
+      setFormData({
+        name: data.name || "",
+        email: data.email || "",
+        photo: data.photo || "",
+        phone: data.phone || "",
+        address: data.address || ""
+      });
+    } catch (err: any) {
+      setError(err.message || "Something went wrong!");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-        // Response is a single object, not an array
-        const data: User = await res.json();
-        setUsers([data]);
-        setFormData({
-          name: data.name || "",
-          email: data.email,
-          photo: data.photo || "",
-          phone: data.phone || "",
-          address: data.address || ""
-        });
-      } catch (err: any) {
-        setError(err.message || "Something went wrong!");
-      } finally {
-        setLoading(false);
-      }
-    };
-
+  useEffect(() => {
     fetchUser();
   }, [user]);
 
@@ -60,62 +56,52 @@ const Profile: React.FC = () => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+    // Live update in profile card
+    setUserData(prev => prev ? { ...prev, [name]: value } : prev);
   };
 
-  // Submit updated profile 
+  // Handle form submit
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email) return toast.error("Name and email required");
 
-  try {
-   
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/users/${encodeURIComponent(user?.email.toLowerCase())}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData),
-        }
-      );
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/users/${encodeURIComponent(user?.email.toLowerCase())}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
 
-      if (!res.ok) {
-        const errText = await res.text();
-        throw new Error(errText || "Update failed");
+      if (res.ok) {
+        const errData = await res.json();
+        throw new Error(errData.message || "Failed to update profile");
       }
 
-
-    const updatedUser = await res.json();
-    setUsers([updatedUser]);
-    setFormData(updatedUser);
-    setIsModalOpen(false);
-    toast.success("Profile updated successfully!");
-  } catch (err: any) {
-    console.error("Frontend update error:", err);
-    toast.error(err.message);
-  }
-};
-
+      toast.success("Profile updated successfully!");
+      setIsModalOpen(false);
+     
+    } catch (err: any) {
+      console.error("Update error:", err);
+      toast.error('okk',err.message);
+    }
+  };
 
   if (loading) return <Loading />;
 
-  if (error)
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-100">
-        <p className="text-lg text-red-500">{error}</p>
-      </div>
-    );
+  if (error) return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <p className="text-lg text-red-500">{error}</p>
+    </div>
+  );
 
-  if (!users.length)
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-100">
-        <p className="text-lg text-red-500">No users found!</p>
-      </div>
-    );
+  if (!userData) return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <p className="text-lg text-red-500">No user found!</p>
+    </div>
+  );
 
-  const userData = users[0];
   const { name, displayName, email, photo, role, phone, address } = userData;
 
- 
   return (
     <div className="min-h-screen bg-gray-50 p-6 my-16 flex flex-col items-center">
       {/* Profile Card */}
@@ -161,70 +147,20 @@ const Profile: React.FC = () => {
         </div>
       </div>
 
-      {/* Stats Cards */}
-     
       {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-2xl p-6 w-11/12 sm:w-96 relative">
             <h2 className="text-xl font-semibold mb-4">Update Profile</h2>
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-              <input
-                type="text"
-                name="name"
-                placeholder="Name"
-                value={formData.name}
-                onChange={handleChange}
-                className="border p-2 rounded-md w-full"
-                required
-              />
-              <input
-                type="email"
-                name="email"
-                placeholder="Email"
-                value={formData.email}
-                onChange={handleChange}
-                className="border p-2 rounded-md w-full"
-                required
-              />
-              <input
-                type="text"
-                name="photo"
-                placeholder="Photo URL"
-                value={formData.photo}
-                onChange={handleChange}
-                className="border p-2 rounded-md w-full"
-              />
-              <input
-                type="text"
-                name="phone"
-                placeholder="Phone"
-                value={formData.phone || ""}
-                onChange={handleChange}
-                className="border p-2 rounded-md w-full"
-              />
-              <input
-                type="text"
-                name="address"
-                placeholder="Address"
-                value={formData.address || ""}
-                onChange={handleChange}
-                className="border p-2 rounded-md w-full"
-              />
+              <input type="text" name="name" placeholder="Name" value={formData.name} onChange={handleChange} className="border p-2 rounded-md w-full" required />
+              <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} className="border p-2 rounded-md w-full" required />
+              <input type="text" name="photo" placeholder="Photo URL" value={formData.photo} onChange={handleChange} className="border p-2 rounded-md w-full" />
+              <input type="text" name="phone" placeholder="Phone" value={formData.phone || ""} onChange={handleChange} className="border p-2 rounded-md w-full" />
+              <input type="text" name="address" placeholder="Address" value={formData.address || ""} onChange={handleChange} className="border p-2 rounded-md w-full" />
               <div className="flex justify-end gap-2 mt-2">
-                <button
-                  type="button"
-                  onClick={() => setIsModalOpen(false)}
-                  className="px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400 transition-colors"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="px-4 py-2 bg-[#71BBB2] text-white rounded-md hover:bg-[#5ea49a] transition-colors"
-                >
-                  Save Changes
-                </button>
+                <button type="button" onClick={() => setIsModalOpen(false)} className="px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400 transition-colors">Cancel</button>
+                <button type="submit" className="px-4 py-2 bg-[#71BBB2] text-white rounded-md hover:bg-[#5ea49a] transition-colors">Save Changes</button>
               </div>
             </form>
           </div>

@@ -10,7 +10,6 @@ import router from "./Routes/Routes";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import AuthProvider from "./Auth/AuthProvider";
 import { ToastContainer } from 'react-toastify';
-import Sidebar from "./pages/Sidebar/Sidebar";
 import Loader from './Loading/Loder';
 import { motion, AnimatePresence } from 'framer-motion';
 

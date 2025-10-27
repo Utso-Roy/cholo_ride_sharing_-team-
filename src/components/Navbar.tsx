@@ -9,6 +9,7 @@ import { IconType } from "react-icons";
 import { AuthContext } from "../Auth/AuthProvider";
 import { IoMdLogOut } from "react-icons/io";
 import { toast } from "react-toastify";
+import Loading from "../Loading/Loading";
 interface ServiceItem {
   label: string;
   icon: IconType;
@@ -44,7 +45,7 @@ const Navbar: React.FC = () => {
     isActive ? "text-[#71BBB2]" : "hover:text-[#71BBB2] transition-colors";
 
   const getDropdownClass = (isOpen: boolean) =>
-    `flex items-center gap-1 cursor-pointer transition-colors duration-300 ${isOpen ? "text-[#71BBB2]" : "text-black hover:text-[#71BBB2]"
+    `flex items-center gap-1 cursor-pointer transition-colors duration-300 ${isOpen ? "text-[#71BBB2]" : "text-[#27445D] hover:text-[#71BBB2]"
     }`;
 
   const links = (
@@ -187,7 +188,7 @@ const Navbar: React.FC = () => {
           />
         </button>
         {openHelp && (
-          <div className="absolute left-0 top-full mt-2 w-64 rounded-md bg-white text-[#27445D] p-4 shadow-lg z-50">
+          <div className="absolute left-0 top-full mt-2 w-64 rounded-md bg-white text-[#0d487b] p-4 shadow-lg z-50">
             <ul className="flex flex-col gap-2">
               <li>
                 <NavLink to="/faq" className="hover:text-[#71BBB2] block">
@@ -257,7 +258,7 @@ const Navbar: React.FC = () => {
   }
 
   return (
-    <div className="navbar bg-gradient-to-r from-[#e6fcf9] via-gray-50 to-[#e6fcf9] backdrop-blur-lg  text-black ">
+    <div className="navbar bg-gradient-to-r from-[#e6fcf9] via-gray-50 to-[#e6fcf9] backdrop-blur-lg  text-[#0d487b] ">
       {/* Navbar Start */}
 
       <div className="navbar-start flex items-center gap-4">
@@ -317,7 +318,7 @@ const Navbar: React.FC = () => {
                   alt="User Avatar"
                   src={
                     user?.photoURL ||
-                    "N/A"
+                    'https://i.ibb.co.com/JjNCs1G1/logo-2.png'
                   }
                 />
               </div>

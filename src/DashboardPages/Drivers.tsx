@@ -8,7 +8,8 @@ import { Tag } from "primereact/tag";
 import { Button } from "primereact/button";
 import { Sidebar } from "primereact/sidebar";
 import { Toast } from "primereact/toast";
-import api from "../lib/api"; // <-- default export (match your api.ts)
+import api from "../lib/api"; 
+import Loading from "../Loading/Loading";
 
 /** Types */
 type DriverDoc = {
@@ -269,7 +270,7 @@ export default function Drivers() {
         showCloseIcon
         style={{ width: "420px", maxWidth: "100%" }}
       >
-        {loadingDetail && <div className="p-4">Loading…</div>}
+        {loadingDetail && <div><Loading></Loading></div>}
         {!loadingDetail && selected && (
           <div>
             <div className="p-6 flex flex-col gap-8">

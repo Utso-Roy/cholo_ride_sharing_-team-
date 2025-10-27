@@ -86,7 +86,7 @@ const FareEstimator: React.FC = () => {
   return (
     <section className="py-20 bg-gradient-to-b from-[#F7FAFC] to-white">
       <div className="w-full px-6 text-center">
-        <h2 className="text-4xl text-[#27445D] font-bold mb-4">
+        <h2 className="text-4xl md:text-5xl  text-[#27445D] font-bold mb-4">
           ভাড়া পরিকল্পনা
         </h2>
         <p className="text-gray-600 mb-12 max-w-4xl mx-auto">
