@@ -49,19 +49,19 @@ const RatingsReviews = () => {
     <div className="p-4 sm:p-6 bg-gradient-to-b from-gray-50 to-gray-100 min-h-screen">
       <div className="max-w-6xl mx-auto">
         {/* Title */}
-        <h2 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-8 text-center">
+        <h2 className="text-3xl sm:text-4xl font-bold text-[#27445D] mb-8 text-center">
           Rider Ratings & Customer Reviews
         </h2>
 
         {/* Overall Rating Summary */}
         <div className="bg-white shadow-lg rounded-2xl p-6 mb-10 text-center hover:shadow-xl transition-all duration-300">
-          <h3 className="text-lg font-semibold text-gray-700 mb-2">
+          <h3 className="text-lg font-semibold text-[#27445D] mb-2">
             Overall Rating
           </h3>
           <div className="flex justify-center gap-1 mb-3">
             {renderStars(4)}
           </div>
-          <p className="text-gray-600 text-sm sm:text-base">
+          <p className="text-[#27445D] text-sm sm:text-base">
             4.0 out of 5 (based on 120 reviews)
           </p>
         </div>
@@ -74,7 +74,7 @@ const RatingsReviews = () => {
               className="bg-white shadow-md rounded-2xl p-5 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border border-gray-100"
             >
               <div className="flex flex-col sm:flex-row justify-between sm:items-center mb-2 gap-2">
-                <h4 className="text-lg font-semibold text-gray-800 text-center sm:text-left">
+                <h4 className="text-lg font-semibold text-[#27445D] text-center sm:text-left">
                   {review.name}
                 </h4>
                 <div className="flex justify-center sm:justify-end">
@@ -82,7 +82,7 @@ const RatingsReviews = () => {
                 </div>
               </div>
 
-              <p className="text-gray-600 text-sm mb-3 leading-relaxed text-center sm:text-left">
+              <p className="text-[#27445D] text-sm mb-3 leading-relaxed text-center sm:text-left">
                 {review.review}
               </p>
               <p className="text-xs text-gray-400 text-center sm:text-right italic">

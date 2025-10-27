@@ -79,7 +79,7 @@ const statusTemplate = (rowData: RideHistoryType) => {
 const RideHistory: React.FC = () => {
   return (
     <div className="w-full p-4 sm:p-6 bg-gray-50 min-h-screen">
-      <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-6">
+      <h1 className="text-2xl sm:text-3xl font-bold text-[#27445D] mb-6">
       Total Ride History
       </h1>
 

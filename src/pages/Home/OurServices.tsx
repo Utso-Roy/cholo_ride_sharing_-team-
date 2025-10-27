@@ -10,16 +10,17 @@ import {
   MapPin,
   Train,
 } from "lucide-react";
+import { Link } from "react-router";
 
 const services = [
-  { icon: Bike, title: "বাইক" },
-  { icon: Train, title: "অটো" },
-  { icon: Car, title: "কার" },
-  { icon: Truck, title: "ট্রাক" },
-  { icon: Bus, title: "শাটল" },
-  { icon: MapPin, title: "ভ্রমণ প্যাকেজ" },
-  { icon: Ambulance, title: "অ্যাম্বুলেন্স" },
-  { icon: Package, title: "প্যাকেজ" },
+  { icon: Bike, title: "বাইক" ,path : '/bike'},
+  { icon: Train, title: "অটো" ,path : '/cng'},
+  { icon: Car, title: "কার",path : '/car' },
+  { icon: Truck, title: "ট্রাক",path : '/track' },
+  { icon: Bus, title: "শাটল",path : '/shuttlebus' },
+  { icon: MapPin, title: "ভ্রমণ প্যাকেজ",path : '/journeypackage' },
+  { icon: Ambulance, title: "অ্যাম্বুলেন্স",path : '/ambulance' },
+  { icon: Package, title: "প্যাকেজ",path : '/shipment' },
 ];
 
 const fadeUp = {
@@ -102,9 +103,12 @@ const OurServices: React.FC = () => {
                 </div>
 
                 {/* Shine Effect */}
-                <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                <Link to= {service.path}>
+                 <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
                 </div>
+                
+                </Link>
               </motion.div>
             );
           })}

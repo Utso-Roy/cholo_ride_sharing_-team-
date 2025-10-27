@@ -12,7 +12,7 @@ const dummyRequests = [
 
 const RideRequest: React.FC = () => {
 
-  // ✅ Action Buttons Template
+  //  Action Buttons Template
   const actionBodyTemplate = (rowData: any) => (
     <div className="flex flex-col sm:flex-row gap-2 justify-center">
       <Button
@@ -30,7 +30,7 @@ const RideRequest: React.FC = () => {
     </div>
   );
 
-  // ✅ Pickup & Drop templates with icons
+  //  Pickup & Drop templates with icons
   const pickupBodyTemplate = (rowData: any) => (
     <span className="flex items-center gap-1 text-red-600 font-medium">
       <FaMapMarkerAlt /> {rowData.pickup}
@@ -51,7 +51,7 @@ const RideRequest: React.FC = () => {
 
   return (
     <div className="w-full p-4 sm:p-6 bg-gray-50 min-h-screen">
-      <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-4 sm:mb-6">
+      <h1 className="text-2xl sm:text-3xl font-bold text-[#27445D] mb-4 sm:mb-6">
         Ride Requests
       </h1>
 

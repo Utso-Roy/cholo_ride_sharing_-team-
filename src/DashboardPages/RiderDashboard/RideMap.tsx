@@ -5,14 +5,14 @@ import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import L from "leaflet";
 
-// 🗺️ Custom marker icon setup
+//  Custom marker icon setup
 const markerIcon = new L.Icon({
   iconUrl: "https://cdn-icons-png.flaticon.com/512/684/684908.png",
   iconSize: [32, 32],
   iconAnchor: [16, 32],
 });
 
-// 📍 Helper component to update map position dynamically
+//  Helper component to update map position dynamically
 function ChangeMapView({ coords }: { coords: [number, number] }) {
   const map = useMap();
   map.setView(coords, 13);
@@ -67,18 +67,18 @@ const RideMap: React.FC = () => {
       const { lat, lon } = data[0];
       setPosition([parseFloat(lat), parseFloat(lon)]);
     } else {
-      alert("❌ Location not found!");
+      alert(" Location not found!");
     }
   };
 
   return (
     <div className="w-full h-screen bg-gray-50 flex flex-col">
-      {/* ✅ Top Bar */}
+      {/* Top Bar */}
       <div className="flex items-center justify-between bg-white px-6 py-4 shadow-md">
-        <h1 className="text-2xl font-bold text-gray-800">Ride Map Dashboard</h1>
+        <h1 className="text-2xl font-bold text-[#27445D]">Ride Map </h1>
 
         <div className="flex items-center gap-6 relative">
-          {/* 🔹 Search Input with Suggestion */}
+          {/*  Search Input with Suggestion */}
           <form onSubmit={handleSearch} className="flex flex-col relative">
             <span className="p-input-icon-left">
               <InputText
@@ -126,9 +126,9 @@ const RideMap: React.FC = () => {
         </div>
       </div>
 
-      {/* ✅ Main Content */}
+      {/*  Main Content */}
       <div className="flex flex-1">
-        {/* 🌍 Leaflet Live Map Section (80%) */}
+        {/*  Leaflet Live Map Section (80%) */}
         <div className="w-full md:w-4/5 bg-gray-200 relative">
           <MapContainer
             center={position}
@@ -145,15 +145,15 @@ const RideMap: React.FC = () => {
             <ChangeMapView coords={position} />
 
             <Marker position={position} icon={markerIcon}>
-              <Popup>📍 {searchText || "Current Location"}</Popup>
+              <Popup> {searchText || "Current Location"}</Popup>
             </Marker>
           </MapContainer>
         </div>
 
-        {/* 🏍️ Ride Info Sidebar (20%) */}
+        {/*  Ride Info Sidebar (20%) */}
         <div className="hidden md:flex flex-col w-1/5 bg-white shadow-inner border-l border-gray-200 p-5 space-y-5">
-          <h2 className="text-xl font-bold text-gray-800 mb-2">Current Ride Info</h2>
-          <div className="space-y-3 text-sm text-gray-600">
+          <h2 className="text-xl font-bold text-[#27445D] mb-2">Current Ride Info</h2>
+          <div className="space-y-3 text-sm text-[#27445D]">
             <p>
               <span className="font-semibold">Pickup:</span> Rampur Station
             </p>

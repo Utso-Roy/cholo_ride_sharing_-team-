@@ -76,7 +76,7 @@ const PerformanceReport: React.FC = () => {
 
   return (
     <div className="w-full p-4 sm:p-6 bg-gray-50 min-h-screen">
-      <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+      <h1 className="text-2xl sm:text-3xl font-bold text-[#27445D] mb-6 flex items-center gap-2">
         <FaChartLine className="text-blue-500" /> Performance Report
       </h1>
 
@@ -85,7 +85,7 @@ const PerformanceReport: React.FC = () => {
         <Card className="shadow-md hover:shadow-lg transition-all border-l-4 border-blue-500">
           <div className="flex justify-between items-center">
             <div>
-              <h2 className="text-lg text-gray-600">Total Rides</h2>
+              <h2 className="text-lg text-[#27445D]">Total Rides</h2>
               <p className="text-2xl font-bold text-blue-600">
                 {performanceData.totalRides}
               </p>
@@ -97,7 +97,7 @@ const PerformanceReport: React.FC = () => {
         <Card className="shadow-md hover:shadow-lg transition-all border-l-4 border-yellow-500">
           <div className="flex justify-between items-center">
             <div>
-              <h2 className="text-lg text-gray-600">Average Rating</h2>
+              <h2 className="text-lg text-[#27445D]">Average Rating</h2>
               <p className="text-2xl font-bold text-yellow-500">
                 {performanceData.avgRating}★
               </p>
@@ -109,7 +109,7 @@ const PerformanceReport: React.FC = () => {
         <Card className="shadow-md hover:shadow-lg transition-all border-l-4 border-green-500">
           <div className="flex justify-between items-center">
             <div>
-              <h2 className="text-lg text-gray-600">Avg. Ride Time</h2>
+              <h2 className="text-lg text-[#27445D]">Avg. Ride Time</h2>
               <p className="text-2xl font-bold text-green-600">
                 {performanceData.avgTimePerRide}
               </p>
@@ -123,7 +123,7 @@ const PerformanceReport: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Ride Chart */}
         <Card className="shadow-md p-4">
-          <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-700 flex items-center gap-2">
+          <h2 className="text-lg sm:text-xl font-semibold mb-4 text-[#27445D] flex items-center gap-2">
             📊 Weekly Ride Count
           </h2>
           <Chart
@@ -136,8 +136,8 @@ const PerformanceReport: React.FC = () => {
 
         {/* Rating Chart */}
         <Card className="shadow-md p-4">
-          <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-700 flex items-center gap-2">
-            ⭐ Customer Rating Distribution
+          <h2 className="text-lg sm:text-xl font-semibold mb-4 text-[#27445D] flex items-center gap-2">
+            Customer Rating Distribution
           </h2>
           <Chart
             type="doughnut"

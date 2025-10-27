@@ -61,7 +61,7 @@ export default function BikeRide() {
             {/* Features Section */}
 
             <section
-                className="bg-cover bg-center bg-no-repeat bg-fixed"
+                className="bg-cover bg-center  bg-no-repeat bg-fixed"
                 style={{
                     // backgroundImage: "url('https://i.ibb.co.com/zTQ6z80G/map.jpg')",
                     backgroundImage: "linear-gradient(to right, rgba(230,252,249,0.8), rgba(249,250,251,0.8)), url('https://i.ibb.co/zTQ6z80G/map.jpg')",
@@ -76,7 +76,7 @@ export default function BikeRide() {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, ease: "easeOut" }}
                     viewport={{ once: true }}
-                    className="px-5 md:px-10 "
+                    className="px-5 bg-gradient-to-br from-[#F9FFFE] to-[#E7F8F5] md:px-10 "
                 >
                     <h2
                         className="text-2xl md:text-4xl font-bold mb-8 text-center pt-8"

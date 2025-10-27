@@ -93,7 +93,7 @@ const EarningRide = () => {
 
   return (
     <div className="w-full p-4 sm:p-6 bg-gray-50 min-h-screen">
-      <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-6">
+      <h1 className="text-2xl sm:text-3xl font-bold text-[#27445D] mb-6">
         Earnings Overview
       </h1>
 
@@ -102,7 +102,7 @@ const EarningRide = () => {
         <Card className="shadow-md hover:shadow-lg transition-all border-l-4 border-green-500">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-lg text-gray-600">Total Earnings</h2>
+              <h2 className="text-lg text-[#27445D]">Total Earnings</h2>
               <p className="text-2xl font-bold text-green-600">
                 ৳{earningsData.total}
               </p>
@@ -114,7 +114,7 @@ const EarningRide = () => {
         <Card className="shadow-md hover:shadow-lg transition-all border-l-4 border-blue-500">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-lg text-gray-600">Today’s Earnings</h2>
+              <h2 className="text-lg text-[#27445D]">Today’s Earnings</h2>
               <p className="text-2xl font-bold text-blue-600">
                 ৳{earningsData.today}
               </p>
@@ -126,7 +126,7 @@ const EarningRide = () => {
         <Card className="shadow-md hover:shadow-lg transition-all border-l-4 border-yellow-500">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-lg text-gray-600">Average Fare</h2>
+              <h2 className="text-lg text-[#27445D]">Average Fare</h2>
               <p className="text-2xl font-bold text-yellow-600">
                 ৳{earningsData.averageFare}
               </p>
@@ -140,10 +140,10 @@ const EarningRide = () => {
       <Card className="shadow-md p-5 mb-8">
         <div className="flex flex-col sm:flex-row justify-between items-center">
           <div>
-            <h2 className="text-lg font-semibold text-gray-700 flex items-center gap-2 mb-2">
+            <h2 className="text-lg font-semibold text-[#27445D] flex items-center gap-2 mb-2">
               <FaMoneyCheckAlt className="text-green-500" /> Cashout Section
             </h2>
-            <p className="text-gray-600 text-sm">
+            <p className="text-[#27445D] text-sm">
               Next eligible withdrawal date:{" "}
               <span className="font-medium text-green-600">
                 {nextWithdrawDate}
@@ -167,7 +167,7 @@ const EarningRide = () => {
 
       {/* Earnings Chart */}
       <Card className="shadow-md p-4">
-        <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-700 flex items-center gap-2">
+        <h2 className="text-lg sm:text-xl font-semibold mb-4 text-[#27445D] flex items-center gap-2">
           <FaChartLine className="text-green-500" /> Weekly Earnings Chart
         </h2>
         <Chart

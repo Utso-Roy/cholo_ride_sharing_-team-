@@ -72,7 +72,7 @@ export default function CarRide() {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, ease: "easeOut" }}
                     viewport={{ once: true }}
-                    className="px-5 md:px-10 "
+                    className="px-5 bg-gradient-to-br from-[#F9FFFE] to-[#E7F8F5] md:px-10 "
                 >
                     <h2
                         className="text-2xl md:text-4xl font-bold mb-8 text-center pt-8"
