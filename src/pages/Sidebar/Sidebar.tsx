@@ -22,6 +22,7 @@ import {
   FaBell,
   FaRoute,
   FaMapMarkedAlt,
+  FaTimes,
 } from "react-icons/fa";
 import { Link, NavLink, useNavigate } from "react-router";
 import { AuthContext } from "../../Auth/AuthProvider";
@@ -116,7 +117,11 @@ const Sidebar: React.FC = () => {
       icon: <FaBell />,
     },
 
-    { label: "My Rides", path: "/dashboard/rides-successful", icon: <FaRoute /> },
+    {
+      label: "My Rides",
+      path: "/dashboard/rides-successful",
+      icon: <FaRoute />,
+    },
     {
       label: "Earnings Report",
       path: "/dashboard/earnings",
@@ -128,6 +133,8 @@ const Sidebar: React.FC = () => {
       icon: <FaStar />,
     },
     { label: "Ride History", path: "/dashboard/history", icon: <FaHistory /> },
+
+    { label: "Ride Reject", path: "/dashboard/ride-reject", icon: <FaTimes /> },
     {
       label: "Performance Report",
       path: "/dashboard/performance",
