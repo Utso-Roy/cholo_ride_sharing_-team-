@@ -606,7 +606,7 @@ export default function BookingMapWithSearch() {
                 </div>
 
                 {/* RIGHT: Map */}
-                <div className="h-[520px] z-0 rounded-2xl overflow-hidden shadow-lg">
+                <div className="h-[400px] z-0 rounded-2xl overflow-hidden shadow-lg">
                     <MapContainer center={[23.8103, 90.4125]} zoom={13} scrollWheelZoom style={{ height: '100%', width: '100%' }} whenCreated={(map) => (mapRef.current = map)}>
                         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                         <ClickSelector selectMode={selectMode} setPickup={setPickup} setDrop={setDrop} />
