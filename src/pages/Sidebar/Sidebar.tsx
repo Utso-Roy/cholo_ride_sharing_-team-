@@ -21,6 +21,7 @@ import {
   FaWallet,
   FaBell,
   FaRoute,
+  FaMapMarkedAlt,
 } from "react-icons/fa";
 import { Link, NavLink, useNavigate } from "react-router";
 import { AuthContext } from "../../Auth/AuthProvider";
@@ -48,8 +49,10 @@ interface MenuItem {
 const Sidebar: React.FC = () => {
   const [users, setUsers] = useState<AppUser[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const { user, logOut ,setUser} = useContext(AuthContext) as { user?: { email?: string } };
-  const navigate = useNavigate()
+  const { user, logOut, setUser } = useContext(AuthContext) as {
+    user?: { email?: string };
+  };
+  const navigate = useNavigate();
   useEffect(() => {
     if (!user?.email) return;
     const fetchUser = async () => {
@@ -99,17 +102,39 @@ const Sidebar: React.FC = () => {
     },
   ];
 
+  const riderItems: MenuItem[] = [
+    { label: "Dashboard", path: "/dashboard", icon: <FaHome /> },
+    {
+      label: "Ride Map",
+      path: "/dashboard/ride_map",
+      icon: <FaMapMarkedAlt />,
+    },
 
- const riderItems: MenuItem[] = [
-  { label: "Dashboard", path: "/dashboard", icon: <FaHome /> },
-  { label: "Profile", path: "/dashboard/profile", icon: <FaUser /> },
-  { label: "My Rides", path: "/dashboard/my-rides", icon: <FaRoute /> },
-  { label: "Ride Requests", path: "/dashboard/ride-requests", icon: <FaBell /> },
-  { label: "Earnings Report", path: "/dashboard/earnings", icon: <FaWallet /> },
-  { label: "Ratings & Reviews", path: "/dashboard/reviews", icon: <FaStar /> },
-  { label: "Ride History", path: "/dashboard/history", icon: <FaHistory /> },
-  { label: "Performance Report", path: "/dashboard/performance", icon: <FaChartLine /> },
-];
+    {
+      label: "Ride Requests",
+      path: "/dashboard/ride-requests",
+      icon: <FaBell />,
+    },
+
+    { label: "My Rides", path: "/dashboard/rides-successful", icon: <FaRoute /> },
+    {
+      label: "Earnings Report",
+      path: "/dashboard/earnings",
+      icon: <FaWallet />,
+    },
+    {
+      label: "Ratings & Reviews",
+      path: "/dashboard/reviews",
+      icon: <FaStar />,
+    },
+    { label: "Ride History", path: "/dashboard/history", icon: <FaHistory /> },
+    {
+      label: "Performance Report",
+      path: "/dashboard/performance",
+      icon: <FaChartLine />,
+    },
+    { label: "Profile", path: "/dashboard/profile", icon: <FaUser /> },
+  ];
 
   const userItems: MenuItem[] = [
     { icon: <FaHome />, label: "Overview", path: "/dashboard" },
@@ -149,21 +174,18 @@ const Sidebar: React.FC = () => {
     return <Loading />;
   }
 
-
-    const logoutBtn = () => {
-
+  const logoutBtn = () => {
     logOut()
       .then(() => {
         setUser(null);
-        navigate('/login')
+        navigate("/login");
         toast.success("Logged out successfully!");
       })
       .catch((error) => {
         console.log(error.message);
         toast.error("Logout failed!");
       });
-
-  }
+  };
 
   return (
     <div className="h-screen w-64 bg-[#71BBB2] text-[#083c3a] flex flex-col shadow-xl border-r border-[#9ad2cb] fixed md:static z-40">
@@ -198,14 +220,15 @@ const Sidebar: React.FC = () => {
       </nav>
 
       {/* Footer */}
-      
-      
-       <div className="border-t cursor-pointer border-[#9ad2cb] bg-[#e6f6f5] p-4 flex items-center justify-between hover:bg-[#d9efed] transition-all duration-300">
-        <button onClick={logoutBtn} className="w-full text-left flex items-center gap-2 cursor-pointer  font-semibold transition-colors duration-200 rounded-md px-2 py-1">
-                  <IoMdLogOut className="text-lg" /> Logout
+
+      <div className="border-t cursor-pointer border-[#9ad2cb] bg-[#e6f6f5] p-4 flex items-center justify-between hover:bg-[#d9efed] transition-all duration-300">
+        <button
+          onClick={logoutBtn}
+          className="w-full text-left flex items-center gap-2 cursor-pointer  font-semibold transition-colors duration-200 rounded-md px-2 py-1"
+        >
+          <IoMdLogOut className="text-lg" /> Logout
         </button>
-        
-        </div>
+      </div>
     </div>
   );
 };

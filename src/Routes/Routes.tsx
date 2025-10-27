@@ -84,6 +84,13 @@ import RideDetailPage from "../DashboardPages/Moderator/Rides/RideDetailPage";
 import DisputeListPage from "../DashboardPages/Moderator/Dispute/DisputeListPage";
 import DisputeDetailPage from "../DashboardPages/Moderator/Dispute/DisputeDetailPage";
 import { TemplateListPage } from "../DashboardPages/Moderator/MessageTemplate/TemplateListPage";
+import RideMap from "../DashboardPages/RiderDashboard/RideMap";
+import RideRequest from "../DashboardPages/RiderDashboard/RideRequest";
+import RideSuccessful from "../DashboardPages/RiderDashboard/RideSuccessful";
+import EarningRide from "../DashboardPages/RiderDashboard/EarningRide";
+import RatingsReviews from "../DashboardPages/RiderDashboard/RatingsReviews";
+import RideHistory from "../DashboardPages/RiderDashboard/RideHistory";
+import PerformanceReport from "../DashboardPages/RiderDashboard/PerformanceReport";
 
 
 const router = createBrowserRouter([
@@ -245,6 +252,37 @@ const router = createBrowserRouter([
         path: 'mod/comms/templates',
         element: <TemplateListPage/>
       }, 
+
+      // rider dashboard
+
+      {
+        path: '/dashboard/ride_map',
+        element : <RideMap></RideMap>
+      },
+      {
+        path: '/dashboard/ride-requests',
+        element : <RideRequest></RideRequest>
+      },
+      {
+        path: '/dashboard/rides-successful',
+        element : <RideSuccessful></RideSuccessful>
+      },
+      {
+        path: '/dashboard/earnings',
+        element : <EarningRide></EarningRide>
+      },
+      {
+        path: '/dashboard/reviews',
+        element : <RatingsReviews></RatingsReviews>
+      },
+      {
+        path: '/dashboard/history',
+        element : <RideHistory></RideHistory>
+      },
+      {
+        path: '/dashboard/performance',
+        element : <PerformanceReport></PerformanceReport>
+      }
     ],
   },
 
