@@ -5,7 +5,6 @@ import cabBookingLottie from "../../public/Lottie/cab booking.json";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router";
 import { InputText } from "primereact/inputtext";
-import { Password } from "primereact/password";
 import { Button } from "primereact/button";
 import { Divider } from "primereact/divider";
 import GoogleLogin from "./GoogleLogin";
@@ -182,11 +181,11 @@ const SignUp: React.FC = () => {
               <label className="block text-sm font-medium mb-2 text-gray-700">
                 প্রোফাইল ছবি
               </label>
-              <input
+              <InputText
                 type="file"
                 accept="image/*"
                 onChange={handleFileChange}
-                className="file-input file-input-bordered file-input-lg w-full"
+                className="file-input file-input-bordered !p-1 file-input-lg w-full"
               />
             </div>
 
@@ -213,14 +212,14 @@ const SignUp: React.FC = () => {
               <label className="block text-sm font-medium mb-2 text-gray-700">
                 পাসওয়ার্ড
               </label>
-              <Password
+              <InputText
+                type="password"
                 value={passwordValue}
                 onChange={(e) => {
                   setPasswordValue(e.target.value);
                   setValue("password", e.target.value);
                 }}
-                toggleMask
-                feedback
+                
                 placeholder="পাসওয়ার্ড লিখুন"
                 className="w-full border border-gray-300 rounded-md p-2"
               />

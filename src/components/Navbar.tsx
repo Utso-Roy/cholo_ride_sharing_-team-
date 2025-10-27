@@ -9,6 +9,7 @@ import { IconType } from "react-icons";
 import { AuthContext } from "../Auth/AuthProvider";
 import { IoMdLogOut } from "react-icons/io";
 import { toast } from "react-toastify";
+import Loading from "../Loading/Loading";
 interface ServiceItem {
   label: string;
   icon: IconType;
@@ -317,7 +318,7 @@ const Navbar: React.FC = () => {
                   alt="User Avatar"
                   src={
                     user?.photoURL ||
-                    "N/A"
+                    'https://i.ibb.co.com/JjNCs1G1/logo-2.png'
                   }
                 />
               </div>
