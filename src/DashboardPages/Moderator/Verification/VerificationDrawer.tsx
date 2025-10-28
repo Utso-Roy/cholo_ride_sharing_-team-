@@ -240,9 +240,18 @@ export default function VerificationDrawer({
                 className="w-full flex items-center justify-center h-10 px-4 rounded-lg text-white text-sm font-bold tracking-[0.015em] transition-colors bg-[#497D74] hover:bg-[#416f6a] shadow-sm ring-1 ring-inset ring-white/0 hover:ring-[#71BBB2]/40"
                 onClick={() => onApprove(row.type, row._id, notes)}
                 type="button"
+                
               >
                 Approve
               </button>
+              {/* const saveUser = {
+        name: data.name,
+        email: data.email,
+        photo: profilePic || null,
+        createdAt: new Date(),
+
+        role: "user",
+      }; */}
             </div>
           </div>
         </div>

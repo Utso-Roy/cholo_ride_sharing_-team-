@@ -28,6 +28,7 @@ import { Link, NavLink, useNavigate } from "react-router";
 import { AuthContext } from "../../Auth/AuthProvider";
 import { moderatorMenuItems } from "../../Utils/ModeratorMenu/moderatorMenu";
 import Loading from "../../Loading/Loading";
+import { isAnyRider } from "../../Utils/role/roles";
 import axios from "axios";
 import { IoMdLogOut } from "react-icons/io";
 import { toast } from "react-toastify";
@@ -172,7 +173,7 @@ const Sidebar: React.FC = () => {
     roleToRender = adminItems;
   } else if (currentUser?.role === "moderator") {
     roleToRender = moderatorMenuItems;
-  } else if (currentUser?.role === "rider") {
+  } else if (isAnyRider(currentUser)) {
     roleToRender = riderItems;
   } else {
     roleToRender = userItems;

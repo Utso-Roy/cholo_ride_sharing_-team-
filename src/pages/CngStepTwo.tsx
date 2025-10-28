@@ -1,4 +1,4 @@
-import React, { useRef, useMemo, useEffect, useState } from "react";
+import React, { useRef, useMemo, useEffect, useState, useContext } from "react";
 import { FileUpload, FileUploadSelectEvent } from "primereact/fileupload";
 import { useNavigate } from "react-router";
 import { InputText } from "primereact/inputtext";
@@ -13,6 +13,7 @@ import { FaUserCheck, FaShuttleVan, FaClipboardCheck } from "react-icons/fa";
 
 import { useMutation } from "@tanstack/react-query";
 import { api } from "../lib/api";
+import { AuthContext } from "../Auth/AuthProvider";
 
 // 🔧 টোস্ট অন করতে true করে দাও (ডিফল্টে কনসোলে দেখায়)
 const ENABLE_TOAST = true;
@@ -33,6 +34,7 @@ const BRAND_MODELS: Record<string, string[]> = {
 };
 
 const CngStepTwo = () => {
+  const {user} = useContext(AuthContext);
   const { driver, setDriver, vehicle, setVehicle, reset } = useCNGApply();
   const toast = useRef<Toast>(null);
   const navigate = useNavigate();
@@ -113,6 +115,7 @@ const CngStepTwo = () => {
       fd.set("license", driver.license);
       if (driver.photo) fd.set("photo", driver.photo, driver.photo.name);
       fd.set("dob", dobStr);
+      fd.set("email", user?.email);
 
       // --- vehicle fields ---
       fd.set("brand", vehicle.brand);
@@ -173,7 +176,6 @@ const CngStepTwo = () => {
       {
         onSuccess: (data) => {
           notify("success", "আবেদন জমা হয়েছে!");
-          // চাইলে data.id দেখাতে পারেন
           reset();
           navigate("/");
         },
