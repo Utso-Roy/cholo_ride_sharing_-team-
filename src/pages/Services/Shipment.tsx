@@ -1,132 +1,128 @@
-// src/pages/Shipment.tsx
-import React, { useState } from "react";
-import { Dialog } from "primereact/dialog";
-import { Button } from "primereact/button";
+import React from "react";
 import { motion } from "framer-motion";
-import { Avatar } from "primereact/avatar";
-import { Rating } from "primereact/rating";
-import BookingForm, { BookingFormData } from "./BookingForm";
-import HowToBook from "./HowToBook";
+import { Button } from "primereact/button";
 import { NavLink } from "react-router";
-import Lottie from "lottie-react";
-import lottieData from "../../../public/map.json";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTruckFast, faBoxOpen, faShieldHalved } from "@fortawesome/free-solid-svg-icons";
+import car1 from "../../assets/servicesimg/18.png";
+import car2 from "../../assets/servicesimg/19.png";
+import clock from "../../assets/servicesimg/1.png";
+import HowToBook from "./HowToBook";
 
 const PRIMARY = "#274450";
 const ACCENT = "#71BBB2";
 
-
-
 export default function Shipment() {
+  const features = [
+    {
+      title: "দ্রুত ডেলিভারি",
+      desc: "আপনার পণ্য নির্ধারিত সময়ে দ্রুত এবং নির্ভরযোগ্যভাবে পৌঁছে যাবে।",
+      icon: faTruckFast,
+      img: car1,
+      bg: "from-[#E9FBF8] to-[#F8FFFE]",
+    },
+    {
+      title: "রিয়েল-টাইম ট্র্যাকিং",
+      desc: "যেকোনো সময় আপনার পণ্যের অবস্থান লাইভ ট্র্যাক করতে পারবেন।",
+      icon: faBoxOpen,
+      img: clock,
+      bg: "from-[#F2FAF9] to-[#F8FFFE]",
+    },
+    {
+      title: "নিরাপদ পরিবহন",
+      desc: "সুরক্ষিত লোডিং সিস্টেম এবং অভিজ্ঞ টিমের মাধ্যমে আপনার পণ্য নিরাপদে পৌঁছাবে।",
+      icon: faShieldHalved,
+      img: car2,
+      bg: "from-[#EBFAF8] to-[#F8FFFE]",
+    },
+  ];
 
-    return (
-        <div className="relative space-y-12">
-            {/* Lottie Background */}
-            <div className="absolute inset-0 z-0 opacity-30">
-                <Lottie
-                    animationData={lottieData}
-                    loop
-                    autoplay
-                    style={{ width: "100%", height: "100%" }}
-                />
-            </div>
+  return (
+    <div className="relative min-h-screen">
+      {/* 🚚 Hero Section */}
+      <motion.section
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7 }}
+        className="relative flex flex-col justify-center items-center text-center py-20 px-4 bg-cover bg-center"
+        style={{
+          backgroundImage: "url('https://i.ibb.co.com/pckHwd6/cc.png')",
+        }}
+      >
+        <div className="absolute inset-0 bg-[#274450]/70"></div>
 
-            {/* Hero Section */}
-            <motion.section
-                initial={{ opacity: 0, y: -30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                className="relative h-[350px] md:h-[400px] w-full flex items-center justify-center text-center overflow-hidden"
-                style={{
-                    backgroundImage: "url('https://i.ibb.co.com/pckHwd6/cc.png')",
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                }}
+        <div className="relative z-10 text-white space-y-6">
+          <h1 className="text-3xl md:text-5xl font-extrabold leading-snug">
+            এখনই প্যাকেজ / পণ্য প্রেরণ বুক করুন
+          </h1>
+          <p className="text-lg md:text-xl font-medium opacity-90">
+            সাশ্রয়ী · দ্রুত · নিরাপদ
+          </p>
+
+          <NavLink to="/ridebooking">
+            <Button
+              className="!font-bold !bg-gradient-to-r !from-[#71BBB2] !to-[#56A89E] !text-white !border-none 
+              px-6 py-3 rounded-full shadow-lg hover:shadow-2xl
+              hover:!from-[#56A89E] hover:!to-[#71BBB2] transition-all duration-300"
             >
-                <div className="absolute inset-0 bg-[#274450]/60"></div>
-                <div className="relative z-10 text-white px-4">
-                    <h1 className="text-3xl md:text-5xl font-bold mb-4">এখনই প্যাকেজ / পণ্য প্রেরণ বুক করুন</h1>
-                    <p className="text-lg md:text-2xl mb-6">সাশ্রয়ী · দ্রুত · নিরাপদ</p>
-
-                    <NavLink to="/ridebooking">
-                        <Button
-                            className="
-                     relative !bg-gradient-to-r from-[#497D74] to-[#74B49B]
-                     !text-white !border-none !px-4 !py-3 !rounded-xl 
-                     overflow-hidden
-                     before:absolute before:-inset-1 before:rounded-xl
-                     before:bg-gradient-to-r before:from-[#497D74] before:via-[#74B49B] before:to-[#497D74]
-                     before:bg-[length:200%_200%] before:animate-border-slide
-                     before:z-[-1]
-                     hover:scale-105 transition-transform duration-300
-                     "
-                        >
-                            <span className="mr-2 text-2xl animate-pulse">✨</span>
-                            এখনই রাইড বুক করুন
-                        </Button>
-                    </NavLink>
-                </div>
-            </motion.section>
-
-            {/* Features Section */}
-            <motion.section
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
-                viewport={{ once: true }}
-                className="bg-[#274450] rounded-2xl shadow-lg p-8 mx-5 md:mx-10"
-            >
-                <h2 className="text-2xl md:text-3xl font-bold text-white mb-8 text-center">
-                    কেন ট্রাক রাইড ব্যবহার করবেন?
-                </h2>
-
-                <div className="grid md:grid-cols-3 gap-6">
-                    <motion.div whileHover={{ scale: 1.05 }} className="bg-[#71BBB2] text-white rounded-xl p-6 shadow-md flex flex-col items-center text-center">
-                        <span className="text-3xl mb-3">🚚</span>
-                        <h3 className="font-semibold text-lg mb-2">রিয়েল-টাইম ট্র্যাকিং</h3>
-                        <p className="text-sm">আপনার ট্রাকের অবস্থান এবং অগ্রগতি যেকোনো সময় রিয়েল-টাইমে দেখুন।</p>
-                    </motion.div>
-
-                    <motion.div whileHover={{ scale: 1.05 }} className="bg-[#497D74] text-white rounded-xl p-6 shadow-md flex flex-col items-center text-center">
-                        <span className="text-3xl mb-3">⏱️</span>
-                        <h3 className="font-semibold text-lg mb-2">সঠিক ETA</h3>
-                        <p className="text-sm">ডেলিভারি এবং ট্রাকের আনুমানিক আগমনের সময় নিশ্চিতভাবে জানুন।</p>
-                    </motion.div>
-
-                    <motion.div whileHover={{ scale: 1.05 }} className="bg-[#71BBB2] text-white rounded-xl p-6 shadow-md flex flex-col items-center text-center">
-                        <span className="text-3xl mb-3">🔒</span>
-                        <h3 className="font-semibold text-lg mb-2">নিরাপদ ডেলিভারি</h3>
-                        <p className="text-sm">আপনার মালামাল নিরাপদে গন্তব্যে পৌঁছানোর নিশ্চয়তা সহ।</p>
-                    </motion.div>
-                </div>
-            </motion.section>
-
-            {/* //HowToBook */}
-            <HowToBook></HowToBook>
-
-
-            {/* BTN  */}
-            <div className="flex justify-center items-center my-10 pb-5">
-
-                <NavLink to="/ridebooking">
-                    <Button
-                        className="
-                     relative !bg-gradient-to-r from-[#497D74] to-[#74B49B]
-                     !text-white !border-none !px-4 !py-3 !rounded-xl 
-                     overflow-hidden
-                     before:absolute before:-inset-1 before:rounded-xl
-                     before:bg-gradient-to-r before:from-[#497D74] before:via-[#74B49B] before:to-[#497D74]
-                     before:bg-[length:200%_200%] before:animate-border-slide
-                     before:z-[-1]
-                     hover:scale-105 transition-transform duration-300
-                     "
-                    >
-                        <span className="mr-2 text-2xl animate-pulse">✨</span>
-                        এখনই রাইড বুক করুন
-                    </Button>
-                </NavLink>
-
-            </div>
-
+              <FontAwesomeIcon icon={faTruckFast} className="mr-2" />
+              এখনই রাইড বুক করুন
+            </Button>
+          </NavLink>
         </div>
-    );
+      </motion.section>
+
+      {/* 🌟 Features Section */}
+      <section className="py-16 px-5 md:px-12 bg-gradient-to-br from-[#F9FFFE] to-[#E7F8F5]">
+        <motion.h2
+          className="text-2xl md:text-4xl font-bold text-center mb-12 text-[#274450]"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          কেন প্যাকেজ / পণ্য রাইড ব্যবহার করবেন?
+        </motion.h2>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 w-full">
+          {features.map((feature, i) => (
+            <motion.div
+              key={i}
+              whileHover={{ y: -8, scale: 1.02 }}
+              transition={{ duration: 0.3 }}
+              className={`p-6 rounded-3xl shadow-lg bg-gradient-to-br ${feature.bg} 
+              hover:shadow-2xl border border-transparent hover:border-[#71BBB2]/30 
+              flex flex-col justify-between`}
+            >
+              <div>
+                <div className="flex justify-center mb-4">
+                  <FontAwesomeIcon
+                    icon={feature.icon}
+                    className="text-[#71BBB2] text-5xl"
+                  />
+                </div>
+
+                <h3 className="text-xl font-semibold text-[#274450] mb-2 text-center">
+                  {feature.title}
+                </h3>
+                <p className="text-[#274450] text-center font-medium opacity-90">
+                  {feature.desc}
+                </p>
+              </div>
+
+              <div className="mt-6 flex justify-center">
+                <img
+                  src={feature.img}
+                  alt={feature.title}
+                  className="w-full h-[200px] object-contain rounded-lg"
+                />
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* 📘 How To Book Section */}
+      <HowToBook />
+    </div>
+  );
 }

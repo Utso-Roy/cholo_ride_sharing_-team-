@@ -72,14 +72,26 @@ import ManageSocialActivities from "../pages/OthersPage/ManageSocialActivities";
 import Dashboard from "../DashboardPages/Dashboard";
 import EditBlog from "../DashboardPages/EditBlog";
 import RideBooking from "../pages/Services/RideBooking";
-import LandingPage from "../pages/Landing/LandingPage";
 import LearnMore from "../pages/LearnMore/LearnMore";
+import MyRides from "../DashboardPages/UsersDashboard/MyRides";
+import FavouriteDrivers from "../DashboardPages/UsersDashboard/FavouriteDrivers";
+import HelpCenter from "../DashboardPages/UsersDashboard/HelpCenter";
+import FeedbackSection from "../DashboardPages/UsersDashboard/FeedbackSection";
+import UpcomingRides from "../DashboardPages/UsersDashboard/UpcomingRides";
 import UsersForModerator from "../DashboardPages/Moderator/Users/UsersForModerator";
 import RideQueuePage from "../DashboardPages/Moderator/Rides/RideQueuePage";
 import RideDetailPage from "../DashboardPages/Moderator/Rides/RideDetailPage";
 import DisputeListPage from "../DashboardPages/Moderator/Dispute/DisputeListPage";
 import DisputeDetailPage from "../DashboardPages/Moderator/Dispute/DisputeDetailPage";
 import { TemplateListPage } from "../DashboardPages/Moderator/MessageTemplate/TemplateListPage";
+import RideMap from "../DashboardPages/RiderDashboard/RideMap";
+import RideRequest from "../DashboardPages/RiderDashboard/RideRequest";
+import RideSuccessful from "../DashboardPages/RiderDashboard/RideSuccessful";
+import EarningRide from "../DashboardPages/RiderDashboard/EarningRide";
+import RatingsReviews from "../DashboardPages/RiderDashboard/RatingsReviews";
+import RideHistory from "../DashboardPages/RiderDashboard/RideHistory";
+import PerformanceReport from "../DashboardPages/RiderDashboard/PerformanceReport";
+import RideReject from "../DashboardPages/RiderDashboard/RideReject";
 
 
 const router = createBrowserRouter([
@@ -89,12 +101,10 @@ const router = createBrowserRouter([
     errorElement: <Error />,
     children: [
       // Home
-      { index: true, element: <LandingPage></LandingPage>},
+      { index: true, element: <Home />},
 
       // Help
-      {
-       path : '/home', element :<Home />
-      },
+    
       { path: "faq", element: <FAQ /> },
       { path: "customercare", element: <CustomerCare /> },
       { path: "userguide", element: <UserGuide /> },
@@ -176,8 +186,8 @@ const router = createBrowserRouter([
       { index: true, element: <Dashboard /> },
       { path: "profile", element: <Profile></Profile> },
       { path: "manage-partners", element: <ManagePartners /> },
-      { path: "manage-jobs", element: <ManageJobsApplications/> },
-      { path: "manage-activities", element: <ManageSocialActivities/> },
+      { path: "manage-jobs", element: <ManageJobsApplications /> },
+      { path: "manage-activities", element: <ManageSocialActivities /> },
       { path: "drivers", element: <Drivers /> },
       { path: "content-Management", element: <ContentManagement /> },
       { path: "content-Management/add-blog", element: <AddBlog /> },
@@ -188,16 +198,36 @@ const router = createBrowserRouter([
       { path: "/dashboard/content-management", element: <ContentManagement /> },
       { path: "ContentManagement/add-blog", element: <AddBlog /> },
       {
-        path :"/dashboard/users" , element : <Users/>
+        path: "/dashboard/users", element: <Users />
       },
-      { path: 'mod/reports', element: <ReportsList/>},
+      { path: 'mod/reports', element: <ReportsList /> },
       {
         path: 'mod/reports/:reportId',
-        element: <ReportDetailPage/>
+        element: <ReportDetailPage />
       },
       {
         path: 'mod/verifications',
         element: <VerificationPage/>
+      },
+      {
+        path: 'my-rides',
+        element: <MyRides/>
+      },
+      {
+        path: 'favourite-drivers',
+        element: <FavouriteDrivers/>
+      },
+      {
+        path: 'help',
+        element: <HelpCenter/>
+      },
+      {
+        path: 'feedback',
+        element: <FeedbackSection/>
+      },
+      {
+        path: 'upcoming-rides',
+        element: <UpcomingRides/>
       },
       {
         path: 'mod/users',
@@ -223,6 +253,41 @@ const router = createBrowserRouter([
         path: 'mod/comms/templates',
         element: <TemplateListPage/>
       }, 
+
+      // rider dashboard
+
+      {
+        path: '/dashboard/ride_map',
+        element : <RideMap></RideMap>
+      },
+      {
+        path: '/dashboard/ride-requests',
+        element : <RideRequest></RideRequest>
+      },
+      {
+        path: '/dashboard/rides-successful',
+        element : <RideSuccessful></RideSuccessful>
+      },
+      {
+        path: '/dashboard/earnings',
+        element : <EarningRide></EarningRide>
+      },
+      {
+        path: '/dashboard/reviews',
+        element : <RatingsReviews></RatingsReviews>
+      },
+      {
+        path: '/dashboard/history',
+        element : <RideHistory></RideHistory>
+      },
+      {
+        path: '/dashboard/performance',
+        element : <PerformanceReport></PerformanceReport>
+      },
+      {
+        path: '/dashboard/ride-reject',
+        element : <RideReject></RideReject>
+      }
     ],
   },
 
