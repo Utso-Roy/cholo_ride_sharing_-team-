@@ -65,7 +65,16 @@ const Privacy: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#f0faf8]">
+    <div 
+    
+      className="bg-cover bg-center min-h-screen bg-no-repeat bg-fixed"
+                style={{
+                    // backgroundImage: "url('https://i.ibb.co.com/zTQ6z80G/map.jpg')",
+                    backgroundImage: "linear-gradient(to right, rgba(230,252,249,0.8), rgba(249,250,251,0.8)), url('https://i.ibb.co/zTQ6z80G/map.jpg')",
+                    backgroundColor: "rgba(0, 0, 0, 0.1)",
+                    backgroundBlendMode: "overlay",
+                }}
+    >
       {/* Hero Section */}
       <section className="relative h-[500px] w-full">
         <img
@@ -104,7 +113,7 @@ const Privacy: React.FC = () => {
       </section>
 
       {/* Privacy Toggle Section */}
-      <section className="py-16 bg-[#f0faf8]">
+      <section className="py-16 ">
         <div className="w-full px-6 mx-auto text-center">
           <h2 className="text-4xl font-bold text-[#27445D] mb-4">
             প্রাইভেসি সেটিংস

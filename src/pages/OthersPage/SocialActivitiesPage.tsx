@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 import { FiFilter, FiSearch } from "react-icons/fi";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import Loading from "../../Loading/Loading";
 
 interface Activity {
   _id: string;
@@ -31,6 +32,10 @@ export default function SocialActivitiesPage() {
     },
   });
 
+  if(isLoading){
+    return <Loading/>
+  }
+
   const toggleVisibility = () => {
     if (visibleCount >= activities.length) {
       setVisibleCount(9);
@@ -53,7 +58,15 @@ export default function SocialActivitiesPage() {
   });
 
   return (
-    <section className="py-20 px-6 bg-gradient-to-b from-[#EFE9D5] to-[#71BBB2]">
+    <section 
+      className="bg-cover bg-center py-20 px-6  bg-no-repeat bg-fixed"
+                style={{
+                    // backgroundImage: "url('https://i.ibb.co.com/zTQ6z80G/map.jpg')",
+                    backgroundImage: "linear-gradient(to right, rgba(230,252,249,0.8), rgba(249,250,251,0.8)), url('https://i.ibb.co/zTQ6z80G/map.jpg')",
+                    backgroundColor: "rgba(0, 0, 0, 0.1)",
+                    backgroundBlendMode: "overlay",
+                }}
+    >
       {/* Heading */}
       <motion.h1
         className="text-5xl font-bold text-[#27445D] text-center mb-4"
@@ -166,7 +179,7 @@ export default function SocialActivitiesPage() {
         >
           <button
             onClick={toggleVisibility}
-            className="bg-gradient-to-r from-[#71BBB2] to-[#27445D] text-white px-8 py-3 rounded-full font-semibold shadow-lg hover:from-[#5aa59c] hover:to-[#1f3245] transition-all duration-300"
+            className=" text-white bg-[#71BBB2] px-8 py-3 rounded-full font-semibold shadow-lg hover:bg-[#1f3245] transition-all duration-300"
           >
             {visibleCount >= filteredActivities.length ? "কম দেখুন" : "আরও দেখুন"}
           </button>

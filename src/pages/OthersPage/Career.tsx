@@ -110,7 +110,8 @@ export default function CareerPage() {
     return (
         <div>
             {/* Hero Carousel */}
-            <section className="pb-5">
+            <section   className="">
+               
                 <Galleria
                     value={heroSlides}
                     activeIndex={activeIndex}
@@ -127,7 +128,15 @@ export default function CareerPage() {
             </section>
 
             {/* Job Listings */}
-            <section className="py-16 bg-[#e6fcf9] mb-5">
+            <section className="py-16  mb-5 bg-cover bg-center  bg-no-repeat bg-fixed"
+            
+             style={{
+                    // backgroundImage: "url('https://i.ibb.co.com/zTQ6z80G/map.jpg')",
+                    backgroundImage: "linear-gradient(to right, rgba(230,252,249,0.8), rgba(249,250,251,0.8)), url('https://i.ibb.co/zTQ6z80G/map.jpg')",
+                    backgroundColor: "rgba(0, 0, 0, 0.1)",
+                    backgroundBlendMode: "overlay",
+                }}
+            >
                 <h2 className="text-4xl font-bold text-[#27445D] text-center mb-10">বর্তমানে খালি পদ</h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-10 w-full px-6 mx-auto">

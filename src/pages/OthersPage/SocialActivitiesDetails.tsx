@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import Loading from "../../Loading/Loading";
 
 interface Activity {
   _id: string;
@@ -28,7 +29,7 @@ export default function SocialActivitiesDetails() {
 
   if (isLoading) {
     return (
-      <p className="text-center my-20 text-lg text-[#27445D]">লোড হচ্ছে...</p>
+     <Loading/>
     );
   }
 
@@ -41,7 +42,23 @@ export default function SocialActivitiesDetails() {
   }
 
   return (
-    <section className="py-16 my-16 px-6 w-full  md:max-w-4xl lg:max-w-4xl  mx-auto bg-white rounded-2xl shadow-lg">
+
+    <section
+     
+
+      className="w-full px-6  bg-cover bg-center py-16  bg-no-repeat bg-fixed"
+                style={{
+                    // backgroundImage: "url('https://i.ibb.co.com/zTQ6z80G/map.jpg')",
+                    backgroundImage: "linear-gradient(to right, rgba(230,252,249,0.8), rgba(249,250,251,0.8)), url('https://i.ibb.co/zTQ6z80G/map.jpg')",
+                    backgroundColor: "rgba(0, 0, 0, 0.1)",
+                    backgroundBlendMode: "overlay",
+                }}
+    >
+
+    <div className="py-16  px-6 w-full  md:max-w-4xl lg:max-w-4xl  mx-auto bg-white rounded-2xl shadow-lg"
+    
+    
+    >
       <button
         onClick={() => navigate(-1)}
         className="mb-6 text-[#27445D] font-semibold hover:underline"
@@ -69,6 +86,8 @@ export default function SocialActivitiesDetails() {
       </span>
 
       <p className="text-[#27445D] leading-relaxed">{activity.description}</p>
+    </div>
     </section>
+ 
   );
 }
