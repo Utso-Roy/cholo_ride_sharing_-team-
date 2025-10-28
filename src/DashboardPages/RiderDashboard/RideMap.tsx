@@ -4,6 +4,7 @@ import { FaMotorcycle, FaToggleOn, FaToggleOff } from "react-icons/fa";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import L from "leaflet";
+import { toast } from "react-toastify";
 
 //  Custom marker icon setup
 const markerIcon = new L.Icon({
@@ -22,7 +23,7 @@ function ChangeMapView({ coords }: { coords: [number, number] }) {
 const RideMap: React.FC = () => {
   const [isOnline, setIsOnline] = useState(true);
   const [searchText, setSearchText] = useState("");
-  const [suggestions, setSuggestions] = useState<any[]>([]); // 🔹 suggestion state
+  const [suggestions, setSuggestions] = useState<any[]>([]); 
   const [position, setPosition] = useState<[number, number]>([25.7832, 88.5595]); // Default: Dinajpur
 
   // 🔹 Fetch suggestions as user types
@@ -67,7 +68,7 @@ const RideMap: React.FC = () => {
       const { lat, lon } = data[0];
       setPosition([parseFloat(lat), parseFloat(lon)]);
     } else {
-      alert(" Location not found!");
+      toast.error(" Location not found!");
     }
   };
 

@@ -173,7 +173,7 @@ const Sidebar: React.FC = () => {
     roleToRender = adminItems;
   } else if (currentUser?.role === "moderator") {
     roleToRender = moderatorMenuItems;
-  } else if (isAnyRider(currentUser)) {
+  } else if (currentUser?.role === "rider") {
     roleToRender = riderItems;
   } else {
     roleToRender = userItems;
