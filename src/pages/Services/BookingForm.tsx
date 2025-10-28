@@ -94,7 +94,7 @@ function ClickSelector({
 }
 
 // ---------------- Main Component ----------------
-export default function RideBookingDashboard() {
+export default function BookingForm() {
     // Step control
     const [step, setStep] = useState<number>(1);
 
@@ -350,3 +350,4 @@ export default function RideBookingDashboard() {
         </div>
     );
 }
+
