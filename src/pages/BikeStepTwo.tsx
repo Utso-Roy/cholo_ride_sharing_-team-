@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useRef, useMemo, useEffect, useState } from "react";
 import { FileUpload, FileUploadSelectEvent } from "primereact/fileupload";
 import { useNavigate } from "react-router";
@@ -14,6 +14,7 @@ import { FaUserCheck, FaMotorcycle, FaClipboardCheck } from "react-icons/fa";
 
 import { useMutation } from "@tanstack/react-query";
 import { api } from "../lib/api";
+import { AuthContext } from "../Auth/AuthProvider";
 
 const ENABLE_TOAST = true;
 
@@ -35,6 +36,7 @@ const BRAND_MODELS: Record<string, string[]> = {
 };
 
 const BikeStepTwo = () => {
+  const {user} = useContext(AuthContext);
   const { driver, setDriver, vehicle, setVehicle, reset } = useBikeApply();
   const toast = useRef<Toast>(null);
   const navigate = useNavigate();
@@ -115,6 +117,7 @@ const BikeStepTwo = () => {
       fd.set("license", driver.license);
       if (driver.photo) fd.set("photo", driver.photo, driver.photo.name);
       fd.set("dob", dobStr);
+      fd.set("email", user?.email);
 
       // --- vehicle fields ---
       fd.set("brand", vehicle.brand);

@@ -1,4 +1,4 @@
-import React, { useRef, useMemo, useEffect, useState } from "react";
+import React, { useRef, useMemo, useEffect, useState, useContext } from "react";
 import { FileUpload, FileUploadSelectEvent } from "primereact/fileupload";
 import { useNavigate } from "react-router";
 import { InputText } from "primereact/inputtext";
@@ -13,6 +13,7 @@ import { FaUserCheck, FaCar, FaClipboardCheck } from "react-icons/fa";
 
 import { useMutation } from "@tanstack/react-query";
 import { api } from "../lib/api";
+import { AuthContext } from "../Auth/AuthProvider";
 
 
 const ENABLE_TOAST = true;
@@ -34,6 +35,7 @@ const BRAND_MODELS: Record<string, string[]> = {
 };
 
 const CarStepTwo = () => {
+  const {user} = useContext(AuthContext);
   const { driver, setDriver, vehicle, setVehicle, reset } = useCarApply();
   const toast = useRef<Toast>(null);
   const navigate = useNavigate();
@@ -112,6 +114,7 @@ const CarStepTwo = () => {
       fd.set("license", driver.license);
       if (driver.photo) fd.set("photo", driver.photo, driver.photo.name);
       fd.set("dob", dobStr);
+      fd.set("email", user?.email);
 
       // --- vehicle fields ---
       fd.set("brand", vehicle.brand);
@@ -121,15 +124,15 @@ const CarStepTwo = () => {
       fd.set("fitnessNo", vehicle.fitnessNo);
       fd.set("taxTokenNo", vehicle.taxTokenNo);
 
-      console.groupCollapsed("FormData preview");
-      for (const [k, v] of fd.entries()) {
-        if (v instanceof File) {
-          console.log(k, { name: v.name, type: v.type, size: v.size });
-        } else {
-          console.log(k, v);
-        }
-      }
-      console.groupEnd();
+      // console.groupCollapsed("FormData preview");
+      // for (const [k, v] of fd.entries()) {
+      //   if (v instanceof File) {
+      //     console.log(k, { name: v.name, type: v.type, size: v.size });
+      //   } else {
+      //     console.log(k, v);
+      //   }
+      // }
+      // console.groupEnd();
 
       if (!(driver.photo instanceof File)) {
         console.warn("photo is NOT a File:", driver.photo);

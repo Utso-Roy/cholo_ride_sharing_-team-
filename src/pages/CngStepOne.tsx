@@ -46,7 +46,7 @@ const CngStepOne = () => {
   return (
     <main className="px-4 bg-white md:px-10 py-10">
       <Toast ref={toast} />
-        <h1 className="text-4xl font-bold text-[#27445D] mt-8 mb-6 text-center">বাইক রাইড দিয়ে আয় করুন</h1>
+        <h1 className="text-4xl font-bold text-[#27445D] mt-8 mb-6 text-center">সিএনজি রাইড দিয়ে আয় করুন</h1>
       <section className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start max-w-7xl mx-auto">
         {/* LEFT: ফর্ম */}
         <div className="bg-[#e6fcf9] rounded-lg shadow p-5 md:p-6 text-[#27445D]">
