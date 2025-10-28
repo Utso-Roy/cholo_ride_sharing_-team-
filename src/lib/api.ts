@@ -1,11 +1,10 @@
 import axios from "axios";
 
 const baseURL =
-  import.meta.env.VITE_API_URL?.replace(/\/$/, "") ||
-  "https://cholo-ride-sharing-website-server-side.onrender.com";
+  import.meta.env.VITE_API_URL?.replace(/\/$/, "") || "http://localhost:3000";
 
 export const api = axios.create({
-  baseURL, // -> https://cholo-ride-sharing-website-server-side.onrender.com
+  baseURL, // -> http://localhost:3000
   withCredentials: false,
   timeout: 15000,
 });

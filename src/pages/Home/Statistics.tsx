@@ -1,6 +1,8 @@
+// Statistics.tsx
 import React from "react";
 import CountUp from "react-countup";
 import { FaMotorcycle, FaUserTie, FaHeadset } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 interface StatItem {
   id: number;
@@ -32,27 +34,34 @@ const stats: StatItem[] = [
 
 const Statistics: React.FC = () => {
   return (
-    <section className="py-20  bg-gradient-to-r from-[#e6fcf9] to-gray-50">
+    <section className="py-20 border-t border-gray-100 bg-gradient-to-r from-[#e6fcf9] to-gray-50">
       <div className="max-w-7xl mx-auto px-6 text-center">
-        <h2 className="text-4xl font-bold  text-[#27445D]">
-          পরিসংখ্যান 
+        <h2 className="text-4xl md:text-5xl font-bold text-[#27445D] mb-4">
+          পরিসংখ্যান
         </h2>
-        <p className="text-gray-600 mb-12 max-w-3xl mx-auto">
+        <p className="text-gray-600 mb-16 max-w-3xl mx-auto text-lg md:text-xl">
           আমাদের সেবার সাফল্য এবং গুরুত্বপূর্ণ তথ্য সমূহ।
         </p>
-        <div className="grid md:grid-cols-3 gap-12">
-          {stats.map((stat) => (
-            <div
+
+        <div className="grid md:grid-cols-3 gap-10">
+          {stats.map((stat, idx) => (
+            <motion.div
               key={stat.id}
-              className="flex flex-col items-center gap-4 bg-white rounded-2xl p-8 shadow hover:shadow-2xl transition cursor-pointer"
+              className="flex flex-col items-center gap-5 bg-white rounded-3xl p-8 shadow-md hover:shadow-2xl transition-transform transform hover:-translate-y-2 cursor-pointer"
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: idx * 0.2 }}
+              viewport={{ once: true }}
             >
-              <div>{stat.icon}</div>
-              <h3 className="text-3xl font-extrabold text-[#27445D]">
+              <div className="bg-[#E0F7F5] p-4 rounded-full">{stat.icon}</div>
+              <h3 className="text-3xl md:text-4xl font-extrabold text-[#27445D]">
                 <CountUp end={stat.count} duration={2.5} separator="," />
                 {stat.id === 3 ? "+ ঘন্টা" : "+"}
               </h3>
-              <p className="text-gray-600 text-lg text-center">{stat.title}</p>
-            </div>
+              <p className="text-gray-600 text-lg md:text-xl font-medium text-center">
+                {stat.title}
+              </p>
+            </motion.div>
           ))}
         </div>
       </div>
