@@ -49,7 +49,7 @@ const Navbar: React.FC = () => {
 
   const links = (
     <>
-    
+
 
       {/* Services */}
       <li className="relative ">
@@ -263,8 +263,8 @@ const Navbar: React.FC = () => {
       <div className="navbar-start flex items-center gap-4">
         <NavLink to="/" className="cursor-pointer text-xl font-bold">
           <div>
-            <img className="md:w-26 md:h-10 w-15 object-contain h-8"  src="https://i.ibb.co.com/JjNCs1G1/logo-2.png" alt="Cholo" />
-        </div>
+            <img className="md:w-26 md:h-10 w-15 object-contain h-8" src="https://i.ibb.co.com/JjNCs1G1/logo-2.png" alt="Cholo" />
+          </div>
         </NavLink>
 
         {/* Mobile dropdown */}
@@ -326,7 +326,7 @@ const Navbar: React.FC = () => {
               tabIndex={0}
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-200 text-[#21BEDA] rounded-box w-52"
             >
-              
+
               <li>
                 <Link to="/dashboard" className="cursor-pointer  flex items-center gap-2 font-semibold transition-colors duration-200 rounded-md px-2 py-1">
                   <MdDashboard className="text-lg" /> Dashboard
@@ -339,10 +339,10 @@ const Navbar: React.FC = () => {
                 </button>
               </li>
             </ul>
-          </div>) : " "          
-         
+          </div>) : " "
 
-}
+
+        }
       </div>
     </div>
   );
