@@ -235,7 +235,7 @@ const Sidebar: React.FC = () => {
           className="w-full text-left flex items-center gap-2 cursor-pointer  font-semibold transition-colors duration-200 rounded-md px-2 py-1"
         >
           <IoMdLogOut className="text-lg" /> Logout
-        </button>
+        </button>  
       </div>
     </div>
   );
