@@ -17,7 +17,7 @@ import api from "../../lib/api";
 import { AuthContext } from "../../Auth/AuthProvider";
 import { moderatorMenuItems } from "../../Utils/ModeratorMenu/moderatorMenu";
 import Loading from "../../Loading/Loading";
-import { isAnyRider } from "../../Utils/role/roles";
+// import { isAnyRider } from "../../Utils/role/roles";
 
 type Role = "admin" | "moderator" | "rider" | "user" | undefined;
 
@@ -87,7 +87,7 @@ const Sidebar: React.FC = () => {
     roleToRender = adminItems;
   } else if (currentUser?.role === "moderator") {
     roleToRender = moderatorMenuItems;
-  } else if (isAnyRider(currentUser)) {
+  } else if (currentUser?.role === "rider") {
     roleToRender = riderItems;
   } else {
     roleToRender = userItems;
