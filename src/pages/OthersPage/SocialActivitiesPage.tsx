@@ -19,7 +19,7 @@ interface Activity {
 
 export default function SocialActivitiesPage() {
  
-  const [visibleCount, setVisibleCount] = useState(9);
+  const [visibleCount, setVisibleCount] = useState(8);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterBadge, setFilterBadge] = useState("all");
   const navigate = useNavigate();
@@ -38,9 +38,9 @@ export default function SocialActivitiesPage() {
 
   const toggleVisibility = () => {
     if (visibleCount >= activities.length) {
-      setVisibleCount(9);
+      setVisibleCount(8);
     } else {
-      setVisibleCount((prev) => prev + 9);
+      setVisibleCount((prev) => prev + 8);
     }
   };
 
@@ -131,7 +131,7 @@ export default function SocialActivitiesPage() {
       </div>
 
       {/* Activities Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-full mx-auto px-6">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-8 max-full mx-auto px-6">
         {filteredActivities.slice(0, visibleCount).map((activity) => (
           <motion.div
             key={activity._id}
@@ -153,13 +153,13 @@ export default function SocialActivitiesPage() {
               <p className="text-sm text-gray-500 mb-2">
                 {activity.date} | {activity.location}
               </p>
-              <span className="inline-block bg-[#71BBB2] text-white px-3 py-1 rounded-full text-xs font-semibold mb-4">
+              <span className="inline-block bg-gray-100 text-[#27445D] px-3 py-1 rounded-full text-xs font-semibold mb-4">
                 {activity.badge}
               </span>
 
               <button
                 onClick={() => navigate(`/activities/${activity._id}`)}
-                className="mt-4 bg-[#71BBB2] text-white text-sm font-semibold px-6 py-2 rounded-full shadow hover:bg-[#1f3245] transition-colors duration-300 absolute bottom-4 right-4"
+                className="mt-4 bg-[#71BBB2]  hover:bg-[#5AA29F] text-white text-sm font-semibold px-6 py-2 rounded-full shadow transition-colors duration-300 absolute bottom-4 right-4"
               >
                 বিস্তারিত
               </button>
@@ -179,7 +179,7 @@ export default function SocialActivitiesPage() {
         >
           <button
             onClick={toggleVisibility}
-            className=" text-white bg-[#71BBB2] px-8 py-3 rounded-full font-semibold shadow-lg hover:bg-[#1f3245] transition-all duration-300"
+            className=" text-white bg-[#71BBB2]  hover:bg-[#5AA29F] px-8 py-3 rounded-full font-semibold shadow-lg  transition-all duration-300"
           >
             {visibleCount >= filteredActivities.length ? "কম দেখুন" : "আরও দেখুন"}
           </button>

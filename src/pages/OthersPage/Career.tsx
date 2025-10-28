@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { FiTrendingUp, FiCreditCard, FiHeart } from "react-icons/fi";
@@ -8,6 +8,7 @@ import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
 import Loading from "../../Loading/Loading";
 import { toast } from "react-toastify";
+import AOS from "aos";
 
 interface Job {
     _id: string;
@@ -31,6 +32,12 @@ export default function CareerPage() {
         phone: "",
         resume: ""
     });
+
+
+    useEffect(() => {
+        AOS.init({ duration: 800, once: true });
+    }, []);
+
 
     // Fetch jobs from backend
     const { data: jobs, isLoading, isError } = useQuery<Job[]>({
@@ -110,8 +117,8 @@ export default function CareerPage() {
     return (
         <div>
             {/* Hero Carousel */}
-            <section   className="">
-               
+            <section className="">
+
                 <Galleria
                     value={heroSlides}
                     activeIndex={activeIndex}
@@ -129,17 +136,24 @@ export default function CareerPage() {
 
             {/* Job Listings */}
             <section className="py-16  mb-5 bg-cover bg-center  bg-no-repeat bg-fixed"
-            
-             style={{
+
+                style={{
                     // backgroundImage: "url('https://i.ibb.co.com/zTQ6z80G/map.jpg')",
                     backgroundImage: "linear-gradient(to right, rgba(230,252,249,0.8), rgba(249,250,251,0.8)), url('https://i.ibb.co/zTQ6z80G/map.jpg')",
                     backgroundColor: "rgba(0, 0, 0, 0.1)",
                     backgroundBlendMode: "overlay",
                 }}
             >
-                <h2 className="text-4xl font-bold text-[#27445D] text-center mb-10">বর্তমানে খালি পদ</h2>
+                <h2 className="text-4xl font-bold text-[#27445D] text-center mb-3">
+                    বর্তমানে খালি পদ
+                </h2>
+                <p className="text-center text-gray-600 text-lg mb-10 max-w-2xl mx-auto">
+                    আমাদের টিমে যুক্ত হোন! নিচে বর্তমান খালি পদের তালিকা দেওয়া হলো।
+                    আপনি যদি উদ্যমী, সৃজনশীল এবং প্রযুক্তিপ্রেমী হন — তাহলে আমরা আপনার অপেক্ষায় আছি।
+                </p>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-10 w-full px-6 mx-auto">
+
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-10 w-full px-6 mx-auto">
                     {jobs?.map((job) => (
                         <div
                             key={job._id}
@@ -153,7 +167,7 @@ export default function CareerPage() {
                             <div className="p-6 flex-1 flex flex-col justify-between text-center">
                                 <div>
                                     <h3 className="text-2xl font-bold text-[#274450] mt-3">{job.title}</h3>
-                                    <div className="bg-[#71BBB2] text-white px-4 py-1 rounded-full shadow-md text-sm inline-block mt-3">
+                                    <div className="bg-gray-100 text-[#27445D] px-4 py-1 rounded-full shadow-md text-sm inline-block mt-3">
                                         {job.type}
                                     </div>
                                     <p className="text-gray-600 mt-4">{job.description}</p>
@@ -163,7 +177,7 @@ export default function CareerPage() {
 
                                 <button
                                     onClick={() => handleApplyClick(job)}
-                                    className="mt-6 bg-[#71BBB2] text-white text-sm font-semibold px-6 py-2 rounded-full hover:bg-[#27445D] transition duration-300"
+                                    className="mt-6 bg-[#71BBB2]  hover:bg-[#5AA29F] text-white text-sm font-semibold px-6 py-2 rounded-full  transition duration-300"
                                 >
                                     আবেদন করুন
                                 </button>
@@ -171,7 +185,85 @@ export default function CareerPage() {
                         </div>
                     ))}
                 </div>
+
+
+                <div className="w-full mx-auto px-6 text center mt-16">
+                    <h2
+                        className="text-3xl text-center md:text-4xl font-bold text-[#27445D] mb-4"
+                        data-aos="fade-up"
+                    >
+                        আমাদের মিশনে যোগ দিন
+                    </h2>
+                    <p
+                        className="text-gray-600 text-center text-lg mb-8 max-w-3xl mx-auto"
+                        data-aos="fade-up"
+                        data-aos-delay="100"
+                    >
+                        আমরা শুধু রাইড নয় — তৈরি করছি এক নিরাপদ, সহজ এবং স্মার্ট যাত্রা প্ল্যাটফর্ম।
+                        আপনি যদি প্রযুক্তি, উদ্ভাবন ও টিমওয়ার্কে বিশ্বাস করেন, তবে আপনিই আমাদের পরবর্তী সহকর্মী।
+                    </p>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-center mt-12">
+                        {/* Card 1 */}
+                        <div
+                            className="bg-white border shadow-md hover:shadow-xl transition transform hover:-translate-y-1  border-gray-200 rounded-2xl p-8  duration-300"
+                            data-aos="fade-up"
+                        >
+                            <h3 className="text-xl font-semibold text-[#27445D] mb-2">
+                                🚀 নতুন সুযোগ
+                            </h3>
+                            <p className="text-gray-600 text-sm">
+                                প্রতিটি প্রকল্পে শেখার ও চ্যালেঞ্জ নেয়ার নতুন সুযোগ।
+                            </p>
+                        </div>
+
+                        {/* Card 2 */}
+                        <div
+                            className="bg-white border shadow-md hover:shadow-xl transition transform hover:-translate-y-1  border-gray-200 rounded-2xl p-8 duration-300"
+                            data-aos="fade-up"
+                            data-aos-delay="100"
+                        >
+                            <h3 className="text-xl font-semibold text-[#27445D] mb-2">
+                                🤝 টিমওয়ার্ক
+                            </h3>
+                            <p className="text-gray-600 text-sm">
+                                বন্ধুত্বপূর্ণ পরিবেশে একসাথে কাজের অভিজ্ঞতা।
+                            </p>
+                        </div>
+
+                        {/* Card 3 */}
+                        <div
+                            className="bg-white border shadow-md hover:shadow-xl transition transform hover:-translate-y-1  border-gray-200 rounded-2xl p-8  duration-300"
+                            data-aos="fade-up"
+                            data-aos-delay="200"
+                        >
+                            <h3 className="text-xl font-semibold text-[#27445D] mb-2">
+                                💡 উদ্ভাবন
+                            </h3>
+                            <p className="text-gray-600 text-sm">
+                                আধুনিক প্রযুক্তি ব্যবহার করে নতুন আইডিয়া বাস্তবায়নের সুযোগ।
+                            </p>
+                        </div>
+
+                        {/* Card 4 */}
+                        <div
+                            className="bg-white border shadow-md hover:shadow-xl transition transform hover:-translate-y-1  border-gray-200 rounded-2xl p-8  duration-300"
+                            data-aos="fade-up"
+                            data-aos-delay="300"
+                        >
+                            <h3 className="text-xl font-semibold text-[#27445D] mb-2">
+                                🌱 উন্নতির পথ
+                            </h3>
+                            <p className="text-gray-600 text-sm">
+                                শেখার মাধ্যমে ক্যারিয়ার গ্রোথের বাস্তব সুযোগ।
+                            </p>
+                        </div>
+                    </div>
+
+
+                </div>
             </section>
+
 
             {/* Apply Form Dialog */}
             <Dialog
@@ -226,7 +318,7 @@ export default function CareerPage() {
                     </div>
                     <button
                         type="submit"
-                        className="w-full bg-[#27445D] hover:bg-[#71BBB2] text-white font-semibold py-3 rounded-lg transition-colors duration-300"
+                        className="w-full bg-[#71BBB2]  hover:bg-[#5AA29F] text-white font-semibold py-3 rounded-lg transition-colors duration-300"
                     >
                         Submit
                     </button>
