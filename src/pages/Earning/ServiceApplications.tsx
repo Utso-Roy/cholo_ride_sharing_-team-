@@ -99,12 +99,12 @@ const ServiceApplication: React.FC = () => {
         className="
     relative p-6 max-w-2xl mx-auto
     rounded-2xl border border-white/30
-    bg-white/20 backdrop-blur-6xl
+    bg-[#e6fcf9]/60 backdrop-blur-6xl
     shadow-lg text-[#27445D]
   "
       >
         <Toast ref={toast} />
-        <h2 className="text-2xl font-bold mb-6 text-center text-[#227B73]">
+        <h2 className="text-4xl font-bold mb-6 text-center text-[#227B73]">
           {getTitle()}
         </h2>
 

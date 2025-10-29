@@ -227,7 +227,7 @@ const CarStepTwo = () => {
 
       <div className="max-w-4xl mx-auto flex flex-col gap-6">
         {/* Driver Details */}
-        <section className="rounded-lg shadow p-5 md:p-6 text-[#27445D] bg-white/20 backdrop-blur-6xl">
+        <section className="rounded-lg shadow p-5 md:p-6 text-[#27445D] bg-[#e6fcf9]/60 backdrop-blur-6xl">
           <header className="flex items-center gap-2 mb-4">
             <FaUserCheck />
             <h2 className="text-xl font-bold text-gray-700">নিজের তথ্য</h2>
@@ -425,7 +425,7 @@ const CarStepTwo = () => {
         </section>
 
         {/* Vehicle Details */}
-        <section className="bg-white/20 backdrop-blur-6xl text-[#27445D] rounded-lg shadow p-5 md:p-6">
+        <section className="bg-[#e6fcf9]/60 backdrop-blur-6xl text-[#27445D] rounded-lg shadow p-5 md:p-6">
           <header className="flex items-center gap-2 mb-4 text-[#27445D]">
             <FaCar />
             <h2 className="text-xl font-bold">গাড়ির তথ্য</h2>
@@ -530,7 +530,7 @@ const CarStepTwo = () => {
         </section>
 
         {/* Checklist */}
-        <section className="rounded-lg p-4 text-sm text-[#27445D] shadow-lg bg-white/20 backdrop-blur-6xl">
+        <section className="rounded-lg p-4 text-sm text-[#27445D] shadow-lg bg-[#e6fcf9]/60 backdrop-blur-6xl">
           <div className="flex items-center gap-2 font-semibold mb-1">
             <FaClipboardCheck />
             <span>চেকলিস্ট</span>
