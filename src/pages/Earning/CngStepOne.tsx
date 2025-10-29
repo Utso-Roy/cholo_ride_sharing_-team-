@@ -1,12 +1,12 @@
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router";
-import { useCNGApply } from "../context/cng";
+import { useCNGApply } from "../../context/cng";
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
 import { Button } from "primereact/button";
 import { Toast } from "primereact/toast";
 import { classNames } from "primereact/utils";
-import CngEarnArticle from "../components/CngEarnArticle";
+import CngEarnArticle from "../../components/EarningArticle/CngEarnArticle";
 
 
 
@@ -44,12 +44,14 @@ const CngStepOne = () => {
   };
 
   return (
-    <main className="px-4 bg-white md:px-10 py-10">
+    <main className="px-4 md:px-10 py-10">
       <Toast ref={toast} />
         <h1 className="text-4xl font-bold text-[#27445D] mt-8 mb-6 text-center">সিএনজি রাইড দিয়ে আয় করুন</h1>
       <section className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start max-w-7xl mx-auto">
         {/* LEFT: ফর্ম */}
-        <div className="bg-[#e6fcf9] rounded-lg shadow p-5 md:p-6 text-[#27445D]">
+        <div className="border-white/30
+    bg-white/20 backdrop-blur-6xl
+    shadow-lg rounded-lg p-5 md:p-6 text-[#27445D]">
           <h1 className="text-2xl font-bold text-gray-700 mb-8 text-center">রেজিষ্ট্রেশন করুন</h1>
 
           <div className="flex flex-col gap-3">
