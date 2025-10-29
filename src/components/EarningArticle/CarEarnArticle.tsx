@@ -1,6 +1,6 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode } from 'react';
 import {
-  FaShuttleVan,
+  FaCar,
   FaClipboardCheck,
   FaClock,
   FaHeadset,
@@ -10,8 +10,8 @@ import {
   FaMoneyBillWave,
   FaShieldAlt,
   FaStar,
-  FaRoute,
-} from "react-icons/fa";
+  FaRoute
+} from 'react-icons/fa';
 
 type Item = {
   icon: ReactNode;
@@ -19,75 +19,77 @@ type Item = {
   desc: string;
 };
 
-const CngEarnArticle = () => {
+const CarEarnArticle = () => {
   const steps: Item[] = [
     {
       icon: <FaMobileAlt className="text-2xl" />,
       title: "অ্যাপে ড্রাইভার সাইন আপ",
-      desc: "মৌলিক তথ্য দিয়ে একাউন্ট খুলুন।",
+      desc: "মৌলিক তথ্য দিয়ে একাউন্ট খুলুন।"
     },
     {
       icon: <FaIdCard className="text-2xl" />,
       title: "ডকুমেন্ট ভেরিফিকেশন",
-      desc: "NID, ড্রাইভিং লাইসেন্স, গাড়ির রেজিস্ট্রেশন ও ফিটনেস যাচাই।",
+      desc: "NID, ড্রাইভিং লাইসেন্স, গাড়ির রেজিস্ট্রেশন/ইনস্যুরেন্স আপলোড ও যাচাই।"
     },
     {
       icon: <FaClock className="text-2xl" />,
       title: "ফ্লেক্সিবল সময়",
-      desc: "যখন সময় আছে তখনই অনলাইনে এসে রাইড নিন।",
+      desc: "আপনার সুবিধামতো অনলাইনে এসে ট্রিপ নিন।"
     },
     {
       icon: <FaStar className="text-2xl" />,
       title: "সেফটি ও সার্ভিস",
-      desc: "যাত্রীদের নিরাপদ ও মানসম্মত সার্ভিস দিন।",
+      desc: "ইন-অ্যাপ সেফটি ফিচার মেনে ৫-স্টার সার্ভিস দিন।"
     },
     {
       icon: <FaMoneyBillWave className="text-2xl" />,
       title: "সাপ্তাহিক পেআউট",
-      desc: "আয় সহজে উইথড্র করুন।",
-    },
+      desc: "আয় সহজে উইথড্র করুন।"
+    }
   ];
 
   const benefits: Item[] = [
     {
-      icon: <FaShuttleVan className="text-xl" />,
-      title: "সহজ আয় শুরু",
-      desc: "নিজের CNG চালিয়ে দ্রুত আয়ের সুযোগ।",
+      icon: <FaCar className="text-xl" />,
+      title: "সহজে আয় শুরু",
+      desc: "নিজের কার ব্যবহার করে দ্রুত আয়ের সুযোগ — নতুনদের জন্য বান্ধব অনবোর্ডিং।"
     },
     {
       icon: <FaMapMarkerAlt className="text-xl" />,
       title: "আপনার শহরেই কাজ",
-      desc: "ঢাকা, চট্টগ্রামসহ একাধিক শহরে অপারেশন।",
+      desc: "ঢাকা, চট্টগ্রাম, সিলেটসহ একাধিক শহরে অপারেশন।"
     },
     {
       icon: <FaShieldAlt className="text-xl" />,
       title: "সেফটি কভারেজ",
-      desc: "SOS বাটন, ইন-অ্যাপ সেফটি ও ট্রিপ ট্র্যাকিং।",
+      desc: "ইন-অ্যাপ সেফটি, SOS এবং ট্রিপ ট্র্যাকিং সাপোর্ট।"
     },
     {
       icon: <FaClipboardCheck className="text-xl" />,
       title: "কম কমিশন/অফার",
-      desc: "সময়ভেদে প্রমোশনাল অফার ও কমিশন বেনিফিট।",
+      desc: "সময়ভেদে প্রমোশনাল অফার ও কমিশন বেনিফিট।"
     },
     {
       icon: <FaHeadset className="text-xl" />,
       title: "ডেডিকেটেড সাপোর্ট",
-      desc: "অ্যাপে/ফোনে দ্রুত সাপোর্ট।",
+      desc: "অ্যাপে/ফোনে দ্রুত সাপোর্ট ও রিসোর্স।"
     },
     {
       icon: <FaRoute className="text-xl" />,
       title: "স্মার্ট রুটিং",
-      desc: "অপ্টিমাইজড রুট সাজেশন দিয়ে জ্যাম এড়ানো।",
-    },
+      desc: "ডিমান্ড-ভিত্তিক সাজেশন, ট্রিপ প্ল্যানিং ও অপ্টিমাইজড রুট।"
+    }
   ];
 
   return (
-    <article className="bg-[#e6fcf9] rounded-lg shadow p-5 md:p-6 text-[#27445D]">
+    <article className="border-white/30
+    bg-white/20 backdrop-blur-6xl
+    shadow-lg rounded-lg p-5 md:p-6 text-[#27445D]">
       {/* Header */}
       <header className="text-center mb-6">
-        <h2 className="text-2xl font-bold">কিভাবে CNG/অটোরিকশা চালিয়ে আয় করবেন</h2>
+        <h2 className="text-2xl font-bold">কিভাবে কার রাইড দিয়ে আয় করবেন</h2>
         <p className="mt-2 opacity-90 text-sm">
-          সহজ রেজিস্ট্রেশন, ফ্লেক্সিবল সময় আর সাপ্তাহিক পেআউট— সব এক জায়গায়।
+          দ্রুত রেজিস্ট্রেশন, ফ্লেক্সিবল সময় আর সাপ্তাহিক পেআউট— সবকিছু এক জায়গায়।
         </p>
       </header>
 
@@ -141,4 +143,4 @@ const CngEarnArticle = () => {
   );
 };
 
-export default CngEarnArticle;
+export default CarEarnArticle;

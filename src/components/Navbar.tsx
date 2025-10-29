@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { HiChevronDown } from "react-icons/hi";
-import { FaMotorcycle, FaCarSide } from "react-icons/fa";
+import { FaMotorcycle, FaCarSide, FaTruckMoving, FaAmbulance, FaBusAlt, FaShuttleVan } from "react-icons/fa";
 import { MdDashboard, MdOutlineElectricRickshaw } from "react-icons/md";
 import { Link, NavLink, useLocation, useNavigate } from "react-router";
 import serviceItems from "../Utils/ServiceItems/serviceItems";
@@ -137,6 +137,38 @@ const Navbar: React.FC = () => {
                 >
                   <MdOutlineElectricRickshaw /> সিএনজি রাইড
                 </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/earn/truck"
+                  className="flex items-center gap-2 hover:text-[#71BBB2] transition-colors"
+                  onClick={() => setOpenEarn(false)}
+                >
+                  <FaTruckMoving /> ট্রাক সার্ভিস                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/earn/ambulance"
+                  className="flex items-center gap-2 hover:text-[#71BBB2] transition-colors"
+                  onClick={() => setOpenEarn(false)}
+                >
+                  <FaAmbulance /> অ্যাম্বুলেন্স সার্ভিস               </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/earn/bus"
+                  className="flex items-center gap-2 hover:text-[#71BBB2] transition-colors"
+                  onClick={() => setOpenEarn(false)}
+                >
+                  <FaBusAlt /> স্কু ল বাস সার্ভিস               </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/earn/shuttle"
+                  className="flex items-center gap-2 hover:text-[#71BBB2] transition-colors"
+                  onClick={() => setOpenEarn(false)}
+                >
+                  <FaShuttleVan /> শাটল সার্ভিস               </NavLink>
               </li>
             </ul>
           </div>

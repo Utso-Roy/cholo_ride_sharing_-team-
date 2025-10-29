@@ -1,5 +1,4 @@
-import React, { useContext } from "react";
-import { useRef, useMemo, useEffect, useState } from "react";
+import React, { useRef, useMemo, useEffect, useState, useContext } from "react";
 import { FileUpload, FileUploadSelectEvent } from "primereact/fileupload";
 import { useNavigate } from "react-router";
 import { InputText } from "primereact/inputtext";
@@ -8,13 +7,14 @@ import { Button } from "primereact/button";
 import { Calendar } from "primereact/calendar";
 import { Toast } from "primereact/toast";
 import { classNames } from "primereact/utils";
-import { Gender, useBikeApply } from "../context/bike";
+import { Gender, useCarApply } from "../../context/car";
 
-import { FaUserCheck, FaMotorcycle, FaClipboardCheck } from "react-icons/fa";
+import { FaUserCheck, FaCar, FaClipboardCheck } from "react-icons/fa";
 
 import { useMutation } from "@tanstack/react-query";
-import { api } from "../lib/api";
-import { AuthContext } from "../Auth/AuthProvider";
+import { api } from "../../lib/api";
+import { AuthContext } from "../../Auth/AuthProvider";
+
 
 const ENABLE_TOAST = true;
 
@@ -23,27 +23,25 @@ const CITY_OPTIONS = [
   { label: "চট্টগ্রাম", value: "Chattogram" },
   { label: "সিলেট", value: "Sylhet" },
   { label: "খুলনা", value: "Khulna" },
-  { label: "কক্সবাজার", value: "CoxsBazar" },
   { label: "রাজশাহী", value: "Rajshahi" },
 ];
 
 const BRAND_MODELS: Record<string, string[]> = {
-  Honda: ["CB Hornet", "Livo", "Shine", "Dream Neo"],
-  Yamaha: ["FZ", "FZS", "Saluto", "SZR"],
-  TVS: ["Apache", "Metro", "Stryker"],
-  Bajaj: ["Pulsar", "Discover", "Platina"],
-  Hero: ["Glamour", "Hunk", "Ignitor"],
+  Toyota: ["Corolla", "Axio", "Allion", "Noah"],
+  Honda: ["City", "Civic", "Grace", "Accord"],
+  Nissan: ["Sunny", "Bluebird", "X-Trail"],
+  Mitsubishi: ["Lancer", "Pajero", "Outlander"],
+  Hyundai: ["Accent", "Elantra", "Tucson"],
 };
 
-const BikeStepTwo = () => {
+const CarStepTwo = () => {
   const {user} = useContext(AuthContext);
-  const { driver, setDriver, vehicle, setVehicle, reset } = useBikeApply();
+  const { driver, setDriver, vehicle, setVehicle, reset } = useCarApply();
   const toast = useRef<Toast>(null);
   const navigate = useNavigate();
   const fileRef = useRef<FileUpload | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const [fileKey, setFileKey] = useState(0);
-
+  const [fileKey, setFileKey] = useState(0); // ফাইল আপলোড রিমাউন্ট fallback
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const modelOptions = useMemo(() => {
@@ -58,15 +56,15 @@ const BikeStepTwo = () => {
     const file = (e.files?.[0] as File | undefined) ?? null;
     if (!file) return;
 
-    // context file
     setDriver({ ...driver, photo: file });
 
-    // Preview URL
+
     const nextUrl = URL.createObjectURL(file);
     setPreviewUrl((prev) => {
       if (prev) URL.revokeObjectURL(prev);
       return nextUrl;
     });
+    // fileRef.current?.clear?.();
   };
 
   const removePhoto = () => {
@@ -89,8 +87,7 @@ const BikeStepTwo = () => {
     if (ENABLE_TOAST) {
       toast.current?.show({
         severity: type,
-        summary:
-          type === "success" ? "সফল" : type === "warn" ? "সতর্কতা" : "ত্রুটি",
+        summary: type === "success" ? "সফল" : type === "warn" ? "সতর্কতা" : "ত্রুটি",
         detail,
         life: 2400,
       });
@@ -127,8 +124,21 @@ const BikeStepTwo = () => {
       fd.set("fitnessNo", vehicle.fitnessNo);
       fd.set("taxTokenNo", vehicle.taxTokenNo);
 
+      // console.groupCollapsed("FormData preview");
+      // for (const [k, v] of fd.entries()) {
+      //   if (v instanceof File) {
+      //     console.log(k, { name: v.name, type: v.type, size: v.size });
+      //   } else {
+      //     console.log(k, v);
+      //   }
+      // }
+      // console.groupEnd();
 
-      const res = await api.post("/api/bike-applications", fd);
+      if (!(driver.photo instanceof File)) {
+        console.warn("photo is NOT a File:", driver.photo);
+      }
+
+      const res = await api.post("/api/car-applications", fd);
       return res.data;
     },
   });
@@ -162,6 +172,7 @@ const BikeStepTwo = () => {
       {
         onSuccess: (data) => {
           notify("success", "আবেদন জমা হয়েছে!");
+          // চাইলে data.id দেখাতে পারেন
           reset();
           navigate("/");
         },
@@ -169,13 +180,16 @@ const BikeStepTwo = () => {
           const data = err?.response?.data;
           console.error("Submit error:", data);
 
+          // Zod field errors (object: { fieldName: string[] })
           const fe = data?.details?.fieldErrors as
             | Record<string, string[]>
             | undefined;
 
+          // First error message (if any)
           const firstField = fe && Object.keys(fe)[0];
           const firstMsg = firstField && fe[firstField]?.[0];
 
+          // Optional: nice label mapping (API keys → Bangla labels)
           const label: Record<string, string> = {
             "driver.firstName": "নামের প্রথম অংশ",
             "driver.lastName": "নামের শেষ অংশ",
@@ -208,12 +222,12 @@ const BikeStepTwo = () => {
   };
 
   return (
-    <main className="px-4 md:px-10 py-10 bg-white">
+    <main className="px-4 md:px-10 py-10">
       {ENABLE_TOAST && <Toast ref={toast} position="top-center" />}
 
       <div className="max-w-4xl mx-auto flex flex-col gap-6">
         {/* Driver Details */}
-        <section className="bg-[#e6fcf9] rounded-lg shadow p-5 md:p-6 text-[#27445D]">
+        <section className="rounded-lg shadow p-5 md:p-6 text-[#27445D] bg-white/20 backdrop-blur-6xl">
           <header className="flex items-center gap-2 mb-4">
             <FaUserCheck />
             <h2 className="text-xl font-bold text-gray-700">নিজের তথ্য</h2>
@@ -307,7 +321,6 @@ const BikeStepTwo = () => {
             <div className="flex flex-col gap-2">
               <label>জন্ম তারিখ*</label>
               <Calendar
-                selectionMode="single"
                 value={driver.dob ?? null}
                 onChange={(e) => setDriver({ ...driver, dob: e.value as Date })}
                 dateFormat="dd/mm/yy"
@@ -356,9 +369,17 @@ const BikeStepTwo = () => {
                 name="photo"
                 chooseLabel="ছবি নির্বাচন"
                 accept="image/jpeg, image/png"
+                // maxFileSize={2 * 1024 * 1024}
                 customUpload
                 onSelect={onPhoto}
-               
+                // pt={{
+                //   chooseButton: {
+                //     className:
+                //       "!bg-[#71BBB2] !border-none hover:!bg-[#5AA29F] " +
+                //       "focus:!ring-2 focus:!ring-[#71BBB2]/40 !text-[#27445D] font-medium",
+                //   },
+                // }}
+                /* 🔹 বিকল্প: কিছু ভার্সনে chooseOptions ও কাজ করে */
                 chooseOptions={{
                   label: "ছবি নির্বাচন",
                   className:
@@ -366,6 +387,7 @@ const BikeStepTwo = () => {
                     "!text-[#27445D] font-medium",
                 }}
               />
+              {/* নির্বাচিত ফাইলের নাম */}
               {driver.photo && !previewUrl && (
                 <small className="text-gray-700">
                   নির্বাচিত: {driver.photo.name}
@@ -403,15 +425,15 @@ const BikeStepTwo = () => {
         </section>
 
         {/* Vehicle Details */}
-        <section className="bg-[#e6fcf9] text-[#27445D] rounded-lg shadow p-5 md:p-6">
+        <section className="bg-white/20 backdrop-blur-6xl text-[#27445D] rounded-lg shadow p-5 md:p-6">
           <header className="flex items-center gap-2 mb-4 text-[#27445D]">
-            <FaMotorcycle />
+            <FaCar />
             <h2 className="text-xl font-bold">গাড়ির তথ্য</h2>
           </header>
 
           <div className="grid md:grid-cols-2 gap-4">
             <div className="flex flex-col gap-2">
-              <label>ব্র্যান্ড সিলেক্ট করুন*</label>
+              <label>ব্র্যান্ড*</label>
               <Dropdown
                 value={vehicle.brand}
                 onChange={(e) =>
@@ -458,7 +480,7 @@ const BikeStepTwo = () => {
                 onChange={(e) =>
                   setVehicle({ ...vehicle, year: e.target.value })
                 }
-                placeholder="যেমন: 2019"
+                placeholder="যেমন: 2020"
                 className={classNames({ "p-invalid": !vehicle.year?.trim() })}
               />
             </div>
@@ -471,9 +493,7 @@ const BikeStepTwo = () => {
                   setVehicle({ ...vehicle, fitnessNo: e.target.value })
                 }
                 placeholder="যেমন: FT-458921"
-                className={classNames({
-                  "p-invalid": !vehicle.fitnessNo?.trim(),
-                })}
+                className={classNames({ "p-invalid": !vehicle.fitnessNo?.trim() })}
               />
             </div>
 
@@ -485,9 +505,7 @@ const BikeStepTwo = () => {
                   setVehicle({ ...vehicle, taxTokenNo: e.target.value })
                 }
                 placeholder="যেমন: TT-2025-XXXX"
-                className={classNames({
-                  "p-invalid": !vehicle.taxTokenNo?.trim(),
-                })}
+                className={classNames({ "p-invalid": !vehicle.taxTokenNo?.trim() })}
               />
             </div>
           </div>
@@ -496,16 +514,14 @@ const BikeStepTwo = () => {
             <Button
               label="পিছনে"
               icon="pi pi-arrow-left"
-              className="p-button-text  text-[#27445D]"
+              className="p-button-text text-[#27445D]"
               onClick={() => navigate(-1)}
             />
             <Button
-              label={submitMutation.isPending ? "সাবমিট হচ্ছে..." : "সাবমিট"}
-              icon={
-                submitMutation.isPending
-                  ? "pi pi-spin pi-spinner"
-                  : "pi pi-check"
-              }
+              label={isSubmitting ? "সাবমিট হচ্ছে..." : "সাবমিট"}
+              icon={submitMutation.isPending
+                ? "pi pi-spin pi-spinner"
+                : "pi pi-check"}
               className="!bg-[#71BBB2] !border-none hover:!bg-[#5AA29F]"
               onClick={submitAll}
               disabled={submitMutation.isPending}
@@ -513,8 +529,8 @@ const BikeStepTwo = () => {
           </div>
         </section>
 
-        {/* Small note / checklist */}
-        <section className="rounded-lg border border-[#27445D]/10 p-4 text-sm text-[#27445D] bg-[#e6fcf9]">
+        {/* Checklist */}
+        <section className="rounded-lg p-4 text-sm text-[#27445D] shadow-lg bg-white/20 backdrop-blur-6xl">
           <div className="flex items-center gap-2 font-semibold mb-1">
             <FaClipboardCheck />
             <span>চেকলিস্ট</span>
@@ -522,8 +538,8 @@ const BikeStepTwo = () => {
           <ul className="list-disc ml-5 space-y-1">
             <li>সঠিক মোবাইল ফরম্যাট (01XXXXXXXXX)</li>
             <li>NID ≥ ১০ সংখ্যা, লাইসেন্স ≥ ৬ অক্ষর</li>
-            <li>পরিষ্কার মুখের ছবি (jpg/png ≤ 2MB)</li>
-            <li>গাড়ির ব্র্যান্ড, মডেল, রেজিস্ট্রেশন/ফিটনেস স্পষ্টভাবে দিন</li>
+            <li>পরিষ্কার ছবি (jpg/png ≤ 2MB)</li>
+            <li>গাড়ির ব্র্যান্ড, মডেল, রেজিস্ট্রেশন/ফিটনেস/ট্যাক্স স্পষ্টভাবে দিন</li>
           </ul>
         </section>
       </div>
@@ -531,4 +547,4 @@ const BikeStepTwo = () => {
   );
 };
 
-export default BikeStepTwo;
+export default CarStepTwo;
