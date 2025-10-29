@@ -55,7 +55,7 @@ export default function BikeStepOne() {
         {/* LEFT: ফর্ম */}
         <div
           className="border-white/30
-    bg-white/20 backdrop-blur-6xl
+    bg-[#e6fcf9]/60 backdrop-blur-6xl
     shadow-lg rounded-lg p-5 md:p-6 text-[#27445D]"
         >
           <h1 className="text-2xl font-bold text-gray-700 mb-8 text-center">
