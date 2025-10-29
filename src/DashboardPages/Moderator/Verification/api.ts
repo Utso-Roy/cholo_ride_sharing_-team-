@@ -1,5 +1,4 @@
-import api from "../../../lib/api"; // ✅ axios instance import
-
+import api from "../../../lib/api"; 
 export type AppType = "bike" | "car" | "cng";
 export type AppStatus = "pending" | "approved" | "rejected" | "need_info";
 
@@ -48,10 +47,9 @@ const q = (o: Record<string, any>) =>
     .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(String(v))}`)
     .join("&");
 
-// ✅ এখন base URL বের করা হচ্ছে axios থেকে
 const getApiBase = (): string => api.defaults.baseURL || "";
 
-// ✅ base + path safely join
+//  base + path safely join
 const withBase = (path: string) => {
   const base = getApiBase();
   if (!base) return path;
