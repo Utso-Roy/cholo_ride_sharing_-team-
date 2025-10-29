@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import { Place } from "./types";
 import { LatLngExpression } from "leaflet";
-import LocationInput from "./LocationInput";
+import LocationInput from "./LocationSearch";
 import AnimatedButton from "./AnimatedButton";
 import MapSelector from "./MapSelector";
 
