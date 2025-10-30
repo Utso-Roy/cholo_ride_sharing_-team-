@@ -36,7 +36,7 @@ const BRAND_MODELS: Record<string, string[]> = {
 };
 
 const BikeStepTwo = () => {
-  const {user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const { driver, setDriver, vehicle, setVehicle, reset } = useBikeApply();
   const toast = useRef<Toast>(null);
   const navigate = useNavigate();
@@ -127,7 +127,6 @@ const BikeStepTwo = () => {
       fd.set("fitnessNo", vehicle.fitnessNo);
       fd.set("taxTokenNo", vehicle.taxTokenNo);
 
-
       const res = await api.post("/api/bike-applications", fd);
       return res.data;
     },
@@ -213,7 +212,11 @@ const BikeStepTwo = () => {
 
       <div className="max-w-4xl mx-auto flex flex-col gap-6">
         {/* Driver Details */}
-        <section className="rounded-lg shadow p-5 md:p-6 text-[#27445D] bg-[#e6fcf9]/60 backdrop-blur-6xl">
+        <section
+          className="border-white/30
+    bg-[#e6fcf9]/60 backdrop-blur-6xl
+    shadow-lg rounded-lg p-5 md:p-6 text-[#27445D]"
+        >
           <header className="flex items-center gap-2 mb-4">
             <FaUserCheck />
             <h2 className="text-xl font-bold text-gray-700">নিজের তথ্য</h2>
@@ -296,8 +299,8 @@ const BikeStepTwo = () => {
                       {g === "male"
                         ? "পুরুষ"
                         : g === "female"
-                          ? "নারী"
-                          : "অন্যান্য"}
+                        ? "নারী"
+                        : "অন্যান্য"}
                     </span>
                   </label>
                 ))}
@@ -358,7 +361,6 @@ const BikeStepTwo = () => {
                 accept="image/jpeg, image/png"
                 customUpload
                 onSelect={onPhoto}
-               
                 chooseOptions={{
                   label: "ছবি নির্বাচন",
                   className:
@@ -403,7 +405,11 @@ const BikeStepTwo = () => {
         </section>
 
         {/* Vehicle Details */}
-        <section className="bg-[#e6fcf9]/60 backdrop-blur-6xl text-[#27445D] rounded-lg shadow p-5 md:p-6">
+        <section
+          className="border-white/30
+    bg-[#e6fcf9]/60 backdrop-blur-6xl
+    shadow-lg rounded-lg p-5 md:p-6 text-[#27445D]"
+        >
           <header className="flex items-center gap-2 mb-4 text-[#27445D]">
             <FaMotorcycle />
             <h2 className="text-xl font-bold">গাড়ির তথ্য</h2>
@@ -514,7 +520,11 @@ const BikeStepTwo = () => {
         </section>
 
         {/* Small note / checklist */}
-        <section className="rounded-lg p-4 text-sm text-[#27445D] shadow-lg bg-[#e6fcf9]/60 backdrop-blur-6xl">
+        <section
+          className="border-white/30
+    bg-[#e6fcf9]/60 backdrop-blur-6xl
+    shadow-lg rounded-lg p-5 md:p-6 text-[#27445D]"
+        >
           <div className="flex items-center gap-2 font-semibold mb-1">
             <FaClipboardCheck />
             <span>চেকলিস্ট</span>
