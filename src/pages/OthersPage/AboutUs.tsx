@@ -20,6 +20,7 @@ import {
 import aboutBanner from "../../assets/banner/aboutBanner1.jpg";
 import aboutBanner2 from "../../assets/banner/aboutBanner2.jpg";
 
+
 export default function About(): JSX.Element {
   useEffect(() => {
     AOS.init({ duration: 1000, offset: 50, once: true });
@@ -175,7 +176,7 @@ export default function About(): JSX.Element {
         </div>
       </section>
 
-    
+  
      
       <section className="w-full mb-16 px-6  text-white">
         <div className="full mx-auto text-center" data-aos="fade-up">
