@@ -82,7 +82,9 @@ const CngEarnArticle = () => {
   ];
 
   return (
-    <article className="bg-[#e6fcf9] rounded-lg shadow p-5 md:p-6 text-[#27445D]">
+    <article className="border-white/30
+    bg-[#e6fcf9]/60 backdrop-blur-6xl
+    shadow-lg rounded-lg p-5 md:p-6 text-[#27445D]">
       {/* Header */}
       <header className="text-center mb-6">
         <h2 className="text-2xl font-bold">কিভাবে CNG/অটোরিকশা চালিয়ে আয় করবেন</h2>

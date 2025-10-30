@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Accordion, AccordionTab } from "primereact/accordion";
 import { FaQuestionCircle } from "react-icons/fa";
 
@@ -18,7 +18,7 @@ const faqItems = [
   {
     question: "রাইড ক্যানসেল করলে কোনো চার্জ লাগবে কি?",
     answer:
-      "বুকিংয়ের ২ মিনিটের মধ্যে ক্যানসেল করলে কোনো চার্জ নেই। এর পরে ক্যানসেল করলে একটি ছোট চার্জ প্রযোজ্য হতে পারে।",
+      "বুকিংয়ের ২ মিনিটের মধ্যে ক্যান্সেল করলে কোনো চার্জ নেই। এর পরে ক্যান্সেল করলে একটি ছোট চার্জ প্রযোজ্য হতে পারে।",
   },
   {
     question: "আমি রাইডের সময় ও অবস্থান শেয়ার করতে পারি কি?",
@@ -38,32 +38,39 @@ const faqItems = [
 ];
 
 const FAQ: React.FC = () => {
+  const [activeIndex, setActiveIndex] = useState<number[]>([]);
+
   return (
-    <div className="bg-gradient-to-r from-[#e6fcf9] to-gray-50 min-h-screen py-12 px-4">
-      <div className="max-w-3xl mx-auto">
-        <h2 className="text-4xl font-extrabold text-center text-[#27445D] mb-10 drop-shadow-md">
+    <div className="bg-gray-100 min-h-screen py-16 px-4">
+      <div className="max-w-4xl mx-auto">
+        <h2 className="text-4xl font-extrabold text-center text-[#27445D] mb-12 drop-shadow-md">
           সাধারণ জিজ্ঞাসা (FAQ)
         </h2>
 
-        <Accordion multiple className="bg-white/80 backdrop-blur-md rounded-2xl shadow-lg border border-gray-200">
+        <Accordion
+          multiple
+          activeIndex={activeIndex}
+          onTabChange={(e) => setActiveIndex(e.index as number[])}
+          className="space-y-4"
+        >
           {faqItems.map((item, index) => (
             <AccordionTab
               key={index}
               header={
                 <div className="flex items-center gap-3 text-[#27445D] font-semibold text-lg">
-                  <FaQuestionCircle className="text-[#71BBB2]" />
+                  <FaQuestionCircle className={`text-[#71BBB2] transition-transform duration-300 ${activeIndex.includes(index) ? "rotate-45" : ""}`} />
                   {item.question}
                 </div>
               }
-              headerClassName="hover:text-[#71BBB2] transition-colors"
-              contentClassName="text-[#27445D] text-base leading-relaxed px-4 py-3"
+              headerClassName="bg-white rounded-xl p-4 shadow-md hover:bg-gradient-to-r hover:from-[#71BBB2]/20 hover:to-[#27445D]/10 transition-all duration-300 cursor-pointer"
+              contentClassName="bg-white/90 rounded-b-xl p-4 text-[#27445D] text-base leading-relaxed shadow-inner border-t border-gray-100 transition-all duration-300"
             >
               {item.answer}
             </AccordionTab>
           ))}
         </Accordion>
 
-        <div className="mt-8 text-center text-gray-600 text-lg font-medium">
+        <div className="mt-10 text-center text-gray-600 text-lg font-medium">
           💡 মনে রাখবেন: সবসময় নিরাপদে এবং নিয়ম মেনে রাইড করুন।
         </div>
       </div>

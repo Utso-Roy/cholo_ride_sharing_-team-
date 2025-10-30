@@ -26,8 +26,8 @@ const Login: React.FC = () => {
   } = useForm<FormData>();
   const navigate = useNavigate();
   const { loginUser } = useContext(AuthContext);
-
   const [showPassword, setShowPassword] = useState(false);
+
   const password = watch("password") || "";
   const email = watch("email") || "";
 
@@ -107,6 +107,7 @@ const Login: React.FC = () => {
               </div>
 
               {/* Password */}
+              {/* Password */}
               <div className="w-full">
                 <label className="block text-gray-700 text-sm mb-1">
                   পাসওয়ার্ড
@@ -114,14 +115,24 @@ const Login: React.FC = () => {
                 <div className="relative">
                   <InputText
                     value={password}
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     onChange={(e) => setValue("password", e.target.value)}
                     placeholder="পাসওয়ার্ড লিখুন"
-                    className="w-full"
+                    className="w-full pr-10"
                   />
+
+                  {/* 👁 Show/Hide Password Icon */}
+                  <i
+                    className={`pi ${
+                      showPassword ? "pi-eye-slash" : "pi-eye"
+                    } absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 cursor-pointer`}
+                    onClick={() => setShowPassword(!showPassword)}
+                  ></i>
                 </div>
+
+                {/* ✅ Password Validation List */}
                 {password && (
-                  <ul className="text-xs text-gray-600 mt-1 ml-1 space-y-1">
+                  <ul className="text-xs text-gray-600 mt-2 ml-1 space-y-1">
                     <li
                       className={
                         validations.length ? "text-green-600" : "text-red-500"

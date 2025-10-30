@@ -3,6 +3,7 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { FaCheck, FaTimes, FaMapMarkerAlt, FaMotorcycle } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 const dummyRequests = [
   { id: 1, rider: "Rahim Uddin", pickup: "Rampur Station", drop: "Kaharol Bazar", distance: "5.8 km", fare: "৳85" },
@@ -19,13 +20,13 @@ const RideRequest: React.FC = () => {
         icon={<FaCheck />}
         label="Accept"
         className="p-button-rounded p-button-success w-full sm:w-auto"
-        onClick={() => alert(`Accepted ride for ${rowData.rider}`)}
+        onClick={() => toast.success(`Accepted ride for ${rowData.rider}`)}
       />
       <Button
         icon={<FaTimes />}
         label="Reject"
         className="p-button-rounded p-button-danger w-full sm:w-auto"
-        onClick={() => alert(`Rejected ride for ${rowData.rider}`)}
+        onClick={() =>toast.error(`Rejected ride for ${rowData.rider}`)}
       />
     </div>
   );

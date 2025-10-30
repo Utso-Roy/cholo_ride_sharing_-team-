@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { HiChevronDown } from "react-icons/hi";
-import { FaMotorcycle, FaCarSide } from "react-icons/fa";
+import { FaMotorcycle, FaCarSide, FaTruckMoving, FaAmbulance, FaBusAlt, FaShuttleVan } from "react-icons/fa";
 import { MdDashboard, MdOutlineElectricRickshaw } from "react-icons/md";
 import { Link, NavLink, useLocation, useNavigate } from "react-router";
 import serviceItems from "../Utils/ServiceItems/serviceItems";
@@ -50,7 +50,7 @@ const Navbar: React.FC = () => {
 
   const links = (
     <>
-    
+
 
       {/* Services */}
       <li className="relative ">
@@ -137,6 +137,38 @@ const Navbar: React.FC = () => {
                 >
                   <MdOutlineElectricRickshaw /> সিএনজি রাইড
                 </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/earn/truck"
+                  className="flex items-center gap-2 hover:text-[#71BBB2] transition-colors"
+                  onClick={() => setOpenEarn(false)}
+                >
+                  <FaTruckMoving /> ট্রাক সার্ভিস                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/earn/ambulance"
+                  className="flex items-center gap-2 hover:text-[#71BBB2] transition-colors"
+                  onClick={() => setOpenEarn(false)}
+                >
+                  <FaAmbulance /> অ্যাম্বুলেন্স সার্ভিস               </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/earn/bus"
+                  className="flex items-center gap-2 hover:text-[#71BBB2] transition-colors"
+                  onClick={() => setOpenEarn(false)}
+                >
+                  <FaBusAlt /> স্কু ল বাস সার্ভিস               </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/earn/shuttle"
+                  className="flex items-center gap-2 hover:text-[#71BBB2] transition-colors"
+                  onClick={() => setOpenEarn(false)}
+                >
+                  <FaShuttleVan /> শাটল সার্ভিস               </NavLink>
               </li>
             </ul>
           </div>
@@ -264,8 +296,8 @@ const Navbar: React.FC = () => {
       <div className="navbar-start flex items-center gap-4">
         <NavLink to="/" className="cursor-pointer text-xl font-bold">
           <div>
-            <img className="md:w-26 md:h-10 w-15 object-contain h-8"  src="https://i.ibb.co.com/JjNCs1G1/logo-2.png" alt="Cholo" />
-        </div>
+            <img className="md:w-26 md:h-10 w-15 object-contain h-8" src="https://i.ibb.co.com/JjNCs1G1/logo-2.png" alt="Cholo" />
+          </div>
         </NavLink>
 
         {/* Mobile dropdown */}
@@ -327,7 +359,7 @@ const Navbar: React.FC = () => {
               tabIndex={0}
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-200 text-[#21BEDA] rounded-box w-52"
             >
-              
+
               <li>
                 <Link to="/dashboard" className="cursor-pointer  flex items-center gap-2 font-semibold transition-colors duration-200 rounded-md px-2 py-1">
                   <MdDashboard className="text-lg" /> Dashboard
@@ -340,10 +372,10 @@ const Navbar: React.FC = () => {
                 </button>
               </li>
             </ul>
-          </div>) : " "          
-         
+          </div>) : " "
 
-}
+
+        }
       </div>
     </div>
   );
