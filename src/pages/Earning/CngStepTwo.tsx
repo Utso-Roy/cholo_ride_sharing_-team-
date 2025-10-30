@@ -1,4 +1,4 @@
-import React, { useRef, useMemo, useEffect, useState } from "react";
+import React, { useRef, useMemo, useEffect, useState, useContext } from "react";
 import { FileUpload, FileUploadSelectEvent } from "primereact/fileupload";
 import { useNavigate } from "react-router";
 import { InputText } from "primereact/inputtext";
@@ -7,12 +7,13 @@ import { Button } from "primereact/button";
 import { Calendar } from "primereact/calendar";
 import { Toast } from "primereact/toast";
 import { classNames } from "primereact/utils";
-import { Gender, useCNGApply } from "../context/cng";
+import { Gender, useCNGApply } from "../../context/cng";
 
 import { FaUserCheck, FaShuttleVan, FaClipboardCheck } from "react-icons/fa";
 
 import { useMutation } from "@tanstack/react-query";
-import { api } from "../lib/api";
+import { api } from "../../lib/api";
+import { AuthContext } from "../../Auth/AuthProvider";
 
 // 🔧 টোস্ট অন করতে true করে দাও (ডিফল্টে কনসোলে দেখায়)
 const ENABLE_TOAST = true;
@@ -33,6 +34,7 @@ const BRAND_MODELS: Record<string, string[]> = {
 };
 
 const CngStepTwo = () => {
+  const { user } = useContext(AuthContext);
   const { driver, setDriver, vehicle, setVehicle, reset } = useCNGApply();
   const toast = useRef<Toast>(null);
   const navigate = useNavigate();
@@ -113,6 +115,7 @@ const CngStepTwo = () => {
       fd.set("license", driver.license);
       if (driver.photo) fd.set("photo", driver.photo, driver.photo.name);
       fd.set("dob", dobStr);
+      fd.set("email", user?.email);
 
       // --- vehicle fields ---
       fd.set("brand", vehicle.brand);
@@ -173,7 +176,6 @@ const CngStepTwo = () => {
       {
         onSuccess: (data) => {
           notify("success", "আবেদন জমা হয়েছে!");
-          // চাইলে data.id দেখাতে পারেন
           reset();
           navigate("/");
         },
@@ -221,16 +223,19 @@ const CngStepTwo = () => {
         onSettled: () => setIsSubmitting(false),
       }
     );
-
   };
 
   return (
-    <main className="px-4 md:px-10 py-10 bg-white">
+    <main className="px-4 md:px-10 py-10">
       {ENABLE_TOAST && <Toast ref={toast} position="top-center" />}
 
       <div className="max-w-4xl mx-auto flex flex-col gap-6">
         {/* Driver Details */}
-        <section className="bg-[#e6fcf9] rounded-lg shadow p-5 md:p-6 text-[#27445D]">
+        <section
+          className="border-white/30
+    bg-[#e6fcf9]/60 backdrop-blur-6xl
+    shadow-lg rounded-lg p-5 md:p-6 text-[#27445D]"
+        >
           <header className="flex items-center gap-2 mb-4">
             <FaUserCheck />
             <h2 className="text-xl font-bold text-gray-700">নিজের তথ্য</h2>
@@ -416,7 +421,11 @@ const CngStepTwo = () => {
         </section>
 
         {/* Vehicle Details */}
-        <section className="bg-[#e6fcf9] text-[#27445D] rounded-lg shadow p-5 md:p-6">
+        <section
+          className="border-white/30
+    bg-[#e6fcf9]/60 backdrop-blur-6xl
+    shadow-lg rounded-lg p-5 md:p-6 text-[#27445D]"
+        >
           <header className="flex items-center gap-2 mb-4 text-[#27445D]">
             <FaShuttleVan />
             <h2 className="text-xl font-bold">CNG/অটোরিকশার তথ্য</h2>
@@ -528,7 +537,11 @@ const CngStepTwo = () => {
             />
             <Button
               label={isSubmitting ? "সাবমিট হচ্ছে..." : "সাবমিট"}
-              icon={submitMutation.isPending ? "pi pi-spin pi-spinner" : "pi pi-check"}
+              icon={
+                submitMutation.isPending
+                  ? "pi pi-spin pi-spinner"
+                  : "pi pi-check"
+              }
               className="!bg-[#71BBB2] !border-none hover:!bg-[#5AA29F]"
               onClick={submitAll}
               disabled={submitMutation.isPending}
@@ -537,7 +550,11 @@ const CngStepTwo = () => {
         </section>
 
         {/* Small note / checklist */}
-        <section className="rounded-lg border border-[#27445D]/10 p-4 text-sm text-[#27445D] bg-[#e6fcf9]">
+        <section
+          className="border-white/30
+    bg-[#e6fcf9]/60 backdrop-blur-6xl
+    shadow-lg rounded-lg p-5 md:p-6 text-[#27445D]"
+        >
           <div className="flex items-center gap-2 font-semibold mb-1">
             <FaClipboardCheck />
             <span>চেকলিস্ট</span>

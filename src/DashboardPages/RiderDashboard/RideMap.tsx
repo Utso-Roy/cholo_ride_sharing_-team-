@@ -1,35 +1,101 @@
-import React, { useState } from "react";
-import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import React, { useContext, useEffect, useState } from "react";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  useMapEvents,
+  Polyline,
+} from "react-leaflet";
 import { FaMotorcycle, FaToggleOn, FaToggleOff } from "react-icons/fa";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import L from "leaflet";
+import { toast } from "react-toastify";
+import axios from "axios";
+import { AuthContext } from "../../Auth/AuthProvider";
+import { MdOnlinePrediction } from "react-icons/md";
+import { IoCloudOffline } from "react-icons/io5";
 
-//  Custom marker icon setup
+// 🔹 Custom marker icon
 const markerIcon = new L.Icon({
   iconUrl: "https://cdn-icons-png.flaticon.com/512/684/684908.png",
   iconSize: [32, 32],
   iconAnchor: [16, 32],
 });
 
-//  Helper component to update map position dynamically
-function ChangeMapView({ coords }: { coords: [number, number] }) {
-  const map = useMap();
-  map.setView(coords, 13);
+// 🔹 Map click listener
+function LocationMarker({ onSetPosition }) {
+  useMapEvents({
+    click(e) {
+      const { lat, lng } = e.latlng;
+      onSetPosition(lat, lng);
+    },
+  });
   return null;
 }
 
-const RideMap: React.FC = () => {
+const RideMap = () => {
   const [isOnline, setIsOnline] = useState(true);
   const [searchText, setSearchText] = useState("");
-  const [suggestions, setSuggestions] = useState<any[]>([]); // 🔹 suggestion state
-  const [position, setPosition] = useState<[number, number]>([25.7832, 88.5595]); // Default: Dinajpur
+  const [suggestions, setSuggestions] = useState([]);
+  const [pickupName, setPickupName] = useState("");
+  const [pickupSelected, setPickupSelected] = useState(false);
+  const [position, setPosition] = useState([25.7832, 88.5595]); 
+  const [currentLocation, setCurrentLocation] = useState(null);
+  const { user } = useContext(AuthContext);
 
-  // 🔹 Fetch suggestions as user types
-  const handleInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  // 🔹 Get current user location once on mount
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const coords = [pos.coords.latitude, pos.coords.longitude];
+          setCurrentLocation(coords);
+        },
+        (err) => {
+          console.error(err);
+          toast.error("Unable to get your current location!");
+        }
+      );
+    }
+  }, []);
+
+  // 🔹 Toggle online/offline
+  const handleToggle = async () => {
+    const newStatus = !isOnline;
+    setIsOnline(newStatus);
+
+    try {
+      await axios.put(
+        `http://localhost:3000/api/verified_riders/${user.email}`,
+        { isActive: newStatus }
+      );
+      toast.success(
+        <div className="flex items-center gap-2">
+          {newStatus ? (
+            <>
+              <MdOnlinePrediction className="text-green-500 text-xl" />
+              <span>You are now Online</span>
+            </>
+          ) : (
+            <>
+              <IoCloudOffline className="text-red-500 text-xl" />
+              <span>You are now Offline</span>
+            </>
+          )}
+        </div>
+      );
+    } catch (err) {
+      toast.error("Failed to update user status!");
+      console.error(err);
+    }
+  };
+
+  // 🔹 Search location
+  const handleInputChange = async (e) => {
     const value = e.target.value;
     setSearchText(value);
-
     if (value.length < 3) {
       setSuggestions([]);
       return;
@@ -44,15 +110,17 @@ const RideMap: React.FC = () => {
     setSuggestions(data);
   };
 
-  // 🔹 Handle suggestion click
-  const handleSelectLocation = (lat: string, lon: string, display_name: string) => {
+  // 🔹 Select from suggestion
+  const handleSelectLocation = (lat, lon, name) => {
     setPosition([parseFloat(lat), parseFloat(lon)]);
-    setSearchText(display_name);
-    setSuggestions([]); // hide list after select
+    setPickupName(name);
+    setPickupSelected(true);
+    setSearchText(name);
+    setSuggestions([]);
   };
 
-  // 🔹 Manual search (optional)
-  const handleSearch = async (e: React.FormEvent) => {
+  // 🔹 Manual search
+  const handleSearch = async (e) => {
     e.preventDefault();
     if (!searchText) return;
 
@@ -64,30 +132,54 @@ const RideMap: React.FC = () => {
     const data = await res.json();
 
     if (data && data.length > 0) {
-      const { lat, lon } = data[0];
+      const { lat, lon, display_name } = data[0];
       setPosition([parseFloat(lat), parseFloat(lon)]);
+      setPickupName(display_name);
+      setPickupSelected(true);
     } else {
-      alert(" Location not found!");
+      toast.error("Location not found!");
     }
+  };
+
+  // 🔹 Set pickup by clicking map
+  const handleSetPosition = async (lat, lon) => {
+    setPosition([lat, lon]);
+
+    try {
+      const res = await fetch(
+        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`
+      );
+      const data = await res.json();
+      const address = data.display_name || "Unnamed Location";
+      setPickupName(address);
+      setPickupSelected(true);
+      toast.success("Pickup location selected!");
+    } catch (err) {
+      setPickupName("Unknown location");
+      toast.error("Failed to get location name.");
+    }
+  };
+
+  const startRideHandler = () => {
+    if (!pickupSelected) return;
+    toast.success(`🏍 Ride started from: ${pickupName}`);
   };
 
   return (
     <div className="w-full h-screen bg-gray-50 flex flex-col">
-      {/* Top Bar */}
+      {/* 🔹 Top Bar */}
       <div className="flex items-center justify-between bg-white px-6 py-4 shadow-md">
-        <h1 className="text-2xl font-bold text-[#27445D]">Ride Map </h1>
+        <h1 className="text-2xl font-bold text-[#27445D]">Ride Map</h1>
 
         <div className="flex items-center gap-6 relative">
-          {/*  Search Input with Suggestion */}
+          {/* 🔹 Search Input */}
           <form onSubmit={handleSearch} className="flex flex-col relative">
-            <span className="p-input-icon-left">
-              <InputText
-                value={searchText}
-                onChange={handleInputChange}
-                placeholder="Search location..."
-                className="w-64"
-              />
-            </span>
+            <InputText
+              value={searchText}
+              onChange={handleInputChange}
+              placeholder="Search location..."
+              className="w-64"
+            />
             {suggestions.length > 0 && (
               <ul className="absolute top-10 left-0 bg-white border rounded-md shadow-md w-64 max-h-48 overflow-auto z-50">
                 {suggestions.map((s, i) => (
@@ -105,10 +197,10 @@ const RideMap: React.FC = () => {
             )}
           </form>
 
-          {/* Online/Offline Toggle */}
+          {/* 🔹 Online/Offline Toggle */}
           <div
             className="flex items-center gap-2 cursor-pointer"
-            onClick={() => setIsOnline(!isOnline)}
+            onClick={handleToggle}
           >
             {isOnline ? (
               <FaToggleOn className="text-3xl text-green-500" />
@@ -126,14 +218,13 @@ const RideMap: React.FC = () => {
         </div>
       </div>
 
-      {/*  Main Content */}
+      {/* 🔹 Map Section */}
       <div className="flex flex-1">
-        {/*  Leaflet Live Map Section (80%) */}
         <div className="w-full md:w-4/5 bg-gray-200 relative">
           <MapContainer
             center={position}
             zoom={13}
-            scrollWheelZoom={true}
+            scrollWheelZoom
             className="h-full w-full z-0"
           >
             <TileLayer
@@ -141,21 +232,50 @@ const RideMap: React.FC = () => {
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
 
-            {/* Dynamic position update */}
-            <ChangeMapView coords={position} />
+            {/* Click handler */}
+            <LocationMarker onSetPosition={handleSetPosition} />
 
-            <Marker position={position} icon={markerIcon}>
-              <Popup> {searchText || "Current Location"}</Popup>
-            </Marker>
+            {/* Rider current location marker */}
+            {currentLocation && (
+              <Marker
+                position={currentLocation}
+                icon={new L.Icon({
+                  iconUrl:
+                    "https://cdn-icons-png.flaticon.com/512/149/149071.png",
+                  iconSize: [32, 32],
+                  iconAnchor: [16, 32],
+                })}
+              >
+                <Popup>🚴 You are here</Popup>
+              </Marker>
+            )}
+
+            {/* Pickup marker */}
+            {pickupSelected && (
+              <Marker position={position} icon={markerIcon}>
+                <Popup>{pickupName}</Popup>
+              </Marker>
+            )}
+
+            {/* 🔹 Polyline between current location & pickup */}
+            {currentLocation && pickupSelected && (
+              <Polyline
+                positions={[currentLocation, position]}
+                pathOptions={{ color: "blue", weight: 4 }}
+              />
+            )}
           </MapContainer>
         </div>
 
-        {/*  Ride Info Sidebar (20%) */}
+        {/* 🔹 Sidebar */}
         <div className="hidden md:flex flex-col w-1/5 bg-white shadow-inner border-l border-gray-200 p-5 space-y-5">
-          <h2 className="text-xl font-bold text-[#27445D] mb-2">Current Ride Info</h2>
+          <h2 className="text-xl font-bold text-[#27445D] mb-2">
+            Current Ride Info
+          </h2>
           <div className="space-y-3 text-sm text-[#27445D]">
             <p>
-              <span className="font-semibold">Pickup:</span> Rampur Station
+              <span className="font-semibold">Pickup:</span>{" "}
+              {pickupName || "Not selected"}
             </p>
             <p>
               <span className="font-semibold">Drop:</span> Kaharol Bazar
@@ -171,7 +291,13 @@ const RideMap: React.FC = () => {
           <Button
             label="Start Ride"
             icon={<FaMotorcycle />}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded-xl transition-all duration-300"
+            disabled={!pickupSelected}
+            onClick={startRideHandler}
+            className={`${
+              pickupSelected
+                ? "bg-blue-500 hover:bg-blue-600"
+                : "bg-gray-300 cursor-not-allowed"
+            } text-white font-semibold py-2 rounded-xl transition-all duration-300`}
           />
         </div>
       </div>

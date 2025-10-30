@@ -1,12 +1,14 @@
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router";
-import { useCarApply } from "../context/car";
+import { useCNGApply } from "../../context/cng";
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
 import { Button } from "primereact/button";
 import { Toast } from "primereact/toast";
 import { classNames } from "primereact/utils";
-import CarEarnArticle from "../components/CarEarnArticle";
+import CngEarnArticle from "../../components/EarningArticle/CngEarnArticle";
+
+
 
 const CITY_OPTIONS = [
   { label: "ঢাকা", value: "Dhaka" },
@@ -16,8 +18,9 @@ const CITY_OPTIONS = [
   { label: "রাজশাহী", value: "Rajshahi" },
 ];
 
-export default function CarStepOne() {
-  const { driver, setDriver } = useCarApply();
+
+const CngStepOne = () => {
+  const { driver, setDriver } = useCNGApply();
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const toast = useRef<Toast>(null);
   const navigate = useNavigate();
@@ -37,16 +40,18 @@ export default function CarStepOne() {
       toast.current?.show({ severity: "warn", summary: "ফর্ম অসম্পূর্ণ", detail: "ধাপ ১-এর প্রয়োজনীয় ঘরগুলো পূরণ করুন।" });
       return;
     }
-    navigate("/earn/car/details");
+    navigate("/earn/cng/details");
   };
 
   return (
-    <main className="px-4 bg-white md:px-10 py-10">
+    <main className="px-4 md:px-10 py-10">
       <Toast ref={toast} />
-      <h1 className="text-4xl font-bold text-[#27445D] mt-8 mb-6 text-center">কার রাইড দিয়ে আয় করুন</h1>
+        <h1 className="text-4xl font-bold text-[#27445D] mt-8 mb-6 text-center">সিএনজি রাইড দিয়ে আয় করুন</h1>
       <section className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start max-w-7xl mx-auto">
         {/* LEFT: ফর্ম */}
-        <div className="bg-[#e6fcf9] rounded-lg shadow p-5 md:p-6 text-[#27445D]">
+        <div className="border-white/30
+    bg-[#e6fcf9]/60 backdrop-blur-6xl
+    shadow-lg rounded-lg p-5 md:p-6 text-[#27445D]">
           <h1 className="text-2xl font-bold text-gray-700 mb-8 text-center">রেজিষ্ট্রেশন করুন</h1>
 
           <div className="flex flex-col gap-3">
@@ -56,7 +61,7 @@ export default function CarStepOne() {
               onChange={(e) => setDriver({ ...driver, firstName: e.target.value })}
               onBlur={() => markTouched("firstName")}
               className={classNames({ "p-invalid": touched.firstName && errs.firstName })}
-              placeholder="যেমন: মোহাম্মদ"
+              placeholder="যেমন: রহিম"
             />
             {touched.firstName && errs.firstName && <small className="p-error">প্রথম অংশ আবশ্যক</small>}
 
@@ -66,7 +71,7 @@ export default function CarStepOne() {
               onChange={(e) => setDriver({ ...driver, lastName: e.target.value })}
               onBlur={() => markTouched("lastName")}
               className={classNames({ "p-invalid": touched.lastName && errs.lastName })}
-              placeholder="যেমন: হাসান"
+              placeholder="যেমন: উদ্দিন"
             />
             {touched.lastName && errs.lastName && <small className="p-error">শেষ অংশ আবশ্যক</small>}
 
@@ -96,14 +101,16 @@ export default function CarStepOne() {
 
             <div className="flex justify-end pt-3">
               <Button label="পরবর্তী ধাপ" icon="pi pi-arrow-right"
-                className="!bg-[#71BBB2] !border-none hover:!bg-[#5AA29F]" onClick={gotoNext} />
+              className="!bg-[#71BBB2] !border-none hover:!bg-[#5AA29F]" onClick={gotoNext} />
             </div>
           </div>
         </div>
 
-        {/* RIGHT: আর্টিকেল */}
-        <CarEarnArticle/>
+        {/* RIGHT: আর্টিকেল/বর্ণনা */}
+        <CngEarnArticle/>
       </section>
     </main>
-  );
-}
+    );
+};
+
+export default CngStepOne;

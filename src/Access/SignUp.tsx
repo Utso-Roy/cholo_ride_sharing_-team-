@@ -30,6 +30,8 @@ const SignUp: React.FC = () => {
   } = useForm<FormData>();
   const location = useLocation();
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+
   const from = location.state?.from || "/";
   const authContext = useContext(AuthContext);
 
@@ -108,6 +110,7 @@ const SignUp: React.FC = () => {
         email: data.email,
         photo: profilePic || null,
         createdAt: new Date(),
+        userActive : 'false',
         role: "user",
       };
 
@@ -207,23 +210,46 @@ const SignUp: React.FC = () => {
               )}
             </div>
 
-            {/* Password */}
-            <div className="w-full">
-              <label className="block text-sm font-medium mb-2 text-gray-700">
-                পাসওয়ার্ড
-              </label>
-              <InputText
-                type="password"
-                value={passwordValue}
-                onChange={(e) => {
-                  setPasswordValue(e.target.value);
-                  setValue("password", e.target.value);
-                }}
-                
-                placeholder="পাসওয়ার্ড লিখুন"
-                className="w-full border border-gray-300 rounded-md p-2"
-              />
-            </div>
+         {/* Password Field */}
+<div className="w-full relative">
+  <label className="block text-sm font-medium mb-2 text-gray-700">
+    পাসওয়ার্ড
+  </label>
+
+  <div className="relative">
+    <InputText
+      type={showPassword ? "text" : "password"}
+      value={passwordValue}
+      onChange={(e) => {
+        setPasswordValue(e.target.value);
+        setValue("password", e.target.value);
+      }}
+      placeholder="পাসওয়ার্ড লিখুন"
+      className="w-full border border-gray-300 rounded-md p-2 pr-10"
+    />
+
+    {/* 👁 Toggle Icon */}
+    <i
+      className={`pi ${showPassword ? "pi-eye-slash" : "pi-eye"} 
+                 absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 cursor-pointer`}
+      onClick={() => setShowPassword(!showPassword)}
+    ></i>
+  </div>
+
+  {/* Password validation hints (optional, nice UX) */}
+  <div className="mt-2 text-xs text-gray-500 space-y-1">
+    <p className={validations.length ? "text-green-600" : "text-gray-500"}>
+      • অন্তত ৮ অক্ষরের হতে হবে
+    </p>
+    <p className={validations.upper ? "text-green-600" : "text-gray-500"}>
+      • অন্তত একটি বড় হাতের অক্ষর
+    </p>
+    <p className={validations.number ? "text-green-600" : "text-gray-500"}>
+      • অন্তত একটি সংখ্যা থাকতে হবে
+    </p>
+  </div>
+</div>
+
 
             {/* Submit Button */}
             <Button

@@ -15,12 +15,14 @@ import {
   signInWithPopup,
   onAuthStateChanged,
   User,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 import app from "../Firebase/firebase.config";
 
 interface AuthContextType {
   signup: (email: string, password: string) => Promise<User>;
   loginUser: (email: string, password: string) => Promise<User>;
+  resetPassword: (email: string) => Promise<void>;
   googleLogin: () => Promise<User>;
   logOut: () => Promise<void>;
   user: User | null;
@@ -63,6 +65,12 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     await signOut(auth);
   };
 
+const resetPassword = async (email: string): Promise<void> => {
+  await sendPasswordResetEmail(auth, email, {
+    url: "http://localhost:5173/login",
+  });
+};
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -81,6 +89,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setUser,
     loading,
     setLoading,
+    resetPassword,
   };
 
   return (
@@ -89,4 +98,3 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 };
 
 export default AuthProvider;
-

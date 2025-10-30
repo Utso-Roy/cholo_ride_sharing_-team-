@@ -1,74 +1,93 @@
 import React, { ReactNode } from 'react';
-import { FaClipboardCheck, FaClock, FaHeadset, FaIdCard, FaMapMarkerAlt, FaMobileAlt, FaMoneyBillWave, FaMotorcycle, FaShieldAlt, FaStar } from 'react-icons/fa';
+import {
+  FaCar,
+  FaClipboardCheck,
+  FaClock,
+  FaHeadset,
+  FaIdCard,
+  FaMapMarkerAlt,
+  FaMobileAlt,
+  FaMoneyBillWave,
+  FaShieldAlt,
+  FaStar,
+  FaRoute
+} from 'react-icons/fa';
 
 type Item = {
-    icon: ReactNode;
-    title: string;
-    desc: string;
-}
+  icon: ReactNode;
+  title: string;
+  desc: string;
+};
 
-const BikeEarnArticle = () => {
-    const steps: Item[] = [
+const CarEarnArticle = () => {
+  const steps: Item[] = [
     {
       icon: <FaMobileAlt className="text-2xl" />,
       title: "অ্যাপে ড্রাইভার সাইন আপ",
-      desc: "মৌলিক তথ্য দিয়ে একাউন্ট খুলুন।",
+      desc: "মৌলিক তথ্য দিয়ে একাউন্ট খুলুন।"
     },
     {
       icon: <FaIdCard className="text-2xl" />,
       title: "ডকুমেন্ট ভেরিফিকেশন",
-      desc: "NID, ড্রাইভিং লাইসেন্স, রেজিস্ট্রেশন আপলোড ও যাচাই।",
+      desc: "NID, ড্রাইভিং লাইসেন্স, গাড়ির রেজিস্ট্রেশন/ইনস্যুরেন্স আপলোড ও যাচাই।"
     },
     {
       icon: <FaClock className="text-2xl" />,
-      title: "নিজের সুবিধামতো সময়",
-      desc: "যখন সময় আছে তখনই অনলাইনে এসে রাইড নিন।",
+      title: "ফ্লেক্সিবল সময়",
+      desc: "আপনার সুবিধামতো অনলাইনে এসে ট্রিপ নিন।"
     },
     {
       icon: <FaStar className="text-2xl" />,
       title: "সেফটি ও সার্ভিস",
-      desc: "নিরাপত্তা গাইডলাইন মেনে ৫-স্টার মানের সার্ভিস দিন।",
+      desc: "ইন-অ্যাপ সেফটি ফিচার মেনে ৫-স্টার সার্ভিস দিন।"
     },
     {
       icon: <FaMoneyBillWave className="text-2xl" />,
       title: "সাপ্তাহিক পেআউট",
-      desc: "আয় সহজে উইথড্র করুন।",
-    },
+      desc: "আয় সহজে উইথড্র করুন।"
+    }
   ];
 
   const benefits: Item[] = [
     {
-      icon: <FaMotorcycle className="text-xl" />,
-      title: "সহজ আয় শুরু",
-      desc: "বাইক চালিয়ে দ্রুত আয়ের সুযোগ — নতুনদের জন্য বান্ধব অনবোর্ডিং।",
+      icon: <FaCar className="text-xl" />,
+      title: "সহজে আয় শুরু",
+      desc: "নিজের কার ব্যবহার করে দ্রুত আয়ের সুযোগ — নতুনদের জন্য বান্ধব অনবোর্ডিং।"
     },
     {
       icon: <FaMapMarkerAlt className="text-xl" />,
       title: "আপনার শহরেই কাজ",
-      desc: "ঢাকা, চট্টগ্রাম, সিলেটসহ একাধিক শহরে অপারেশন।",
+      desc: "ঢাকা, চট্টগ্রাম, সিলেটসহ একাধিক শহরে অপারেশন।"
     },
     {
       icon: <FaShieldAlt className="text-xl" />,
       title: "সেফটি কভারেজ",
-      desc: "ইন-অ্যাপ সেফটি ফিচার ও জরুরি সহায়তা ব্যবস্থা।",
+      desc: "ইন-অ্যাপ সেফটি, SOS এবং ট্রিপ ট্র্যাকিং সাপোর্ট।"
     },
     {
       icon: <FaClipboardCheck className="text-xl" />,
       title: "কম কমিশন/অফার",
-      desc: "প্রমোশনাল অফার ও কমিশন বেনিফিট (সময়ভেদে প্রযোজ্য)।",
+      desc: "সময়ভেদে প্রমোশনাল অফার ও কমিশন বেনিফিট।"
     },
     {
       icon: <FaHeadset className="text-xl" />,
       title: "ডেডিকেটেড সাপোর্ট",
-      desc: "অ্যাপে/ফোনে দ্রুত সাপোর্ট ও রিসোর্স।",
+      desc: "অ্যাপে/ফোনে দ্রুত সাপোর্ট ও রিসোর্স।"
     },
+    {
+      icon: <FaRoute className="text-xl" />,
+      title: "স্মার্ট রুটিং",
+      desc: "ডিমান্ড-ভিত্তিক সাজেশন, ট্রিপ প্ল্যানিং ও অপ্টিমাইজড রুট।"
+    }
   ];
 
   return (
-    <article className="bg-[#e6fcf9] rounded-lg shadow p-5 md:p-6 text-[#27445D]">
+    <article className="border-white/30
+    bg-[#e6fcf9]/60 backdrop-blur-6xl
+    shadow-lg rounded-lg p-5 md:p-6 text-[#27445D]">
       {/* Header */}
       <header className="text-center mb-6">
-        <h2 className="text-2xl font-bold">কিভাবে বাইক রাইড দিয়ে আয় করবেন</h2>
+        <h2 className="text-2xl font-bold">কিভাবে কার রাইড দিয়ে আয় করবেন</h2>
         <p className="mt-2 opacity-90 text-sm">
           দ্রুত রেজিস্ট্রেশন, ফ্লেক্সিবল সময় আর সাপ্তাহিক পেআউট— সবকিছু এক জায়গায়।
         </p>
@@ -115,13 +134,13 @@ const BikeEarnArticle = () => {
       {/* Info/Note */}
       <section className="mt-6 text-sm opacity-90">
         <p className="italic">
-          নোট: সঠিক ও বৈধ ডকুমেন্ট (NID, ড্রাইভিং লাইসেন্স, গাড়ির রেজিস্ট্রেশন,
-          ফিটনেস ইত্যাদি) ছাড়া একাউন্ট ভেরিফাই নাও হতে পারে। কমিশন/প্রমোশন বা
-          কভারেজ শহরভেদে সময়ের সাথে পরিবর্তিত হতে পারে।
+          নোট: বৈধ ডকুমেন্ট (NID, ড্রাইভিং লাইসেন্স, গাড়ির রেজিস্ট্রেশন, ফিটনেস/ইনস্যুরেন্স)
+          ছাড়া একাউন্ট ভেরিফাই নাও হতে পারে। কমিশন/প্রমোশন বা কভারেজ শহরভেদে সময়ের সাথে
+          পরিবর্তিত হতে পারে।
         </p>
       </section>
     </article>
   );
 };
 
-export default BikeEarnArticle;
+export default CarEarnArticle;
