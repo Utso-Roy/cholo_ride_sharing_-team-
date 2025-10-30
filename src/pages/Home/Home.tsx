@@ -10,13 +10,14 @@ import LatestNews from "./LatestNews";
 import HowItWorks from "./HowItWorks";
 import Partners from "./Partners";
 import Newsletter from "./Newsletter";
-import Banner from "./AboutCholoVideo";
 import LandingPage from "../Landing/LandingPage";
 import AboutCholoVideo from "./AboutCholoVideo";
 import CenteredTestimonialSlider from "./CenteredTestimonialSlider";
 const Home = () => {
   return (
     <div>
+     
+
       <section>
         <LandingPage></LandingPage>
       </section>

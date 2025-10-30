@@ -1,10 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   MapContainer,
   TileLayer,
   Marker,
   Popup,
   useMapEvents,
+  Polyline,
 } from "react-leaflet";
 import { FaMotorcycle, FaToggleOn, FaToggleOff } from "react-icons/fa";
 import { InputText } from "primereact/inputtext";
@@ -23,7 +24,7 @@ const markerIcon = new L.Icon({
   iconAnchor: [16, 32],
 });
 
-// 🔹 Clickable marker component
+// 🔹 Map click listener
 function LocationMarker({ onSetPosition }) {
   useMapEvents({
     click(e) {
@@ -40,11 +41,27 @@ const RideMap = () => {
   const [suggestions, setSuggestions] = useState([]);
   const [pickupName, setPickupName] = useState("");
   const [pickupSelected, setPickupSelected] = useState(false);
-  const [position, setPosition] = useState([25.7832, 88.5595]);
-  const { user} = useContext(AuthContext)
-  // ⚙️ Replace this with your logged-in user ID (from context/localStorage)
+  const [position, setPosition] = useState([25.7832, 88.5595]); 
+  const [currentLocation, setCurrentLocation] = useState(null);
+  const { user } = useContext(AuthContext);
 
-  // 🔹 Update user status to backend
+  // 🔹 Get current user location once on mount
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const coords = [pos.coords.latitude, pos.coords.longitude];
+          setCurrentLocation(coords);
+        },
+        (err) => {
+          console.error(err);
+          toast.error("Unable to get your current location!");
+        }
+      );
+    }
+  }, []);
+
+  // 🔹 Toggle online/offline
   const handleToggle = async () => {
     const newStatus = !isOnline;
     setIsOnline(newStatus);
@@ -54,28 +71,28 @@ const RideMap = () => {
         `http://localhost:3000/api/verified_riders/${user.email}`,
         { isActive: newStatus }
       );
-     toast.success(
-  <div className="flex items-center gap-2">
-    {newStatus ? (
-      <>
-        <MdOnlinePrediction className="text-green-500 text-xl" />
-        <span>You are now Online </span>
-      </>
-    ) : (
-      <>
-        <IoCloudOffline className="text-red-500 text-xl" />
-        <span>You are now Offline </span>
-      </>
-    )}
-  </div>
-);
+      toast.success(
+        <div className="flex items-center gap-2">
+          {newStatus ? (
+            <>
+              <MdOnlinePrediction className="text-green-500 text-xl" />
+              <span>You are now Online</span>
+            </>
+          ) : (
+            <>
+              <IoCloudOffline className="text-red-500 text-xl" />
+              <span>You are now Offline</span>
+            </>
+          )}
+        </div>
+      );
     } catch (err) {
-      toast.error(" Failed to update user status!");
+      toast.error("Failed to update user status!");
       console.error(err);
     }
   };
 
-  //  Fetch location suggestions
+  // 🔹 Search location
   const handleInputChange = async (e) => {
     const value = e.target.value;
     setSearchText(value);
@@ -93,7 +110,7 @@ const RideMap = () => {
     setSuggestions(data);
   };
 
-  //  Select location from suggestions
+  // 🔹 Select from suggestion
   const handleSelectLocation = (lat, lon, name) => {
     setPosition([parseFloat(lat), parseFloat(lon)]);
     setPickupName(name);
@@ -102,7 +119,7 @@ const RideMap = () => {
     setSuggestions([]);
   };
 
-  //  Manual search
+  // 🔹 Manual search
   const handleSearch = async (e) => {
     e.preventDefault();
     if (!searchText) return;
@@ -124,7 +141,7 @@ const RideMap = () => {
     }
   };
 
-  // 🔹 Set pickup by clicking on map
+  // 🔹 Set pickup by clicking map
   const handleSetPosition = async (lat, lon) => {
     setPosition([lat, lon]);
 
@@ -136,18 +153,16 @@ const RideMap = () => {
       const address = data.display_name || "Unnamed Location";
       setPickupName(address);
       setPickupSelected(true);
-      toast.success("✅ Pickup location selected!");
+      toast.success("Pickup location selected!");
     } catch (err) {
       setPickupName("Unknown location");
       toast.error("Failed to get location name.");
     }
   };
 
-  // 🔹 Start ride handler
   const startRideHandler = () => {
     if (!pickupSelected) return;
     toast.success(`🏍 Ride started from: ${pickupName}`);
-    // এখানে তুমি backend call করতে পারো ride start করার জন্য
   };
 
   return (
@@ -203,9 +218,8 @@ const RideMap = () => {
         </div>
       </div>
 
-      {/* 🔹 Main Content */}
+      {/* 🔹 Map Section */}
       <div className="flex flex-1">
-        {/* Live Map */}
         <div className="w-full md:w-4/5 bg-gray-200 relative">
           <MapContainer
             center={position}
@@ -218,15 +232,42 @@ const RideMap = () => {
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
 
+            {/* Click handler */}
             <LocationMarker onSetPosition={handleSetPosition} />
 
-            <Marker position={position} icon={markerIcon}>
-              <Popup>{pickupName || "Click map to set pickup"}</Popup>
-            </Marker>
+            {/* Rider current location marker */}
+            {currentLocation && (
+              <Marker
+                position={currentLocation}
+                icon={new L.Icon({
+                  iconUrl:
+                    "https://cdn-icons-png.flaticon.com/512/149/149071.png",
+                  iconSize: [32, 32],
+                  iconAnchor: [16, 32],
+                })}
+              >
+                <Popup>🚴 You are here</Popup>
+              </Marker>
+            )}
+
+            {/* Pickup marker */}
+            {pickupSelected && (
+              <Marker position={position} icon={markerIcon}>
+                <Popup>{pickupName}</Popup>
+              </Marker>
+            )}
+
+            {/* 🔹 Polyline between current location & pickup */}
+            {currentLocation && pickupSelected && (
+              <Polyline
+                positions={[currentLocation, position]}
+                pathOptions={{ color: "blue", weight: 4 }}
+              />
+            )}
           </MapContainer>
         </div>
 
-        {/* Sidebar */}
+        {/* 🔹 Sidebar */}
         <div className="hidden md:flex flex-col w-1/5 bg-white shadow-inner border-l border-gray-200 p-5 space-y-5">
           <h2 className="text-xl font-bold text-[#27445D] mb-2">
             Current Ride Info
