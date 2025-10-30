@@ -7,14 +7,13 @@ import { Button } from "primereact/button";
 import { Calendar } from "primereact/calendar";
 import { Toast } from "primereact/toast";
 import { classNames } from "primereact/utils";
-import { Gender, useCarApply } from "../context/car";
+import { Gender, useCarApply } from "../../context/car";
 
 import { FaUserCheck, FaCar, FaClipboardCheck } from "react-icons/fa";
 
 import { useMutation } from "@tanstack/react-query";
-import { api } from "../lib/api";
-import { AuthContext } from "../Auth/AuthProvider";
-
+import { api } from "../../lib/api";
+import { AuthContext } from "../../Auth/AuthProvider";
 
 const ENABLE_TOAST = true;
 
@@ -35,7 +34,7 @@ const BRAND_MODELS: Record<string, string[]> = {
 };
 
 const CarStepTwo = () => {
-  const {user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const { driver, setDriver, vehicle, setVehicle, reset } = useCarApply();
   const toast = useRef<Toast>(null);
   const navigate = useNavigate();
@@ -57,7 +56,6 @@ const CarStepTwo = () => {
     if (!file) return;
 
     setDriver({ ...driver, photo: file });
-
 
     const nextUrl = URL.createObjectURL(file);
     setPreviewUrl((prev) => {
@@ -87,7 +85,8 @@ const CarStepTwo = () => {
     if (ENABLE_TOAST) {
       toast.current?.show({
         severity: type,
-        summary: type === "success" ? "সফল" : type === "warn" ? "সতর্কতা" : "ত্রুটি",
+        summary:
+          type === "success" ? "সফল" : type === "warn" ? "সতর্কতা" : "ত্রুটি",
         detail,
         life: 2400,
       });
@@ -222,12 +221,16 @@ const CarStepTwo = () => {
   };
 
   return (
-    <main className="px-4 md:px-10 py-10 bg-white">
+    <main className="px-4 md:px-10 py-10">
       {ENABLE_TOAST && <Toast ref={toast} position="top-center" />}
 
       <div className="max-w-4xl mx-auto flex flex-col gap-6">
         {/* Driver Details */}
-        <section className="bg-[#e6fcf9] rounded-lg shadow p-5 md:p-6 text-[#27445D]">
+        <section
+          className="border-white/30
+    bg-[#e6fcf9]/60 backdrop-blur-6xl
+    shadow-lg rounded-lg p-5 md:p-6 text-[#27445D]"
+        >
           <header className="flex items-center gap-2 mb-4">
             <FaUserCheck />
             <h2 className="text-xl font-bold text-gray-700">নিজের তথ্য</h2>
@@ -310,8 +313,8 @@ const CarStepTwo = () => {
                       {g === "male"
                         ? "পুরুষ"
                         : g === "female"
-                          ? "নারী"
-                          : "অন্যান্য"}
+                        ? "নারী"
+                        : "অন্যান্য"}
                     </span>
                   </label>
                 ))}
@@ -425,7 +428,11 @@ const CarStepTwo = () => {
         </section>
 
         {/* Vehicle Details */}
-        <section className="bg-[#e6fcf9] text-[#27445D] rounded-lg shadow p-5 md:p-6">
+        <section
+          className="border-white/30
+    bg-[#e6fcf9]/60 backdrop-blur-6xl
+    shadow-lg rounded-lg p-5 md:p-6 text-[#27445D]"
+        >
           <header className="flex items-center gap-2 mb-4 text-[#27445D]">
             <FaCar />
             <h2 className="text-xl font-bold">গাড়ির তথ্য</h2>
@@ -493,7 +500,9 @@ const CarStepTwo = () => {
                   setVehicle({ ...vehicle, fitnessNo: e.target.value })
                 }
                 placeholder="যেমন: FT-458921"
-                className={classNames({ "p-invalid": !vehicle.fitnessNo?.trim() })}
+                className={classNames({
+                  "p-invalid": !vehicle.fitnessNo?.trim(),
+                })}
               />
             </div>
 
@@ -505,7 +514,9 @@ const CarStepTwo = () => {
                   setVehicle({ ...vehicle, taxTokenNo: e.target.value })
                 }
                 placeholder="যেমন: TT-2025-XXXX"
-                className={classNames({ "p-invalid": !vehicle.taxTokenNo?.trim() })}
+                className={classNames({
+                  "p-invalid": !vehicle.taxTokenNo?.trim(),
+                })}
               />
             </div>
           </div>
@@ -519,9 +530,11 @@ const CarStepTwo = () => {
             />
             <Button
               label={isSubmitting ? "সাবমিট হচ্ছে..." : "সাবমিট"}
-              icon={submitMutation.isPending
-                ? "pi pi-spin pi-spinner"
-                : "pi pi-check"}
+              icon={
+                submitMutation.isPending
+                  ? "pi pi-spin pi-spinner"
+                  : "pi pi-check"
+              }
               className="!bg-[#71BBB2] !border-none hover:!bg-[#5AA29F]"
               onClick={submitAll}
               disabled={submitMutation.isPending}
@@ -530,7 +543,11 @@ const CarStepTwo = () => {
         </section>
 
         {/* Checklist */}
-        <section className="rounded-lg border border-[#27445D]/10 p-4 text-sm text-[#27445D] bg-[#e6fcf9]">
+        <section
+          className="border-white/30
+    bg-[#e6fcf9]/60 backdrop-blur-6xl
+    shadow-lg rounded-lg p-5 md:p-6 text-[#27445D]"
+        >
           <div className="flex items-center gap-2 font-semibold mb-1">
             <FaClipboardCheck />
             <span>চেকলিস্ট</span>
@@ -539,7 +556,9 @@ const CarStepTwo = () => {
             <li>সঠিক মোবাইল ফরম্যাট (01XXXXXXXXX)</li>
             <li>NID ≥ ১০ সংখ্যা, লাইসেন্স ≥ ৬ অক্ষর</li>
             <li>পরিষ্কার ছবি (jpg/png ≤ 2MB)</li>
-            <li>গাড়ির ব্র্যান্ড, মডেল, রেজিস্ট্রেশন/ফিটনেস/ট্যাক্স স্পষ্টভাবে দিন</li>
+            <li>
+              গাড়ির ব্র্যান্ড, মডেল, রেজিস্ট্রেশন/ফিটনেস/ট্যাক্স স্পষ্টভাবে দিন
+            </li>
           </ul>
         </section>
       </div>

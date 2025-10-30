@@ -1,4 +1,5 @@
-import React, { useRef, useMemo, useEffect, useState, useContext } from "react";
+import React, { useContext } from "react";
+import { useRef, useMemo, useEffect, useState } from "react";
 import { FileUpload, FileUploadSelectEvent } from "primereact/fileupload";
 import { useNavigate } from "react-router";
 import { InputText } from "primereact/inputtext";
@@ -7,15 +8,14 @@ import { Button } from "primereact/button";
 import { Calendar } from "primereact/calendar";
 import { Toast } from "primereact/toast";
 import { classNames } from "primereact/utils";
-import { Gender, useCNGApply } from "../context/cng";
+import { Gender, useBikeApply } from "../../context/bike";
 
-import { FaUserCheck, FaShuttleVan, FaClipboardCheck } from "react-icons/fa";
+import { FaUserCheck, FaMotorcycle, FaClipboardCheck } from "react-icons/fa";
 
 import { useMutation } from "@tanstack/react-query";
-import { api } from "../lib/api";
-import { AuthContext } from "../Auth/AuthProvider";
+import { api } from "../../lib/api";
+import { AuthContext } from "../../Auth/AuthProvider";
 
-// 🔧 টোস্ট অন করতে true করে দাও (ডিফল্টে কনসোলে দেখায়)
 const ENABLE_TOAST = true;
 
 const CITY_OPTIONS = [
@@ -23,25 +23,27 @@ const CITY_OPTIONS = [
   { label: "চট্টগ্রাম", value: "Chattogram" },
   { label: "সিলেট", value: "Sylhet" },
   { label: "খুলনা", value: "Khulna" },
+  { label: "কক্সবাজার", value: "CoxsBazar" },
   { label: "রাজশাহী", value: "Rajshahi" },
 ];
 
 const BRAND_MODELS: Record<string, string[]> = {
-  Bajaj: ["RE 2S", "RE 4S", "Maxima C"],
-  TVS: ["King Deluxe", "King Duramax"],
-  Piaggio: ["Ape City", "Ape Auto DX"],
-  Mahindra: ["Alfa Passenger"],
+  Honda: ["CB Hornet", "Livo", "Shine", "Dream Neo"],
+  Yamaha: ["FZ", "FZS", "Saluto", "SZR"],
+  TVS: ["Apache", "Metro", "Stryker"],
+  Bajaj: ["Pulsar", "Discover", "Platina"],
+  Hero: ["Glamour", "Hunk", "Ignitor"],
 };
 
-const CngStepTwo = () => {
-  const {user} = useContext(AuthContext);
-  const { driver, setDriver, vehicle, setVehicle, reset } = useCNGApply();
+const BikeStepTwo = () => {
+  const { user } = useContext(AuthContext);
+  const { driver, setDriver, vehicle, setVehicle, reset } = useBikeApply();
   const toast = useRef<Toast>(null);
   const navigate = useNavigate();
   const fileRef = useRef<FileUpload | null>(null);
-
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const [fileKey, setFileKey] = useState(0); // FileUpload রিমাউন্ট ফfallback
+  const [fileKey, setFileKey] = useState(0);
+
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const modelOptions = useMemo(() => {
@@ -56,15 +58,15 @@ const CngStepTwo = () => {
     const file = (e.files?.[0] as File | undefined) ?? null;
     if (!file) return;
 
+    // context file
     setDriver({ ...driver, photo: file });
 
+    // Preview URL
     const nextUrl = URL.createObjectURL(file);
     setPreviewUrl((prev) => {
       if (prev) URL.revokeObjectURL(prev);
       return nextUrl;
     });
-
-    fileRef.current?.clear?.();
   };
 
   const removePhoto = () => {
@@ -124,29 +126,13 @@ const CngStepTwo = () => {
       fd.set("year", vehicle.year);
       fd.set("fitnessNo", vehicle.fitnessNo);
       fd.set("taxTokenNo", vehicle.taxTokenNo);
-      fd.set("routePermitNo", vehicle.routePermitNo);
 
-      // console.groupCollapsed("FormData preview");
-      // for (const [k, v] of fd.entries()) {
-      //   if (v instanceof File) {
-      //     console.log(k, { name: v.name, type: v.type, size: v.size });
-      //   } else {
-      //     console.log(k, v);
-      //   }
-      // }
-      // console.groupEnd();
-
-      // if (!(driver.photo instanceof File)) {
-      //   console.warn("photo is NOT a File:", driver.photo);
-      // }
-
-      const res = await api.post("/api/cng-applications", fd);
+      const res = await api.post("/api/bike-applications", fd);
       return res.data;
     },
   });
 
   const submitAll = async () => {
-    // ধাপ–২ ভ্যালিডেশন (ড্রাইভার + ভেহিকল)
     const invalid =
       !driver.firstName?.trim() ||
       !driver.lastName?.trim() ||
@@ -162,8 +148,7 @@ const CngStepTwo = () => {
       !vehicle.regNo?.trim() ||
       !vehicle.year?.trim() ||
       !vehicle.fitnessNo?.trim() ||
-      !vehicle.taxTokenNo?.trim() ||
-      !vehicle.routePermitNo?.trim();
+      !vehicle.taxTokenNo?.trim();
 
     if (invalid) {
       notify("warn", "সবগুলো প্রয়োজনীয় ঘর পূরণ করুন।");
@@ -183,16 +168,13 @@ const CngStepTwo = () => {
           const data = err?.response?.data;
           console.error("Submit error:", data);
 
-          // Zod field errors (object: { fieldName: string[] })
           const fe = data?.details?.fieldErrors as
             | Record<string, string[]>
             | undefined;
 
-          // First error message (if any)
           const firstField = fe && Object.keys(fe)[0];
           const firstMsg = firstField && fe[firstField]?.[0];
 
-          // Optional: nice label mapping (API keys → Bangla labels)
           const label: Record<string, string> = {
             "driver.firstName": "নামের প্রথম অংশ",
             "driver.lastName": "নামের শেষ অংশ",
@@ -208,7 +190,6 @@ const CngStepTwo = () => {
             "vehicle.year": "সাল",
             "vehicle.fitnessNo": "ফিটনেস নম্বর",
             "vehicle.taxTokenNo": "ট্যাক্স টোকেন নম্বর",
-            "vehicle.routePermitNo": "রুট পারমিট নম্বর",
           };
 
           const msg = data?.error || err?.message || "সাবমিট ব্যর্থ হয়েছে";
@@ -223,16 +204,19 @@ const CngStepTwo = () => {
         onSettled: () => setIsSubmitting(false),
       }
     );
-
   };
 
   return (
-    <main className="px-4 md:px-10 py-10 bg-white">
+    <main className="px-4 md:px-10 py-10">
       {ENABLE_TOAST && <Toast ref={toast} position="top-center" />}
 
       <div className="max-w-4xl mx-auto flex flex-col gap-6">
         {/* Driver Details */}
-        <section className="bg-[#e6fcf9] rounded-lg shadow p-5 md:p-6 text-[#27445D]">
+        <section
+          className="border-white/30
+    bg-[#e6fcf9]/60 backdrop-blur-6xl
+    shadow-lg rounded-lg p-5 md:p-6 text-[#27445D]"
+        >
           <header className="flex items-center gap-2 mb-4">
             <FaUserCheck />
             <h2 className="text-xl font-bold text-gray-700">নিজের তথ্য</h2>
@@ -326,6 +310,7 @@ const CngStepTwo = () => {
             <div className="flex flex-col gap-2">
               <label>জন্ম তারিখ*</label>
               <Calendar
+                selectionMode="single"
                 value={driver.dob ?? null}
                 onChange={(e) => setDriver({ ...driver, dob: e.value as Date })}
                 dateFormat="dd/mm/yy"
@@ -366,6 +351,7 @@ const CngStepTwo = () => {
 
             <div className="flex flex-col gap-2 md:col-span-2">
               <label>ছবি আপলোড করুন (jpg/png)*</label>
+
               <FileUpload
                 key={fileKey}
                 ref={fileRef}
@@ -373,7 +359,6 @@ const CngStepTwo = () => {
                 name="photo"
                 chooseLabel="ছবি নির্বাচন"
                 accept="image/jpeg, image/png"
-                // maxFileSize={2 * 1024 * 1024}
                 customUpload
                 onSelect={onPhoto}
                 chooseOptions={{
@@ -389,6 +374,7 @@ const CngStepTwo = () => {
                 </small>
               )}
 
+              {/* প্রিভিউ */}
               {previewUrl && (
                 <div className="mt-3 flex items-center gap-3">
                   <img
@@ -410,6 +396,7 @@ const CngStepTwo = () => {
                   </div>
                 </div>
               )}
+
               <small className="opacity-70">
                 সমর্থিত: JPG/PNG • সর্বোচ্চ 2MB • পরিষ্কার মুখের ছবি দিন
               </small>
@@ -418,10 +405,14 @@ const CngStepTwo = () => {
         </section>
 
         {/* Vehicle Details */}
-        <section className="bg-[#e6fcf9] text-[#27445D] rounded-lg shadow p-5 md:p-6">
+        <section
+          className="border-white/30
+    bg-[#e6fcf9]/60 backdrop-blur-6xl
+    shadow-lg rounded-lg p-5 md:p-6 text-[#27445D]"
+        >
           <header className="flex items-center gap-2 mb-4 text-[#27445D]">
-            <FaShuttleVan />
-            <h2 className="text-xl font-bold">CNG/অটোরিকশার তথ্য</h2>
+            <FaMotorcycle />
+            <h2 className="text-xl font-bold">গাড়ির তথ্য</h2>
           </header>
 
           <div className="grid md:grid-cols-2 gap-4">
@@ -442,7 +433,7 @@ const CngStepTwo = () => {
             </div>
 
             <div className="flex flex-col gap-2">
-              <label>মডেল সিলেক্ট করুন*</label>
+              <label>মডেল*</label>
               <Dropdown
                 value={vehicle.model}
                 onChange={(e) => setVehicle({ ...vehicle, model: e.value })}
@@ -505,20 +496,6 @@ const CngStepTwo = () => {
                 })}
               />
             </div>
-
-            <div className="flex flex-col gap-2 md:col-span-2">
-              <label>রুট পারমিট নাম্বার*</label>
-              <InputText
-                value={vehicle.routePermitNo}
-                onChange={(e) =>
-                  setVehicle({ ...vehicle, routePermitNo: e.target.value })
-                }
-                placeholder="যেমন: RP-XXXXX"
-                className={classNames({
-                  "p-invalid": !vehicle.routePermitNo?.trim(),
-                })}
-              />
-            </div>
           </div>
 
           <div className="flex justify-between md:justify-end gap-3 pt-4">
@@ -529,8 +506,12 @@ const CngStepTwo = () => {
               onClick={() => navigate(-1)}
             />
             <Button
-              label={isSubmitting ? "সাবমিট হচ্ছে..." : "সাবমিট"}
-              icon={submitMutation.isPending ? "pi pi-spin pi-spinner" : "pi pi-check"}
+              label={submitMutation.isPending ? "সাবমিট হচ্ছে..." : "সাবমিট"}
+              icon={
+                submitMutation.isPending
+                  ? "pi pi-spin pi-spinner"
+                  : "pi pi-check"
+              }
               className="!bg-[#71BBB2] !border-none hover:!bg-[#5AA29F]"
               onClick={submitAll}
               disabled={submitMutation.isPending}
@@ -539,7 +520,11 @@ const CngStepTwo = () => {
         </section>
 
         {/* Small note / checklist */}
-        <section className="rounded-lg border border-[#27445D]/10 p-4 text-sm text-[#27445D] bg-[#e6fcf9]">
+        <section
+          className="border-white/30
+    bg-[#e6fcf9]/60 backdrop-blur-6xl
+    shadow-lg rounded-lg p-5 md:p-6 text-[#27445D]"
+        >
           <div className="flex items-center gap-2 font-semibold mb-1">
             <FaClipboardCheck />
             <span>চেকলিস্ট</span>
@@ -548,10 +533,7 @@ const CngStepTwo = () => {
             <li>সঠিক মোবাইল ফরম্যাট (01XXXXXXXXX)</li>
             <li>NID ≥ ১০ সংখ্যা, লাইসেন্স ≥ ৬ অক্ষর</li>
             <li>পরিষ্কার মুখের ছবি (jpg/png ≤ 2MB)</li>
-            <li>
-              ব্র্যান্ড/মডেল, রেজিস্ট্রেশন, ফিটনেস, ট্যাক্স টোকেন ও রুট পারমিট
-              সঠিকভাবে দিন
-            </li>
+            <li>গাড়ির ব্র্যান্ড, মডেল, রেজিস্ট্রেশন/ফিটনেস স্পষ্টভাবে দিন</li>
           </ul>
         </section>
       </div>
@@ -559,4 +541,4 @@ const CngStepTwo = () => {
   );
 };
 
-export default CngStepTwo;
+export default BikeStepTwo;

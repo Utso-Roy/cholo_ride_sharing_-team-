@@ -22,16 +22,16 @@ import { BlogDetailsPage } from "../pages/Blog_Page/BlogDetailsPage";
 
 // Earnings Pages
 import BikeLayout from "../Layout/BikeLayout";
-import BikeStepOne from "../pages/BikeStepOne";
-import BikeStepTwo from "../pages/BikeStepTwo";
+import BikeStepOne from "../pages/Earning/BikeStepOne";
+import BikeStepTwo from "../pages/Earning/BikeStepTwo";
 import CarLayout from "../Layout/CarLayout";
-import CarStepOne from "../pages/CarStepOne";
-import CarStepTwo from "../pages/CarStepTwo";
+import CarStepOne from "../pages/Earning/CarStepOne";
+import CarStepTwo from "../pages/Earning/CarStepTwo";
 import CNGLayout from "../Layout/CNGLayout";
-import CngStepOne from "../pages/CngStepOne";
-import CngStepTwo from "../pages/CngStepTwo";
-import CarEarnings from "../pages/CarEarnings";
-import CngEarnings from "../pages/CngEarnings";
+import CngStepOne from "../pages/Earning/CngStepOne";
+import CngStepTwo from "../pages/Earning/CngStepTwo";
+import CarEarnings from "../pages/Earning/CarEarnings";
+import CngEarnings from "../pages/Earning/CngEarnings";
 import SignUp from "../Access/SignUp";
 import Login from "../Access/Login";
 import ForgetPasswordwithEmail from "../Access/ForgetPasswordwithEmail";
@@ -92,6 +92,8 @@ import RatingsReviews from "../DashboardPages/RiderDashboard/RatingsReviews";
 import RideHistory from "../DashboardPages/RiderDashboard/RideHistory";
 import PerformanceReport from "../DashboardPages/RiderDashboard/PerformanceReport";
 import RideReject from "../DashboardPages/RiderDashboard/RideReject";
+import ServiceApplications from "../pages/Earning/ServiceApplications";
+import ServiceApplicationsLayout from "../Layout/ServiceApplicationsLayout";
 
 
 const router = createBrowserRouter([
@@ -164,6 +166,12 @@ const router = createBrowserRouter([
           { index: true, element: <CngStepOne /> },
           { path: "details", element: <CngStepTwo /> },
         ],
+      },
+      {
+        element: <ServiceApplicationsLayout/>,
+        children:[
+          {path: "earn/:type", element: <ServiceApplications/>}
+        ]
       },
 
       // Earnings Summary
