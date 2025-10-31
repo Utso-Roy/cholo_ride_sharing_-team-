@@ -110,11 +110,14 @@ const SignUp: React.FC = () => {
         email: data.email,
         photo: profilePic || null,
         createdAt: new Date(),
-        userActive : 'false',
+        userActive: "false",
         role: "user",
       };
 
-      await axios.post("http://localhost:3000/users", saveUser);
+      await axios.post(
+        "https://cholo-ride-sharing-website-server-side.onrender.com/users",
+        saveUser
+      );
 
       toast.success("নিবন্ধন সফল!");
       navigate(from);
@@ -210,46 +213,57 @@ const SignUp: React.FC = () => {
               )}
             </div>
 
-         {/* Password Field */}
-<div className="w-full relative">
-  <label className="block text-sm font-medium mb-2 text-gray-700">
-    পাসওয়ার্ড
-  </label>
+            {/* Password Field */}
+            <div className="w-full relative">
+              <label className="block text-sm font-medium mb-2 text-gray-700">
+                পাসওয়ার্ড
+              </label>
 
-  <div className="relative">
-    <InputText
-      type={showPassword ? "text" : "password"}
-      value={passwordValue}
-      onChange={(e) => {
-        setPasswordValue(e.target.value);
-        setValue("password", e.target.value);
-      }}
-      placeholder="পাসওয়ার্ড লিখুন"
-      className="w-full border border-gray-300 rounded-md p-2 pr-10"
-    />
+              <div className="relative">
+                <InputText
+                  type={showPassword ? "text" : "password"}
+                  value={passwordValue}
+                  onChange={(e) => {
+                    setPasswordValue(e.target.value);
+                    setValue("password", e.target.value);
+                  }}
+                  placeholder="পাসওয়ার্ড লিখুন"
+                  className="w-full border border-gray-300 rounded-md p-2 pr-10"
+                />
 
-    {/* 👁 Toggle Icon */}
-    <i
-      className={`pi ${showPassword ? "pi-eye-slash" : "pi-eye"} 
+                {/* 👁 Toggle Icon */}
+                <i
+                  className={`pi ${showPassword ? "pi-eye-slash" : "pi-eye"} 
                  absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 cursor-pointer`}
-      onClick={() => setShowPassword(!showPassword)}
-    ></i>
-  </div>
+                  onClick={() => setShowPassword(!showPassword)}
+                ></i>
+              </div>
 
-  {/* Password validation hints (optional, nice UX) */}
-  <div className="mt-2 text-xs text-gray-500 space-y-1">
-    <p className={validations.length ? "text-green-600" : "text-gray-500"}>
-      • অন্তত ৮ অক্ষরের হতে হবে
-    </p>
-    <p className={validations.upper ? "text-green-600" : "text-gray-500"}>
-      • অন্তত একটি বড় হাতের অক্ষর
-    </p>
-    <p className={validations.number ? "text-green-600" : "text-gray-500"}>
-      • অন্তত একটি সংখ্যা থাকতে হবে
-    </p>
-  </div>
-</div>
-
+              {/* Password validation hints (optional, nice UX) */}
+              <div className="mt-2 text-xs text-gray-500 space-y-1">
+                <p
+                  className={
+                    validations.length ? "text-green-600" : "text-gray-500"
+                  }
+                >
+                  • অন্তত ৮ অক্ষরের হতে হবে
+                </p>
+                <p
+                  className={
+                    validations.upper ? "text-green-600" : "text-gray-500"
+                  }
+                >
+                  • অন্তত একটি বড় হাতের অক্ষর
+                </p>
+                <p
+                  className={
+                    validations.number ? "text-green-600" : "text-gray-500"
+                  }
+                >
+                  • অন্তত একটি সংখ্যা থাকতে হবে
+                </p>
+              </div>
+            </div>
 
             {/* Submit Button */}
             <Button

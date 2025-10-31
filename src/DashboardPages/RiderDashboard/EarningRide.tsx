@@ -11,7 +11,6 @@ import {
 import Swal from "sweetalert2";
 
 const EarningRide = () => {
-  // Dummy earnings data
   const earningsData = {
     total: 15800,
     today: 1250,

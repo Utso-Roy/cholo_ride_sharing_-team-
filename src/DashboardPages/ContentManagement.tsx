@@ -30,7 +30,7 @@ export default function ContentManagement() {
       if (filter !== "all") params.set("status", filter);
 
       const res = await fetch(
-        `http://localhost:3000/api/blogs?${params.toString()}`
+        `https://cholo-ride-sharing-website-server-side.onrender.com/api/blogs?${params.toString()}`
       );
       const data = await res.json();
       setBlogs(data);
@@ -53,11 +53,14 @@ export default function ContentManagement() {
 
     try {
       const newStatus = current === "draft" ? "published" : "draft";
-      await fetch(`http://localhost:3000/api/blogs/${id}/status`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status: newStatus }),
-      });
+      await fetch(
+        `https://cholo-ride-sharing-website-server-side.onrender.com/api/blogs/${id}/status`,
+        {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ status: newStatus }),
+        }
+      );
       Swal.fire("Success", `Blog ${newStatus}`, "success");
       fetchBlogs();
     } catch (err) {
@@ -82,9 +85,12 @@ export default function ContentManagement() {
     if (!confirm.isConfirmed) return;
 
     try {
-      await fetch(`http://localhost:3000/api/blogs/${id}`, {
-        method: "DELETE",
-      });
+      await fetch(
+        `https://cholo-ride-sharing-website-server-side.onrender.com/api/blogs/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
       Swal.fire("Deleted!", "Blog has been removed.", "success");
       fetchBlogs();
     } catch (err) {

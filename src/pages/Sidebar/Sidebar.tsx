@@ -32,7 +32,6 @@ import { IoMdLogOut } from "react-icons/io";
 import { toast } from "react-toastify";
 import axios from "axios";
 
-
 type Role = "admin" | "moderator" | "rider" | "user" | undefined;
 
 interface AppUser {
@@ -60,7 +59,9 @@ const Sidebar: React.FC = () => {
     const fetchUser = async () => {
       try {
         setLoading(true);
-        const res = await axios.get<AppUser[]>("http://localhost:3000/users");
+        const res = await axios.get<AppUser[]>(
+          "https://cholo-ride-sharing-website-server-side.onrender.com/users"
+        );
         setUsers(res.data);
       } catch (err) {
         console.error(err);
@@ -235,7 +236,7 @@ const Sidebar: React.FC = () => {
           className="w-full text-left flex items-center gap-2 cursor-pointer  font-semibold transition-colors duration-200 rounded-md px-2 py-1"
         >
           <IoMdLogOut className="text-lg" /> Logout
-        </button>  
+        </button>
       </div>
     </div>
   );
