@@ -46,8 +46,13 @@ export default function PartnershipSection() {
 
   return (
     <section
-      className="py-20 px-6"
-      style={{ background: "linear-gradient(135deg, #EFE9D5 0%, #71BBB2 100%)" }}
+       className="bg-cover bg-center py-20 px-6  bg-no-repeat bg-fixed"
+                style={{
+                    // backgroundImage: "url('https://i.ibb.co.com/zTQ6z80G/map.jpg')",
+                    backgroundImage: "linear-gradient(to right, rgba(230,252,249,0.8), rgba(249,250,251,0.8)), url('https://i.ibb.co/zTQ6z80G/map.jpg')",
+                    backgroundColor: "rgba(0, 0, 0, 0.1)",
+                    backgroundBlendMode: "overlay",
+                }}
     >
       <motion.h2
         initial={{ opacity: 0, y: -30 }}

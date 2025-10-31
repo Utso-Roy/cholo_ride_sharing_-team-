@@ -41,7 +41,6 @@ const PerformanceReport: React.FC = () => {
     },
   };
 
-  // Customer rating chart (doughnut)
   const ratingChartData = {
     labels: ["5★", "4★", "3★", "2★", "1★"],
     datasets: [
@@ -124,7 +123,7 @@ const PerformanceReport: React.FC = () => {
         {/* Ride Chart */}
         <Card className="shadow-md p-4">
           <h2 className="text-lg sm:text-xl font-semibold mb-4 text-[#27445D] flex items-center gap-2">
-            📊 Weekly Ride Count
+             Weekly Ride Count
           </h2>
           <Chart
             type="bar"

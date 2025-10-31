@@ -41,7 +41,7 @@ const RideMap = () => {
   const [suggestions, setSuggestions] = useState([]);
   const [pickupName, setPickupName] = useState("");
   const [pickupSelected, setPickupSelected] = useState(false);
-  const [position, setPosition] = useState([25.7832, 88.5595]); 
+  const [position, setPosition] = useState([25.7832, 88.5595]);
   const [currentLocation, setCurrentLocation] = useState(null);
   const { user } = useContext(AuthContext);
 
@@ -68,7 +68,7 @@ const RideMap = () => {
 
     try {
       await axios.put(
-        `http://localhost:3000/api/verified_riders/${user.email}`,
+        `https://cholo-ride-sharing-website-server-side.onrender.com/api/verified_riders/${user.email}`,
         { isActive: newStatus }
       );
       toast.success(
@@ -239,12 +239,14 @@ const RideMap = () => {
             {currentLocation && (
               <Marker
                 position={currentLocation}
-                icon={new L.Icon({
-                  iconUrl:
-                    "https://cdn-icons-png.flaticon.com/512/149/149071.png",
-                  iconSize: [32, 32],
-                  iconAnchor: [16, 32],
-                })}
+                icon={
+                  new L.Icon({
+                    iconUrl:
+                      "https://cdn-icons-png.flaticon.com/512/149/149071.png",
+                    iconSize: [32, 32],
+                    iconAnchor: [16, 32],
+                  })
+                }
               >
                 <Popup>🚴 You are here</Popup>
               </Marker>
