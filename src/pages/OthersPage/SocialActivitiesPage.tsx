@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 import { FiFilter, FiSearch } from "react-icons/fi";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import Loading from "../../Loading/Loading";
 
 interface Activity {
   _id: string;
@@ -18,7 +19,7 @@ interface Activity {
 
 export default function SocialActivitiesPage() {
  
-  const [visibleCount, setVisibleCount] = useState(9);
+  const [visibleCount, setVisibleCount] = useState(8);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterBadge, setFilterBadge] = useState("all");
   const navigate = useNavigate();
@@ -31,11 +32,15 @@ export default function SocialActivitiesPage() {
     },
   });
 
+  if(isLoading){
+    return <Loading/>
+  }
+
   const toggleVisibility = () => {
     if (visibleCount >= activities.length) {
-      setVisibleCount(9);
+      setVisibleCount(8);
     } else {
-      setVisibleCount((prev) => prev + 9);
+      setVisibleCount((prev) => prev + 8);
     }
   };
 
@@ -53,7 +58,15 @@ export default function SocialActivitiesPage() {
   });
 
   return (
-    <section className="py-20 px-6 bg-gradient-to-b from-[#EFE9D5] to-[#71BBB2]">
+    <section 
+      className="bg-cover bg-center py-20 px-6  bg-no-repeat bg-fixed"
+                style={{
+                    // backgroundImage: "url('https://i.ibb.co.com/zTQ6z80G/map.jpg')",
+                    backgroundImage: "linear-gradient(to right, rgba(230,252,249,0.8), rgba(249,250,251,0.8)), url('https://i.ibb.co/zTQ6z80G/map.jpg')",
+                    backgroundColor: "rgba(0, 0, 0, 0.1)",
+                    backgroundBlendMode: "overlay",
+                }}
+    >
       {/* Heading */}
       <motion.h1
         className="text-5xl font-bold text-[#27445D] text-center mb-4"
@@ -118,7 +131,7 @@ export default function SocialActivitiesPage() {
       </div>
 
       {/* Activities Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-full mx-auto px-6">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-8 max-full mx-auto px-6">
         {filteredActivities.slice(0, visibleCount).map((activity) => (
           <motion.div
             key={activity._id}
@@ -140,13 +153,13 @@ export default function SocialActivitiesPage() {
               <p className="text-sm text-gray-500 mb-2">
                 {activity.date} | {activity.location}
               </p>
-              <span className="inline-block bg-[#71BBB2] text-white px-3 py-1 rounded-full text-xs font-semibold mb-4">
+              <span className="inline-block bg-gray-100 text-[#27445D] px-3 py-1 rounded-full text-xs font-semibold mb-4">
                 {activity.badge}
               </span>
 
               <button
                 onClick={() => navigate(`/activities/${activity._id}`)}
-                className="mt-4 bg-[#71BBB2] text-white text-sm font-semibold px-6 py-2 rounded-full shadow hover:bg-[#1f3245] transition-colors duration-300 absolute bottom-4 right-4"
+                className="mt-4 bg-[#71BBB2]  hover:bg-[#5AA29F] text-white text-sm font-semibold px-6 py-2 rounded-full shadow transition-colors duration-300 absolute bottom-4 right-4"
               >
                 বিস্তারিত
               </button>
@@ -166,7 +179,7 @@ export default function SocialActivitiesPage() {
         >
           <button
             onClick={toggleVisibility}
-            className="bg-gradient-to-r from-[#71BBB2] to-[#27445D] text-white px-8 py-3 rounded-full font-semibold shadow-lg hover:from-[#5aa59c] hover:to-[#1f3245] transition-all duration-300"
+            className=" text-white bg-[#71BBB2]  hover:bg-[#5AA29F] px-8 py-3 rounded-full font-semibold shadow-lg  transition-all duration-300"
           >
             {visibleCount >= filteredActivities.length ? "কম দেখুন" : "আরও দেখুন"}
           </button>
