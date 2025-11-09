@@ -6,11 +6,11 @@
  It enables live rider tracking, online/offline status, and interactive map-based pickup selection.
 
 ## Tech Stack
-Frontend: React, Tailwind CSS, PrimeReact, React-Leaflet
-Backend: Node.js, Express, Socket.io
-Database: MongoDB 
-Auth: Firebase / JWT
-Map & Location: React Leaflet
+-Frontend: React, Tailwind CSS, PrimeReact, React-Leaflet
+-Backend: Node.js, Express, Socket.io
+-Database: MongoDB 
+-Auth: Firebase / JWT
+-Map & Location: React Leaflet
 ## Key Features
 
 - Secure User & Rider Authentication
