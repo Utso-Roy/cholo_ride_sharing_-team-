@@ -179,9 +179,10 @@ const Sidebar: React.FC = () => {
   } else {
     roleToRender = userItems;
   }
-  if (loading || !user?.email) {
+  if (loading || !user?.email || !currentUser ) {
     return <Loading />;
   }
+
 
   const logoutBtn = () => {
     logOut()

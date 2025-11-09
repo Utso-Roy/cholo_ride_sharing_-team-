@@ -3,8 +3,7 @@ import { Users, FileText, Car, PieChart, Bike, UserCheck, TrendingUp, Activity }
 import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer, Area, AreaChart } from 'recharts';
 
 const ModernDashboard = () => {
-  const [role] = useState('admin'); // Change to 'rider' or 'user' to see different views
-
+  const [role] = useState('admin'); 
   const getStatsByRole = () => {
     if (role === 'admin') {
       return [
@@ -138,7 +137,6 @@ const ModernDashboard = () => {
               ড্যাশবোর্ড
             </h1>
             <p className="text-slate-500 text-sm mt-0.5">
-              {role === 'admin' ? 'অ্যাডমিন প্যানেল' : role === 'rider' ? 'রাইডার প্যানেল' : 'ইউজার প্যানেল'}
             </p>
           </div>
         </div>
