@@ -1,6 +1,7 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { Skeleton } from "primereact/skeleton";
 import {
   FaCarSide,
   FaRoute,
@@ -11,20 +12,44 @@ import {
 } from "react-icons/fa";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, EffectFade } from "swiper/modules";
+import { Button } from "primereact/button";
+import { Link } from "react-router";
+import { AuthContext } from "../../Auth/AuthProvider";
 import userPicture from "../../assets/realtime.jpg";
-import LeftPicture from "../../assets/left side.jpg";
+import LeftPicture from "../../assets/left side.webp";
 import rightSide from "../../assets/right side2.jpg";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
-import { Button } from "primereact/button";
-import { Link } from "react-router";
-import { AuthContext } from "../../Auth/AuthProvider";
+
+// Lazy Image Component with Skeleton
+const LazyImage = ({ src, alt, className }) => {
+  const [loaded, setLoaded] = useState(false);
+  const [error, setError] = useState(false);
+
+  return (
+    <div className="relative w-full h-full">
+      {!loaded && !error && (
+        <Skeleton width="100%" height="100%" className="absolute inset-0" />
+      )}
+      <img
+        src={src}
+        alt={alt}
+        className={`${className} ${loaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-500`}
+        onLoad={() => setLoaded(true)}
+        onError={() => setError(true)}
+        loading="lazy"
+      />
+    </div>
+  );
+};
 
 const LandingPage = () => {
+  const { user } = useContext(AuthContext);
+
   useEffect(() => {
     AOS.init({
-      duration: 1200,
+      duration: 1000,
       easing: "ease-in-out-sine",
       once: true,
     });
@@ -81,15 +106,13 @@ const LandingPage = () => {
     },
   ];
 
-  const { user } = useContext(AuthContext);
-
   return (
     <>
       {/* Hero Section */}
       <div className="relative min-h-screen flex flex-col lg:flex-row items-center justify-between px-4 sm:px-6 lg:px-12 xl:px-16 py-6 sm:py-8 lg:py-12 overflow-hidden">
         {/* Background */}
         <div className="absolute inset-0">
-          <img
+          <LazyImage
             src="https://i.ibb.co.com/TMwRrtS3/world-map-page-0001.jpg"
             alt="Background"
             className="w-full h-full object-cover"
@@ -180,9 +203,9 @@ const LandingPage = () => {
           >
             {/* Animated Background Orbs */}
             <div className="absolute inset-0 -z-10">
-              <div className="absolute top-1/4 left-0 w-32 sm:w-40 h-32 sm:h-40  rounded-full blur-3xl animate-pulse"></div>
+              <div className="absolute top-1/4 left-0 w-32 sm:w-40 h-32 sm:h-40 rounded-full blur-3xl animate-pulse"></div>
               <div
-                className="absolute bottom-1/4 right-0 w-40 sm:w-48 h-40 sm:h-48 bg-gradient-to-r  rounded-full blur-3xl animate-pulse"
+                className="absolute bottom-1/4 right-0 w-40 sm:w-48 h-40 sm:h-48 bg-gradient-to-r rounded-full blur-3xl animate-pulse"
                 style={{ animationDelay: "1s" }}
               ></div>
             </div>
@@ -192,7 +215,7 @@ const LandingPage = () => {
               <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-white/10 backdrop-blur-sm rounded-2xl sm:rounded-3xl -rotate-6 group-hover:-rotate-3 transition-all duration-500"></div>
 
               <div className="relative w-20 h-28 xs:w-24 xs:h-32 sm:w-28 sm:h-40 md:w-36 md:h-52 lg:w-48 lg:h-56 rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl -rotate-6 group-hover:-rotate-3 group-hover:scale-105 transition-all duration-500 border-2 sm:border-4 border-white/50">
-                <img
+                <LazyImage
                   src={LeftPicture}
                   alt="Left"
                   className="w-full h-full object-cover"
@@ -207,11 +230,11 @@ const LandingPage = () => {
 
             {/* Center Main Image Card */}
             <div className="relative z-30 group">
-              <div className="absolute -inset-1  rounded-[1.5rem] sm:rounded-[2rem] lg:rounded-[2.5rem] blur-lg opacity-75 group-hover:opacity-100 transition-all duration-500 animate-pulse"></div>
+              <div className="absolute -inset-1 rounded-[1.5rem] sm:rounded-[2rem] lg:rounded-[2.5rem] blur-lg opacity-75 group-hover:opacity-100 transition-all duration-500 animate-pulse"></div>
 
               <div className="relative bg-white p-1.5 sm:p-1 rounded-[1.5rem] sm:rounded-[2rem] lg:rounded-[2.5rem] shadow-2xl">
                 <div className="relative w-36 h-48 xs:w-40 xs:h-52 sm:w-48 sm:h-60 md:w-56 md:h-70 lg:w-58 lg:h-76 rounded-[1.25rem] sm:rounded-[1.75rem] lg:rounded-[2rem] overflow-hidden group-hover:scale-105 transition-transform duration-500">
-                  <img
+                  <LazyImage
                     src={userPicture}
                     alt="Main"
                     className="w-full h-full object-cover"
@@ -229,8 +252,6 @@ const LandingPage = () => {
                 <div className="absolute -top-1 -left-1 sm:-top-2 sm:-left-2 w-6 h-6 sm:w-8 sm:h-8 rounded-full blur-sm opacity-50 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <div className="absolute -bottom-1 -right-1 sm:-bottom-2 sm:-right-2 w-7 h-7 sm:w-10 sm:h-10 rounded-full blur-sm opacity-50 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
-
-              
             </div>
 
             {/* Right Image Card */}
@@ -238,7 +259,7 @@ const LandingPage = () => {
               <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-white/10 backdrop-blur-sm rounded-2xl sm:rounded-3xl rotate-6 group-hover:rotate-3 transition-all duration-500"></div>
 
               <div className="relative w-20 h-28 xs:w-24 xs:h-32 sm:w-28 sm:h-40 md:w-36 md:h-52 lg:w-48 lg:h-56 rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl rotate-6 group-hover:rotate-3 group-hover:scale-105 transition-all duration-500 border-2 sm:border-4 border-white/50">
-                <img
+                <LazyImage
                   src={rightSide}
                   alt="Right"
                   className="w-full h-full object-cover"
@@ -246,14 +267,14 @@ const LandingPage = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
 
-              <div className="absolute -top-2 -left-2 sm:-top-3 sm:-left-3  text-white text-[10px] sm:text-xs font-bold px-2 py-1 sm:px-3 sm:py-1.5 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:scale-110">
+              <div className="absolute -top-2 -left-2 sm:-top-3 sm:-left-3 text-white text-[10px] sm:text-xs font-bold px-2 py-1 sm:px-3 sm:py-1.5 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:scale-110">
                 ⚡ দ্রুত
               </div>
             </div>
 
             {/* Decorative Elements */}
-            <div className="absolute -bottom-4 left-1/4 w-16 sm:w-20 h-1  rounded-full"></div>
-            <div className="absolute -bottom-6 right-1/4 w-12 sm:w-16 h-1  rounded-full"></div>
+            <div className="absolute -bottom-4 left-1/4 w-16 sm:w-20 h-1 rounded-full"></div>
+            <div className="absolute -bottom-6 right-1/4 w-12 sm:w-16 h-1 rounded-full"></div>
           </div>
 
           {/* Swiper */}
@@ -272,7 +293,7 @@ const LandingPage = () => {
               {slides.map((slide, index) => (
                 <SwiperSlide key={index}>
                   <div className="relative w-full h-full">
-                    <img
+                    <LazyImage
                       src={slide.src}
                       alt={slide.title}
                       className="w-full h-full object-cover"
@@ -290,8 +311,7 @@ const LandingPage = () => {
       </div>
 
       {/* Feature Cards Section */}
-      <div >
-       
+      <div>
       </div>
     </>
   );
