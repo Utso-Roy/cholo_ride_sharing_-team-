@@ -68,7 +68,7 @@ const RideMap = () => {
 
     try {
       await axios.put(
-        `https://cholo-ride-sharing-website-server-side.onrender.com/api/verified_riders/${user.email}`,
+        `http://localhost:3000/api/verified_riders/${user.email}`,
         { isActive: newStatus }
       );
       toast.success(
