@@ -4,7 +4,7 @@ const baseURL =
   import.meta.env.VITE_API_URL?.replace(/\/$/, "") || "http://localhost:5000";
 
 export const api = axios.create({
-  baseURL, // -> http://localhost:3000
+  baseURL, // -> https://cholo-ride-sharing-website-server-side.onrender.com
   withCredentials: false,
   timeout: 15000,
 });
@@ -16,7 +16,7 @@ if (import.meta.env.DEV) {
 }
 
 // export const api5000 = axios.create({
-//   baseURL: "http://localhost:3000",
+//   baseURL: "https://cholo-ride-sharing-website-server-side.onrender.com",
 // });
 
 api.interceptors.request.use((config) => {
