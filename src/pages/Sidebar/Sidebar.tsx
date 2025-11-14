@@ -59,9 +59,7 @@ const Sidebar: React.FC = () => {
     const fetchUser = async () => {
       try {
         setLoading(true);
-        const res = await axios.get<AppUser[]>(
-          "https://cholo-ride-sharing-website-server-side.onrender.com/users"
-        );
+        const res = await axios.get<AppUser[]>("http://localhost:3000/users");
         setUsers(res.data);
       } catch (err) {
         console.error(err);
@@ -179,10 +177,9 @@ const Sidebar: React.FC = () => {
   } else {
     roleToRender = userItems;
   }
-  if (loading || !user?.email || !currentUser ) {
+  if (loading || !user?.email || !currentUser) {
     return <Loading />;
   }
-
 
   const logoutBtn = () => {
     logOut()

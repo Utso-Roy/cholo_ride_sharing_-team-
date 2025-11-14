@@ -30,9 +30,7 @@ export default function EditBlog() {
   useEffect(() => {
     if (!id) return;
     setLoading(true);
-    fetch(
-      `https://cholo-ride-sharing-website-server-side.onrender.com/api/blogs/${id}`
-    )
+    fetch(`http://localhost:3000/api/blogs/${id}`)
       .then((res) => res.json())
       .then((data) => setBlog(data))
       .catch((err) => console.error(err))
@@ -52,14 +50,11 @@ export default function EditBlog() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch(
-        `https://cholo-ride-sharing-website-server-side.onrender.com/api/blogs/${id}`,
-        {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(blog),
-        }
-      );
+      const res = await fetch(`http://localhost:3000/api/blogs/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(blog),
+      });
 
       if (res.ok) {
         Swal.fire("Success", "Blog updated successfully!", "success");
