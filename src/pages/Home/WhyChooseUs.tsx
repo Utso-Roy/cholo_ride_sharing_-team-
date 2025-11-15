@@ -1,6 +1,7 @@
 import React from "react";
 import { FaCarSide, FaUserCheck, FaClock, FaLock } from "react-icons/fa";
 import { motion } from "framer-motion";
+import Container from "../../Container/Container";
 
 const features = [
   {
@@ -42,47 +43,52 @@ const itemVariants = {
 
 const WhyChooseUs = () => {
   return (
-    <section className="bg-gray-50 py-20 px-6 md:px-16 border-t border-gray-100">
+    <section className="bg-gray-50 py-20  border-t border-gray-100">
       {/* Heading */}
-      <motion.div
-        className="text-center mb-12"
-        initial={{ opacity: 0, y: -30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        viewport={{ once: true }}
-      >
-        <h2 className="text-4xl md:text-5xl font-extrabold text-[#27445D]">
-          কেন চলো ব্যবহার করবেন?
-        </h2>
-        <p className="text-gray-600 mt-3 text-lg md:text-xl">
-          মাত্র কয়েক ধাপে বুক করুন আপনার রাইড — দ্রুত, নিরাপদ ও সুবিধাজনক।
-        </p>
-      </motion.div>
+      <Container>
+        
+          <>
+        <motion.div
+          className="text-center mb-12"
+          initial={{ opacity: 0, y: -30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          viewport={{ once: true }}
+        >
+          <h2 className="text-4xl md:text-5xl font-extrabold text-[#27445D]">
+            কেন চলো ব্যবহার করবেন?
+          </h2>
+          <p className="text-gray-600 mt-3 text-lg md:text-xl">
+            মাত্র কয়েক ধাপে বুক করুন আপনার রাইড — দ্রুত, নিরাপদ ও সুবিধাজনক।
+          </p>
+        </motion.div>
 
-      {/* Features Grid with smooth stagger animation */}
-      <motion.div
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-      >
-        {features.map((feature, index) => (
-          <motion.div
-            key={index}
-            className="bg-white rounded-xl p-6 text-center shadow-md hover:shadow-xl transition cursor-pointer"
-            variants={itemVariants}
-          >
-            <div className="text-[#71BBB2] text-4xl mb-4 flex justify-center">
-              {feature.icon}
-            </div>
-            <h3 className="text-xl font-bold text-[#27445D] mb-2">
-              {feature.title}
-            </h3>
-            <p className="text-gray-600">{feature.desc}</p>
-          </motion.div>
-        ))}
-      </motion.div>
+        {/* Features Grid with smooth stagger animation */}
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
+          {features.map((feature, index) => (
+            <motion.div
+              key={index}
+              className="bg-white rounded-xl p-6 text-center shadow-md hover:shadow-xl transition cursor-pointer"
+              variants={itemVariants}
+            >
+              <div className="text-[#71BBB2] text-4xl mb-4 flex justify-center">
+                {feature.icon}
+              </div>
+              <h3 className="text-xl font-bold text-[#27445D] mb-2">
+                {feature.title}
+              </h3>
+              <p className="text-gray-600">{feature.desc}</p>
+            </motion.div>
+          ))}
+        </motion.div>
+      </>
+    </Container>
     </section>
   );
 };

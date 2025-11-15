@@ -2,6 +2,7 @@
 import React from "react";
 import { Card } from "primereact/card";
 import { Rating } from "primereact/rating";
+import Container from "../../Container/Container";
 
 interface Driver {
   id: number;
@@ -45,7 +46,9 @@ const featuredDrivers: Driver[] = [
 const FeaturedDrivers: React.FC = () => {
   return (
     <section className="py-16 bg-gradient-to-r from-[#e6fcf9] to-gray-50">
-      <div className="text-center mb-12 px-6 md:px-16">
+      <Container>
+
+        <div className="text-center mb-12 w-full">
         <h2 className="text-4xl md:text-5xl  font-bold text-[#27445D] flex items-center justify-center gap-3">
           শীর্ষ ড্রাইভার / রাইডার
         </h2>
@@ -53,6 +56,7 @@ const FeaturedDrivers: React.FC = () => {
           শীর্ষ ড্রাইভারদের প্রোফাইল — রেটিং এবং সম্পন্ন রাইডের সংখ্যা সহ।
         </p>
       </div>
+      </Container>
 
       {/* Marquee / Carousel */}
       <div className="overflow-hidden relative">

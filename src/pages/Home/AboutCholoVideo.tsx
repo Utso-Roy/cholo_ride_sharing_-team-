@@ -2,11 +2,15 @@ import React from "react";
 import { motion } from "framer-motion";
 import { FaCar, FaUser, FaLock } from "react-icons/fa";
 import { Button } from "primereact/button";
+import Container from "../../Container/Container";
 
 const VideoSection = () => {
   return (
-    <section className="bg-white border-t border-gray-100 py-20 px-6 md:px-12">
+    <section className="bg-white border-t border-gray-100 py-20 ">
       {/* Heading Area */}
+      <Container>
+        
+         <>
       <div className="text-center mb-12">
         <motion.h2
           className="text-4xl md:text-5xl font-extrabold text-[#27445D]"
@@ -104,6 +108,10 @@ const VideoSection = () => {
                        hover:!from-[#56A89E] hover:!to-[#71BBB2] transition-all duration-300"
         />
       </motion.div>
+    
+    
+      </>
+   </Container>
     </section>
   );
 };

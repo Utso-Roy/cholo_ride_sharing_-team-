@@ -57,13 +57,16 @@ const rootElement = document.getElementById("root") as HTMLElement;
 
 createRoot(rootElement).render(
   <StrictMode>
-    <AuthProvider>
+
+
+      <AuthProvider>
       <QueryClientProvider client={queryClient}>
         {/* <RouterProvider router={router} /> */}
         <ToastContainer />
         <App></App>
       </QueryClientProvider>
     </AuthProvider>
+   
   </StrictMode>
 );
 

@@ -13,51 +13,53 @@ import Newsletter from "./Newsletter";
 import LandingPage from "../Landing/LandingPage";
 import AboutCholoVideo from "./AboutCholoVideo";
 import CenteredTestimonialSlider from "./CenteredTestimonialSlider";
+
 const Home = () => {
   return (
     <div>
-     
+      <>
+        <section>
+          <LandingPage></LandingPage>
+        </section>
 
-      <section>
-        <LandingPage></LandingPage>
-      </section>
-      <section>
-        <AboutCholoVideo></AboutCholoVideo>
-      </section>
-      <section>
-        <OurServices></OurServices>
-      </section>
-      <section>
-        <WhyChooseUs></WhyChooseUs>
-      </section>
-      <section>
-        <LatestNews></LatestNews>
-      </section>
-      <section>
-        <FeaturedDrivers></FeaturedDrivers>
-      </section>
-      <FareEstimator></FareEstimator>
-      <section>
-        <CenteredTestimonialSlider></CenteredTestimonialSlider>
-      </section>
-      <section>
-        <CallToAction></CallToAction>
-      </section>
+        <section>
+          <AboutCholoVideo></AboutCholoVideo>
+        </section>
+        <section>
+          <OurServices></OurServices>
+        </section>
+        <section>
+          <WhyChooseUs></WhyChooseUs>
+        </section>
+        <section>
+          <LatestNews></LatestNews>
+        </section>
+        <section>
+          <FeaturedDrivers></FeaturedDrivers>
+        </section>
+        <FareEstimator></FareEstimator>
+        <section>
+          <CenteredTestimonialSlider></CenteredTestimonialSlider>
+        </section>
+        <section>
+          <CallToAction></CallToAction>
+        </section>
 
-      <section>
-        <Statistics></Statistics>
-      </section>
+        <section>
+          <Statistics></Statistics>
+        </section>
 
-      <section>
-        <HowItWorks></HowItWorks>
-      </section>
+        <section>
+          <HowItWorks></HowItWorks>
+        </section>
 
-      <section>
-        <Partners></Partners>
-      </section>
-      <section>
-        <Newsletter></Newsletter>
-      </section>
+        <section>
+          <Partners></Partners>
+        </section>
+        <section>
+          <Newsletter></Newsletter>
+        </section>
+      </>
     </div>
   );
 };

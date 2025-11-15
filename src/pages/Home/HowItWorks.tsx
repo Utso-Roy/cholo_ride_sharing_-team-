@@ -2,6 +2,7 @@
 import React from "react";
 import { FaMotorcycle, FaCarSide, FaCreditCard, FaSmile } from "react-icons/fa";
 import { motion } from "framer-motion";
+import Container from "../../Container/Container";
 
 const steps = [
   {
@@ -33,29 +34,33 @@ const steps = [
 const HowItWorks: React.FC = () => {
   return (
     <section className="py-16 border-t border-gray-300 bg-gray-50">
-      <div className="container mx-auto px-4">
-        <h2 className="text-4xl md:text-5xl  font-bold text-center text-[#27445D]">
-          কিভাবে কাজ করে
-        </h2>
-        <p className="text-center text-gray-600 mb-12">
-          মাত্র ৪ ধাপে সহজ এবং নিরাপদ যাত্রা
-        </p>
-        <div className="grid md:grid-cols-4 gap-8">
-          {steps.map((step, index) => (
-            <motion.div
-              key={step.id}
-              className="bg-white rounded-lg shadow-lg p-6 text-center hover:shadow-xl transition-shadow duration-300"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.2, duration: 0.5 }}
-            >
-              <div className="mb-4 flex justify-center">{step.icon}</div>
-              <h3 className="text-xl font-semibold text-[#27445D] mb-2">{step.title}</h3>
-              <p className="text-gray-600">{step.description}</p>
-            </motion.div>
-          ))}
+      <Container>
+        <div className="w-full">
+          <h2 className="text-4xl md:text-5xl  font-bold text-center text-[#27445D]">
+            কিভাবে কাজ করে
+          </h2>
+          <p className="text-center text-gray-600 mb-12">
+            মাত্র ৪ ধাপে সহজ এবং নিরাপদ যাত্রা
+          </p>
+          <div className="grid md:grid-cols-4 gap-8">
+            {steps.map((step, index) => (
+              <motion.div
+                key={step.id}
+                className="bg-white rounded-lg shadow-lg p-6 text-center hover:shadow-xl transition-shadow duration-300"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.2, duration: 0.5 }}
+              >
+                <div className="mb-4 flex justify-center">{step.icon}</div>
+                <h3 className="text-xl font-semibold text-[#27445D] mb-2">
+                  {step.title}
+                </h3>
+                <p className="text-gray-600">{step.description}</p>
+              </motion.div>
+            ))}
+          </div>
         </div>
-      </div>
+      </Container>
     </section>
   );
 };

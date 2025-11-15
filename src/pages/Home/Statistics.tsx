@@ -3,6 +3,7 @@ import React from "react";
 import CountUp from "react-countup";
 import { FaMotorcycle, FaUserTie, FaHeadset } from "react-icons/fa";
 import { motion } from "framer-motion";
+import Container from "../../Container/Container";
 
 interface StatItem {
   id: number;
@@ -35,7 +36,9 @@ const stats: StatItem[] = [
 const Statistics: React.FC = () => {
   return (
     <section className="py-20 border-t border-gray-100 bg-gradient-to-r from-[#e6fcf9] to-gray-50">
-      <div className="max-w-7xl mx-auto px-6 text-center">
+      <Container>
+
+        <div className="w-full text-center">
         <h2 className="text-4xl md:text-5xl font-bold text-[#27445D] mb-4">
           পরিসংখ্যান
         </h2>
@@ -65,6 +68,7 @@ const Statistics: React.FC = () => {
           ))}
         </div>
       </div>
+      </Container>
     </section>
   );
 };

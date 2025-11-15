@@ -1,10 +1,13 @@
 import React from "react";
 import { Button } from "primereact/button";
+import Container from "../../Container/Container";
 
 const CallToAction: React.FC = () => {
   return (
     <section className="py-20 bg-gradient-to-r from-[#71BBB2] to-[#27445D] text-white">
-      <div className="w-full px-6 text-center flex flex-col items-center gap-6">
+      <Container>
+
+        <div className="w-full text-center flex flex-col items-center gap-6">
         <h2 className="text-4xl md:text-5xl font-extrabold drop-shadow-lg">
           আজই রাইড বুক করুন এবং দ্রুত যাত্রার আনন্দ নিন!
         </h2>
@@ -16,6 +19,7 @@ const CallToAction: React.FC = () => {
           className="!bg-white !text-[#71BBB2] !font-bold !px-10 !py-3 rounded-full shadow-lg hover:scale-105 transition-transform"
         />
       </div>
+      </Container>
     </section>
   );
 };
