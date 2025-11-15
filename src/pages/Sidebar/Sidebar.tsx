@@ -70,7 +70,7 @@ const Sidebar: React.FC = () => {
       }
     };
     fetchUser();
-  }, [user?.email]);
+  }, []);
 
   const currentUser = users.find((u) => u?.email === user?.email);
 
