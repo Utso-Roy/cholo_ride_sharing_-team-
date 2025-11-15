@@ -3,6 +3,7 @@ import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from "react-icons/f
 import { IoLogoYoutube } from "react-icons/io5";
 import { AuthContext } from "../../Auth/AuthProvider";
 import { Link } from "react-router";
+import Container from "../../Container/Container";
 
 const Footer: React.FC = () => {
   const { user } = useContext(AuthContext);
@@ -17,10 +18,11 @@ const Footer: React.FC = () => {
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-purple-400 rounded-full filter blur-3xl animate-pulse delay-1000"></div>
       </div>
 
-      {/* Overlay for glass effect */}
       <div className="absolute inset-0 bg-black/10 backdrop-blur-sm"></div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+      <Container>
+        
+         <div className="relative w-full py-12 lg:py-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10 mb-12">
           {/* Branding Section */}
           <div className="space-y-4 sm:col-span-2 lg:col-span-1">
@@ -46,7 +48,6 @@ const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* সেবা সমূহ */}
           <div className="space-y-4">
             <h4 className="font-bold text-lg lg:text-xl mb-4 pb-2 border-b border-white/20">সেবা সমূহ</h4>
             <ul className="space-y-2.5">
@@ -68,7 +69,6 @@ const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* কোম্পানি */}
           <div className="space-y-4">
             <h4 className="font-bold text-lg lg:text-xl mb-4 pb-2 border-b border-white/20">কোম্পানি</h4>
             <ul className="space-y-2.5">
@@ -87,7 +87,6 @@ const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* আইন ও শর্তাবলী */}
           <div className="space-y-4">
             <h4 className="font-bold text-lg lg:text-xl mb-4 pb-2 border-b border-white/20">আইন ও শর্তাবলী</h4>
             <ul className="space-y-2.5">
@@ -123,6 +122,7 @@ const Footer: React.FC = () => {
           </div>
         </div>
       </div>
+     </Container>
     </footer>
   );
 };

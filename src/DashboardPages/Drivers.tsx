@@ -11,7 +11,6 @@ import { Toast } from "primereact/toast";
 import api from "../lib/api"; 
 import Loading from "../Loading/Loading";
 
-/** Types */
 type DriverDoc = {
   _id: string;
   vehicleType: "bike" | "car" | "cng";

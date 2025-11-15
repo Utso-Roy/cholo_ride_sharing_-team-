@@ -11,6 +11,7 @@ import {
   Train,
 } from "lucide-react";
 import { Link } from "react-router";
+import Container from "../../Container/Container";
 
 const services = [
   { icon: Bike, title: "বাইক" ,path : '/bike'},
@@ -18,7 +19,7 @@ const services = [
   { icon: Car, title: "কার",path : '/car' },
   { icon: Truck, title: "ট্রাক",path : '/track' },
   { icon: Bus, title: "শাটল",path : '/shuttlebus' },
-  { icon: MapPin, title: "ভ্রমণ প্যাকেজ",path : '/journeypackage' },
+  { icon: MapPin, title: "ভ্রমণ ",path : '/journeypackage' },
   { icon: Ambulance, title: "অ্যাম্বুলেন্স",path : '/ambulance' },
   { icon: Package, title: "প্যাকেজ",path : '/shipment' },
 ];
@@ -35,7 +36,7 @@ const fadeUp = {
 const OurServices: React.FC = () => {
   return (
     <section
-      className="relative bg-cover bg-center bg-no-repeat border-t border-gray-100 py-16 md:py-20 px-6"
+      className="relative bg-cover bg-center bg-no-repeat border-t border-gray-100 py-16 md:py-20 "
       style={{
         backgroundImage:
           "url('https://i.ibb.co.com/MkSgJWYZ/service-2.jpg')",
@@ -44,7 +45,11 @@ const OurServices: React.FC = () => {
       {/* Overlay */}
       <div className="absolute inset-0 bg-white/50 backdrop-blur-[2px]"></div>
 
-      <div className="relative z-10 w-full text-center">
+      <>
+        <Container>
+          
+
+           <div className="relative z-10 w-full text-center">
         {/* Section Title */}
         <motion.h2
           className="text-3xl md:text-5xl font-extrabold text-[#27445D] leading-snug md:leading-tight mb-12"
@@ -76,7 +81,7 @@ const OurServices: React.FC = () => {
                   scale: 1.05,
                   y: -8,
                 }}
-                className="group relative flex flex-col items-center justify-center gap-3 bg-white/98 backdrop-blur-md rounded-3xl p-6 cursor-pointer transition-all duration-500 overflow-hidden shadow-lg hover:shadow-2xl"
+                className="group relative flex flex-col items-center justify-center gap-2 bg-white/98 backdrop-blur-md rounded-3xl p-6 cursor-pointer transition-all duration-500 overflow-hidden shadow-lg hover:shadow-2xl"
               >
                 {/* Animated Border Gradient */}
                 <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500">
@@ -115,6 +120,10 @@ const OurServices: React.FC = () => {
         </div>
       </div>
 
+      </Container>
+      
+      
+      </>
       {/* CSS for animations */}
       <style jsx>{`
         @keyframes border-flow {

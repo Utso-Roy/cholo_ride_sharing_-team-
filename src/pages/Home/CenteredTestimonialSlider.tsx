@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaArrowLeft, FaArrowRight, FaQuoteLeft } from "react-icons/fa";
+import Container from "../../Container/Container";
 
 interface Testimonial {
   id: number;
@@ -59,7 +60,12 @@ const CenteredTestimonialSlider: React.FC = () => {
   return (
     <section className="w-full py-16 bg-gradient-to-r from-[#e6fcf9] to-gray-50 text-center">
       {/* Heading */}
-      <h2 className="text-3xl md:text-4xl font-bold text-[#27445D] mb-3">
+      <Container>
+        
+
+          <>
+      
+        <h2 className="text-3xl md:text-4xl font-bold text-[#27445D] mb-3">
         আমাদের গ্রাহকদের মতামত
       </h2>
       <p className="text-gray-600 max-w-2xl mx-auto mb-10">
@@ -141,6 +147,10 @@ const CenteredTestimonialSlider: React.FC = () => {
           />
         ))}
       </div>
+      
+      
+      </>
+    </Container>
     </section>
   );
 };

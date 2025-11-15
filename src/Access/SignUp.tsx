@@ -114,7 +114,10 @@ const SignUp: React.FC = () => {
         role: "user",
       };
 
-      await axios.post("http://localhost:3000/users", saveUser);
+      await axios.post(
+        "https://cholo-ride-sharing-website-server-side.onrender.com/users",
+        saveUser
+      );
 
       toast.success("নিবন্ধন সফল!");
       navigate(from);

@@ -2,6 +2,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { FaRegNewspaper, FaBolt, FaBell } from "react-icons/fa";
+import Container from "../../Container/Container";
 
 interface NewsItem {
   id: number;
@@ -45,8 +46,14 @@ const categoryColors: { [key in NewsItem["category"]]: string } = {
 
 const LatestNews: React.FC = () => {
   return (
-    <section className="py-16 px-6 md:px-16 bg-gradient-to-b from-[#F7FAFC] to-white border-t border-gray-200">
-      {/* Heading */}
+    <section className="  bg-gradient-to-b from-[#F7FAFC] to-white border-t border-gray-200  ">
+    
+      <Container>
+
+
+          <div className="py-16 ">
+        
+          {/* Heading */}
       <div className="text-center mb-12">
         <motion.h2
           className="text-4xl md:text-5xl font-extrabold text-[#27445D]"
@@ -69,7 +76,7 @@ const LatestNews: React.FC = () => {
       </div>
 
       {/* Timeline / Split Layout */}
-      <div className="relative max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
+      <div className="relative w-full grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Left timeline */}
         <div className="relative">
           {newsItems.map((item, index) => (
@@ -126,6 +133,8 @@ const LatestNews: React.FC = () => {
           ))}
         </div>
       </div>
+    </div>
+      </Container>
     </section>
   );
 };
