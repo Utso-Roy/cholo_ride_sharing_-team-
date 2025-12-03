@@ -45,7 +45,7 @@ const OurServices: React.FC = () => {
       {/* Overlay */}
       <div className="absolute inset-0 bg-white/50 backdrop-blur-[2px]"></div>
 
-      <>
+      
         <Container>
           
 
@@ -66,7 +66,7 @@ const OurServices: React.FC = () => {
         </motion.h2>
 
         {/* Services Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-6 justify-center items-center max-w-7xl mx-auto">
+        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-6 justify-center items-center w-full">
           {services.map((service, idx) => {
             const IconComponent = service.icon;
             return (
@@ -123,7 +123,7 @@ const OurServices: React.FC = () => {
       </Container>
       
       
-      </>
+  
       {/* CSS for animations */}
       <style jsx>{`
         @keyframes border-flow {
