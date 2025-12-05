@@ -38,7 +38,7 @@ const Statistics: React.FC = () => {
     <section className="py-20 border-t border-gray-100 bg-gradient-to-r from-[#e6fcf9] to-gray-50">
       <Container>
 
-        <div className="w-full text-center">
+        <div className="max-w-7xl mx-auto text-center">
         <h2 className="text-4xl md:text-5xl font-bold text-[#27445D] mb-4">
           পরিসংখ্যান
         </h2>

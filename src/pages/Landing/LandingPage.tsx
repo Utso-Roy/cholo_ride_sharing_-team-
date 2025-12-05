@@ -113,7 +113,10 @@ const LandingPage = () => {
   return (
     <>
       {/* Hero Section */}
-      <div className="relative min-h-screen lg:min-h-[90vh] overflow-hidden">
+      <div className="relative     pt-16 pb-10
+      md:pt-20 md:pb-16 
+      lg:pt-20 lg:pb-12 
+      xl:pt-16 xl:pb-16 overflow-hidden">
         {/* Background */}
         <div className="absolute inset-0">
           <LazyImage
@@ -125,9 +128,8 @@ const LandingPage = () => {
         </div>
 
         <Container>
-          <div className="relative  flex flex-col lg:flex-row items-center justify-between  overflow-hidden">
+          <div className="relative max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between  overflow-hidden">
             <div
-              data-aos="fade-right"
               className="w-full lg:w-1/2 text-center lg:text-left space-y-4 sm:space-y-5 lg:space-y-6 z-10 mb-8 lg:mb-0"
             >
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#27445D] leading-tight px-2 sm:px-0">

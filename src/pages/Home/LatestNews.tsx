@@ -51,7 +51,7 @@ const LatestNews: React.FC = () => {
       <Container>
 
 
-          <div className="py-16 ">
+          <div className="py-16  mx-auto max-w-7xl">
         
           {/* Heading */}
       <div className="text-center mb-12">

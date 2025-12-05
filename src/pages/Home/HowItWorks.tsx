@@ -34,7 +34,7 @@ const HowItWorks: React.FC = () => {
   return (
     <section className="py-16 border-t border-gray-300 bg-gray-50">
       <Container>
-        <div className="w-full">
+        <div className="max-w-7xl mx-auto">
           <h2 className="text-4xl md:text-5xl  font-bold text-center text-[#27445D]">
             কিভাবে কাজ করে
           </h2>

@@ -117,7 +117,7 @@ const Newsletter = () => {
       </div>
 
       <Container>
-        <div className="relative  w-full">
+        <div className="relative  mx-auto max-w-7xl">
           {/* Header Section */}
           <div className="text-center mb-16 space-y-6">
             <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-50 to-indigo-50 px-6 py-3 rounded-full border border-blue-200">

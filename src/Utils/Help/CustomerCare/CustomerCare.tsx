@@ -18,7 +18,7 @@ const CustomerCare: React.FC = () => {
   const { mutate, isPending } = useMutation({
     mutationFn: async (data: typeof formData) => {
       const res = await axios.post(
-        "https://cholo-ride-sharing-website-server-side.onrender.com/api/customer-care",
+        "http://localhost:3000/api/customer-care",
         data
       );
       return res.data;

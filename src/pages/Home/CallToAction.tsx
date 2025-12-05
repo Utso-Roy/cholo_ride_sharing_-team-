@@ -7,7 +7,7 @@ const CallToAction: React.FC = () => {
     <section className="py-20 bg-gradient-to-r from-[#71BBB2] to-[#27445D] text-white">
       <Container>
 
-        <div className="w-full text-center flex flex-col items-center gap-6">
+        <div className="mx-auto max-w-7xl text-center flex flex-col items-center gap-6">
         <h2 className="text-4xl md:text-5xl font-extrabold drop-shadow-lg">
           আজই রাইড বুক করুন এবং দ্রুত যাত্রার আনন্দ নিন!
         </h2>

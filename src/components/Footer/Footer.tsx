@@ -22,7 +22,7 @@ const Footer: React.FC = () => {
 
       <Container>
         
-         <div className="relative w-full py-12 lg:py-16">
+         <div className="relative max-w-7xl mx-auto py-12 lg:py-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10 mb-12">
           {/* Branding Section */}
           <div className="space-y-4 sm:col-span-2 lg:col-span-1">

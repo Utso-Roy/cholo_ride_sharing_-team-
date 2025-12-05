@@ -9,7 +9,8 @@ import { IconType } from "react-icons";
 import { AuthContext } from "../Auth/AuthProvider";
 import { IoMdLogOut } from "react-icons/io";
 import { toast } from "react-toastify";
-import Loading from "../Loading/Loading";
+import Container from "../Container/Container";
+
 interface ServiceItem {
   label: string;
   icon: IconType;
@@ -290,10 +291,14 @@ const Navbar: React.FC = () => {
   }
 
   return (
-    <div className="navbar bg-gradient-to-r from-[#e6fcf9] via-gray-50 to-[#e6fcf9] backdrop-blur-lg  text-[#0d487b] ">
+    <div className=" bg-gradient-to-r from-[#e6fcf9] via-gray-50 to-[#e6fcf9] backdrop-blur-lg  text-[#0d487b] ">
       {/* Navbar Start */}
 
-      <div className="navbar-start flex items-center gap-4">
+      <Container>
+        
+
+           <div className="navbar ">
+           <div className="navbar-start flex items-center gap-4">
         <NavLink to="/" className="cursor-pointer text-xl font-bold">
           <div>
             <img className="md:w-26 md:h-10 w-15 object-contain h-8" src="https://i.ibb.co.com/JjNCs1G1/logo-2.png" alt="Cholo" />
@@ -377,6 +382,8 @@ const Navbar: React.FC = () => {
 
         }
       </div>
+   </div>
+   </Container>
     </div>
   );
 };

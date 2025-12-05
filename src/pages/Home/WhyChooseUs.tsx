@@ -47,7 +47,7 @@ const WhyChooseUs = () => {
       {/* Heading */}
       <Container>
         
-          <>
+          <div className="max-w-7xl mx-auto">
         <motion.div
           className="text-center mb-12"
           initial={{ opacity: 0, y: -30 }}
@@ -87,7 +87,7 @@ const WhyChooseUs = () => {
             </motion.div>
           ))}
         </motion.div>
-      </>
+      </div>
     </Container>
     </section>
   );

@@ -48,7 +48,7 @@ const FeaturedDrivers: React.FC = () => {
     <section className="py-16 bg-gradient-to-r from-[#e6fcf9] to-gray-50">
       <Container>
 
-        <div className="text-center mb-12 w-full">
+        <div className="text-center mb-12 ">
         <h2 className="text-4xl md:text-5xl  font-bold text-[#27445D] flex items-center justify-center gap-3">
           শীর্ষ ড্রাইভার / রাইডার
         </h2>
@@ -58,8 +58,7 @@ const FeaturedDrivers: React.FC = () => {
       </div>
       </Container>
 
-      {/* Marquee / Carousel */}
-      <div className="overflow-hidden relative">
+      <div className="overflow-hidden max-w-7xl mx-auto relative">
         <div className="flex gap-6 animate-marquee hover:pause">
           {featuredDrivers.concat(featuredDrivers).map((driver, idx) => (
             <Card
@@ -92,7 +91,6 @@ const FeaturedDrivers: React.FC = () => {
       <style jsx>{`
         .animate-marquee {
           display: flex;
-          width: max-content;
           animation: marquee 25s linear infinite;
         }
         .hover\\:pause:hover {
