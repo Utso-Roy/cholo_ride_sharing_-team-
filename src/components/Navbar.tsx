@@ -297,7 +297,7 @@ const Navbar: React.FC = () => {
       <Container>
         
 
-           <div className="navbar">
+           <div className="navbar ">
            <div className="navbar-start flex items-center gap-4">
         <NavLink to="/" className="cursor-pointer text-xl font-bold">
           <div>

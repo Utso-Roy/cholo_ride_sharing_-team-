@@ -59,10 +59,8 @@ const Sidebar: React.FC = () => {
     const fetchUser = async () => {
       try {
         setLoading(true);
-        const res = await axios.get<AppUser[]>(
-          "https://cholo-ride-sharing-website-server-side.onrender.com/users"
-        );
-        setUsers(res.data);
+        const res = await axios.get<AppUser>(`http://localhost:3000/users/${user.email}`);
+        setUsers([res.data]);
       } catch (err) {
         console.error(err);
       } finally {
@@ -70,7 +68,7 @@ const Sidebar: React.FC = () => {
       }
     };
     fetchUser();
-  }, []);
+  }, [user?.email]);
 
   const currentUser = users.find((u) => u?.email === user?.email);
 
