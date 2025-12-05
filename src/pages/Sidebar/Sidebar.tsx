@@ -55,7 +55,7 @@ const Sidebar: React.FC = () => {
   };
   const navigate = useNavigate();
   useEffect(() => {
-    if (!user?.email) return;
+    if (!user) return;
     const fetchUser = async () => {
       try {
         setLoading(true);
