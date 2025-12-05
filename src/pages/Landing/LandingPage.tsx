@@ -124,7 +124,7 @@ const LandingPage = () => {
             alt="Background"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#e6fcf9]/80 to-gray-50/80 " />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#e6fcf9]/80 to-[#e6fcf9]/80 " />
         </div>
 
         <Container>
