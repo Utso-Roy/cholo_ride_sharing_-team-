@@ -63,7 +63,7 @@ const CenteredTestimonialSlider: React.FC = () => {
       <Container>
         
 
-          <>
+          <div className="max-w-7xl mx-auto">
       
         <h2 className="text-3xl md:text-4xl font-bold text-[#27445D] mb-3">
         আমাদের গ্রাহকদের মতামত
@@ -149,7 +149,7 @@ const CenteredTestimonialSlider: React.FC = () => {
       </div>
       
       
-      </>
+      </div>
     </Container>
     </section>
   );

@@ -19,7 +19,7 @@ const Partners = () => {
       
       <Container>
 
-        <div className="relative w-full">
+        <div className="relative max-w-7xl mx-auto">
         {/* Heading with modern styling */}
         <div className="text-center mb-16 space-y-4">
           <div className="inline-block">

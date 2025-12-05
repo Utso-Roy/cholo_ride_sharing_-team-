@@ -49,7 +49,7 @@ const OurServices: React.FC = () => {
         <Container>
           
 
-           <div className="relative z-10 w-full text-center">
+           <div className="relative z-10 max-w-7xl  mx-auto text-center">
         {/* Section Title */}
         <motion.h2
           className="text-3xl md:text-5xl font-extrabold text-[#27445D] leading-snug md:leading-tight mb-12"

@@ -9,7 +9,7 @@ const VideoSection = () => {
     <section className="bg-white border-t border-gray-100 py-20 ">
       {/* Heading Area */}
       <Container>
-        <>
+        <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <motion.h2
               className="text-4xl md:text-5xl font-extrabold text-[#27445D]"
@@ -107,7 +107,7 @@ const VideoSection = () => {
                        hover:!from-[#56A89E] hover:!to-[#71BBB2] transition-all duration-300"
             />
           </motion.div>
-        </>
+        </div>
       </Container>
     </section>
   );
