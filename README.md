@@ -1,12 +1,62 @@
-# React + Vite
+# 🚖 Cholo — Real-Time Ride Sharing Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# 📋 Project Overview
+Cholo is a real-time ride sharing platform designed to connect riders and drivers efficiently. The project aims to solve common transportation challenges such as finding available rides quickly, tracking drivers in real-time, and managing trips seamlessly.
+By leveraging modern web technologies like React.js, Node.js, and Socket.io (or Firebase), Cholo provides:
+* Riders with the ability to request rides, view driver locations in real-time, and track their trips from start to finish.
+* Drivers with a dashboard to accept ride requests, manage trips, and monitor trip progress efficiently.
+* A responsive and intuitive interface suitable for desktops, tablets, and mobile devices.
 
-Currently, two official plugins are available:
+---
+## 🔗 Live Demo & Repositories
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+* 🌐 **Live Website:** [https://cholo.netlify.app/](https://cholo.netlify.app/)
+* 💻 **Client Repository:** [https://github.com/Utso-Roy/cholo_ride_sharing_-team-/tree/main?tab=readme-ov-file](https://github.com/Utso-Roy/cholo_ride_sharing_-team-/tree/main?tab=readme-ov-file)
+* 🖥️ **Server Repository:** [https://github.com/Utso-Roy/cholo_ride_sharing_website_server_side](https://github.com/Utso-Roy/cholo_ride_sharing_website_server_side)
+---
+## 📸 Screenshots & Live Demo
 
-## Expanding the ESLint configuration
+### Homepage
+![Homepage](https://i.ibb.co.com/ns0RYfWg/cholo-netlify-app.png)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Ride Booking Page
+![Booking](https://i.ibb.co.com/ZzrKKtcQ/project4-4.png)
+
+### Dashboard
+![Driver Dashboard](https://i.ibb.co.com/wh4Hr7vb/project4-2.png)
+
+---
+
+## 🌟 Features
+
+- **User Authentication:** Sign up/login as a rider or driver.  
+- **Ride Booking System:** Request rides and track trip progress in real-time.  
+- **Driver Dashboard:** Accept requests, view history, and manage status.  
+- **Live Map Tracking:** Real-time GPS tracking of rides and drivers.  
+- **Notifications:** Alerts for ride requests, updates, and confirmations.  
+- **Responsive UI:** Works flawlessly on desktop, tablet, and mobile.  
+- **Payment Integration (Optional):** Secure online payment options.  
+
+---
+
+## 💻 Tech Stack
+
+### Frontend
+- **Typescript**, **Tailwind CSS**, **React Router**  
+- **Maps & Location:** Google Maps API / Mapbox  
+- **Realtime Updates:** Socket.io / Firebase  
+
+### Backend
+- **Node.js**, **Express.js**  
+- **Database:** MongoDB  
+- **Authentication:** JWT / OAuth  
+- **Hosting:** Vercel (Frontend), Render / Heroku (Backend)  
+
+---
+
+## ⚙️ Installation
+
+1. **Clone the repository**
+```bash
+git clone https://github.com/YOUR_USERNAME/cholo.git
+cd cholo
