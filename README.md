@@ -17,7 +17,7 @@ By leveraging modern web technologies like React.js, Node.js, and Socket.io (or 
 ## 📸 Screenshots & Live Demo
 
 ### Homepage
-![Homepage](https://i.ibb.co.com/ns0RYfWg/cholo-netlify-app.png)
+![Homepage](https://i.ibb.co.com/1JR6qSrx/cholo-netlify-app.png)
 
 ### Ride Booking Page
 ![Booking](https://i.ibb.co.com/ZzrKKtcQ/project4-4.png)
