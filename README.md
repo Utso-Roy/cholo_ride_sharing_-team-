@@ -20,7 +20,7 @@ By leveraging modern web technologies like React.js, Node.js, and Socket.io (or 
 ![Homepage](https://i.ibb.co.com/NkjfySz/project4-1.png)
 
 ### Ride Booking Page
-![Booking](https://i.ibb.co.com/ZzrKKtcQ/project4-4.png)
+![Booking](https://i.ibb.co.com/NkjfySz/project4-1.png)
 
 ### Ride Booking Page
 ![Booking](https://i.ibb.co.com/ZzrKKtcQ/project4-4.png)
